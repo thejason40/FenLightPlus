@@ -1,16 +1,3 @@
-[COLOR dodgerblue][B]Version 2.2.05[/B][/COLOR]
-- Added TMDB Lists integration
-	- Import from Trakt lists (large lists are split into 100 item chunks)
-	- Create / Delete / Clear lists from My Lists > TMDB My Lists
-	- Clear list cache from context menu if it's been updated on the TMDB website.
-	- Set list artwork from inside the list
-- Fixed 'Play # Episodes' so it works more as intended. 
-
-[COLOR dodgerblue][B]Version 2.2.06[/B][/COLOR]
-- Fixed a bug where the confirmation box was covered when importing a Trakt list to TMDB.
-
-[COLOR dodgerblue][B]Version 2.2.07[/B][/COLOR]
-- Fixed a bug where TMDB List Manager wouldn't open when adding a sinlge movie or show.
-
-[COLOR dodgerblue][B]Version 2.2.08[/B][/COLOR]
-- Fixed a bug where TMDB Lists didn't show if set to "private".
+[COLOR dodgerblue][B]Version 2.2.10[/B][/COLOR]
+- Fixed Trakt account refresh issue.
+- Updated Trakt and Real Debrid sign in processes to generate custom QR codes.

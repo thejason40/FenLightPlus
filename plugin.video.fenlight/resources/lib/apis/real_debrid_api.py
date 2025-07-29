@@ -44,10 +44,14 @@ class RealDebridAPI:
 		url = auth_url + device_url % 'client_id=%s&new_credentials=yes' % self.client_ID
 		response = requests.get(url, timeout=timeout).json()
 		user_code = response['user_code']
+		direct_url = response['direct_verification_url']
 		try: copy2clip(user_code)
 		except: pass
-		content = 'Authorize Debrid Services[CR]Navigate to: [B]https://real-debrid.com/device[/B][CR]Enter the following code: [B]%s[/B]' % user_code
-		progressDialog = progress_dialog('Real Debrid Authorize', get_icon('rd_qrcode'))
+		t_o = 5
+		content = 'Scan the QR Code or navigate to: [B]https://real-debrid.com/device[/B][CR]Enter the following code: [B]%s[/B]' % user_code
+		tiny_url = requests.get('http://tinyurl.com/api-create.php', params={'url': direct_url}, timeout=t_o).text
+		qr_icon = 'https://qrcode.tec-it.com/API/QRCode?data=%s&backcolor=%%23ffffff&size=small&quietzone=1&errorcorrection=H' % tiny_url
+		progressDialog = progress_dialog('Real Debrid Authorize', qr_icon)
 		progressDialog.update(content, 0)
 		expires_in = int(response['expires_in'])
 		sleep_interval = int(response['interval'])

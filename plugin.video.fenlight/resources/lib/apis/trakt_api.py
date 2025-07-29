@@ -113,10 +113,16 @@ def trakt_get_device_token(device_codes):
 		expires_in = device_codes['expires_in']
 		sleep_interval = device_codes['interval']
 		user_code = str(device_codes['user_code'])
+		verification_url = str(device_codes['verification_url'])
 		try: copy2clip(user_code)
-		except: pass
-		content = '[CR]Navigate to: [B]%s[/B][CR]Enter the following code: [B]%s[/B]' % (str(device_codes['verification_url']), user_code)
-		progressDialog = progress_dialog('Trakt Authorize', get_icon('trakt_qrcode'))
+		except Exception as e:
+			kodi_utils.logger('TRAKT ERROR 1', e)
+		t_o = 5
+		content = '[CR]Scan the QR Code or navigate to: [B]%s[/B][CR]Enter the following code: [B]%s[/B]' % (str(device_codes['verification_url']), user_code)
+		direct_url = f"{verification_url}/{user_code}"
+		tiny_url = requests.get('http://tinyurl.com/api-create.php', params={'url': direct_url}, timeout=t_o).text
+		qr_icon = 'https://qrcode.tec-it.com/API/QRCode?data=%s&backcolor=%%23ffffff&size=small&quietzone=1&errorcorrection=H' % tiny_url
+		progressDialog = progress_dialog('Trakt Authorize', qr_icon)
 		progressDialog.update(content, 0)
 		try:
 			time_passed = 0
@@ -132,10 +138,13 @@ def trakt_get_device_token(device_codes):
 					progress = int(100 * time_passed/expires_in)
 					progressDialog.update(content, progress)
 				else: break
-		except: pass
+		except Exception as e:
+			kodi_utils.logger('TRAKT ERROR 2', e)
 		try: progressDialog.close()
-		except: pass
-	except: pass
+		except Exception as e:
+			kodi_utils.logger('TRAKT ERROR 3', e)
+	except Exception as e:
+			kodi_utils.logger('TRAKT ERROR 4', e)
 	return result
 
 def trakt_refresh_token():
@@ -158,7 +167,7 @@ def trakt_authenticate(dummy=''):
 	if token:
 		set_setting('trakt.token', token["access_token"])
 		set_setting('trakt.refresh', token["refresh_token"])
-		set_setting('trakt.expires', str(time.time() + 7776000))
+		set_setting('trakt.expires', str(time.time() + 86400))
 		set_setting('watched_indicators', '1')
 		sleep(1000)
 		try:
