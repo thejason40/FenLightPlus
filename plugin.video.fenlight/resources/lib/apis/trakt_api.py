@@ -802,7 +802,7 @@ def trakt_get_activity():
 	return get_trakt(params)
 
 def get_trakt(params):
-	result = call_trakt(params['path'] % params.get('path_insert', ''), params=params.get('params', {}), data=params.get('data'), is_delete=params.get('is_delete', False),
+	result = call_trakt(params['path'] % params.get('path_insert', '') + '?limit=1000', params=params.get('params', {}), data=params.get('data'), is_delete=params.get('is_delete', False),
 						with_auth=params.get('with_auth', False), method=params.get('method'), pagination=params.get('pagination', True), page_no=params.get('page_no'))
 	return result[0] if params.get('pagination', True) else result
 
