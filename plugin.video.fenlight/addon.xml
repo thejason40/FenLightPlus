@@ -1,4 +1,4 @@
-<addon id="plugin.video.fenlight" name="Fen Light+" provider-name="Tikipeter/thejason40" version="2.2.10">
+<addon id="plugin.video.fenlight" name="Fen Light+" provider-name="Tikipeter/thejason40" version="2.2.11">
     <requires>
         <import addon="xbmc.python" version="3.0.0"/>
         <import addon="script.module.requests" version="2.19.1"/>
@@ -20,4 +20,5 @@
         </assets>
         <news>INFO: For latest changes see Changelog within Tools of add-on.</news>
     </extension>
+
 </addon>
