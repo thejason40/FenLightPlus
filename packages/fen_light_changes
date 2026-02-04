@@ -1,3 +1,2 @@
-[COLOR dodgerblue][B]Version 2.2.10[/B][/COLOR]
-- Fixed Trakt account refresh issue.
-- Updated Trakt and Real Debrid sign in processes to generate custom QR codes.
+[COLOR dodgerblue][B]Version 2.2.11[/B][/COLOR]
+- Pushed a quick and dirty fix for an issue with Trakt lists. A proper fix will follow.
