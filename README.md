@@ -6,6 +6,8 @@ Since then I've also added more features, such as:
  - UK specific options for "Trending" and "Providers" lists
  - TMDB Lists integration and abilty to export Trakt lists to TMDB
 
+I've also released a companion android app because I got fed up with searching for movies using a TV Remote. You can download it here: `https://thejason40.github.io/apk/`
+
 This is the first Kodi addon I've ever edited so Tikipeter would probably shed a tear at how I butchered his code. I might keep working to improve this, I might not.
 
 <h2>To Update From FenLight</h2>
