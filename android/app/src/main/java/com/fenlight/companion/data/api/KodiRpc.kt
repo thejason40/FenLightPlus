@@ -1,5 +1,7 @@
 package com.fenlight.companion.data.api
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -23,7 +25,7 @@ class KodiRpc(
     private val endpoint get() = "http://$host:$port/jsonrpc"
     private val json = "application/json".toMediaType()
 
-    private suspend fun call(method: String, params: JSONObject? = null): JSONObject {
+    private suspend fun call(method: String, params: JSONObject? = null): JSONObject = withContext(Dispatchers.IO) {
         val body = JSONObject().apply {
             put("jsonrpc", "2.0")
             put("id", 1)
@@ -38,7 +40,7 @@ class KodiRpc(
         }
         val response = client.newCall(reqBuilder.build()).execute()
         if (!response.isSuccessful) throw IOException("Kodi returned ${response.code}")
-        return JSONObject(response.body?.string() ?: "{}")
+        JSONObject(response.body?.string() ?: "{}")
     }
 
     suspend fun ping(): Boolean = try {

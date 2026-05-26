@@ -59,9 +59,13 @@ object KodiDiscovery {
     }
 
     private fun localIpv4(): String? = try {
-        NetworkInterface.getNetworkInterfaces()?.toList()
-            ?.flatMap { it.inetAddresses.toList() }
-            ?.firstOrNull { !it.isLoopbackAddress && it is Inet4Address }
+        val ifaces = NetworkInterface.getNetworkInterfaces()?.toList() ?: return null
+        // Prefer wlan/eth interfaces over cellular (rmnet_*) to ensure we scan the local network
+        val preferred = ifaces.filter { it.name.startsWith("wlan") || it.name.startsWith("eth") }
+        val candidates = (if (preferred.isNotEmpty()) preferred else ifaces)
+        candidates
+            .flatMap { it.inetAddresses.toList() }
+            .firstOrNull { !it.isLoopbackAddress && it is Inet4Address }
             ?.hostAddress
     } catch (_: Exception) {
         null
