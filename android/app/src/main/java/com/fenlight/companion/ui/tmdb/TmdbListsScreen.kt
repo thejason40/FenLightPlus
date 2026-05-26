@@ -61,9 +61,9 @@ fun TmdbListsScreen(vm: TmdbListsViewModel = viewModel()) {
                 }
                 PaginatedGrid(
                     items = gridItems,
-                    isLoading = false,
-                    hasMore = false,
-                    onLoadMore = {},
+                    isLoading = state.listItemIsLoadingMore,
+                    hasMore = state.listItemHasMore,
+                    onLoadMore = vm::loadMoreListItems,
                     onItemClick = {},
                     modifier = Modifier.fillMaxSize(),
                 )

@@ -17,7 +17,11 @@ data class TmdbListsUiState(
     val isAuthenticated: Boolean = false,
     val lists: List<TmdbList> = emptyList(),
     val listItems: List<TmdbListItem> = emptyList(),
+    val selectedListId: Int = 0,
     val selectedListName: String = "",
+    val listItemPage: Int = 0,
+    val listItemHasMore: Boolean = false,
+    val listItemIsLoadingMore: Boolean = false,
     val playMessage: String? = null,
 )
 
@@ -49,20 +53,47 @@ class TmdbListsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun loadListItems(listId: Int, listName: String) {
+        _state.update {
+            it.copy(
+                isLoading = true, error = null,
+                selectedListId = listId, selectedListName = listName,
+                listItems = emptyList(), listItemPage = 0, listItemHasMore = false,
+            )
+        }
+        fetchListItemsPage(listId, page = 1, append = false)
+    }
+
+    fun loadMoreListItems() {
+        val s = _state.value
+        if (s.listItemIsLoadingMore || !s.listItemHasMore) return
+        fetchListItemsPage(s.selectedListId, page = s.listItemPage + 1, append = true)
+    }
+
+    private fun fetchListItemsPage(listId: Int, page: Int, append: Boolean) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, error = null, selectedListName = listName) }
+            _state.update { it.copy(listItemIsLoadingMore = append, isLoading = !append) }
             try {
                 val accessToken = app.prefs.tmdbAccessToken.first()
                 val v4 = app.buildTmdbV4Api(accessToken)
-                val detail = v4.listDetail(listId)
-                _state.update { it.copy(isLoading = false, listItems = detail.results) }
+                val detail = v4.listDetail(listId, page)
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        listItemIsLoadingMore = false,
+                        listItems = if (append) it.listItems + detail.results else detail.results,
+                        listItemPage = page,
+                        listItemHasMore = page < detail.totalPages,
+                    )
+                }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, listItemIsLoadingMore = false, error = e.message) }
             }
         }
     }
 
-    fun clearListItems() = _state.update { it.copy(listItems = emptyList(), selectedListName = "") }
+    fun clearListItems() = _state.update {
+        it.copy(listItems = emptyList(), selectedListId = 0, selectedListName = "", listItemPage = 0, listItemHasMore = false)
+    }
 
     fun playItem(item: TmdbListItem) {
         viewModelScope.launch {
