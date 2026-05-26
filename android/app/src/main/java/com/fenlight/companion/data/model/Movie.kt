@@ -115,7 +115,7 @@ data class TmdbList(
     val name: String,
     val description: String = "",
     @Json(name = "poster_path") val posterPath: String? = null,
-    @Json(name = "item_count") val itemCount: Int = 0,
+    @Json(name = "number_of_items") val itemCount: Int = 0,
 )
 
 @JsonClass(generateAdapter = true)
