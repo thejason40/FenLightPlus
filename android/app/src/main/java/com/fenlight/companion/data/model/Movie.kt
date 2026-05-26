@@ -113,9 +113,9 @@ data class PagedResult<T>(
 data class TmdbList(
     val id: Int,
     val name: String,
-    val description: String,
-    @Json(name = "poster_path") val posterPath: String?,
-    @Json(name = "item_count") val itemCount: Int,
+    val description: String = "",
+    @Json(name = "poster_path") val posterPath: String? = null,
+    @Json(name = "item_count") val itemCount: Int = 0,
 )
 
 @JsonClass(generateAdapter = true)

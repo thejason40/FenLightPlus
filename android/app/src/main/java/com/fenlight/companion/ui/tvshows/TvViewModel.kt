@@ -117,7 +117,7 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        items = it.items + newItems,
+                        items = (it.items + newItems).distinctBy { item -> item.id },
                         page = nextPage,
                         hasMore = nextPage < result.totalPages,
                     )
