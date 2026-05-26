@@ -3,6 +3,7 @@ package com.fenlight.companion.ui.setup
 import android.content.Intent
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -27,6 +28,16 @@ fun SetupScreen(
 ) {
     val state by vm.state.collectAsState()
     val context = LocalContext.current
+
+    // Kodi discovery sheet
+    if (state.showDiscoverySheet) {
+        KodiDiscoverySheet(
+            discovered = state.kodiDiscovered,
+            isScanning = state.kodiScanning,
+            onSelect = vm::selectDiscoveredKodi,
+            onDismiss = vm::dismissDiscoverySheet,
+        )
+    }
 
     // Handle TMDB OAuth step change
     LaunchedEffect(state.tmdbAuthUrl) {
@@ -102,15 +113,29 @@ fun SetupScreen(
                     style = MaterialTheme.typography.bodySmall,
                 )
             }
-            Button(
-                onClick = vm::testKodiConnection,
+            Row(
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !state.kodiTesting && state.kodiHost.isNotBlank(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                if (state.kodiTesting) {
-                    CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                } else {
-                    Text(if (state.kodiConnected) "Connected ✓" else "Test Connection")
+                OutlinedButton(
+                    onClick = vm::startKodiScan,
+                    modifier = Modifier.weight(1f),
+                    enabled = !state.kodiScanning && !state.kodiTesting,
+                ) {
+                    Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text("Scan")
+                }
+                Button(
+                    onClick = vm::testKodiConnection,
+                    modifier = Modifier.weight(1f),
+                    enabled = !state.kodiTesting && !state.kodiScanning && state.kodiHost.isNotBlank(),
+                ) {
+                    if (state.kodiTesting) {
+                        CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                    } else {
+                        Text(if (state.kodiConnected) "Connected ✓" else "Test Connection")
+                    }
                 }
             }
         }
@@ -256,6 +281,71 @@ fun SetupScreen(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text("Continue to App")
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun KodiDiscoverySheet(
+    discovered: List<DiscoveredKodi>,
+    isScanning: Boolean,
+    onSelect: (DiscoveredKodi) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                "Kodi on your network",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+            )
+
+            if (isScanning) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    Text("Scanning…", style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+
+            if (discovered.isEmpty() && !isScanning) {
+                Text(
+                    "No Kodi instances found. Make sure Kodi is running and that Settings → Services → Control → Allow remote control via HTTP is enabled.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+
+            discovered.forEach { kodi ->
+                ListItem(
+                    headlineContent = { Text(kodi.name) },
+                    supportingContent = {
+                        Text(
+                            "${kodi.host}:${kodi.port}",
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                    },
+                    leadingContent = {
+                        Icon(Icons.Default.Tv, contentDescription = null)
+                    },
+                    trailingContent = {
+                        Icon(Icons.Default.ChevronRight, contentDescription = null)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onSelect(kodi) },
+                )
+                HorizontalDivider()
             }
         }
     }

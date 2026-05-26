@@ -30,6 +30,8 @@ class AppPreferences(private val context: Context) {
         private val RD_CLIENT_ID = stringPreferencesKey("rd_client_id")
         private val RD_CLIENT_SECRET = stringPreferencesKey("rd_client_secret")
         private val RD_EXPIRES_AT = longPreferencesKey("rd_expires_at")
+
+        private val CHECK_UPDATE_ON_STARTUP = booleanPreferencesKey("check_update_on_startup")
     }
 
     val kodiHost: Flow<String> = context.dataStore.data.map { it[KODI_HOST] ?: "" }
@@ -50,6 +52,12 @@ class AppPreferences(private val context: Context) {
     val rdClientId: Flow<String> = context.dataStore.data.map { it[RD_CLIENT_ID] ?: "" }
     val rdClientSecret: Flow<String> = context.dataStore.data.map { it[RD_CLIENT_SECRET] ?: "" }
     val rdExpiresAt: Flow<Long> = context.dataStore.data.map { it[RD_EXPIRES_AT] ?: 0L }
+
+    val checkUpdateOnStartup: Flow<Boolean> = context.dataStore.data.map { it[CHECK_UPDATE_ON_STARTUP] ?: true }
+
+    suspend fun setCheckUpdateOnStartup(enabled: Boolean) {
+        context.dataStore.edit { it[CHECK_UPDATE_ON_STARTUP] = enabled }
+    }
 
     suspend fun saveKodiConnection(host: String, port: Int, user: String = "", pass: String = "") {
         context.dataStore.edit {

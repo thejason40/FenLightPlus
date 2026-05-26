@@ -17,6 +17,10 @@ data class SetupState(
     val kodiTesting: Boolean = false,
     val kodiConnected: Boolean = false,
     val kodiError: String? = null,
+    // Kodi discovery
+    val kodiScanning: Boolean = false,
+    val kodiDiscovered: List<DiscoveredKodi> = emptyList(),
+    val showDiscoverySheet: Boolean = false,
     // TMDB
     val tmdbLoading: Boolean = false,
     val tmdbPolling: Boolean = false,
@@ -48,6 +52,7 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
 
     private var traktPollJob: Job? = null
     private var rdPollJob: Job? = null
+    private var scanJob: Job? = null
 
     init {
         viewModelScope.launch {
@@ -75,6 +80,36 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                 _state.update { it.copy(rdAuthed = token.isNotBlank()) }
             }
         }
+    }
+
+    // ── Kodi discovery ────────────────────────────────────────────────────────
+
+    fun startKodiScan() {
+        scanJob?.cancel()
+        _state.update { it.copy(kodiScanning = true, kodiDiscovered = emptyList(), showDiscoverySheet = true) }
+        scanJob = viewModelScope.launch {
+            KodiDiscovery.scan { found ->
+                _state.update { it.copy(kodiDiscovered = it.kodiDiscovered + found) }
+            }
+            _state.update { it.copy(kodiScanning = false) }
+        }
+    }
+
+    fun selectDiscoveredKodi(found: DiscoveredKodi) {
+        _state.update {
+            it.copy(
+                kodiHost = found.host,
+                kodiPort = found.port.toString(),
+                kodiConnected = false,
+                kodiError = null,
+                showDiscoverySheet = false,
+            )
+        }
+    }
+
+    fun dismissDiscoverySheet() {
+        scanJob?.cancel()
+        _state.update { it.copy(showDiscoverySheet = false, kodiScanning = false) }
     }
 
     fun onKodiHostChange(v: String) = _state.update { it.copy(kodiHost = v, kodiConnected = false, kodiError = null) }
@@ -242,5 +277,6 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
     override fun onCleared() {
         traktPollJob?.cancel()
         rdPollJob?.cancel()
+        scanJob?.cancel()
     }
 }
