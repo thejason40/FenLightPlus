@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.fenlight.companion.data.prefs.AppPreferences
 import com.fenlight.companion.data.update.UpdateChecker
 import com.fenlight.companion.data.update.UpdateInfo
 import com.fenlight.companion.data.update.UpdateResult
@@ -34,11 +33,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             FenLightTheme {
                 val kodiHost by prefs.kodiHost.collectAsStateWithLifecycle(initialValue = "")
-                val tmdbToken by prefs.tmdbAccessToken.collectAsStateWithLifecycle(initialValue = "")
                 val traktToken by prefs.traktAccessToken.collectAsStateWithLifecycle(initialValue = "")
                 val rdToken by prefs.rdAccessToken.collectAsStateWithLifecycle(initialValue = "")
 
-                val isSetupDone = kodiHost.isNotBlank() && tmdbToken.isNotBlank()
+                val isSetupDone = kodiHost.isNotBlank()
                 var screen by remember { mutableStateOf(if (isSetupDone) AppScreen.Home else AppScreen.Setup) }
 
                 LaunchedEffect(isSetupDone) {
@@ -48,9 +46,7 @@ class MainActivity : ComponentActivity() {
                 // Startup update check — runs once after setup is confirmed done
                 var startupUpdate by remember { mutableStateOf<UpdateInfo?>(null) }
                 LaunchedEffect(Unit) {
-                    val host = prefs.kodiHost.first()
-                    val token = prefs.tmdbAccessToken.first()
-                    if (host.isBlank() || token.isBlank()) return@LaunchedEffect
+                    if (prefs.kodiHost.first().isBlank()) return@LaunchedEffect
                     if (!prefs.checkUpdateOnStartup.first()) return@LaunchedEffect
                     val result = UpdateChecker().check(BuildConfig.VERSION_CODE)
                     if (result is UpdateResult.Available) startupUpdate = result.info

@@ -142,8 +142,8 @@ fun SetupScreen(
 
         // ── Step 2: TMDB ──────────────────────────────────────────────────────
         SetupCard(
-            title = "2. TMDB Account",
-            subtitle = "Required for browsing movies and shows",
+            title = "2. TMDB Account (Optional)",
+            subtitle = "Required only for personal lists",
             isDone = state.tmdbAuthed,
             enabled = state.kodiConnected,
         ) {
@@ -275,7 +275,7 @@ fun SetupScreen(
         }
 
         // ── Done ──────────────────────────────────────────────────────────────
-        if (state.kodiConnected && state.tmdbAuthed) {
+        if (state.kodiConnected) {
             Button(
                 onClick = onSetupComplete,
                 modifier = Modifier.fillMaxWidth(),
