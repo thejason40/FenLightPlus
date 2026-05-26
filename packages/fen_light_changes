@@ -1,2 +1,3 @@
-[COLOR dodgerblue][B]Version 2.2.11[/B][/COLOR]
-- Pushed a quick and dirty fix for an issue with Trakt lists. A proper fix will follow.
+[COLOR dodgerblue][B]Version 2.2.12[/B][/COLOR]
+- Fixed default TMDB key.
+- Updated default Trakt key. Log out and back into Trakt if you have any issues.
