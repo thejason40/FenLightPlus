@@ -5,44 +5,46 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+// Brand: #3C4B5E (dark blue-grey)
+private val Brand = Color(0xFF3C4B5E)
+private val BrandLight = Color(0xFF5C7591)
+private val BrandContainer = Color(0xFFD0DCE9)
+private val BrandDark = Color(0xFF2A3545)
+
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF81D4FA),
-    onPrimary = Color(0xFF003549),
-    primaryContainer = Color(0xFF004D65),
-    onPrimaryContainer = Color(0xFFBFE9FF),
-    secondary = Color(0xFFB3C8D4),
-    onSecondary = Color(0xFF1D333D),
-    secondaryContainer = Color(0xFF334A54),
-    onSecondaryContainer = Color(0xFFCFE4F0),
-    tertiary = Color(0xFFC4C3EA),
-    onTertiary = Color(0xFF2D2D4D),
-    background = Color(0xFF0F1923),
-    onBackground = Color(0xFFDEE3E9),
-    surface = Color(0xFF0F1923),
-    onSurface = Color(0xFFDEE3E9),
-    surfaceVariant = Color(0xFF1C2B35),
-    onSurfaceVariant = Color(0xFFB5CAD4),
-    outline = Color(0xFF50677A),
+    primary = BrandLight,
+    onPrimary = Color(0xFF0D1B28),
+    primaryContainer = BrandDark,
+    onPrimaryContainer = Color(0xFFD0DCE9),
+    secondary = Color(0xFFAABBCC),
+    onSecondary = Color(0xFF1A2A38),
+    secondaryContainer = Color(0xFF2A3A4A),
+    onSecondaryContainer = Color(0xFFCCDDE8),
+    background = Color(0xFF111820),
+    onBackground = Color(0xFFDCE4EC),
+    surface = Color(0xFF111820),
+    onSurface = Color(0xFFDCE4EC),
+    surfaceVariant = Color(0xFF1E2C3A),
+    onSurfaceVariant = Color(0xFFAABBCC),
+    outline = Color(0xFF4A5E70),
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF006688),
+    primary = Brand,
     onPrimary = Color(0xFFFFFFFF),
-    primaryContainer = Color(0xFFBFE9FF),
-    onPrimaryContainer = Color(0xFF001F2B),
-    secondary = Color(0xFF4D6470),
+    primaryContainer = BrandContainer,
+    onPrimaryContainer = Color(0xFF0D1B28),
+    secondary = Color(0xFF4A6070),
     onSecondary = Color(0xFFFFFFFF),
-    secondaryContainer = Color(0xFFD0E9F7),
-    onSecondaryContainer = Color(0xFF081E28),
-    tertiary = Color(0xFF5C5C7E),
-    onTertiary = Color(0xFFFFFFFF),
-    background = Color(0xFFF5F9FC),
-    onBackground = Color(0xFF171C1F),
-    surface = Color(0xFFF5F9FC),
-    onSurface = Color(0xFF171C1F),
-    surfaceVariant = Color(0xFFDCE4EA),
-    onSurfaceVariant = Color(0xFF40494F),
-    outline = Color(0xFF70797E),
+    secondaryContainer = Color(0xFFD0E4F0),
+    onSecondaryContainer = Color(0xFF0D1E28),
+    background = Color(0xFFF4F7FA),
+    onBackground = Color(0xFF141C24),
+    surface = Color(0xFFF4F7FA),
+    onSurface = Color(0xFF141C24),
+    surfaceVariant = Color(0xFFDAE4EC),
+    onSurfaceVariant = Color(0xFF3D4E5C),
+    outline = Color(0xFF6A7E8E),
 )
 
 @Composable
