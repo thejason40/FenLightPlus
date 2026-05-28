@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,21 +52,27 @@ fun RdScreen(vm: RdViewModel = viewModel()) {
             if (state.isLoading) { LoadingIndicator(modifier = Modifier.padding(32.dp)); return@Column }
             state.error?.let { ErrorMessage(it, onRetry = { vm.selectTab(state.tab) }, modifier = Modifier.padding(16.dp)); return@Column }
 
-            when (state.tab) {
-                RdTab.TORRENTS -> TorrentList(
-                    torrents = state.torrents,
-                    isLoadingMore = state.torrentIsLoadingMore,
-                    hasMore = state.torrentHasMore,
-                    onLoadMore = vm::loadMoreTorrents,
-                    onTorrentClick = { vm.loadTorrentInfo(it.id) },
-                )
-                RdTab.DOWNLOADS -> DownloadList(
-                    downloads = state.downloads,
-                    isLoadingMore = state.downloadIsLoadingMore,
-                    hasMore = state.downloadHasMore,
-                    onLoadMore = vm::loadMoreDownloads,
-                    onPlay = { vm.playDownload(it) },
-                )
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = vm::refresh,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                when (state.tab) {
+                    RdTab.TORRENTS -> TorrentList(
+                        torrents = state.torrents,
+                        isLoadingMore = state.torrentIsLoadingMore,
+                        hasMore = state.torrentHasMore,
+                        onLoadMore = vm::loadMoreTorrents,
+                        onTorrentClick = { vm.loadTorrentInfo(it.id) },
+                    )
+                    RdTab.DOWNLOADS -> DownloadList(
+                        downloads = state.downloads,
+                        isLoadingMore = state.downloadIsLoadingMore,
+                        hasMore = state.downloadHasMore,
+                        onLoadMore = vm::loadMoreDownloads,
+                        onPlay = { vm.playDownload(it) },
+                    )
+                }
             }
         }
     }

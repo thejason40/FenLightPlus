@@ -19,6 +19,7 @@ private const val PAGE_SIZE = 50
 data class RdUiState(
     val tab: RdTab = RdTab.TORRENTS,
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: String? = null,
     val torrents: List<RdTorrent> = emptyList(),
     val torrentPage: Int = 0,
@@ -38,15 +39,28 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
     private val _state = MutableStateFlow(RdUiState())
     val state: StateFlow<RdUiState> = _state.asStateFlow()
 
+    private companion object { const val CACHE_MS = 24 * 60 * 60 * 1000L }
+    private val tabFetchedAt = mutableMapOf<RdTab, Long>()
+
     init { loadTorrents() }
 
     private suspend fun rdApi() = app.buildAuthedRdApi(app.getValidRdAccessToken())
 
     fun selectTab(tab: RdTab) {
         _state.update { it.copy(tab = tab) }
+        val age = System.currentTimeMillis() - (tabFetchedAt[tab] ?: 0L)
         when (tab) {
-            RdTab.TORRENTS -> if (_state.value.torrents.isEmpty()) loadTorrents() else Unit
-            RdTab.DOWNLOADS -> if (_state.value.downloads.isEmpty()) loadDownloads()
+            RdTab.TORRENTS -> if (_state.value.torrents.isEmpty() || age > CACHE_MS) loadTorrents()
+            RdTab.DOWNLOADS -> if (_state.value.downloads.isEmpty() || age > CACHE_MS) loadDownloads()
+        }
+    }
+
+    fun refresh() {
+        tabFetchedAt.remove(_state.value.tab)
+        _state.update { it.copy(isRefreshing = true) }
+        when (_state.value.tab) {
+            RdTab.TORRENTS -> loadTorrents()
+            RdTab.DOWNLOADS -> loadDownloads()
         }
     }
 
@@ -66,9 +80,11 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
             _state.update { it.copy(torrentIsLoadingMore = append, isLoading = !append) }
             try {
                 val results = rdApi().torrents(limit = PAGE_SIZE, page = page)
+                if (page == 1) tabFetchedAt[RdTab.TORRENTS] = System.currentTimeMillis()
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         torrentIsLoadingMore = false,
                         torrents = if (append) it.torrents + results else results,
                         torrentPage = page,
@@ -76,7 +92,7 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, torrentIsLoadingMore = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, torrentIsLoadingMore = false, error = e.message) }
             }
         }
     }
@@ -97,9 +113,11 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
             _state.update { it.copy(downloadIsLoadingMore = append, isLoading = !append) }
             try {
                 val results = rdApi().downloads(limit = PAGE_SIZE, page = page)
+                if (page == 1) tabFetchedAt[RdTab.DOWNLOADS] = System.currentTimeMillis()
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         downloadIsLoadingMore = false,
                         downloads = if (append) it.downloads + results else results,
                         downloadPage = page,
@@ -107,7 +125,7 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, downloadIsLoadingMore = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, downloadIsLoadingMore = false, error = e.message) }
             }
         }
     }

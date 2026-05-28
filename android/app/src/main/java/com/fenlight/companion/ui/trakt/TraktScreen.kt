@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import com.fenlight.companion.data.model.TraktWatchedShow
 import com.fenlight.companion.ui.components.ErrorMessage
 import com.fenlight.companion.ui.components.LoadingIndicator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TraktScreen(vm: TraktViewModel = viewModel()) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -38,9 +40,11 @@ fun TraktScreen(vm: TraktViewModel = viewModel()) {
                     listName = state.selectedListName,
                     items = state.listItems,
                     isLoading = state.isLoading,
+                    isRefreshing = state.isRefreshing,
                     isLoadingMore = state.listItemIsLoadingMore,
                     hasMore = state.listItemHasMore,
                     onLoadMore = vm::loadMoreListItems,
+                    onRefresh = vm::refresh,
                     onBack = vm::clearListItems,
                     onPlayMovie = vm::playListMovie,
                 )
@@ -67,14 +71,20 @@ fun TraktScreen(vm: TraktViewModel = viewModel()) {
                 return@Column
             }
 
-            when (state.tab) {
-                TraktTab.CONTINUE_WATCHING -> ContinueWatchingList(state.watchedShows, vm::playNextEpisode)
-                TraktTab.MY_LISTS -> TraktListList(state.myLists) { list ->
-                    vm.loadListItems(list.slug, list.name, "me")
-                }
-                TraktTab.LIKED_LISTS -> TraktListList(state.likedLists) { list ->
-                    val user = list.user?.username ?: "me"
-                    vm.loadListItems(list.slug, list.name, user)
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = vm::refresh,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                when (state.tab) {
+                    TraktTab.CONTINUE_WATCHING -> ContinueWatchingList(state.watchedShows, vm::playNextEpisode)
+                    TraktTab.MY_LISTS -> TraktListList(state.myLists) { list ->
+                        vm.loadListItems(list.slug, list.name, "me")
+                    }
+                    TraktTab.LIKED_LISTS -> TraktListList(state.likedLists) { list ->
+                        val user = list.user?.username ?: "me"
+                        vm.loadListItems(list.slug, list.name, user)
+                    }
                 }
             }
         }
@@ -152,9 +162,11 @@ private fun ListItemsScreen(
     listName: String,
     items: List<TraktListItem>,
     isLoading: Boolean,
+    isRefreshing: Boolean,
     isLoadingMore: Boolean,
     hasMore: Boolean,
     onLoadMore: () -> Unit,
+    onRefresh: () -> Unit,
     onBack: () -> Unit,
     onPlayMovie: (TraktListItem) -> Unit,
 ) {
@@ -178,26 +190,32 @@ private fun ListItemsScreen(
             LoadingIndicator(modifier = Modifier.padding(32.dp))
             return@Column
         }
-        LazyColumn(state = listState, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
-            items(items) { item ->
-                val title = item.movie?.title ?: item.show?.title ?: "Unknown"
-                val year = (item.movie?.year ?: item.show?.year)?.toString() ?: ""
-                ListItem(
-                    headlineContent = { Text(title) },
-                    supportingContent = { Text(year + if (item.type.isNotBlank()) " · ${item.type}" else "") },
-                    trailingContent = {
-                        if (item.type == "movie" && item.movie?.ids?.tmdb != null) {
-                            IconButton(onClick = { onPlayMovie(item) }) {
-                                Icon(Icons.Default.PlayArrow, contentDescription = "Play", tint = MaterialTheme.colorScheme.primary)
+        PullToRefreshBox(
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            LazyColumn(state = listState, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
+                items(items) { item ->
+                    val title = item.movie?.title ?: item.show?.title ?: "Unknown"
+                    val year = (item.movie?.year ?: item.show?.year)?.toString() ?: ""
+                    ListItem(
+                        headlineContent = { Text(title) },
+                        supportingContent = { Text(year + if (item.type.isNotBlank()) " · ${item.type}" else "") },
+                        trailingContent = {
+                            if (item.type == "movie" && item.movie?.ids?.tmdb != null) {
+                                IconButton(onClick = { onPlayMovie(item) }) {
+                                    Icon(Icons.Default.PlayArrow, contentDescription = "Play", tint = MaterialTheme.colorScheme.primary)
+                                }
                             }
-                        }
-                    },
-                )
-                HorizontalDivider()
-            }
-            if (isLoadingMore) {
-                item {
-                    LoadingIndicator(modifier = Modifier.padding(16.dp))
+                        },
+                    )
+                    HorizontalDivider()
+                }
+                if (isLoadingMore) {
+                    item {
+                        LoadingIndicator(modifier = Modifier.padding(16.dp))
+                    }
                 }
             }
         }

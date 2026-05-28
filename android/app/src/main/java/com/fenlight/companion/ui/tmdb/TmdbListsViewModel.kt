@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 
 data class TmdbListsUiState(
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: String? = null,
     val isAuthenticated: Boolean = false,
     val lists: List<TmdbList> = emptyList(),
@@ -31,24 +32,45 @@ class TmdbListsViewModel(application: Application) : AndroidViewModel(applicatio
     private val _state = MutableStateFlow(TmdbListsUiState())
     val state: StateFlow<TmdbListsUiState> = _state.asStateFlow()
 
+    private companion object { const val CACHE_MS = 24 * 60 * 60 * 1000L }
+    private var listsFetchedAt = 0L
+
     init { loadLists() }
 
-    fun loadLists() {
+    fun loadLists(force: Boolean = false) {
         viewModelScope.launch {
             val accessToken = app.prefs.tmdbAccessToken.first()
             val accountId = app.prefs.tmdbAccountId.first()
             if (accessToken.isBlank()) {
-                _state.update { it.copy(isAuthenticated = false, isLoading = false) }
+                _state.update { it.copy(isAuthenticated = false, isLoading = false, isRefreshing = false) }
+                return@launch
+            }
+            val age = System.currentTimeMillis() - listsFetchedAt
+            if (!force && _state.value.lists.isNotEmpty() && age < CACHE_MS) {
+                _state.update { it.copy(isRefreshing = false) }
                 return@launch
             }
             _state.update { it.copy(isLoading = true, error = null, isAuthenticated = true) }
             try {
                 val v4 = app.buildTmdbV4Api(accessToken)
                 val result = v4.accountLists(accountId)
-                _state.update { it.copy(isLoading = false, lists = result.results, listItems = emptyList(), selectedListName = "") }
+                listsFetchedAt = System.currentTimeMillis()
+                _state.update { it.copy(isLoading = false, isRefreshing = false, lists = result.results, listItems = emptyList(), selectedListName = "") }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
             }
+        }
+    }
+
+    fun refresh() {
+        listsFetchedAt = 0L
+        if (_state.value.listItems.isNotEmpty()) {
+            val id = _state.value.selectedListId
+            _state.update { it.copy(isRefreshing = true) }
+            fetchListItemsPage(id, page = 1, append = false)
+        } else {
+            _state.update { it.copy(isRefreshing = true) }
+            loadLists(force = true)
         }
     }
 
@@ -79,6 +101,7 @@ class TmdbListsViewModel(application: Application) : AndroidViewModel(applicatio
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         listItemIsLoadingMore = false,
                         listItems = if (append) it.listItems + detail.results else detail.results,
                         listItemPage = page,
@@ -86,7 +109,7 @@ class TmdbListsViewModel(application: Application) : AndroidViewModel(applicatio
                     )
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, listItemIsLoadingMore = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, listItemIsLoadingMore = false, error = e.message) }
             }
         }
     }

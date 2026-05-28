@@ -16,6 +16,7 @@ enum class TraktTab { CONTINUE_WATCHING, MY_LISTS, LIKED_LISTS }
 data class TraktUiState(
     val tab: TraktTab = TraktTab.CONTINUE_WATCHING,
     val isLoading: Boolean = false,
+    val isRefreshing: Boolean = false,
     val error: String? = null,
     val watchedShows: List<TraktWatchedShow> = emptyList(),
     val myLists: List<TraktList> = emptyList(),
@@ -36,6 +37,9 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
     private val _state = MutableStateFlow(TraktUiState())
     val state: StateFlow<TraktUiState> = _state.asStateFlow()
 
+    private companion object { const val CACHE_MS = 24 * 60 * 60 * 1000L }
+    private val tabFetchedAt = mutableMapOf<TraktTab, Long>()
+
     init { loadCurrentTab() }
 
     fun selectTab(tab: TraktTab) {
@@ -43,8 +47,22 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         loadCurrentTab()
     }
 
-    private fun loadCurrentTab() {
-        when (_state.value.tab) {
+    fun refresh() {
+        tabFetchedAt.remove(_state.value.tab)
+        _state.update { it.copy(isRefreshing = true) }
+        loadCurrentTab(force = true)
+    }
+
+    private fun loadCurrentTab(force: Boolean = false) {
+        val tab = _state.value.tab
+        val age = System.currentTimeMillis() - (tabFetchedAt[tab] ?: 0L)
+        val hasData = when (tab) {
+            TraktTab.CONTINUE_WATCHING -> _state.value.watchedShows.isNotEmpty()
+            TraktTab.MY_LISTS -> _state.value.myLists.isNotEmpty()
+            TraktTab.LIKED_LISTS -> _state.value.likedLists.isNotEmpty()
+        }
+        if (!force && hasData && age < CACHE_MS) return
+        when (tab) {
             TraktTab.CONTINUE_WATCHING -> loadContinueWatching()
             TraktTab.MY_LISTS -> loadMyLists()
             TraktTab.LIKED_LISTS -> loadLikedLists()
@@ -58,9 +76,10 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                 val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val shows = api.watchedShows()
                 val sorted = shows.sortedByDescending { it.lastWatchedAt }
-                _state.update { it.copy(isLoading = false, watchedShows = sorted) }
+                tabFetchedAt[TraktTab.CONTINUE_WATCHING] = System.currentTimeMillis()
+                _state.update { it.copy(isLoading = false, isRefreshing = false, watchedShows = sorted) }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
             }
         }
     }
@@ -71,9 +90,10 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
             try {
                 val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val lists = api.myLists()
-                _state.update { it.copy(isLoading = false, myLists = lists) }
+                tabFetchedAt[TraktTab.MY_LISTS] = System.currentTimeMillis()
+                _state.update { it.copy(isLoading = false, isRefreshing = false, myLists = lists) }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
             }
         }
     }
@@ -85,9 +105,10 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                 val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val response = api.likedLists(page = 1, limit = 50)
                 val liked = response.body() ?: emptyList()
-                _state.update { it.copy(isLoading = false, likedLists = liked.map { it.list }) }
+                tabFetchedAt[TraktTab.LIKED_LISTS] = System.currentTimeMillis()
+                _state.update { it.copy(isLoading = false, isRefreshing = false, likedLists = liked.map { it.list }) }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
             }
         }
     }
@@ -129,6 +150,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         listItemIsLoadingMore = false,
                         listItems = if (append) it.listItems + newItems else newItems,
                         listItemPage = page,
@@ -136,7 +158,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(isLoading = false, listItemIsLoadingMore = false, error = e.message) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false, listItemIsLoadingMore = false, error = e.message) }
             }
         }
     }

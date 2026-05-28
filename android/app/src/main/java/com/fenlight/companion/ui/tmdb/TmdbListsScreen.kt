@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,19 +67,25 @@ fun TmdbListsScreen(
                         rating = null,
                     )
                 }
-                PaginatedGrid(
-                    items = gridItems,
-                    isLoading = state.listItemIsLoadingMore,
-                    hasMore = state.listItemHasMore,
-                    onLoadMore = vm::loadMoreListItems,
-                    onItemClick = { item ->
-                        when (mediaTypeById[item.id]) {
-                            "tv" -> onShowClick(item.id)
-                            else -> onMovieClick(item.id)
-                        }
-                    },
+                PullToRefreshBox(
+                    isRefreshing = state.isRefreshing,
+                    onRefresh = vm::refresh,
                     modifier = Modifier.fillMaxSize(),
-                )
+                ) {
+                    PaginatedGrid(
+                        items = gridItems,
+                        isLoading = state.listItemIsLoadingMore,
+                        hasMore = state.listItemHasMore,
+                        onLoadMore = vm::loadMoreListItems,
+                        onItemClick = { item ->
+                            when (mediaTypeById[item.id]) {
+                                "tv" -> onShowClick(item.id)
+                                else -> onMovieClick(item.id)
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
                 return@Column
             }
 
@@ -92,18 +99,24 @@ fun TmdbListsScreen(
                 return@Column
             }
 
-            LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
-                items(state.lists) { list ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                        onClick = { vm.loadListItems(list.id, list.name) },
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Text(list.name, style = MaterialTheme.typography.titleSmall)
-                            if (list.description.isNotBlank()) {
-                                Text(list.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = vm::refresh,
+                modifier = Modifier.fillMaxSize(),
+            ) {
+                LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
+                    items(state.lists) { list ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            onClick = { vm.loadListItems(list.id, list.name) },
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp)) {
+                                Text(list.name, style = MaterialTheme.typography.titleSmall)
+                                if (list.description.isNotBlank()) {
+                                    Text(list.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+                                }
+                                Text("${list.itemCount} items", style = MaterialTheme.typography.labelSmall)
                             }
-                            Text("${list.itemCount} items", style = MaterialTheme.typography.labelSmall)
                         }
                     }
                 }

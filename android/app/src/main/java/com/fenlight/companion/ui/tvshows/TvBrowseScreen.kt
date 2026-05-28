@@ -7,6 +7,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -17,6 +18,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fenlight.companion.ui.components.*
 import com.fenlight.companion.ui.movies.DropdownField
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TvBrowseScreen(
     onShowClick: (Int) -> Unit,
@@ -60,15 +62,21 @@ fun TvBrowseScreen(
                 }
             }
             TvBrowseTab.DISCOVER -> DiscoverTab(state, vm, onShowClick, onItemLongClick = { selectedItem = it })
-            else -> PaginatedGrid(
-                items = state.items,
-                isLoading = state.isLoading,
-                hasMore = state.hasMore,
-                onLoadMore = vm::loadNextPage,
-                onItemClick = { onShowClick(it.id) },
-                onItemLongClick = { selectedItem = it },
+            else -> PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = vm::refresh,
                 modifier = Modifier.fillMaxSize(),
-            )
+            ) {
+                PaginatedGrid(
+                    items = state.items,
+                    isLoading = state.isLoading,
+                    hasMore = state.hasMore,
+                    onLoadMore = vm::loadNextPage,
+                    onItemClick = { onShowClick(it.id) },
+                    onItemLongClick = { selectedItem = it },
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
 
         state.error?.let {
@@ -77,6 +85,7 @@ fun TvBrowseScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DiscoverTab(
     state: TvUiState,
@@ -85,22 +94,28 @@ private fun DiscoverTab(
     onItemLongClick: (PaginatedItem) -> Unit,
 ) {
     if (!state.discoverShowForm && state.items.isNotEmpty()) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TextButton(
-                onClick = vm::showDiscoverForm,
-                modifier = Modifier.padding(horizontal = 8.dp),
-            ) {
-                Text("← Change Filters")
+        PullToRefreshBox(
+            isRefreshing = state.isRefreshing,
+            onRefresh = vm::refresh,
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                TextButton(
+                    onClick = vm::showDiscoverForm,
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                ) {
+                    Text("← Change Filters")
+                }
+                PaginatedGrid(
+                    items = state.items,
+                    isLoading = state.isLoading,
+                    hasMore = state.hasMore,
+                    onLoadMore = vm::loadNextPage,
+                    onItemClick = { onShowClick(it.id) },
+                    onItemLongClick = onItemLongClick,
+                    modifier = Modifier.fillMaxSize(),
+                )
             }
-            PaginatedGrid(
-                items = state.items,
-                isLoading = state.isLoading,
-                hasMore = state.hasMore,
-                onLoadMore = vm::loadNextPage,
-                onItemClick = { onShowClick(it.id) },
-                onItemLongClick = onItemLongClick,
-                modifier = Modifier.fillMaxSize(),
-            )
         }
         return
     }
