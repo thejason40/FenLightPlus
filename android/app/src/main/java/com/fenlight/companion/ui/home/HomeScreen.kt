@@ -1,11 +1,14 @@
 package com.fenlight.companion.ui.home
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -13,7 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
+import com.fenlight.companion.R
 import com.fenlight.companion.ui.movies.MovieBrowseScreen
 import com.fenlight.companion.ui.movies.MovieDetailScreen
 import com.fenlight.companion.ui.realdebrid.RdScreen
@@ -22,12 +25,12 @@ import com.fenlight.companion.ui.trakt.TraktScreen
 import com.fenlight.companion.ui.tvshows.TvBrowseScreen
 import com.fenlight.companion.ui.tvshows.TvDetailScreen
 
-private sealed class TopDest(val route: String, val label: String, val iconUrl: String) {
-    object Movies : TopDest("movies", "Movies", "https://i.imgur.com/pmyCOx7.png")
-    object TV : TopDest("tv", "TV Shows", "https://i.imgur.com/R3NEEJl.png")
-    object TmdbLists : TopDest("tmdb_lists", "TMDB Lists", "https://i.imgur.com/bOqItvH.png")
-    object Trakt : TopDest("trakt", "Trakt", "https://i.imgur.com/sGq3ifV.png")
-    object RealDebrid : TopDest("rd", "Real Debrid", "https://i.imgur.com/DotYAc3.png")
+private sealed class TopDest(val route: String, val label: String, @DrawableRes val iconRes: Int) {
+    object Movies : TopDest("movies", "Movies", R.drawable.icon_movies)
+    object TV : TopDest("tv", "TV Shows", R.drawable.icon_tv)
+    object TmdbLists : TopDest("tmdb_lists", "TMDB Lists", R.drawable.icon_tmdb)
+    object Trakt : TopDest("trakt", "Trakt", R.drawable.icon_trakt)
+    object RealDebrid : TopDest("rd", "Real Debrid", R.drawable.icon_realdebrid)
 }
 
 @Composable
@@ -65,8 +68,8 @@ fun HomeScreen(
                 topDests.forEach { dest ->
                     NavigationBarItem(
                         icon = {
-                            AsyncImage(
-                                model = dest.iconUrl,
+                            Image(
+                                painter = painterResource(dest.iconRes),
                                 contentDescription = dest.label,
                                 modifier = Modifier.size(24.dp),
                             )

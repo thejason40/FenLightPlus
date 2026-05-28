@@ -20,7 +20,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.fenlight.companion.R
 
 @Composable
 fun SetupScreen(
@@ -147,7 +150,7 @@ fun SetupScreen(
             subtitle = "Required only for personal lists",
             isDone = state.tmdbAuthed,
             enabled = state.kodiConnected,
-            iconUrl = "https://i.imgur.com/bOqItvH.png",
+            iconRes = R.drawable.icon_tmdb,
         ) {
             when {
                 state.tmdbAuthed -> {
@@ -188,7 +191,7 @@ fun SetupScreen(
             subtitle = "Next episodes and personal lists",
             isDone = state.traktAuthed,
             enabled = state.kodiConnected,
-            iconUrl = "https://i.imgur.com/sGq3ifV.png",
+            iconRes = R.drawable.icon_trakt,
         ) {
             when {
                 state.traktAuthed -> {
@@ -237,7 +240,7 @@ fun SetupScreen(
             subtitle = "Browse your cloud files directly",
             isDone = state.rdAuthed,
             enabled = state.kodiConnected,
-            iconUrl = "https://i.imgur.com/DotYAc3.png",
+            iconRes = R.drawable.icon_realdebrid,
         ) {
             when {
                 state.rdAuthed -> {
@@ -370,7 +373,7 @@ private fun SetupCard(
     modifier: Modifier = Modifier,
     subtitle: String? = null,
     enabled: Boolean = true,
-    iconUrl: String? = null,
+    @DrawableRes iconRes: Int? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Card(
@@ -387,9 +390,9 @@ private fun SetupCard(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (iconUrl != null) {
-                    AsyncImage(
-                        model = iconUrl,
+                if (iconRes != null) {
+                    Image(
+                        painter = painterResource(iconRes),
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
                     )
