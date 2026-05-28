@@ -55,8 +55,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val shows = api.watchedShows()
                 val sorted = shows.sortedByDescending { it.lastWatchedAt }
                 _state.update { it.copy(isLoading = false, watchedShows = sorted) }
@@ -70,8 +69,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val lists = api.myLists()
                 _state.update { it.copy(isLoading = false, myLists = lists) }
             } catch (e: Exception) {
@@ -84,8 +82,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val response = api.likedLists(page = 1, limit = 50)
                 val liked = response.body() ?: emptyList()
                 _state.update { it.copy(isLoading = false, likedLists = liked.map { it.list }) }
@@ -121,8 +118,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(listItemIsLoadingMore = append, isLoading = !append) }
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
                 val response = if (user == "me") {
                     api.myListItems(slug, page = page)
                 } else {

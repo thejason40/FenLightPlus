@@ -151,6 +151,21 @@ class FenLightApp : Application() {
             .create(RealDebridApi::class.java)
     }
 
+    suspend fun getValidTraktAccessToken(): String {
+        val expiresAt = prefs.traktExpiresAt.first()
+        val accessToken = prefs.traktAccessToken.first()
+        if (System.currentTimeMillis() < expiresAt - 5 * 60 * 1000L) return accessToken
+        val refreshToken = prefs.traktRefreshToken.first()
+        val newToken = traktApi.refreshToken(mapOf(
+            "refresh_token" to refreshToken,
+            "client_id" to traktClientId,
+            "client_secret" to traktClientSecret,
+            "grant_type" to "refresh_token",
+        ))
+        prefs.saveTraktTokens(newToken.accessToken, newToken.refreshToken, newToken.expiresIn)
+        return newToken.accessToken
+    }
+
     suspend fun getValidRdAccessToken(): String {
         val expiresAt = prefs.rdExpiresAt.first()
         val accessToken = prefs.rdAccessToken.first()
