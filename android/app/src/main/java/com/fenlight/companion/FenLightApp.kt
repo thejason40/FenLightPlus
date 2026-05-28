@@ -2,6 +2,7 @@ package com.fenlight.companion
 
 import android.app.Application
 import com.fenlight.companion.data.api.RealDebridApi
+import kotlinx.coroutines.flow.first
 import com.fenlight.companion.data.api.TmdbApi
 import com.fenlight.companion.data.api.TmdbV4Api
 import com.fenlight.companion.data.api.TraktApi
@@ -148,6 +149,18 @@ class FenLightApp : Application() {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(RealDebridApi::class.java)
+    }
+
+    suspend fun getValidRdAccessToken(): String {
+        val expiresAt = prefs.rdExpiresAt.first()
+        val accessToken = prefs.rdAccessToken.first()
+        if (System.currentTimeMillis() < expiresAt - 5 * 60 * 1000L) return accessToken
+        val clientId = prefs.rdClientId.first()
+        val clientSecret = prefs.rdClientSecret.first()
+        val refreshToken = prefs.rdRefreshToken.first()
+        val newToken = rdBaseApi.refreshToken(clientId, clientSecret, refreshToken)
+        prefs.saveRdTokens(newToken.accessToken, newToken.refreshToken, clientId, clientSecret, newToken.expiresIn)
+        return newToken.accessToken
     }
 
     companion object {

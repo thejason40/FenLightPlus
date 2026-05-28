@@ -40,7 +40,7 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
 
     init { loadTorrents() }
 
-    private suspend fun rdApi() = app.buildAuthedRdApi(app.prefs.rdAccessToken.first())
+    private suspend fun rdApi() = app.buildAuthedRdApi(app.getValidRdAccessToken())
 
     fun selectTab(tab: RdTab) {
         _state.update { it.copy(tab = tab) }
