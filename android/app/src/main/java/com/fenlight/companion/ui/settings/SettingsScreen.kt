@@ -1,5 +1,9 @@
 package com.fenlight.companion.ui.settings
 
+import android.content.Intent
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,10 +14,14 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fenlight.companion.R
 import com.fenlight.companion.ui.movies.DropdownField
+import com.fenlight.companion.ui.setup.SetupViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,8 +29,15 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onOpenSetup: () -> Unit,
     vm: SettingsViewModel = viewModel(),
+    setupVm: SetupViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsState()
+    val setupState by setupVm.state.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(setupState.tmdbAuthUrl) {
+        setupState.tmdbAuthUrl?.let { CustomTabsIntent.Builder().build().launchUrl(context, Uri.parse(it)) }
+    }
 
     Scaffold(
         topBar = {
@@ -63,10 +78,7 @@ fun SettingsScreen(
 
             // ── Updates ───────────────────────────────────────────────────────
             SettingsSection(title = "Updates") {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text("Check on startup", style = MaterialTheme.typography.bodyLarge)
                         Text(
@@ -75,67 +87,35 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    Switch(
-                        checked = state.checkUpdateOnStartup,
-                        onCheckedChange = vm::toggleCheckUpdateOnStartup,
-                    )
+                    Switch(checked = state.checkUpdateOnStartup, onCheckedChange = vm::toggleCheckUpdateOnStartup)
                 }
-
                 HorizontalDivider()
-
                 val upd = state.update
                 when {
                     upd.checking -> {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                             CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                             Text("Checking for updates…")
                         }
                     }
                     upd.upToDate -> {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Icon(
-                                Icons.Default.CheckCircle,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(20.dp),
-                            )
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                             Text("App is up to date", color = MaterialTheme.colorScheme.primary)
                         }
                     }
                     upd.available -> {
                         val info = upd.updateInfo!!
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Text(
-                                "Version ${info.versionName} is available",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.primary,
-                            )
+                            Text("Version ${info.versionName} is available", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             if (info.releaseNotes.isNotBlank()) {
-                                Text(
-                                    info.releaseNotes,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
+                                Text(info.releaseNotes, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             if (upd.downloading) {
                                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                                Text(
-                                    "Downloading…",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
+                                Text("Downloading…", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             } else {
-                                Button(
-                                    onClick = { vm.downloadUpdate(info.apkUrl) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                ) {
+                                Button(onClick = { vm.downloadUpdate(info.apkUrl) }, modifier = Modifier.fillMaxWidth()) {
                                     Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                                     Spacer(Modifier.width(8.dp))
                                     Text("Download & Install")
@@ -144,19 +124,10 @@ fun SettingsScreen(
                         }
                     }
                     upd.error != null -> {
-                        Text(
-                            "Update check failed: ${upd.error}",
-                            color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
+                        Text("Update check failed: ${upd.error}", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
                     }
                 }
-
-                Button(
-                    onClick = vm::checkForUpdate,
-                    modifier = Modifier.fillMaxWidth(),
-                    enabled = !upd.checking && !upd.downloading,
-                ) {
+                Button(onClick = vm::checkForUpdate, modifier = Modifier.fillMaxWidth(), enabled = !upd.checking && !upd.downloading) {
                     Text("Check for Updates")
                 }
             }
@@ -168,27 +139,132 @@ fun SettingsScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                DropdownField(
-                    label = "Region",
-                    options = tmdbRegions,
-                    selected = state.region,
-                    onSelect = vm::setRegion,
-                )
+                DropdownField(label = "Region", options = tmdbRegions, selected = state.region, onSelect = vm::setRegion)
             }
 
-            // ── Services ──────────────────────────────────────────────────────
-            SettingsSection(title = "Services") {
-                Text(
-                    "Reconfigure Kodi, or sign in / out of TMDB, Trakt, and Real Debrid.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+            // ── Kodi ──────────────────────────────────────────────────────────
+            SettingsSection(title = "Kodi") {
+                if (setupState.kodiConnected && setupState.kodiHost.isNotBlank()) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                        Column {
+                            Text("Connected", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.primary)
+                            Text("${setupState.kodiHost}:${setupState.kodiPort}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                        Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                    }
+                } else {
+                    Text("Not connected.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
                 OutlinedButton(onClick = onOpenSetup, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Default.Tune, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("Service Setup")
+                    Text("Reconfigure Kodi")
                 }
             }
+
+            // ── TMDB ──────────────────────────────────────────────────────────
+            SettingsSection(title = "TMDB") {
+                ServiceSectionHeader(iconRes = R.drawable.icon_tmdb, name = "TMDB", subtitle = "Required for personal lists")
+                HorizontalDivider()
+                when {
+                    setupState.tmdbAuthed -> {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text("Signed in", color = MaterialTheme.colorScheme.primary)
+                            TextButton(onClick = setupVm::signOutTmdb) { Text("Sign out") }
+                        }
+                    }
+                    setupState.tmdbPolling -> {
+                        Text("Complete sign-in in your browser, then tap below.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Button(onClick = setupVm::completeTmdbAuth, modifier = Modifier.fillMaxWidth()) {
+                            Text("I've approved it — complete sign-in")
+                        }
+                        TextButton(onClick = setupVm::cancelTmdbAuth) { Text("Cancel") }
+                    }
+                    else -> {
+                        if (setupState.tmdbError != null) Text(setupState.tmdbError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                        Button(onClick = setupVm::startTmdbAuth, modifier = Modifier.fillMaxWidth(), enabled = !setupState.tmdbLoading) {
+                            if (setupState.tmdbLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                            else Text("Sign in to TMDB")
+                        }
+                    }
+                }
+            }
+
+            // ── Trakt ─────────────────────────────────────────────────────────
+            SettingsSection(title = "Trakt") {
+                ServiceSectionHeader(iconRes = R.drawable.icon_trakt, name = "Trakt", subtitle = "Continue Watching and personal lists")
+                HorizontalDivider()
+                when {
+                    setupState.traktAuthed -> {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text("Signed in", color = MaterialTheme.colorScheme.primary)
+                            TextButton(onClick = setupVm::signOutTrakt) { Text("Sign out") }
+                        }
+                    }
+                    setupState.traktPolling -> {
+                        Text("Visit trakt.tv/activate and enter this code:", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(setupState.traktUserCode, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, modifier = Modifier.align(Alignment.CenterHorizontally))
+                        OutlinedButton(
+                            onClick = { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://trakt.tv/activate/${setupState.traktUserCode}"))) },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text("Open trakt.tv/activate") }
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                        TextButton(onClick = setupVm::cancelTraktAuth) { Text("Cancel") }
+                    }
+                    else -> {
+                        if (setupState.traktError != null) Text(setupState.traktError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                        Button(onClick = setupVm::startTraktAuth, modifier = Modifier.fillMaxWidth(), enabled = !setupState.traktLoading) {
+                            if (setupState.traktLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                            else Text("Sign in to Trakt")
+                        }
+                    }
+                }
+            }
+
+            // ── Real Debrid ───────────────────────────────────────────────────
+            SettingsSection(title = "Real Debrid") {
+                ServiceSectionHeader(iconRes = R.drawable.icon_realdebrid, name = "Real Debrid", subtitle = "Browse your cloud files")
+                HorizontalDivider()
+                when {
+                    setupState.rdAuthed -> {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text("Signed in", color = MaterialTheme.colorScheme.primary)
+                            TextButton(onClick = setupVm::signOutRd) { Text("Sign out") }
+                        }
+                    }
+                    setupState.rdPolling -> {
+                        Text("Visit real-debrid.com/device and enter this code:", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(setupState.rdUserCode, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary, modifier = Modifier.align(Alignment.CenterHorizontally))
+                        OutlinedButton(
+                            onClick = {
+                                val url = setupState.rdDirectVerificationUrl.ifBlank { "https://real-debrid.com/device" }
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) { Text(if (setupState.rdDirectVerificationUrl.isNotBlank()) "Open real-debrid.com/device (code pre-filled)" else "Open real-debrid.com/device") }
+                        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                        TextButton(onClick = setupVm::cancelRdAuth) { Text("Cancel") }
+                    }
+                    else -> {
+                        if (setupState.rdError != null) Text(setupState.rdError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                        Button(onClick = setupVm::startRdAuth, modifier = Modifier.fillMaxWidth(), enabled = !setupState.rdLoading) {
+                            if (setupState.rdLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
+                            else Text("Sign in to Real Debrid")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ServiceSectionHeader(iconRes: Int, name: String, subtitle: String) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        Image(painter = painterResource(iconRes), contentDescription = null, modifier = Modifier.size(28.dp))
+        Column {
+            Text(name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -248,11 +324,7 @@ private fun SettingsSection(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                content = content,
-            )
+            Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp), content = content)
         }
     }
 }

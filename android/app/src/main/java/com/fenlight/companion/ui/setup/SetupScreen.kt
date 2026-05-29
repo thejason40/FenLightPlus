@@ -2,7 +2,6 @@ package com.fenlight.companion.ui.setup
 
 import android.content.Intent
 import android.net.Uri
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -31,9 +30,7 @@ fun SetupScreen(
     vm: SetupViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsState()
-    val context = LocalContext.current
 
-    // Kodi discovery sheet
     if (state.showDiscoverySheet) {
         KodiDiscoverySheet(
             discovered = state.kodiDiscovered,
@@ -41,14 +38,6 @@ fun SetupScreen(
             onSelect = vm::selectDiscoveredKodi,
             onDismiss = vm::dismissDiscoverySheet,
         )
-    }
-
-    // Handle TMDB OAuth step change
-    LaunchedEffect(state.tmdbAuthUrl) {
-        val url = state.tmdbAuthUrl
-        if (url != null) {
-            CustomTabsIntent.Builder().build().launchUrl(context, Uri.parse(url))
-        }
     }
 
     LaunchedEffect(state.setupComplete) {
@@ -68,16 +57,12 @@ fun SetupScreen(
             fontWeight = FontWeight.Bold,
         )
         Text(
-            text = "Connect to Kodi and sign in to your media services.",
+            text = "Connect to your Kodi instance to get started. Sign in to media services afterwards via Settings.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
-        // ── Step 1: Kodi ──────────────────────────────────────────────────────
-        SetupCard(
-            title = "1. Kodi Connection",
-            isDone = state.kodiConnected,
-        ) {
+        SetupCard(title = "Kodi Connection", isDone = state.kodiConnected) {
             OutlinedTextField(
                 value = state.kodiHost,
                 onValueChange = vm::onKodiHostChange,
@@ -144,157 +129,8 @@ fun SetupScreen(
             }
         }
 
-        // ── Step 2: TMDB ──────────────────────────────────────────────────────
-        SetupCard(
-            title = "2. TMDB Account (Optional)",
-            subtitle = "Required only for personal lists",
-            isDone = state.tmdbAuthed,
-            enabled = state.kodiConnected,
-            iconRes = R.drawable.icon_tmdb,
-        ) {
-            when {
-                state.tmdbAuthed -> {
-                    Text("Signed in to TMDB", color = MaterialTheme.colorScheme.primary)
-                    TextButton(onClick = vm::signOutTmdb) { Text("Sign out") }
-                }
-                state.tmdbPolling -> {
-                    Text("Complete sign-in in your browser, then come back here.")
-                    Button(onClick = vm::completeTmdbAuth, modifier = Modifier.fillMaxWidth()) {
-                        Text("I've approved it — complete sign-in")
-                    }
-                    TextButton(onClick = vm::cancelTmdbAuth) { Text("Cancel") }
-                }
-                else -> {
-                    Text(
-                        "Tap below to open TMDB in your browser and authorise this app.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    if (state.tmdbError != null) {
-                        Text(state.tmdbError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-                    }
-                    Button(
-                        onClick = vm::startTmdbAuth,
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = !state.tmdbLoading,
-                    ) {
-                        if (state.tmdbLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                        else Text("Log in to TMDB")
-                    }
-                }
-            }
-        }
-
-        // ── Step 3: Trakt ─────────────────────────────────────────────────────
-        SetupCard(
-            title = "3. Trakt (Optional)",
-            subtitle = "Next episodes and personal lists",
-            isDone = state.traktAuthed,
-            enabled = state.kodiConnected,
-            iconRes = R.drawable.icon_trakt,
-        ) {
-            when {
-                state.traktAuthed -> {
-                    Text("Signed in to Trakt", color = MaterialTheme.colorScheme.primary)
-                    TextButton(onClick = vm::signOutTrakt) { Text("Sign out") }
-                }
-                state.traktPolling -> {
-                    Text("Visit trakt.tv/activate and enter this code:", style = MaterialTheme.typography.bodySmall)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = state.traktUserCode,
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    OutlinedButton(
-                        onClick = {
-                            context.startActivity(
-                                Intent(Intent.ACTION_VIEW, Uri.parse("https://trakt.tv/activate/${state.traktUserCode}"))
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                    ) { Text("Open trakt.tv/activate (code pre-filled)") }
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                    TextButton(onClick = vm::cancelTraktAuth) { Text("Cancel") }
-                }
-                else -> {
-                    if (state.traktError != null) {
-                        Text(state.traktError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-                    }
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Button(onClick = vm::startTraktAuth, enabled = !state.traktLoading, modifier = Modifier.weight(1f)) {
-                            if (state.traktLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                            else Text("Log in to Trakt")
-                        }
-                    }
-                }
-            }
-        }
-
-        // ── Step 4: Real Debrid ───────────────────────────────────────────────
-        SetupCard(
-            title = "4. Real Debrid (Optional)",
-            subtitle = "Browse your cloud files directly",
-            isDone = state.rdAuthed,
-            enabled = state.kodiConnected,
-            iconRes = R.drawable.icon_realdebrid,
-        ) {
-            when {
-                state.rdAuthed -> {
-                    Text("Signed in to Real Debrid", color = MaterialTheme.colorScheme.primary)
-                    TextButton(onClick = vm::signOutRd) { Text("Sign out") }
-                }
-                state.rdPolling -> {
-                    Text("Visit real-debrid.com/device and enter this code:", style = MaterialTheme.typography.bodySmall)
-                    Spacer(Modifier.height(8.dp))
-                    Text(
-                        text = state.rdUserCode,
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    OutlinedButton(
-                        onClick = {
-                            val rdUrl = state.rdDirectVerificationUrl.ifBlank { "https://real-debrid.com/device" }
-                            context.startActivity(
-                                Intent(Intent.ACTION_VIEW, Uri.parse(rdUrl))
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(
-                            if (state.rdDirectVerificationUrl.isNotBlank())
-                                "Open real-debrid.com/device (code pre-filled)"
-                            else
-                                "Open real-debrid.com/device"
-                        )
-                    }
-                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                    TextButton(onClick = vm::cancelRdAuth) { Text("Cancel") }
-                }
-                else -> {
-                    if (state.rdError != null) {
-                        Text(state.rdError!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-                    }
-                    Button(onClick = vm::startRdAuth, enabled = !state.rdLoading, modifier = Modifier.fillMaxWidth()) {
-                        if (state.rdLoading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
-                        else Text("Log in to Real Debrid")
-                    }
-                }
-            }
-        }
-
-        // ── Done ──────────────────────────────────────────────────────────────
         if (state.kodiConnected) {
-            Button(
-                onClick = onSetupComplete,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
+            Button(onClick = onSetupComplete, modifier = Modifier.fillMaxWidth()) {
                 Text("Continue to App")
             }
         }
@@ -317,22 +153,13 @@ private fun KodiDiscoverySheet(
                 .padding(bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(
-                "Kodi on your network",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-            )
-
+            Text("Kodi on your network", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             if (isScanning) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                     Text("Scanning…", style = MaterialTheme.typography.bodyMedium)
                 }
             }
-
             if (discovered.isEmpty() && !isScanning) {
                 Text(
                     "No Kodi instances found. Make sure Kodi is running and that Settings → Services → Control → Allow remote control via HTTP is enabled.",
@@ -340,25 +167,13 @@ private fun KodiDiscoverySheet(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-
             discovered.forEach { kodi ->
                 ListItem(
                     headlineContent = { Text(kodi.name) },
-                    supportingContent = {
-                        Text(
-                            "${kodi.host}:${kodi.port}",
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    },
-                    leadingContent = {
-                        Icon(Icons.Default.Tv, contentDescription = null)
-                    },
-                    trailingContent = {
-                        Icon(Icons.Default.ChevronRight, contentDescription = null)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onSelect(kodi) },
+                    supportingContent = { Text("${kodi.host}:${kodi.port}", style = MaterialTheme.typography.bodySmall) },
+                    leadingContent = { Icon(Icons.Default.Tv, contentDescription = null) },
+                    trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) },
+                    modifier = Modifier.fillMaxWidth().clickable { onSelect(kodi) },
                 )
                 HorizontalDivider()
             }
@@ -385,17 +200,10 @@ private fun SetupCard(
                 MaterialTheme.colorScheme.surfaceVariant,
         ),
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
+        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (iconRes != null) {
-                    Image(
-                        painter = painterResource(iconRes),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp),
-                    )
+                    Image(painter = painterResource(iconRes), contentDescription = null, modifier = Modifier.size(32.dp))
                     Spacer(Modifier.width(10.dp))
                 }
                 Column(modifier = Modifier.weight(1f)) {
