@@ -24,6 +24,14 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     private val _state = MutableStateFlow(ListManagementState())
     val state: StateFlow<ListManagementState> = _state.asStateFlow()
 
+    // Maps a caller-supplied mediaType to the string Trakt expects in request bodies
+    private fun traktKey(mediaType: String) =
+        if (mediaType == "show" || mediaType == "tv") "shows" else "movies"
+
+    // Maps a caller-supplied mediaType to the string TMDB v4 expects
+    private fun tmdbType(mediaType: String) =
+        if (mediaType == "show" || mediaType == "tv") "tv" else "movie"
+
     init {
         viewModelScope.launch {
             val traktToken = app.prefs.traktAccessToken.first()
@@ -78,10 +86,8 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun addToTraktWatchlist(tmdbId: Int, mediaType: String) {
         viewModelScope.launch {
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
-                val key = if (mediaType == "show") "shows" else "movies"
-                api.addToWatchlist(mapOf(key to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
+                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                api.addToWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 _state.update { it.copy(watchlistedIds = it.watchlistedIds + tmdbId, actionMessage = "Added to Watchlist") }
             } catch (e: Exception) {
                 _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
@@ -92,10 +98,8 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun removeFromTraktWatchlist(tmdbId: Int, mediaType: String) {
         viewModelScope.launch {
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
-                val key = if (mediaType == "show") "shows" else "movies"
-                api.removeFromWatchlist(mapOf(key to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
+                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                api.removeFromWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 _state.update { it.copy(watchlistedIds = it.watchlistedIds - tmdbId, actionMessage = "Removed from Watchlist") }
             } catch (e: Exception) {
                 _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
@@ -106,11 +110,21 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun addToTraktList(tmdbId: Int, mediaType: String, slug: String) {
         viewModelScope.launch {
             try {
-                val token = app.prefs.traktAccessToken.first()
-                val api = app.buildAuthedTraktApi(token)
-                val key = if (mediaType == "show") "shows" else "movies"
-                api.addToListItems(slug, mapOf(key to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
+                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                api.addToListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 _state.update { it.copy(actionMessage = "Added to list") }
+            } catch (e: Exception) {
+                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+            }
+        }
+    }
+
+    fun removeFromTraktList(tmdbId: Int, mediaType: String, slug: String) {
+        viewModelScope.launch {
+            try {
+                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                api.removeFromListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
+                _state.update { it.copy(actionMessage = "Removed from list") }
             } catch (e: Exception) {
                 _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
             }
@@ -121,9 +135,26 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
         viewModelScope.launch {
             try {
                 val token = app.prefs.tmdbAccessToken.first()
-                val api = app.buildTmdbV4Api(token)
-                api.addItemToList(listId, mapOf("items" to listOf(mapOf("media_type" to mediaType, "media_id" to tmdbId))))
+                app.buildTmdbV4Api(token).addItemToList(
+                    listId,
+                    mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
+                )
                 _state.update { it.copy(actionMessage = "Added to TMDB list") }
+            } catch (e: Exception) {
+                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+            }
+        }
+    }
+
+    fun removeFromTmdbList(tmdbId: Int, mediaType: String, listId: Int) {
+        viewModelScope.launch {
+            try {
+                val token = app.prefs.tmdbAccessToken.first()
+                app.buildTmdbV4Api(token).removeItemFromList(
+                    listId,
+                    mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
+                )
+                _state.update { it.copy(actionMessage = "Removed from TMDB list") }
             } catch (e: Exception) {
                 _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
             }

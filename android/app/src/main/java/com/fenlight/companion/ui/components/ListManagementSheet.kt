@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlaylistAdd
+import androidx.compose.material.icons.filled.PlaylistRemove
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
@@ -28,6 +29,11 @@ fun ListManagementSheet(
     title: String,
     posterUrl: String?,
     onDismiss: () -> Unit,
+    // When non-null the user is inside this list — show "Remove from list" instead of "Add to list"
+    currentTraktListSlug: String? = null,
+    currentTraktListName: String? = null,
+    currentTmdbListId: Int? = null,
+    currentTmdbListName: String? = null,
     vm: ListManagementViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -110,7 +116,7 @@ fun ListManagementSheet(
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.padding(bottom = 24.dp)) {
-            // Header row
+            // Header
             ListItem(
                 headlineContent = { Text(title, style = MaterialTheme.typography.titleMedium) },
                 leadingContent = {
@@ -159,14 +165,27 @@ fun ListManagementSheet(
                         onDismiss()
                     },
                 )
-                ListItem(
-                    headlineContent = { Text("Add to Trakt List…") },
-                    leadingContent = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) },
-                    modifier = Modifier.clickable {
-                        vm.loadTraktLists()
-                        showTraktListPicker = true
-                    },
-                )
+                if (currentTraktListSlug != null) {
+                    // Inside a list — offer remove
+                    ListItem(
+                        headlineContent = { Text("Remove from ${currentTraktListName ?: "list"}") },
+                        leadingContent = { Icon(Icons.Default.PlaylistRemove, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        modifier = Modifier.clickable {
+                            vm.removeFromTraktList(mediaId, mediaType, currentTraktListSlug)
+                            onDismiss()
+                        },
+                    )
+                } else {
+                    // Browsing — offer add to any list
+                    ListItem(
+                        headlineContent = { Text("Add to Trakt List…") },
+                        leadingContent = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) },
+                        modifier = Modifier.clickable {
+                            vm.loadTraktLists()
+                            showTraktListPicker = true
+                        },
+                    )
+                }
             }
 
             // TMDB section — only when authenticated
@@ -178,14 +197,27 @@ fun ListManagementSheet(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 )
-                ListItem(
-                    headlineContent = { Text("Add to TMDB List…") },
-                    leadingContent = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) },
-                    modifier = Modifier.clickable {
-                        vm.loadTmdbLists()
-                        showTmdbListPicker = true
-                    },
-                )
+                if (currentTmdbListId != null) {
+                    // Inside a list — offer remove
+                    ListItem(
+                        headlineContent = { Text("Remove from ${currentTmdbListName ?: "list"}") },
+                        leadingContent = { Icon(Icons.Default.PlaylistRemove, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        modifier = Modifier.clickable {
+                            vm.removeFromTmdbList(mediaId, mediaType, currentTmdbListId)
+                            onDismiss()
+                        },
+                    )
+                } else {
+                    // Browsing — offer add to any list
+                    ListItem(
+                        headlineContent = { Text("Add to TMDB List…") },
+                        leadingContent = { Icon(Icons.Default.PlaylistAdd, contentDescription = null) },
+                        modifier = Modifier.clickable {
+                            vm.loadTmdbLists()
+                            showTmdbListPicker = true
+                        },
+                    )
+                }
             }
         }
     }

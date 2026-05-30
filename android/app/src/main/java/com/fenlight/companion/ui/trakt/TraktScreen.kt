@@ -1,6 +1,8 @@
 package com.fenlight.companion.ui.trakt
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,6 +28,7 @@ import com.fenlight.companion.data.model.TraktListItem
 import com.fenlight.companion.data.model.TraktShowProgress
 import com.fenlight.companion.data.model.TraktWatchedShow
 import com.fenlight.companion.ui.components.ErrorMessage
+import com.fenlight.companion.ui.components.ListManagementSheet
 import com.fenlight.companion.ui.components.LoadingIndicator
 
 private fun placeholderColor(title: String): Color {
@@ -52,6 +55,8 @@ fun TraktScreen(vm: TraktViewModel = viewModel()) {
                 // Show list items with pagination
                 ListItemsScreen(
                     listName = state.selectedListName,
+                    listSlug = state.selectedListSlug,
+                    isMine = state.selectedListUser == "me",
                     items = state.listItems,
                     isLoading = state.isLoading,
                     isRefreshing = state.isRefreshing,
@@ -302,10 +307,12 @@ private fun WatchlistTab(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 private fun ListItemsScreen(
     listName: String,
+    listSlug: String,
+    isMine: Boolean,
     items: List<TraktListItem>,
     isLoading: Boolean,
     isRefreshing: Boolean,
@@ -324,6 +331,27 @@ private fun ListItemsScreen(
         }
     }
     LaunchedEffect(shouldLoadMore) { if (shouldLoadMore) onLoadMore() }
+
+    var selectedItem by remember { mutableStateOf<TraktListItem?>(null) }
+
+    selectedItem?.let { item ->
+        val tmdbId = item.movie?.ids?.tmdb ?: item.show?.ids?.tmdb
+        val mediaType = if (item.type == "show") "show" else "movie"
+        val title = item.movie?.title ?: item.show?.title ?: ""
+        if (tmdbId != null) {
+            ListManagementSheet(
+                mediaId = tmdbId,
+                mediaType = mediaType,
+                title = title,
+                posterUrl = null,
+                currentTraktListSlug = if (isMine) listSlug else null,
+                currentTraktListName = if (isMine) listName else null,
+                onDismiss = { selectedItem = null },
+            )
+        } else {
+            selectedItem = null
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
@@ -355,6 +383,10 @@ private fun ListItemsScreen(
                                 }
                             }
                         },
+                        modifier = Modifier.combinedClickable(
+                            onClick = {},
+                            onLongClick = { selectedItem = item },
+                        ),
                     )
                     HorizontalDivider()
                 }

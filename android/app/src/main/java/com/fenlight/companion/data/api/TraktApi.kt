@@ -60,9 +60,15 @@ interface TraktApi {
     @POST("sync/watchlist/remove")
     suspend fun removeFromWatchlist(@Body body: Map<String, Any>): Any
 
-    // Add items to a user's custom list
+    // Add / remove items from a user's custom list
     @POST("users/me/lists/{slug}/items")
     suspend fun addToListItems(
+        @Path("slug") slug: String,
+        @Body body: Map<String, Any>,
+    ): Any
+
+    @POST("users/me/lists/{slug}/items/remove")
+    suspend fun removeFromListItems(
         @Path("slug") slug: String,
         @Body body: Map<String, Any>,
     ): Any

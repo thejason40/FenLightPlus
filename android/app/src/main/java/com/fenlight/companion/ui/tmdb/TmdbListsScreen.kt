@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.ui.components.ErrorMessage
+import com.fenlight.companion.ui.components.ListManagementSheet
 import com.fenlight.companion.ui.components.LoadingIndicator
 import com.fenlight.companion.ui.components.PaginatedGrid
 import com.fenlight.companion.ui.components.PaginatedItem
@@ -29,6 +30,22 @@ fun TmdbListsScreen(
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    var selectedItem by remember { mutableStateOf<PaginatedItem?>(null) }
+    val selectedItemMediaType = remember(state.listItems, selectedItem) {
+        state.listItems.firstOrNull { it.id == selectedItem?.id }?.mediaType ?: "movie"
+    }
+
+    selectedItem?.let { item ->
+        ListManagementSheet(
+            mediaId = item.id,
+            mediaType = selectedItemMediaType,
+            title = item.title,
+            posterUrl = item.posterUrl,
+            currentTmdbListId = state.selectedListId.takeIf { it != 0 },
+            currentTmdbListName = state.selectedListName.takeIf { it.isNotBlank() },
+            onDismiss = { selectedItem = null },
+        )
+    }
 
     LaunchedEffect(state.playMessage) {
         state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
@@ -84,6 +101,7 @@ fun TmdbListsScreen(
                                 else -> onMovieClick(item.id)
                             }
                         },
+                        onItemLongClick = { selectedItem = it },
                         modifier = Modifier.fillMaxSize(),
                     )
                 }
