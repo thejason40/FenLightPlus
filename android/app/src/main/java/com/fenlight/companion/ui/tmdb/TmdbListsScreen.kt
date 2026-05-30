@@ -1,9 +1,12 @@
 package com.fenlight.companion.ui.tmdb
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
@@ -21,7 +24,7 @@ import com.fenlight.companion.ui.components.LoadingIndicator
 import com.fenlight.companion.ui.components.PaginatedGrid
 import com.fenlight.companion.ui.components.PaginatedItem
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun TmdbListsScreen(
     onMovieClick: (Int) -> Unit = {},
@@ -51,7 +54,66 @@ fun TmdbListsScreen(
         state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
     }
 
-    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
+    // Create list dialog
+    if (state.showCreateListDialog) {
+        var listName by remember { mutableStateOf("") }
+        var listDesc by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = vm::dismissCreateListDialog,
+            title = { Text("New TMDB List") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = listName,
+                        onValueChange = { listName = it },
+                        label = { Text("Name") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    OutlinedTextField(
+                        value = listDesc,
+                        onValueChange = { listDesc = it },
+                        label = { Text("Description (optional)") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { vm.createTmdbList(listName, listDesc) }, enabled = listName.isNotBlank()) {
+                    Text("Create")
+                }
+            },
+            dismissButton = { TextButton(onClick = vm::dismissCreateListDialog) { Text("Cancel") } },
+        )
+    }
+
+    // Delete confirmation dialog
+    state.listToDelete?.let { list ->
+        AlertDialog(
+            onDismissRequest = vm::cancelDeleteList,
+            title = { Text("Delete \"${list.name}\"?") },
+            text = { Text("This will permanently delete the list and all its items. This cannot be undone.") },
+            confirmButton = {
+                TextButton(
+                    onClick = { vm.deleteTmdbList(list.id) },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                ) { Text("Delete") }
+            },
+            dismissButton = { TextButton(onClick = vm::cancelDeleteList) { Text("Cancel") } },
+        )
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            if (state.isAuthenticated && state.listItems.isEmpty() && state.selectedListName.isEmpty() && !state.isLoading) {
+                FloatingActionButton(onClick = vm::showCreateListDialog) {
+                    Icon(Icons.Default.Add, contentDescription = "Create list")
+                }
+            }
+        },
+    ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (!state.isAuthenticated && !state.isLoading) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -126,8 +188,13 @@ fun TmdbListsScreen(
                 LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
                     items(state.lists) { list ->
                         Card(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            onClick = { vm.loadListItems(list.id, list.name) },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .combinedClickable(
+                                    onClick = { vm.loadListItems(list.id, list.name) },
+                                    onLongClick = { vm.confirmDeleteList(list) },
+                                ),
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
                                 Text(list.name, style = MaterialTheme.typography.titleSmall)

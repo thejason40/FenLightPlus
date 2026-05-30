@@ -23,6 +23,8 @@ data class TmdbListsUiState(
     val listItemPage: Int = 0,
     val listItemHasMore: Boolean = false,
     val listItemIsLoadingMore: Boolean = false,
+    val showCreateListDialog: Boolean = false,
+    val listToDelete: TmdbList? = null,
     val playMessage: String? = null,
 )
 
@@ -139,4 +141,44 @@ class TmdbListsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun clearPlayMessage() = _state.update { it.copy(playMessage = null) }
+
+    // List management
+    fun showCreateListDialog() = _state.update { it.copy(showCreateListDialog = true) }
+    fun dismissCreateListDialog() = _state.update { it.copy(showCreateListDialog = false) }
+    fun confirmDeleteList(list: TmdbList) = _state.update { it.copy(listToDelete = list) }
+    fun cancelDeleteList() = _state.update { it.copy(listToDelete = null) }
+
+    fun createTmdbList(name: String, description: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(showCreateListDialog = false) }
+            try {
+                val accessToken = app.prefs.tmdbAccessToken.first()
+                app.buildTmdbV4Api(accessToken).createList(mapOf(
+                    "name" to name,
+                    "description" to description,
+                    "iso_3166_1" to "US",
+                    "iso_639_1" to "en",
+                    "public" to false,
+                ))
+                listsFetchedAt = 0L
+                loadLists(force = true)
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to create list: ${e.message}") }
+            }
+        }
+    }
+
+    fun deleteTmdbList(listId: Int) {
+        viewModelScope.launch {
+            _state.update { it.copy(listToDelete = null) }
+            try {
+                val accessToken = app.prefs.tmdbAccessToken.first()
+                app.buildTmdbV4Api(accessToken).deleteList(listId)
+                listsFetchedAt = 0L
+                loadLists(force = true)
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to delete list: ${e.message}") }
+            }
+        }
+    }
 }

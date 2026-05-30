@@ -78,4 +78,10 @@ interface TraktApi {
 
     @GET("shows/{id}/progress/watched")
     suspend fun showProgress(@Path("id") id: String): TraktShowProgress
+
+    @POST("users/me/lists")
+    suspend fun createList(@Body body: Map<String, Any>): TraktList
+
+    @DELETE("users/me/lists/{slug}")
+    suspend fun deleteList(@Path("slug") slug: String): Unit
 }

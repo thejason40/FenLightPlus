@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
@@ -21,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fenlight.companion.data.model.TraktList
@@ -49,7 +52,66 @@ fun TraktScreen(vm: TraktViewModel = viewModel()) {
         state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
     }
 
-    Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
+    // Create list dialog
+    if (state.showCreateListDialog) {
+        var listName by remember { mutableStateOf("") }
+        var listDesc by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = vm::dismissCreateListDialog,
+            title = { Text("New Trakt List") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = listName,
+                        onValueChange = { listName = it },
+                        label = { Text("Name") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    OutlinedTextField(
+                        value = listDesc,
+                        onValueChange = { listDesc = it },
+                        label = { Text("Description (optional)") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { vm.createTraktList(listName, listDesc) }, enabled = listName.isNotBlank()) {
+                    Text("Create")
+                }
+            },
+            dismissButton = { TextButton(onClick = vm::dismissCreateListDialog) { Text("Cancel") } },
+        )
+    }
+
+    // Delete confirmation dialog
+    state.listToDelete?.let { list ->
+        AlertDialog(
+            onDismissRequest = vm::cancelDeleteList,
+            title = { Text("Delete \"${list.name}\"?") },
+            text = { Text("This will permanently delete the list and all its items. This cannot be undone.") },
+            confirmButton = {
+                TextButton(
+                    onClick = { vm.deleteTraktList(list.slug) },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                ) { Text("Delete") }
+            },
+            dismissButton = { TextButton(onClick = vm::cancelDeleteList) { Text("Cancel") } },
+        )
+    }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            if (state.tab == TraktTab.MY_LISTS && state.listItems.isEmpty() && state.selectedListName.isEmpty()) {
+                FloatingActionButton(onClick = vm::showCreateListDialog) {
+                    Icon(Icons.Default.Add, contentDescription = "Create list")
+                }
+            }
+        },
+    ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
             if (state.listItems.isNotEmpty() || state.selectedListName.isNotEmpty()) {
                 // Show list items with pagination
@@ -97,13 +159,18 @@ fun TraktScreen(vm: TraktViewModel = viewModel()) {
             ) {
                 when (state.tab) {
                     TraktTab.CONTINUE_WATCHING -> ContinueWatchingList(state.watchedShows, state.showProgressMap, vm::playNextEpisode)
-                    TraktTab.MY_LISTS -> TraktListList(state.myLists) { list ->
-                        vm.loadListItems(list.slug, list.name, "me")
-                    }
-                    TraktTab.LIKED_LISTS -> TraktListList(state.likedLists) { list ->
-                        val user = list.user?.username ?: "me"
-                        vm.loadListItems(list.slug, list.name, user)
-                    }
+                    TraktTab.MY_LISTS -> TraktListList(
+                        lists = state.myLists,
+                        onListClick = { list -> vm.loadListItems(list.slug, list.name, "me") },
+                        onListLongClick = { list -> vm.confirmDeleteList(list) },
+                    )
+                    TraktTab.LIKED_LISTS -> TraktListList(
+                        lists = state.likedLists,
+                        onListClick = { list ->
+                            val user = list.user?.username ?: "me"
+                            vm.loadListItems(list.slug, list.name, user)
+                        },
+                    )
                     TraktTab.WATCHLIST -> WatchlistTab(state.watchlistMovies, state.watchlistShows, vm::playListMovie)
                 }
             }
@@ -219,10 +286,12 @@ private fun ContinueWatchingList(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TraktListList(
     lists: List<TraktList>,
     onListClick: (TraktList) -> Unit,
+    onListLongClick: ((TraktList) -> Unit)? = null,
 ) {
     if (lists.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -233,8 +302,13 @@ private fun TraktListList(
     LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
         items(lists) { list ->
             Card(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                onClick = { onListClick(list) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp)
+                    .combinedClickable(
+                        onClick = { onListClick(list) },
+                        onLongClick = onListLongClick?.let { { it(list) } },
+                    ),
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(list.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)

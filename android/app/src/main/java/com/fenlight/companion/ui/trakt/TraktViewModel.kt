@@ -35,6 +35,8 @@ data class TraktUiState(
     val selectedListUser: String = "me",
     val watchlistMovies: List<TraktListItem> = emptyList(),
     val watchlistShows: List<TraktListItem> = emptyList(),
+    val showCreateListDialog: Boolean = false,
+    val listToDelete: TraktList? = null,
     val playMessage: String? = null,
 )
 
@@ -252,4 +254,44 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun clearPlayMessage() = _state.update { it.copy(playMessage = null) }
+
+    // List management
+    fun showCreateListDialog() = _state.update { it.copy(showCreateListDialog = true) }
+    fun dismissCreateListDialog() = _state.update { it.copy(showCreateListDialog = false) }
+    fun confirmDeleteList(list: TraktList) = _state.update { it.copy(listToDelete = list) }
+    fun cancelDeleteList() = _state.update { it.copy(listToDelete = null) }
+
+    fun createTraktList(name: String, description: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(showCreateListDialog = false) }
+            try {
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                api.createList(mapOf(
+                    "name" to name,
+                    "description" to description,
+                    "privacy" to "private",
+                    "display_numbers" to false,
+                    "allow_comments" to true,
+                ))
+                tabFetchedAt.remove(TraktTab.MY_LISTS)
+                loadMyLists()
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to create list: ${e.message}") }
+            }
+        }
+    }
+
+    fun deleteTraktList(slug: String) {
+        viewModelScope.launch {
+            _state.update { it.copy(listToDelete = null) }
+            try {
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                api.deleteList(slug)
+                tabFetchedAt.remove(TraktTab.MY_LISTS)
+                loadMyLists()
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to delete list: ${e.message}") }
+            }
+        }
+    }
 }

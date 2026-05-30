@@ -162,3 +162,10 @@ data class TmdbV4Lists(
     val page: Int,
     @Json(name = "total_pages") val totalPages: Int,
 )
+
+@JsonClass(generateAdapter = true)
+data class TmdbCreateListResponse(
+    val id: Int,
+    val success: Boolean,
+    @Json(name = "status_message") val statusMessage: String? = null,
+)

@@ -119,4 +119,10 @@ interface TmdbV4Api {
         @Path("list_id") listId: Int,
         @Body body: Map<String, Any>,
     ): Any
+
+    @POST("list")
+    suspend fun createList(@Body body: Map<String, Any>): TmdbCreateListResponse
+
+    @DELETE("list/{list_id}")
+    suspend fun deleteList(@Path("list_id") listId: Int): Any
 }
