@@ -149,6 +149,13 @@ class RdViewModel(application: Application) : AndroidViewModel(application) {
             _state.update { it.copy(isLoading = true) }
             try {
                 val selectedFiles = torrent.files.filter { it.selected == 1 }
+                // Real-Debrid's `links` array maps positionally to the selected files. If the
+                // counts don't match, some files aren't cached yet and positional mapping would
+                // resolve the WRONG file — refuse rather than play the wrong thing.
+                if (selectedFiles.size != torrent.links.size) {
+                    _state.update { it.copy(isLoading = false, playMessage = "Some files aren't cached on Real-Debrid yet — try again once it finishes.") }
+                    return@launch
+                }
                 val fileIndex = selectedFiles.indexOfFirst { it.id == file.id }
                 if (fileIndex < 0 || fileIndex >= torrent.links.size) {
                     _state.update { it.copy(isLoading = false, playMessage = "File not available — torrent may still be downloading.") }

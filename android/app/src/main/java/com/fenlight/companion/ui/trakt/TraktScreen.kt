@@ -33,6 +33,7 @@ import com.fenlight.companion.data.model.TraktWatchedShow
 import com.fenlight.companion.ui.components.ErrorMessage
 import com.fenlight.companion.ui.components.ListManagementSheet
 import com.fenlight.companion.ui.components.LoadingIndicator
+import com.fenlight.companion.ui.components.rememberPlayMessageSnackbar
 
 private fun placeholderColor(title: String): Color {
     val colors = listOf(
@@ -46,11 +47,7 @@ private fun placeholderColor(title: String): Color {
 @Composable
 fun TraktScreen(vm: TraktViewModel = viewModel()) {
     val state by vm.state.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(state.playMessage) {
-        state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
-    }
+    val snackbarHostState = rememberPlayMessageSnackbar(state.playMessage) { vm.clearPlayMessage() }
 
     // Create list dialog
     if (state.showCreateListDialog) {

@@ -1,11 +1,13 @@
 package com.fenlight.companion.ui.lists
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.model.TmdbList
 import com.fenlight.companion.data.model.TraktList
+import com.fenlight.companion.util.MediaTypeMapper
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -15,7 +17,6 @@ data class ListManagementState(
     val watchlistedIds: Set<Int> = emptySet(),
     val traktLists: List<TraktList> = emptyList(),
     val tmdbLists: List<TmdbList> = emptyList(),
-    val actionMessage: String? = null,
 )
 
 class ListManagementViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,13 +25,14 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     private val _state = MutableStateFlow(ListManagementState())
     val state: StateFlow<ListManagementState> = _state.asStateFlow()
 
-    // Maps a caller-supplied mediaType to the string Trakt expects in request bodies
-    private fun traktKey(mediaType: String) =
-        if (mediaType == "show" || mediaType == "tv") "shows" else "movies"
+    // Confirm list actions to the user. Runs on the main dispatcher (viewModelScope default).
+    private fun toast(message: String) {
+        Toast.makeText(app, message, Toast.LENGTH_SHORT).show()
+    }
 
-    // Maps a caller-supplied mediaType to the string TMDB v4 expects
-    private fun tmdbType(mediaType: String) =
-        if (mediaType == "show" || mediaType == "tv") "tv" else "movie"
+    // Maps a caller-supplied mediaType to the strings Trakt / TMDB expect (see MediaTypeMapper)
+    private fun traktKey(mediaType: String) = MediaTypeMapper.traktKey(mediaType)
+    private fun tmdbType(mediaType: String) = MediaTypeMapper.tmdbType(mediaType)
 
     init {
         viewModelScope.launch {
@@ -88,9 +90,10 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
                 api.addToWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
-                _state.update { it.copy(watchlistedIds = it.watchlistedIds + tmdbId, actionMessage = "Added to Watchlist") }
+                _state.update { it.copy(watchlistedIds = it.watchlistedIds + tmdbId) }
+                toast("Added to Watchlist")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
@@ -100,9 +103,10 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
                 api.removeFromWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
-                _state.update { it.copy(watchlistedIds = it.watchlistedIds - tmdbId, actionMessage = "Removed from Watchlist") }
+                _state.update { it.copy(watchlistedIds = it.watchlistedIds - tmdbId) }
+                toast("Removed from Watchlist")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
@@ -112,9 +116,9 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
                 api.addToListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
-                _state.update { it.copy(actionMessage = "Added to list") }
+                toast("Added to list")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
@@ -124,9 +128,9 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
                 api.removeFromListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
-                _state.update { it.copy(actionMessage = "Removed from list") }
+                toast("Removed from list")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
@@ -139,9 +143,9 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
                     listId,
                     mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
                 )
-                _state.update { it.copy(actionMessage = "Added to TMDB list") }
+                toast("Added to TMDB list")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
@@ -154,12 +158,10 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
                     listId,
                     mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
                 )
-                _state.update { it.copy(actionMessage = "Removed from TMDB list") }
+                toast("Removed from TMDB list")
             } catch (e: Exception) {
-                _state.update { it.copy(actionMessage = "Failed: ${e.message}") }
+                toast("Failed: ${e.message}")
             }
         }
     }
-
-    fun clearActionMessage() = _state.update { it.copy(actionMessage = null) }
 }

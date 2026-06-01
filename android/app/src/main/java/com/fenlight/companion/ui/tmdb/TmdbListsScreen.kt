@@ -23,6 +23,7 @@ import com.fenlight.companion.ui.components.ListManagementSheet
 import com.fenlight.companion.ui.components.LoadingIndicator
 import com.fenlight.companion.ui.components.PaginatedGrid
 import com.fenlight.companion.ui.components.PaginatedItem
+import com.fenlight.companion.ui.components.rememberPlayMessageSnackbar
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -32,7 +33,7 @@ fun TmdbListsScreen(
     vm: TmdbListsViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackbarHostState = rememberPlayMessageSnackbar(state.playMessage) { vm.clearPlayMessage() }
     var selectedItem by remember { mutableStateOf<PaginatedItem?>(null) }
     val selectedItemMediaType = remember(state.listItems, selectedItem) {
         state.listItems.firstOrNull { it.id == selectedItem?.id }?.mediaType ?: "movie"
@@ -48,10 +49,6 @@ fun TmdbListsScreen(
             currentTmdbListName = state.selectedListName.takeIf { it.isNotBlank() },
             onDismiss = { selectedItem = null },
         )
-    }
-
-    LaunchedEffect(state.playMessage) {
-        state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
     }
 
     // Create list dialog

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -64,15 +65,21 @@ fun TvBrowseScreen(
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
                     )
-                    PaginatedGrid(
-                        items = state.items,
-                        isLoading = state.isLoading,
-                        hasMore = state.hasMore,
-                        onLoadMore = vm::loadNextPage,
-                        onItemClick = { onShowClick(it.id) },
-                        onItemLongClick = { selectedItem = it },
-                        modifier = Modifier.fillMaxSize(),
-                    )
+                    if (state.searchQuery.length >= 2 && !state.isLoading && state.items.isEmpty() && state.error == null) {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("No results for \"${state.searchQuery}\"", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
+                    } else {
+                        PaginatedGrid(
+                            items = state.items,
+                            isLoading = state.isLoading,
+                            hasMore = state.hasMore,
+                            onLoadMore = vm::loadNextPage,
+                            onItemClick = { onShowClick(it.id) },
+                            onItemLongClick = { selectedItem = it },
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
                 }
             }
             TvBrowseTab.DISCOVER -> DiscoverTab(state, vm, onShowClick, onItemLongClick = { selectedItem = it })

@@ -24,6 +24,7 @@ import com.fenlight.companion.data.model.RdTorrent
 import com.fenlight.companion.data.model.RdTorrentInfo
 import com.fenlight.companion.ui.components.ErrorMessage
 import com.fenlight.companion.ui.components.LoadingIndicator
+import com.fenlight.companion.ui.components.rememberPlayMessageSnackbar
 
 private fun parseRdTitle(filename: String): String {
     return filename
@@ -39,11 +40,7 @@ private fun parseRdTitle(filename: String): String {
 @Composable
 fun RdScreen(vm: RdViewModel = viewModel()) {
     val state by vm.state.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    LaunchedEffect(state.playMessage) {
-        state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
-    }
+    val snackbarHostState = rememberPlayMessageSnackbar(state.playMessage) { vm.clearPlayMessage() }
 
     Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {

@@ -90,9 +90,41 @@ data class Credits(
 
 @JsonClass(generateAdapter = true)
 data class CastMember(
+    val id: Int,
     val name: String,
     val character: String,
     @Json(name = "profile_path") val profilePath: String?,
+)
+
+@JsonClass(generateAdapter = true)
+data class TmdbPerson(
+    val id: Int,
+    val name: String,
+    val biography: String = "",
+    @Json(name = "profile_path") val profilePath: String? = null,
+    @Json(name = "known_for_department") val knownForDepartment: String? = null,
+    val birthday: String? = null,
+    @Json(name = "place_of_birth") val placeOfBirth: String? = null,
+    @Json(name = "combined_credits") val combinedCredits: PersonCredits? = null,
+)
+
+@JsonClass(generateAdapter = true)
+data class PersonCredits(
+    val cast: List<PersonCredit> = emptyList(),
+    val crew: List<PersonCredit> = emptyList(),
+)
+
+@JsonClass(generateAdapter = true)
+data class PersonCredit(
+    val id: Int,
+    val title: String? = null,
+    val name: String? = null,
+    @Json(name = "media_type") val mediaType: String? = null,
+    @Json(name = "poster_path") val posterPath: String? = null,
+    @Json(name = "vote_average") val voteAverage: Double = 0.0,
+    val popularity: Double = 0.0,
+    val character: String? = null,
+    val adult: Boolean = false,
 )
 
 @JsonClass(generateAdapter = true)

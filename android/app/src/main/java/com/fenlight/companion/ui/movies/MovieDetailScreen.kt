@@ -24,27 +24,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.fenlight.companion.FenLightApp
+import com.fenlight.companion.ui.components.CastRow
+import com.fenlight.companion.ui.components.ErrorMessage
+import com.fenlight.companion.ui.components.rememberPlayMessageSnackbar
 
 @Composable
 fun MovieDetailScreen(
     tmdbId: Int,
     onBack: () -> Unit,
-    vm: MovieViewModel = viewModel(),
+    onPersonClick: (Int) -> Unit = {},
+    vm: MovieDetailViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(tmdbId) { vm.loadMovieDetail(tmdbId) }
 
-    val movie = state.selectedMovie
+    val movie = state.movie
 
     // Snackbar for play feedback
-    val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(state.playMessage) {
-        state.playMessage?.let {
-            snackbarHostState.showSnackbar(it)
-            vm.clearPlayMessage()
-        }
-    }
+    val snackbarHostState = rememberPlayMessageSnackbar(state.playMessage) { vm.clearPlayMessage() }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -66,9 +64,12 @@ fun MovieDetailScreen(
             }
         },
     ) { padding ->
-        if (state.isLoading || movie == null) {
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+        if (movie == null) {
+            Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+                when {
+                    state.error != null -> ErrorMessage(state.error!!, onRetry = { vm.loadMovieDetail(tmdbId) })
+                    else -> CircularProgressIndicator()
+                }
             }
             return@Scaffold
         }
@@ -164,13 +165,10 @@ fun MovieDetailScreen(
                         )
                     }
 
-                    val cast = movie.credits?.cast?.take(6)?.joinToString { it.name }
-                    if (!cast.isNullOrBlank()) {
-                        Text(
-                            "Cast: $cast",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
+                    val cast = movie.credits?.cast?.take(15)
+                    if (!cast.isNullOrEmpty()) {
+                        Text("Cast", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                        CastRow(cast = cast, onPersonClick = onPersonClick)
                     }
 
                     Spacer(Modifier.height(16.dp))

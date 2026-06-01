@@ -47,10 +47,6 @@ fun ListManagementSheet(
     var showTraktListPicker by remember { mutableStateOf(false) }
     var showTmdbListPicker by remember { mutableStateOf(false) }
 
-    LaunchedEffect(state.actionMessage) {
-        if (state.actionMessage != null) vm.clearActionMessage()
-    }
-
     if (showTraktListPicker) {
         ModalBottomSheet(onDismissRequest = { showTraktListPicker = false }) {
             Text(

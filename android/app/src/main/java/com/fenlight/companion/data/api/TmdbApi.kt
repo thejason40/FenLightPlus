@@ -90,6 +90,14 @@ interface TmdbApi {
     @GET("tv/{id}/season/{season}")
     suspend fun seasonDetail(@Path("id") id: Int, @Path("season") season: Int): Season
 
+    // --- People ---
+
+    @GET("person/{id}")
+    suspend fun person(
+        @Path("id") id: Int,
+        @Query("append_to_response") append: String = "combined_credits",
+    ): TmdbPerson
+
     // --- Genres ---
 
     @GET("genre/movie/list")

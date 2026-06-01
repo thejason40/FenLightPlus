@@ -23,23 +23,24 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.fenlight.companion.FenLightApp
+import com.fenlight.companion.ui.components.CastRow
+import com.fenlight.companion.ui.components.ErrorMessage
+import com.fenlight.companion.ui.components.rememberPlayMessageSnackbar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TvDetailScreen(
     tmdbId: Int,
     onBack: () -> Unit,
-    vm: TvViewModel = viewModel(),
+    onPersonClick: (Int) -> Unit = {},
+    vm: TvDetailViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     LaunchedEffect(tmdbId) { vm.loadShowDetail(tmdbId) }
 
-    val snackbarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(state.playMessage) {
-        state.playMessage?.let { snackbarHostState.showSnackbar(it); vm.clearPlayMessage() }
-    }
+    val snackbarHostState = rememberPlayMessageSnackbar(state.playMessage) { vm.clearPlayMessage() }
 
-    val show = state.selectedShow
+    val show = state.show
     val season = state.selectedSeason
 
     Scaffold(
@@ -55,9 +56,12 @@ fun TvDetailScreen(
             )
         },
     ) { padding ->
-        if (state.isLoading || show == null) {
+        if (show == null) {
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+                when {
+                    state.error != null -> ErrorMessage(state.error!!, onRetry = { vm.loadShowDetail(tmdbId) })
+                    else -> CircularProgressIndicator()
+                }
             }
             return@Scaffold
         }
@@ -137,6 +141,11 @@ fun TvDetailScreen(
                     if (show.overview.isNotBlank()) {
                         Text("Overview", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                         Text(show.overview, style = MaterialTheme.typography.bodyMedium)
+                    }
+                    val cast = show.credits?.cast?.take(15)
+                    if (!cast.isNullOrEmpty()) {
+                        Text("Cast", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                        CastRow(cast = cast, onPersonClick = onPersonClick)
                     }
                     Text("Seasons", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                     show.seasons?.filter { it.seasonNumber > 0 }?.forEach { s ->
