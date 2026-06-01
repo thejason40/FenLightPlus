@@ -98,6 +98,18 @@ interface TmdbApi {
         @Query("append_to_response") append: String = "combined_credits",
     ): TmdbPerson
 
+    @GET("movie/top_rated")
+    suspend fun topRatedMovies(@Query("page") page: Int = 1, @Query("region") region: String? = null): PagedResult<Movie>
+
+    @GET("tv/top_rated")
+    suspend fun topRatedTv(@Query("page") page: Int = 1, @Query("region") region: String? = null): PagedResult<TvShow>
+
+    @GET("watch/providers/movie")
+    suspend fun movieWatchProviders(@Query("watch_region") region: String? = null): WatchProviderResults
+
+    @GET("watch/providers/tv")
+    suspend fun tvWatchProviders(@Query("watch_region") region: String? = null): WatchProviderResults
+
     // --- Genres ---
 
     @GET("genre/movie/list")

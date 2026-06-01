@@ -34,6 +34,9 @@ class AppPreferences(private val context: Context) {
         private val CHECK_UPDATE_ON_STARTUP = booleanPreferencesKey("check_update_on_startup")
         private val REGION = stringPreferencesKey("region")
         private val EXCLUDE_ADULT = booleanPreferencesKey("exclude_adult")
+
+        private val MOVIE_BROWSE_ROWS = stringPreferencesKey("movie_browse_rows")
+        private val TV_BROWSE_ROWS    = stringPreferencesKey("tv_browse_rows")
     }
 
     val kodiHost: Flow<String> = context.dataStore.data.map { it[KODI_HOST] ?: "" }
@@ -58,6 +61,9 @@ class AppPreferences(private val context: Context) {
     val checkUpdateOnStartup: Flow<Boolean> = context.dataStore.data.map { it[CHECK_UPDATE_ON_STARTUP] ?: true }
     val region: Flow<String> = context.dataStore.data.map { it[REGION] ?: "" }
     val excludeAdult: Flow<Boolean> = context.dataStore.data.map { it[EXCLUDE_ADULT] ?: true }
+
+    val movieBrowseRowsJson: Flow<String> = context.dataStore.data.map { it[MOVIE_BROWSE_ROWS] ?: "" }
+    val tvBrowseRowsJson: Flow<String> = context.dataStore.data.map { it[TV_BROWSE_ROWS] ?: "" }
 
     suspend fun setCheckUpdateOnStartup(enabled: Boolean) {
         context.dataStore.edit { it[CHECK_UPDATE_ON_STARTUP] = enabled }
@@ -140,6 +146,18 @@ class AppPreferences(private val context: Context) {
             it.remove(RD_CLIENT_ID)
             it.remove(RD_CLIENT_SECRET)
             it.remove(RD_EXPIRES_AT)
+        }
+    }
+
+    suspend fun saveMovieBrowseRows(json: String) {
+        context.dataStore.edit {
+            if (json.isBlank()) it.remove(MOVIE_BROWSE_ROWS) else it[MOVIE_BROWSE_ROWS] = json
+        }
+    }
+
+    suspend fun saveTvBrowseRows(json: String) {
+        context.dataStore.edit {
+            if (json.isBlank()) it.remove(TV_BROWSE_ROWS) else it[TV_BROWSE_ROWS] = json
         }
     }
 }

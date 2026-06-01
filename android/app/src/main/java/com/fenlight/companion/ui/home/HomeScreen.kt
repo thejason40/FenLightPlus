@@ -18,8 +18,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.fenlight.companion.R
+import com.fenlight.companion.data.model.BrowseRowConfig
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.fenlight.companion.ui.browse.BrowseAllScreen
 import com.fenlight.companion.ui.movies.MovieBrowseScreen
 import com.fenlight.companion.ui.movies.MovieDetailScreen
+import com.fenlight.companion.ui.movies.MovieSearchScreen
 import com.fenlight.companion.ui.person.PersonScreen
 import com.fenlight.companion.ui.realdebrid.RdScreen
 import com.fenlight.companion.ui.related.RelatedScreen
@@ -27,6 +32,7 @@ import com.fenlight.companion.ui.tmdb.TmdbListsScreen
 import com.fenlight.companion.ui.trakt.TraktScreen
 import com.fenlight.companion.ui.tvshows.TvBrowseScreen
 import com.fenlight.companion.ui.tvshows.TvDetailScreen
+import com.fenlight.companion.ui.tvshows.TvSearchScreen
 
 private sealed class TopDest(val route: String, val label: String, @DrawableRes val iconRes: Int) {
     object Movies : TopDest("movies", "Movies", R.drawable.icon_movies)
@@ -35,6 +41,23 @@ private sealed class TopDest(val route: String, val label: String, @DrawableRes 
     object Trakt : TopDest("trakt", "Trakt", R.drawable.icon_trakt)
     object RealDebrid : TopDest("rd", "Debrid", R.drawable.icon_realdebrid)
 }
+
+// Moshi instance for serializing BrowseRowConfig to/from URL-encoded nav args.
+// Created lazily at top-level — lightweight and correct.
+private val browseRowConfigMoshi: Moshi by lazy {
+    Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+}
+private val browseRowConfigAdapter by lazy {
+    browseRowConfigMoshi.adapter(BrowseRowConfig::class.java)
+}
+
+private fun BrowseRowConfig.toNavArg(): String =
+    java.net.URLEncoder.encode(browseRowConfigAdapter.toJson(this), "UTF-8")
+
+private fun String.toBrowseRowConfig(): BrowseRowConfig? =
+    runCatching {
+        browseRowConfigAdapter.fromJson(java.net.URLDecoder.decode(this, "UTF-8"))
+    }.getOrNull()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,6 +77,8 @@ fun HomeScreen(
     }
 
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -61,6 +86,17 @@ fun HomeScreen(
             TopAppBar(
                 title = { Text("FenLight+ Companion") },
                 actions = {
+                    // Show search icon when on movies or tv top-level destinations
+                    if (currentRoute == "movies") {
+                        IconButton(onClick = { navController.navigate("movie_search") }) {
+                            Icon(Icons.Default.Search, contentDescription = "Search Movies")
+                        }
+                    }
+                    if (currentRoute == "tv") {
+                        IconButton(onClick = { navController.navigate("tv_search") }) {
+                            Icon(Icons.Default.Search, contentDescription = "Search TV")
+                        }
+                    }
                     IconButton(onClick = onGoToSettings) {
                         Icon(Icons.Default.Settings, contentDescription = "Settings")
                     }
@@ -70,7 +106,6 @@ fun HomeScreen(
         },
         bottomBar = {
             NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDest = navBackStackEntry?.destination
                 topDests.forEach { dest ->
                     NavigationBarItem(
@@ -105,6 +140,27 @@ fun HomeScreen(
                     onMovieClick = { id -> navController.navigate("movie_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
+                    onSeeAll = { config -> navController.navigate("movie_browse_all/${config.toNavArg()}") },
+                )
+            }
+            composable("movie_search") {
+                MovieSearchScreen(
+                    onBack = { navController.popBackStack() },
+                    onMovieClick = { id -> navController.navigate("movie_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
+                )
+            }
+            composable("movie_browse_all/{rowConfigJson}") { back ->
+                val json = back.arguments?.getString("rowConfigJson") ?: return@composable
+                val config = json.toBrowseRowConfig() ?: return@composable
+                BrowseAllScreen(
+                    rowConfig = config,
+                    mediaType = "movie",
+                    onBack = { navController.popBackStack() },
+                    onItemClick = { id -> navController.navigate("movie_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
                 )
             }
             composable("movie_detail/{id}") { back ->
@@ -118,6 +174,27 @@ fun HomeScreen(
             composable("tv") {
                 TvBrowseScreen(
                     onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
+                    onSeeAll = { config -> navController.navigate("tv_browse_all/${config.toNavArg()}") },
+                )
+            }
+            composable("tv_search") {
+                TvSearchScreen(
+                    onBack = { navController.popBackStack() },
+                    onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
+                )
+            }
+            composable("tv_browse_all/{rowConfigJson}") { back ->
+                val json = back.arguments?.getString("rowConfigJson") ?: return@composable
+                val config = json.toBrowseRowConfig() ?: return@composable
+                BrowseAllScreen(
+                    rowConfig = config,
+                    mediaType = "tv",
+                    onBack = { navController.popBackStack() },
+                    onItemClick = { id -> navController.navigate("tv_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
                 )

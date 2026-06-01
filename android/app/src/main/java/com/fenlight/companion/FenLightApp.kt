@@ -21,7 +21,7 @@ class FenLightApp : Application() {
 
     val prefs by lazy { AppPreferences(this) }
 
-    private val moshi = Moshi.Builder()
+    val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
