@@ -22,7 +22,17 @@ interface TmdbApi {
     suspend fun upcomingMovies(@Query("page") page: Int = 1, @Query("region") region: String? = null): PagedResult<Movie>
 
     @GET("search/movie")
-    suspend fun searchMovies(@Query("query") query: String, @Query("page") page: Int = 1): PagedResult<Movie>
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("include_adult") includeAdult: Boolean = false,
+    ): PagedResult<Movie>
+
+    @GET("movie/{id}/recommendations")
+    suspend fun movieRecommendations(@Path("id") id: Int, @Query("page") page: Int = 1): PagedResult<Movie>
+
+    @GET("movie/{id}/similar")
+    suspend fun similarMovies(@Path("id") id: Int, @Query("page") page: Int = 1): PagedResult<Movie>
 
     @GET("discover/movie")
     suspend fun discoverMovies(
@@ -52,7 +62,17 @@ interface TmdbApi {
     suspend fun airingTodayTv(@Query("page") page: Int = 1, @Query("region") region: String? = null): PagedResult<TvShow>
 
     @GET("search/tv")
-    suspend fun searchTv(@Query("query") query: String, @Query("page") page: Int = 1): PagedResult<TvShow>
+    suspend fun searchTv(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("include_adult") includeAdult: Boolean = false,
+    ): PagedResult<TvShow>
+
+    @GET("tv/{id}/recommendations")
+    suspend fun tvRecommendations(@Path("id") id: Int, @Query("page") page: Int = 1): PagedResult<TvShow>
+
+    @GET("tv/{id}/similar")
+    suspend fun similarTv(@Path("id") id: Int, @Query("page") page: Int = 1): PagedResult<TvShow>
 
     @GET("discover/tv")
     suspend fun discoverTv(

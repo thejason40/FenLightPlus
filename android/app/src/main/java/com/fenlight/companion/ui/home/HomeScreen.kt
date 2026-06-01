@@ -21,6 +21,7 @@ import com.fenlight.companion.R
 import com.fenlight.companion.ui.movies.MovieBrowseScreen
 import com.fenlight.companion.ui.movies.MovieDetailScreen
 import com.fenlight.companion.ui.realdebrid.RdScreen
+import com.fenlight.companion.ui.related.RelatedScreen
 import com.fenlight.companion.ui.tmdb.TmdbListsScreen
 import com.fenlight.companion.ui.trakt.TraktScreen
 import com.fenlight.companion.ui.tvshows.TvBrowseScreen
@@ -99,14 +100,22 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize().padding(padding),
         ) {
             composable("movies") {
-                MovieBrowseScreen(onMovieClick = { id -> navController.navigate("movie_detail/$id") })
+                MovieBrowseScreen(
+                    onMovieClick = { id -> navController.navigate("movie_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
+                )
             }
             composable("movie_detail/{id}") { back ->
                 val id = back.arguments?.getString("id")?.toIntOrNull() ?: return@composable
                 MovieDetailScreen(tmdbId = id, onBack = { navController.popBackStack() })
             }
             composable("tv") {
-                TvBrowseScreen(onShowClick = { id -> navController.navigate("tv_detail/$id") })
+                TvBrowseScreen(
+                    onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                    onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
+                    onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
+                )
             }
             composable("tv_detail/{id}") { back ->
                 val id = back.arguments?.getString("id")?.toIntOrNull() ?: return@composable
@@ -116,6 +125,22 @@ fun HomeScreen(
                 TmdbListsScreen(
                     onMovieClick = { id -> navController.navigate("movie_detail/$id") },
                     onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                )
+            }
+            composable("related/{mediaType}/{id}/{kind}") { back ->
+                val mediaType = back.arguments?.getString("mediaType") ?: return@composable
+                val id = back.arguments?.getString("id")?.toIntOrNull() ?: return@composable
+                val kind = back.arguments?.getString("kind") ?: return@composable
+                RelatedScreen(
+                    mediaType = mediaType,
+                    mediaId = id,
+                    kind = kind,
+                    onBack = { navController.popBackStack() },
+                    onItemClick = { itemId ->
+                        navController.navigate(if (mediaType == "tv") "tv_detail/$itemId" else "movie_detail/$itemId")
+                    },
+                    onShowRecommendations = { itemId -> navController.navigate("related/$mediaType/$itemId/recommendations") },
+                    onShowSimilar = { itemId -> navController.navigate("related/$mediaType/$itemId/similar") },
                 )
             }
             composable("trakt") { TraktScreen() }

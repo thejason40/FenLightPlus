@@ -22,6 +22,8 @@ import com.fenlight.companion.ui.movies.DropdownField
 @Composable
 fun TvBrowseScreen(
     onShowClick: (Int) -> Unit,
+    onShowRecommendations: (Int) -> Unit = {},
+    onShowSimilar: (Int) -> Unit = {},
     vm: TvViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -33,6 +35,8 @@ fun TvBrowseScreen(
             mediaType = "show",
             title = item.title,
             posterUrl = item.posterUrl,
+            onShowRecommendations = { onShowRecommendations(item.id) },
+            onShowSimilar = { onShowSimilar(item.id) },
             onDismiss = { selectedItem = null },
         )
     }

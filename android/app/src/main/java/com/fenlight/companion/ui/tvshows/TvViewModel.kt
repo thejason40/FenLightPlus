@@ -109,12 +109,13 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val region = app.prefs.region.first().takeIf { it.isNotBlank() }
+                val excludeAdult = app.prefs.excludeAdult.first()
                 val result = when (s.tab) {
                     TvBrowseTab.POPULAR -> app.tmdbApi.popularTv(nextPage, region = region)
                     TvBrowseTab.TRENDING -> app.tmdbApi.trendingTv(nextPage, region = region)
                     TvBrowseTab.ON_THE_AIR -> app.tmdbApi.onTheAirTv(nextPage, region = region)
                     TvBrowseTab.AIRING_TODAY -> app.tmdbApi.airingTodayTv(nextPage, region = region)
-                    TvBrowseTab.SEARCH -> app.tmdbApi.searchTv(s.searchQuery, nextPage)
+                    TvBrowseTab.SEARCH -> app.tmdbApi.searchTv(s.searchQuery, nextPage, includeAdult = !excludeAdult)
                     TvBrowseTab.DISCOVER -> {
                         val f = s.discoverFilters
                         val filters = buildMap<String, String> {
@@ -126,6 +127,7 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
                                 put("vote_count.gte", "20")
                             }
                             if (f.language.isNotBlank()) put("with_original_language", f.language)
+                            put("include_adult", (!excludeAdult).toString())
                         }
                         app.tmdbApi.discoverTv(filters, nextPage, region = region)
                     }

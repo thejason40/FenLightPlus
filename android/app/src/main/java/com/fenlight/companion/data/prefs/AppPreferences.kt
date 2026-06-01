@@ -33,6 +33,7 @@ class AppPreferences(private val context: Context) {
 
         private val CHECK_UPDATE_ON_STARTUP = booleanPreferencesKey("check_update_on_startup")
         private val REGION = stringPreferencesKey("region")
+        private val EXCLUDE_ADULT = booleanPreferencesKey("exclude_adult")
     }
 
     val kodiHost: Flow<String> = context.dataStore.data.map { it[KODI_HOST] ?: "" }
@@ -56,9 +57,14 @@ class AppPreferences(private val context: Context) {
 
     val checkUpdateOnStartup: Flow<Boolean> = context.dataStore.data.map { it[CHECK_UPDATE_ON_STARTUP] ?: true }
     val region: Flow<String> = context.dataStore.data.map { it[REGION] ?: "" }
+    val excludeAdult: Flow<Boolean> = context.dataStore.data.map { it[EXCLUDE_ADULT] ?: true }
 
     suspend fun setCheckUpdateOnStartup(enabled: Boolean) {
         context.dataStore.edit { it[CHECK_UPDATE_ON_STARTUP] = enabled }
+    }
+
+    suspend fun setExcludeAdult(enabled: Boolean) {
+        context.dataStore.edit { it[EXCLUDE_ADULT] = enabled }
     }
 
     suspend fun setRegion(region: String) {

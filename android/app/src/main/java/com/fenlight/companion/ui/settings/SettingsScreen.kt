@@ -142,6 +142,21 @@ fun SettingsScreen(
                 DropdownField(label = "Region", options = tmdbRegions, selected = state.region, onSelect = vm::setRegion)
             }
 
+            // ── Content ───────────────────────────────────────────────────────
+            SettingsSection(title = "Content") {
+                Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Exclude adult content", style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            "Hide titles flagged as adult in TMDB results",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    Switch(checked = state.excludeAdult, onCheckedChange = vm::toggleExcludeAdult)
+                }
+            }
+
             // ── Kodi ──────────────────────────────────────────────────────────
             SettingsSection(title = "Kodi") {
                 if (setupState.kodiConnected && setupState.kodiHost.isNotBlank()) {

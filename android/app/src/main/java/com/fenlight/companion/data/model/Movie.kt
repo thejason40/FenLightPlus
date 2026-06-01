@@ -17,6 +17,7 @@ data class Movie(
     val runtime: Int?,
     val credits: Credits?,
     val videos: VideoResults?,
+    val adult: Boolean = false,
 )
 
 @JsonClass(generateAdapter = true)

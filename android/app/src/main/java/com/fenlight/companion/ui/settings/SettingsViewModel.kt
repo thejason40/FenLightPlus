@@ -35,6 +35,7 @@ data class UpdateUiState(
 data class SettingsUiState(
     val checkUpdateOnStartup: Boolean = true,
     val region: String = "",
+    val excludeAdult: Boolean = true,
     val update: UpdateUiState = UpdateUiState(),
     val currentVersion: String = BuildConfig.VERSION_NAME,
     val currentVersionCode: Int = BuildConfig.VERSION_CODE,
@@ -58,6 +59,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch {
             prefs.region.collect { r -> _state.update { it.copy(region = r) } }
         }
+        viewModelScope.launch {
+            prefs.excludeAdult.collect { e -> _state.update { it.copy(excludeAdult = e) } }
+        }
     }
 
     fun toggleCheckUpdateOnStartup(enabled: Boolean) {
@@ -66,6 +70,10 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun setRegion(region: String) {
         viewModelScope.launch { prefs.setRegion(region) }
+    }
+
+    fun toggleExcludeAdult(enabled: Boolean) {
+        viewModelScope.launch { prefs.setExcludeAdult(enabled) }
     }
 
     fun checkForUpdate() {

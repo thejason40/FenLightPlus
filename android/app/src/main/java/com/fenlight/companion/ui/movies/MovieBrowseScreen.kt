@@ -21,6 +21,8 @@ import com.fenlight.companion.ui.components.*
 @Composable
 fun MovieBrowseScreen(
     onMovieClick: (Int) -> Unit,
+    onShowRecommendations: (Int) -> Unit = {},
+    onShowSimilar: (Int) -> Unit = {},
     vm: MovieViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -32,6 +34,8 @@ fun MovieBrowseScreen(
             mediaType = "movie",
             title = item.title,
             posterUrl = item.posterUrl,
+            onShowRecommendations = { onShowRecommendations(item.id) },
+            onShowSimilar = { onShowSimilar(item.id) },
             onDismiss = { selectedItem = null },
         )
     }

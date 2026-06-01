@@ -107,12 +107,13 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             try {
                 val region = app.prefs.region.first().takeIf { it.isNotBlank() }
+                val excludeAdult = app.prefs.excludeAdult.first()
                 val result = when (s.tab) {
                     MovieBrowseTab.POPULAR -> app.tmdbApi.popularMovies(nextPage, region = region)
                     MovieBrowseTab.TRENDING -> app.tmdbApi.trendingMovies(nextPage, region = region)
                     MovieBrowseTab.NOW_PLAYING -> app.tmdbApi.nowPlayingMovies(nextPage, region = region)
                     MovieBrowseTab.UPCOMING -> app.tmdbApi.upcomingMovies(nextPage, region = region)
-                    MovieBrowseTab.SEARCH -> app.tmdbApi.searchMovies(s.searchQuery, nextPage)
+                    MovieBrowseTab.SEARCH -> app.tmdbApi.searchMovies(s.searchQuery, nextPage, includeAdult = !excludeAdult)
                     MovieBrowseTab.DISCOVER -> {
                         val f = s.discoverFilters
                         val filters = buildMap<String, String> {
@@ -124,11 +125,14 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                                 put("vote_count.gte", "20")
                             }
                             if (f.language.isNotBlank()) put("with_original_language", f.language)
+                            put("include_adult", (!excludeAdult).toString())
                         }
                         app.tmdbApi.discoverMovies(filters, nextPage, region = region)
                     }
                 }
-                val newItems = result.results.map { m ->
+                val newItems = result.results
+                    .filter { !excludeAdult || !it.adult }
+                    .map { m ->
                     PaginatedItem(
                         id = m.id,
                         title = m.title,
