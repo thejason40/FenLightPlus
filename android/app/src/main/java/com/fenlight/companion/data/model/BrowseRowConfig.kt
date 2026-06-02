@@ -5,7 +5,8 @@ import com.squareup.moshi.JsonClass
 
 enum class RowType {
     POPULAR, TRENDING, NOW_PLAYING, UPCOMING, TOP_RATED,
-    ON_THE_AIR, AIRING_TODAY, CUSTOM
+    ON_THE_AIR, AIRING_TODAY, CUSTOM,
+    TMDB_LIST, TRAKT_LIST,
 }
 
 @JsonClass(generateAdapter = true)
@@ -26,6 +27,9 @@ data class BrowseRowConfig(
     val label: String,
     val type: RowType,
     val filters: DiscoverFilters? = null,
+    val listId: Int? = null,          // TMDB_LIST: v4 list id
+    val traktSlug: String? = null,    // TRAKT_LIST: list slug
+    val traktUser: String? = null,    // TRAKT_LIST: "me" or owner username (for liked lists)
 )
 
 @JsonClass(generateAdapter = true)

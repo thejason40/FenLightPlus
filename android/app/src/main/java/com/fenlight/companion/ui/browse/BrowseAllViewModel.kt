@@ -4,9 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenlight.companion.FenLightApp
-import com.fenlight.companion.data.model.BrowseRowConfig
-import com.fenlight.companion.data.model.DiscoverFilters
-import com.fenlight.companion.data.model.RowType
+import com.fenlight.companion.data.model.*
 import com.fenlight.companion.ui.components.PaginatedItem
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -50,43 +48,99 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
                 val region = app.prefs.region.first().takeIf { it.isNotBlank() }
                 val excludeAdult = app.prefs.excludeAdult.first()
 
-                if (mediaType == "tv") {
-                    val result = fetchTvPage(cfg, nextPage, region, excludeAdult)
-                    val newItems = result.results.map { show ->
-                        PaginatedItem(
-                            id = show.id, title = show.name,
-                            posterUrl = FenLightApp.posterUrl(show.posterPath),
-                            rating = show.voteAverage.takeIf { it > 0 },
-                            backdropUrl = FenLightApp.backdropUrl(show.backdropPath),
-                        )
-                    }
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            items = (it.items + newItems).distinctBy { i -> i.id },
-                            page = nextPage,
-                            hasMore = nextPage < result.totalPages,
-                        )
-                    }
-                } else {
-                    val result = fetchMoviePage(cfg, nextPage, region, excludeAdult)
-                    val newItems = result.results
-                        .filter { !excludeAdult || !it.adult }
-                        .map { m ->
-                            PaginatedItem(
-                                id = m.id, title = m.title,
-                                posterUrl = FenLightApp.posterUrl(m.posterPath),
-                                rating = m.voteAverage.takeIf { it > 0 },
-                                backdropUrl = FenLightApp.backdropUrl(m.backdropPath),
+                when (cfg.type) {
+                    RowType.TMDB_LIST -> {
+                        val token = app.prefs.tmdbAccessToken.first()
+                        val listId = cfg.listId ?: return@launch
+                        val detail = app.buildTmdbV4Api(token).listDetail(listId, nextPage)
+                        val filterMediaType = if (mediaType == "tv") "tv" else "movie"
+                        val newItems = detail.results
+                            .filter { it.mediaType == filterMediaType }
+                            .map { item ->
+                                PaginatedItem(
+                                    id = item.id,
+                                    title = item.title ?: item.name ?: "",
+                                    posterUrl = FenLightApp.posterUrl(item.posterPath),
+                                    rating = null,
+                                    backdropUrl = null,
+                                )
+                            }
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                items = (it.items + newItems).distinctBy { i -> i.id },
+                                page = nextPage,
+                                hasMore = nextPage < detail.totalPages,
                             )
                         }
-                    _state.update {
-                        it.copy(
-                            isLoading = false,
-                            items = (it.items + newItems).distinctBy { i -> i.id },
-                            page = nextPage,
-                            hasMore = nextPage < result.totalPages,
-                        )
+                    }
+                    RowType.TRAKT_LIST -> {
+                        val token = app.getValidTraktAccessToken()
+                        val slug = cfg.traktSlug ?: return@launch
+                        val user = cfg.traktUser ?: "me"
+                        val traktApi = app.buildAuthedTraktApi(token)
+                        val response = if (user == "me") traktApi.myListItems(slug, page = nextPage) else traktApi.listItems(user, slug, page = nextPage)
+                        val body = response.body() ?: emptyList()
+                        val newItems = if (mediaType == "tv") {
+                            body.mapNotNull { item -> item.show?.let { s -> s.ids.tmdb?.let { id ->
+                                PaginatedItem(id = id, title = s.title, posterUrl = null, rating = null, backdropUrl = null)
+                            }}}
+                        } else {
+                            body.mapNotNull { item -> item.movie?.let { m -> m.ids.tmdb?.let { id ->
+                                PaginatedItem(id = id, title = m.title, posterUrl = null, rating = null, backdropUrl = null)
+                            }}}
+                        }
+                        val totalPages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull()
+                            ?: if (body.size >= 50) nextPage + 1 else nextPage
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                items = (it.items + newItems).distinctBy { i -> i.id },
+                                page = nextPage,
+                                hasMore = nextPage < totalPages,
+                            )
+                        }
+                    }
+                    else -> {
+                        if (mediaType == "tv") {
+                            val result = fetchTvPage(cfg, nextPage, region, excludeAdult)
+                            val newItems = result.results.map { show ->
+                                PaginatedItem(
+                                    id = show.id, title = show.name,
+                                    posterUrl = FenLightApp.posterUrl(show.posterPath),
+                                    rating = show.voteAverage.takeIf { it > 0 },
+                                    backdropUrl = FenLightApp.backdropUrl(show.backdropPath),
+                                )
+                            }
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    items = (it.items + newItems).distinctBy { i -> i.id },
+                                    page = nextPage,
+                                    hasMore = nextPage < result.totalPages,
+                                )
+                            }
+                        } else {
+                            val result = fetchMoviePage(cfg, nextPage, region, excludeAdult)
+                            val newItems = result.results
+                                .filter { !excludeAdult || !it.adult }
+                                .map { m ->
+                                    PaginatedItem(
+                                        id = m.id, title = m.title,
+                                        posterUrl = FenLightApp.posterUrl(m.posterPath),
+                                        rating = m.voteAverage.takeIf { it > 0 },
+                                        backdropUrl = FenLightApp.backdropUrl(m.backdropPath),
+                                    )
+                                }
+                            _state.update {
+                                it.copy(
+                                    isLoading = false,
+                                    items = (it.items + newItems).distinctBy { i -> i.id },
+                                    page = nextPage,
+                                    hasMore = nextPage < result.totalPages,
+                                )
+                            }
+                        }
                     }
                 }
             } catch (e: Exception) {
@@ -122,7 +176,7 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
             }
             app.tmdbApi.discoverMovies(filters, page, region)
         }
-        RowType.ON_THE_AIR, RowType.AIRING_TODAY -> app.tmdbApi.popularMovies(page, region)
+        else -> app.tmdbApi.popularMovies(page, region)  // TV-only / list types already handled
     }
 
     private suspend fun fetchTvPage(
@@ -154,6 +208,6 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
             }
             app.tmdbApi.discoverTv(filters, page, region)
         }
-        RowType.NOW_PLAYING, RowType.UPCOMING -> app.tmdbApi.popularTv(page, region)
+        else -> app.tmdbApi.popularTv(page, region)  // movie-only / list types already handled
     }
 }

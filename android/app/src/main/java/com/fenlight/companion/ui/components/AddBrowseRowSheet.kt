@@ -13,7 +13,9 @@ import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.model.DiscoverFilters
 import com.fenlight.companion.data.model.Genre
 import com.fenlight.companion.data.model.RowType
+import com.fenlight.companion.data.model.TmdbList
 import com.fenlight.companion.data.model.WatchProvider
+import com.fenlight.companion.ui.movies.TraktListEntry
 import com.fenlight.companion.ui.movies.displayName
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,11 +25,18 @@ fun AddBrowseRowSheet(
     pendingType: RowType,
     pendingLabel: String,
     pendingFilters: DiscoverFilters,
+    pendingListId: Int? = null,
+    pendingTraktSlug: String? = null,
+    pendingTraktUser: String? = null,
     genres: List<Genre>,
     watchProviders: List<WatchProvider>,
+    availableTmdbLists: List<TmdbList> = emptyList(),
+    availableTraktLists: List<TraktListEntry> = emptyList(),
     onTypeChange: (RowType) -> Unit,
     onLabelChange: (String) -> Unit,
     onFiltersChange: (DiscoverFilters) -> Unit,
+    onListIdChange: (Int?) -> Unit = {},
+    onTraktListChange: (slug: String?, user: String?) -> Unit = { _, _ -> },
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
     addRowError: String? = null,
@@ -44,20 +53,18 @@ fun AddBrowseRowSheet(
             Text("Add Row", style = MaterialTheme.typography.titleLarge)
 
             // Row type dropdown — show type options appropriate for the media type
-            val typeOptions: List<Pair<String, String>> = if (mediaType == "tv") {
-                listOf(
-                    RowType.ON_THE_AIR.name to RowType.ON_THE_AIR.displayName(),
-                    RowType.AIRING_TODAY.name to RowType.AIRING_TODAY.displayName(),
-                    RowType.TOP_RATED.name to RowType.TOP_RATED.displayName(),
-                    RowType.CUSTOM.name to RowType.CUSTOM.displayName(),
-                )
-            } else {
-                listOf(
-                    RowType.NOW_PLAYING.name to RowType.NOW_PLAYING.displayName(),
-                    RowType.UPCOMING.name to RowType.UPCOMING.displayName(),
-                    RowType.TOP_RATED.name to RowType.TOP_RATED.displayName(),
-                    RowType.CUSTOM.name to RowType.CUSTOM.displayName(),
-                )
+            val typeOptions: List<Pair<String, String>> = buildList {
+                if (mediaType == "tv") {
+                    add(RowType.ON_THE_AIR.name to RowType.ON_THE_AIR.displayName())
+                    add(RowType.AIRING_TODAY.name to RowType.AIRING_TODAY.displayName())
+                } else {
+                    add(RowType.NOW_PLAYING.name to RowType.NOW_PLAYING.displayName())
+                    add(RowType.UPCOMING.name to RowType.UPCOMING.displayName())
+                }
+                add(RowType.TOP_RATED.name to RowType.TOP_RATED.displayName())
+                add(RowType.CUSTOM.name to RowType.CUSTOM.displayName())
+                if (availableTmdbLists.isNotEmpty()) add(RowType.TMDB_LIST.name to RowType.TMDB_LIST.displayName())
+                if (availableTraktLists.isNotEmpty()) add(RowType.TRAKT_LIST.name to RowType.TRAKT_LIST.displayName())
             }
 
             DropdownField(
@@ -79,6 +86,42 @@ fun AddBrowseRowSheet(
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
+
+            // TMDB list picker
+            if (pendingType == RowType.TMDB_LIST) {
+                HorizontalDivider()
+                Text("TMDB List", style = MaterialTheme.typography.titleSmall)
+                val listOptions = listOf("" to "Select a list…") + availableTmdbLists.map { it.id.toString() to it.name }
+                DropdownField(
+                    label = "List",
+                    options = listOptions,
+                    selected = pendingListId?.toString() ?: "",
+                    onSelect = { key -> onListIdChange(key.toIntOrNull()) },
+                )
+            }
+
+            // Trakt list picker
+            if (pendingType == RowType.TRAKT_LIST) {
+                HorizontalDivider()
+                Text("Trakt List", style = MaterialTheme.typography.titleSmall)
+                val traktOptions = listOf("" to "Select a list…") + availableTraktLists.map {
+                    "${it.user}/${it.slug}" to it.name
+                }
+                val selectedKey = if (pendingTraktSlug != null) "${pendingTraktUser ?: "me"}/$pendingTraktSlug" else ""
+                DropdownField(
+                    label = "List",
+                    options = traktOptions,
+                    selected = selectedKey,
+                    onSelect = { key ->
+                        if (key.isBlank()) {
+                            onTraktListChange(null, null)
+                        } else {
+                            val parts = key.split("/", limit = 2)
+                            onTraktListChange(parts.getOrNull(1), parts.getOrNull(0))
+                        }
+                    },
+                )
+            }
 
             // Custom filters section — only when type == CUSTOM
             if (pendingType == RowType.CUSTOM) {
