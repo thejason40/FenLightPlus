@@ -79,3 +79,10 @@ data class RdUnrestrict(
     val download: String,
     val streamable: Int,
 )
+
+@JsonClass(generateAdapter = true)
+data class RdUser(
+    val id: Long,
+    val username: String,
+    val email: String? = null,
+)

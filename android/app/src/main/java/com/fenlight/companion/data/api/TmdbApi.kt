@@ -168,4 +168,7 @@ interface TmdbV4Api {
 
     @DELETE("list/{list_id}")
     suspend fun deleteList(@Path("list_id") listId: Int): Any
+
+    @GET("account/{account_id}")
+    suspend fun accountDetails(@Path("account_id") accountId: String): TmdbAccountInfo
 }

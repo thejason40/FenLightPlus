@@ -85,6 +85,9 @@ interface TraktApi {
     @DELETE("users/me/lists/{slug}")
     suspend fun deleteList(@Path("slug") slug: String): Unit
 
+    @GET("users/settings")
+    suspend fun userSettings(): TraktUserSettings
+
     @GET("movies/trending")
     suspend fun moviesTrending(
         @Query("page") page: Int = 1,

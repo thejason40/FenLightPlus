@@ -56,4 +56,7 @@ interface RealDebridApi {
     @FormUrlEncoded
     @POST("unrestrict/link")
     suspend fun unrestrictLink(@Field("link") link: String): RdUnrestrict
+
+    @GET("user")
+    suspend fun user(): RdUser
 }

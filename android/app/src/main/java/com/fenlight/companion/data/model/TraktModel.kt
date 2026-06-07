@@ -138,6 +138,9 @@ data class TraktWatchedEpisode(
 )
 
 @JsonClass(generateAdapter = true)
+data class TraktUserSettings(val user: TraktUser)
+
+@JsonClass(generateAdapter = true)
 data class TraktTrendingMovie(
     val watchers: Int,
     val movie: TraktMovie,

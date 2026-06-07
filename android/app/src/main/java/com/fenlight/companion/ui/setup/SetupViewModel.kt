@@ -27,12 +27,14 @@ data class SetupState(
     val tmdbAuthed: Boolean = false,
     val tmdbAuthUrl: String? = null,
     val tmdbError: String? = null,
+    val tmdbUsername: String = "",
     // Trakt
     val traktLoading: Boolean = false,
     val traktPolling: Boolean = false,
     val traktAuthed: Boolean = false,
     val traktUserCode: String = "",
     val traktError: String? = null,
+    val traktUsername: String = "",
     // Real Debrid
     val rdLoading: Boolean = false,
     val rdPolling: Boolean = false,
@@ -40,6 +42,7 @@ data class SetupState(
     val rdUserCode: String = "",
     val rdDirectVerificationUrl: String = "",
     val rdError: String? = null,
+    val rdUsername: String = "",
     val setupComplete: Boolean = false,
 )
 
@@ -80,6 +83,15 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
             prefs.rdAccessToken.collect { token ->
                 _state.update { it.copy(rdAuthed = token.isNotBlank()) }
             }
+        }
+        viewModelScope.launch {
+            prefs.tmdbUsername.collect { u -> _state.update { it.copy(tmdbUsername = u) } }
+        }
+        viewModelScope.launch {
+            prefs.traktUsername.collect { u -> _state.update { it.copy(traktUsername = u) } }
+        }
+        viewModelScope.launch {
+            prefs.rdUsername.collect { u -> _state.update { it.copy(rdUsername = u) } }
         }
     }
 
@@ -166,6 +178,11 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                 if (resp.success) {
                     prefs.saveTmdbSession(resp.accessToken, resp.accountId)
                     _state.update { it.copy(tmdbLoading = false, tmdbPolling = false, tmdbAuthed = true) }
+                    runCatching {
+                        val acctInfo = app.buildTmdbV4Api(resp.accessToken).accountDetails(resp.accountId)
+                        val name = acctInfo.username ?: acctInfo.name ?: ""
+                        if (name.isNotBlank()) prefs.saveTmdbUsername(name)
+                    }
                 } else {
                     _state.update { it.copy(tmdbLoading = false, tmdbError = "TMDB authorisation not approved yet. Please approve in your browser first.") }
                 }
@@ -212,6 +229,10 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                     )
                     prefs.saveTraktTokens(token.accessToken, token.refreshToken, token.expiresIn)
                     _state.update { it.copy(traktPolling = false, traktAuthed = true) }
+                    runCatching {
+                        val username = app.buildAuthedTraktApi(token.accessToken).userSettings().user.username
+                        prefs.saveTraktUsername(username)
+                    }
                     return@launch
                 } catch (_: Exception) {
                     // 400/404 means not approved yet — keep polling
@@ -260,6 +281,10 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                         creds.clientId, creds.clientSecret, token.expiresIn,
                     )
                     _state.update { it.copy(rdPolling = false, rdAuthed = true) }
+                    runCatching {
+                        val rdUser = app.buildAuthedRdApi(token.accessToken).user()
+                        prefs.saveRdUsername(rdUser.username)
+                    }
                     return@launch
                 } catch (_: Exception) {
                     // Not approved yet
