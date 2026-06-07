@@ -6,8 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.model.*
 import com.fenlight.companion.ui.components.PaginatedItem
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 data class BrowseAllUiState(
     val title: String = "",
@@ -101,6 +104,61 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
                             )
                         }
                     }
+                    RowType.TRENDING -> {
+                        val countries = region?.lowercase()
+                        val (newItems, totalPages) = if (mediaType == "tv") {
+                            val response = app.traktApi.showsTrending(nextPage, countries = countries)
+                            val body = response.body() ?: emptyList()
+                            val pages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull() ?: nextPage
+                            val items = supervisorScope {
+                                body.filter { it.show.ids.tmdb != null }.map { trending ->
+                                    async {
+                                        val tmdbId = trending.show.ids.tmdb!!
+                                        runCatching {
+                                            val detail = app.tmdbApi.tvDetail(tmdbId, append = "")
+                                            PaginatedItem(
+                                                id = detail.id, title = detail.name,
+                                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                                rating = detail.voteAverage.takeIf { it > 0 },
+                                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                                            )
+                                        }.getOrNull()
+                                    }
+                                }.awaitAll().filterNotNull()
+                            }
+                            items to pages
+                        } else {
+                            val response = app.traktApi.moviesTrending(nextPage, countries = countries)
+                            val body = response.body() ?: emptyList()
+                            val pages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull() ?: nextPage
+                            val items = supervisorScope {
+                                body.filter { it.movie.ids.tmdb != null }.map { trending ->
+                                    async {
+                                        val tmdbId = trending.movie.ids.tmdb!!
+                                        runCatching {
+                                            val detail = app.tmdbApi.movieDetail(tmdbId, append = "")
+                                            if (excludeAdult && detail.adult) return@runCatching null
+                                            PaginatedItem(
+                                                id = detail.id, title = detail.title,
+                                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                                rating = detail.voteAverage.takeIf { it > 0 },
+                                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                                            )
+                                        }.getOrNull()
+                                    }
+                                }.awaitAll().filterNotNull()
+                            }
+                            items to pages
+                        }
+                        _state.update {
+                            it.copy(
+                                isLoading = false,
+                                items = (it.items + newItems).distinctBy { i -> i.id },
+                                page = nextPage,
+                                hasMore = nextPage < totalPages,
+                            )
+                        }
+                    }
                     else -> {
                         if (mediaType == "tv") {
                             val result = fetchTvPage(cfg, nextPage, region, excludeAdult)
@@ -156,7 +214,6 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
         excludeAdult: Boolean,
     ) = when (cfg.type) {
         RowType.POPULAR -> app.tmdbApi.popularMovies(page, region)
-        RowType.TRENDING -> app.tmdbApi.trendingMovies(page, region)
         RowType.NOW_PLAYING -> app.tmdbApi.nowPlayingMovies(page, region)
         RowType.UPCOMING -> app.tmdbApi.upcomingMovies(page, region)
         RowType.TOP_RATED -> app.tmdbApi.topRatedMovies(page, region)
@@ -186,7 +243,6 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
         excludeAdult: Boolean,
     ) = when (cfg.type) {
         RowType.POPULAR -> app.tmdbApi.popularTv(page, region)
-        RowType.TRENDING -> app.tmdbApi.trendingTv(page, region)
         RowType.ON_THE_AIR -> app.tmdbApi.onTheAirTv(page, region)
         RowType.AIRING_TODAY -> app.tmdbApi.airingTodayTv(page, region)
         RowType.TOP_RATED -> app.tmdbApi.topRatedTv(page, region)

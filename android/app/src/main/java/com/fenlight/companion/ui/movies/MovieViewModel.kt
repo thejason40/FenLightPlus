@@ -148,10 +148,10 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                         PaginatedItem(id = id, title = m.title, posterUrl = null, rating = null, backdropUrl = null)
                     }}  }
             }
+            RowType.TRENDING -> fetchTraktTrendingMovies(1, region, excludeAdult)
             else -> {
                 val result = when (config.type) {
                     RowType.POPULAR -> app.tmdbApi.popularMovies(1, region)
-                    RowType.TRENDING -> app.tmdbApi.trendingMovies(1, region)
                     RowType.NOW_PLAYING -> app.tmdbApi.nowPlayingMovies(1, region)
                     RowType.UPCOMING -> app.tmdbApi.upcomingMovies(1, region)
                     RowType.TOP_RATED -> app.tmdbApi.topRatedMovies(1, region)
@@ -182,6 +182,32 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             }
+        }
+    }
+
+    private suspend fun fetchTraktTrendingMovies(page: Int, region: String?, excludeAdult: Boolean): List<PaginatedItem> {
+        val countries = region?.lowercase()
+        val response = app.traktApi.moviesTrending(page, countries = countries)
+        val traktItems = response.body() ?: emptyList()
+        return supervisorScope {
+            traktItems
+                .filter { it.movie.ids.tmdb != null }
+                .map { trending ->
+                    async {
+                        val tmdbId = trending.movie.ids.tmdb!!
+                        runCatching {
+                            val detail = app.tmdbApi.movieDetail(tmdbId, append = "")
+                            if (excludeAdult && detail.adult) return@runCatching null
+                            PaginatedItem(
+                                id = detail.id,
+                                title = detail.title,
+                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                rating = detail.voteAverage.takeIf { it > 0 },
+                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                            )
+                        }.getOrNull()
+                    }
+                }.awaitAll().filterNotNull()
         }
     }
 

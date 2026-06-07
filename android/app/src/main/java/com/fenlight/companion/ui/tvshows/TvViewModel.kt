@@ -142,10 +142,10 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
                         PaginatedItem(id = id, title = s.title, posterUrl = null, rating = null, backdropUrl = null)
                     }}}
             }
+            RowType.TRENDING -> fetchTraktTrendingShows(1, region)
             else -> {
                 val result = when (config.type) {
                     RowType.POPULAR -> app.tmdbApi.popularTv(1, region)
-                    RowType.TRENDING -> app.tmdbApi.trendingTv(1, region)
                     RowType.ON_THE_AIR -> app.tmdbApi.onTheAirTv(1, region)
                     RowType.AIRING_TODAY -> app.tmdbApi.airingTodayTv(1, region)
                     RowType.TOP_RATED -> app.tmdbApi.topRatedTv(1, region)
@@ -178,6 +178,31 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
                     )
                 }
             }
+        }
+    }
+
+    private suspend fun fetchTraktTrendingShows(page: Int, region: String?): List<PaginatedItem> {
+        val countries = region?.lowercase()
+        val response = app.traktApi.showsTrending(page, countries = countries)
+        val traktItems = response.body() ?: emptyList()
+        return supervisorScope {
+            traktItems
+                .filter { it.show.ids.tmdb != null }
+                .map { trending ->
+                    async {
+                        val tmdbId = trending.show.ids.tmdb!!
+                        runCatching {
+                            val detail = app.tmdbApi.tvDetail(tmdbId, append = "")
+                            PaginatedItem(
+                                id = detail.id,
+                                title = detail.name,
+                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                rating = detail.voteAverage.takeIf { it > 0 },
+                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                            )
+                        }.getOrNull()
+                    }
+                }.awaitAll().filterNotNull()
         }
     }
 

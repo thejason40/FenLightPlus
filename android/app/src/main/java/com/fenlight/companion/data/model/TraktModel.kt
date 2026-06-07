@@ -136,3 +136,15 @@ data class TraktWatchedEpisode(
     val plays: Int,
     @Json(name = "last_watched_at") val lastWatchedAt: String? = null,
 )
+
+@JsonClass(generateAdapter = true)
+data class TraktTrendingMovie(
+    val watchers: Int,
+    val movie: TraktMovie,
+)
+
+@JsonClass(generateAdapter = true)
+data class TraktTrendingShow(
+    val watchers: Int,
+    val show: TraktShow,
+)
