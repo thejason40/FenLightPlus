@@ -59,8 +59,12 @@ object KodiDiscovery {
                 // Open (anonymous) Kodi: confirm via the pong response.
                 resp.isSuccessful -> JSONObject(resp.body?.string() ?: "{}").optString("result") == "pong"
                 // Password-protected Kodi: /jsonrpc requires Basic auth and returns 401.
-                // Treat that as a discovered Kodi (the name just can't be read).
-                resp.code == 401 -> true
+                // Many non-Kodi web servers on :8080 also return 401, so only accept it
+                // when the Basic-auth realm identifies Kodi (its web server uses "XBMC").
+                resp.code == 401 -> {
+                    val auth = resp.header("WWW-Authenticate").orEmpty().lowercase()
+                    auth.contains("xbmc") || auth.contains("kodi")
+                }
                 else -> false
             }
         }
