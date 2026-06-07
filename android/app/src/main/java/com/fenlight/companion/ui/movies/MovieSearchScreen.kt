@@ -64,7 +64,7 @@ fun MovieSearchScreen(
     ) { padding ->
         Box(modifier = Modifier.fillMaxSize().padding(padding)) {
             when {
-                state.query.length >= 2 && !state.isLoading && state.items.isEmpty() && state.error == null -> {
+                state.query.length >= 2 && !state.isLoading && state.page > 0 && state.items.isEmpty() && state.error == null -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
                             "No results for \"${state.query}\"",
