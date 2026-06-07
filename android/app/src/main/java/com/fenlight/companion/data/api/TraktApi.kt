@@ -77,7 +77,7 @@ interface TraktApi {
     suspend fun watchedShows(): List<TraktWatchedShow>
 
     @GET("shows/{id}/progress/watched")
-    suspend fun showProgress(@Path("id") id: String): TraktShowProgress
+    suspend fun showProgress(@Path("id") id: String, @Query("extended") extended: String = "full"): TraktShowProgress
 
     @POST("users/me/lists")
     suspend fun createList(@Body body: @JvmSuppressWildcards Map<String, Any>): TraktList
@@ -87,6 +87,13 @@ interface TraktApi {
 
     @GET("users/settings")
     suspend fun userSettings(): TraktUserSettings
+
+    @GET("sync/history")
+    suspend fun history(
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 50,
+        @Query("extended") extended: String = "full",
+    ): Response<List<TraktHistoryEntry>>
 
     @GET("movies/trending")
     suspend fun moviesTrending(

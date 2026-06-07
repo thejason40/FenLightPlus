@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.api.KodiRpc
+import com.fenlight.companion.data.model.TraktHistoryEntry
 import com.fenlight.companion.data.model.TraktList
 import com.fenlight.companion.data.model.TraktListItem
 import com.fenlight.companion.data.model.TraktShowProgress
@@ -15,7 +16,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-enum class TraktTab { CONTINUE_WATCHING, MY_LISTS, LIKED_LISTS, WATCHLIST }
+enum class TraktTab { CONTINUE_WATCHING, MY_LISTS, LIKED_LISTS, WATCHLIST, RECENT }
 
 data class TraktUiState(
     val tab: TraktTab = TraktTab.CONTINUE_WATCHING,
@@ -36,6 +37,10 @@ data class TraktUiState(
     val selectedListUser: String = "me",
     val watchlistMovies: List<TraktListItem> = emptyList(),
     val watchlistShows: List<TraktListItem> = emptyList(),
+    val recentHistory: List<TraktHistoryEntry> = emptyList(),
+    val recentHistoryPage: Int = 0,
+    val recentHistoryHasMore: Boolean = false,
+    val recentHistoryIsLoadingMore: Boolean = false,
     val showCreateListDialog: Boolean = false,
     val listToDelete: TraktList? = null,
     val playMessage: String? = null,
@@ -53,7 +58,18 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
     init { loadCurrentTab() }
 
     fun selectTab(tab: TraktTab) {
-        _state.update { it.copy(tab = tab, listItems = emptyList(), selectedListName = "", listItemPage = 0, listItemHasMore = false) }
+        _state.update {
+            it.copy(
+                tab = tab,
+                listItems = emptyList(),
+                selectedListName = "",
+                listItemPage = 0,
+                listItemHasMore = false,
+                recentHistory = if (tab != TraktTab.RECENT) emptyList() else it.recentHistory,
+                recentHistoryPage = if (tab != TraktTab.RECENT) 0 else it.recentHistoryPage,
+                recentHistoryHasMore = if (tab != TraktTab.RECENT) false else it.recentHistoryHasMore,
+            )
+        }
         loadCurrentTab()
     }
 
@@ -71,6 +87,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
             TraktTab.MY_LISTS -> _state.value.myLists.isNotEmpty()
             TraktTab.LIKED_LISTS -> _state.value.likedLists.isNotEmpty()
             TraktTab.WATCHLIST -> _state.value.watchlistMovies.isNotEmpty() || _state.value.watchlistShows.isNotEmpty()
+            TraktTab.RECENT -> _state.value.recentHistory.isNotEmpty()
         }
         if (!force && hasData && age < CACHE_MS) return
         when (tab) {
@@ -78,6 +95,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
             TraktTab.MY_LISTS -> loadMyLists()
             TraktTab.LIKED_LISTS -> loadLikedLists()
             TraktTab.WATCHLIST -> loadWatchlist()
+            TraktTab.RECENT -> loadRecent()
         }
     }
 
@@ -98,10 +116,13 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                     }.awaitAll().filterNotNull().toMap()
                 }
 
-                // Only keep shows where Trakt knows there is a next episode
+                // Only keep shows where Trakt knows there is a next episode and it has already aired
+                val today = java.time.LocalDate.now().toString() // "YYYY-MM-DD"
                 val filtered = allShows.filter { show ->
                     val slug = show.show.ids.slug ?: return@filter false
-                    progressMap[slug]?.nextEpisode != null
+                    val nextEp = progressMap[slug]?.nextEpisode ?: return@filter false
+                    val airDate = nextEp.firstAired?.take(10) // "YYYY-MM-DD"
+                    airDate == null || airDate <= today
                 }
 
                 // Fetch TMDB poster art for each show in parallel (Trakt provides no artwork).
@@ -167,6 +188,55 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
+            }
+        }
+    }
+
+    private fun loadRecent() {
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true, error = null) }
+            try {
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val response = api.history(page = 1, limit = 50)
+                val entries = response.body() ?: emptyList()
+                val totalPages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull() ?: 1
+                tabFetchedAt[TraktTab.RECENT] = System.currentTimeMillis()
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        isRefreshing = false,
+                        recentHistory = entries,
+                        recentHistoryPage = 1,
+                        recentHistoryHasMore = 1 < totalPages,
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(isLoading = false, isRefreshing = false, error = e.message) }
+            }
+        }
+    }
+
+    fun loadMoreRecent() {
+        val s = _state.value
+        if (s.recentHistoryIsLoadingMore || !s.recentHistoryHasMore) return
+        viewModelScope.launch {
+            _state.update { it.copy(recentHistoryIsLoadingMore = true) }
+            try {
+                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val nextPage = s.recentHistoryPage + 1
+                val response = api.history(page = nextPage, limit = 50)
+                val entries = response.body() ?: emptyList()
+                val totalPages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull() ?: 1
+                _state.update {
+                    it.copy(
+                        recentHistoryIsLoadingMore = false,
+                        recentHistory = it.recentHistory + entries,
+                        recentHistoryPage = nextPage,
+                        recentHistoryHasMore = nextPage < totalPages,
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(recentHistoryIsLoadingMore = false, error = e.message) }
             }
         }
     }

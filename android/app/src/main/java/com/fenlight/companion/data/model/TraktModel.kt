@@ -122,6 +122,7 @@ data class TraktProgressEpisode(
     val season: Int,
     val number: Int,
     val title: String? = null,
+    @Json(name = "first_aired") val firstAired: String? = null,
 )
 
 @JsonClass(generateAdapter = true)
@@ -150,4 +151,15 @@ data class TraktTrendingMovie(
 data class TraktTrendingShow(
     val watchers: Int,
     val show: TraktShow,
+)
+
+@JsonClass(generateAdapter = true)
+data class TraktHistoryEntry(
+    val id: Long,
+    val action: String,
+    @Json(name = "watched_at") val watchedAt: String,
+    val type: String,
+    val movie: TraktMovie? = null,
+    val show: TraktShow? = null,
+    val episode: TraktEpisode? = null,
 )
