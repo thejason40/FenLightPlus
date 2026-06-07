@@ -85,13 +85,42 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
                         val response = if (user == "me") traktApi.myListItems(slug, page = nextPage) else traktApi.listItems(user, slug, page = nextPage)
                         val body = response.body() ?: emptyList()
                         val newItems = if (mediaType == "tv") {
-                            body.mapNotNull { item -> item.show?.let { s -> s.ids.tmdb?.let { id ->
-                                PaginatedItem(id = id, title = s.title, posterUrl = null, rating = null, backdropUrl = null)
-                            }}}
+                            val shows = body.mapNotNull { item -> item.show?.takeIf { it.ids.tmdb != null } }
+                            supervisorScope {
+                                shows.map { s ->
+                                    async {
+                                        runCatching {
+                                            val detail = app.tmdbApi.tvDetail(s.ids.tmdb!!, append = "")
+                                            PaginatedItem(
+                                                id = detail.id,
+                                                title = detail.name,
+                                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                                rating = detail.voteAverage.takeIf { it > 0 },
+                                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                                            )
+                                        }.getOrNull()
+                                    }
+                                }.awaitAll().filterNotNull()
+                            }
                         } else {
-                            body.mapNotNull { item -> item.movie?.let { m -> m.ids.tmdb?.let { id ->
-                                PaginatedItem(id = id, title = m.title, posterUrl = null, rating = null, backdropUrl = null)
-                            }}}
+                            val movies = body.mapNotNull { item -> item.movie?.takeIf { it.ids.tmdb != null } }
+                            supervisorScope {
+                                movies.map { m ->
+                                    async {
+                                        runCatching {
+                                            val detail = app.tmdbApi.movieDetail(m.ids.tmdb!!, append = "")
+                                            if (excludeAdult && detail.adult) return@runCatching null
+                                            PaginatedItem(
+                                                id = detail.id,
+                                                title = detail.title,
+                                                posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                                rating = detail.voteAverage.takeIf { it > 0 },
+                                                backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                                            )
+                                        }.getOrNull()
+                                    }
+                                }.awaitAll().filterNotNull()
+                            }
                         }
                         val totalPages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull()
                             ?: if (body.size >= 50) nextPage + 1 else nextPage

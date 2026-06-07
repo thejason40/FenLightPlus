@@ -137,10 +137,23 @@ class TvViewModel(application: Application) : AndroidViewModel(application) {
                 val user = config.traktUser ?: "me"
                 val traktApi = app.buildAuthedTraktApi(token)
                 val response = if (user == "me") traktApi.myListItems(slug, page = 1) else traktApi.listItems(user, slug, page = 1)
-                (response.body() ?: emptyList())
-                    .mapNotNull { item -> item.show?.let { s -> s.ids.tmdb?.let { id ->
-                        PaginatedItem(id = id, title = s.title, posterUrl = null, rating = null, backdropUrl = null)
-                    }}}
+                val shows = (response.body() ?: emptyList()).mapNotNull { item -> item.show?.takeIf { it.ids.tmdb != null } }
+                supervisorScope {
+                    shows.map { s ->
+                        async {
+                            runCatching {
+                                val detail = app.tmdbApi.tvDetail(s.ids.tmdb!!, append = "")
+                                PaginatedItem(
+                                    id = detail.id,
+                                    title = detail.name,
+                                    posterUrl = FenLightApp.posterUrl(detail.posterPath),
+                                    rating = detail.voteAverage.takeIf { it > 0 },
+                                    backdropUrl = FenLightApp.backdropUrl(detail.backdropPath),
+                                )
+                            }.getOrNull()
+                        }
+                    }.awaitAll().filterNotNull()
+                }
             }
             RowType.TRENDING -> fetchTraktTrendingShows(1, region)
             else -> {
