@@ -54,6 +54,7 @@ private fun placeholderColor(title: String): Color {
 fun TraktScreen(
     onMovieClick: (Int) -> Unit = {},
     onShowClick: (Int) -> Unit = {},
+    onEpisodeClick: (showId: Int, season: Int, episode: Int) -> Unit = { _, _, _ -> },
     onGoToSettings: () -> Unit = {},
     vm: TraktViewModel = viewModel(),
 ) {
@@ -203,6 +204,10 @@ fun TraktScreen(
                         hasMore = state.recentHistoryHasMore,
                         isLoadingMore = state.recentHistoryIsLoadingMore,
                         onLoadMore = vm::loadMoreRecent,
+                        onMoviePlay = vm::playRecentMovie,
+                        onMovieClick = onMovieClick,
+                        onEpisodePlay = vm::playRecentEpisode,
+                        onEpisodeClick = onEpisodeClick,
                     )
                 }
             }
@@ -531,6 +536,10 @@ private fun RecentTab(
     hasMore: Boolean,
     isLoadingMore: Boolean,
     onLoadMore: () -> Unit,
+    onMoviePlay: (TraktHistoryEntry) -> Unit = {},
+    onMovieClick: (Int) -> Unit = {},
+    onEpisodePlay: (TraktHistoryEntry) -> Unit = {},
+    onEpisodeClick: (showId: Int, season: Int, episode: Int) -> Unit = { _, _, _ -> },
 ) {
     if (history.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -551,8 +560,7 @@ private fun RecentTab(
         items(history, key = { it.id }) { entry ->
             val title = when (entry.type) {
                 "movie" -> entry.movie?.title ?: "Unknown"
-                "episode" -> entry.show?.title ?: "Unknown"
-                else -> entry.movie?.title ?: entry.show?.title ?: "Unknown"
+                else -> entry.show?.title ?: "Unknown"
             }
             val supporting = buildString {
                 when (entry.type) {
@@ -563,17 +571,45 @@ private fun RecentTab(
                             if (!ep.title.isNullOrBlank()) append(" · ${ep.title}")
                         }
                     }
-                    "movie" -> {
-                        entry.movie?.year?.let { append(it.toString()) }
-                    }
+                    "movie" -> entry.movie?.year?.let { append(it.toString()) }
                 }
                 val watchedDate = entry.watchedAt.take(10)
                 if (isNotEmpty()) append(" · ")
                 append(watchedDate)
             }
+            val rowModifier = when (entry.type) {
+                "movie" -> entry.movie?.ids?.tmdb?.let { id -> Modifier.clickable { onMovieClick(id) } } ?: Modifier
+                "episode" -> entry.show?.ids?.tmdb?.let { showId ->
+                    val ep = entry.episode
+                    if (ep != null) Modifier.clickable { onEpisodeClick(showId, ep.season, ep.number) }
+                    else Modifier
+                } ?: Modifier
+                else -> Modifier
+            }
             ListItem(
                 headlineContent = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
-                supportingContent = { if (supporting.isNotEmpty()) Text(supporting, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                supportingContent = {
+                    if (supporting.isNotEmpty()) Text(
+                        supporting,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                },
+                trailingContent = {
+                    when (entry.type) {
+                        "movie" -> if (entry.movie?.ids?.tmdb != null) {
+                            IconButton(onClick = { onMoviePlay(entry) }) {
+                                Icon(Icons.Default.PlayArrow, contentDescription = "Play", tint = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                        "episode" -> if (entry.show?.ids?.tmdb != null && entry.episode != null) {
+                            IconButton(onClick = { onEpisodePlay(entry) }) {
+                                Icon(Icons.Default.PlayArrow, contentDescription = "Play", tint = MaterialTheme.colorScheme.primary)
+                            }
+                        }
+                    }
+                },
+                modifier = rowModifier,
             )
             HorizontalDivider()
         }

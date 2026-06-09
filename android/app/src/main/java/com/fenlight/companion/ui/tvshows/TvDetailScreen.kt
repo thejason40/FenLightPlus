@@ -33,6 +33,7 @@ fun TvDetailScreen(
     tmdbId: Int,
     onBack: () -> Unit,
     onPersonClick: (Int) -> Unit = {},
+    onEpisodeClick: (showId: Int, season: Int, episode: Int) -> Unit = { _, _, _ -> },
     vm: TvDetailViewModel = viewModel(),
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
@@ -95,7 +96,7 @@ fun TvDetailScreen(
                             }
                         },
                         modifier = Modifier.clickable {
-                            vm.playEpisode(show.id, show.name, year, season.seasonNumber, ep.episodeNumber)
+                            onEpisodeClick(show.id, season.seasonNumber, ep.episodeNumber)
                         },
                     )
                     HorizontalDivider()

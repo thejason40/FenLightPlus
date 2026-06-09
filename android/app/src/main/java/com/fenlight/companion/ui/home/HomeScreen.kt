@@ -30,6 +30,7 @@ import com.fenlight.companion.ui.realdebrid.RdScreen
 import com.fenlight.companion.ui.related.RelatedScreen
 import com.fenlight.companion.ui.tmdb.TmdbListsScreen
 import com.fenlight.companion.ui.trakt.TraktScreen
+import com.fenlight.companion.ui.tvshows.EpisodeDetailScreen
 import com.fenlight.companion.ui.tvshows.TvBrowseScreen
 import com.fenlight.companion.ui.tvshows.TvDetailScreen
 import com.fenlight.companion.ui.tvshows.TvSearchScreen
@@ -215,6 +216,20 @@ fun HomeScreen(
                     tmdbId = id,
                     onBack = { navController.popBackStack() },
                     onPersonClick = { personId -> navController.navigate("person/$personId") },
+                    onEpisodeClick = { showId, season, episode ->
+                        navController.navigate("episode_detail/$showId/$season/$episode")
+                    },
+                )
+            }
+            composable("episode_detail/{showId}/{season}/{episode}") { back ->
+                val showId = back.arguments?.getString("showId")?.toIntOrNull() ?: return@composable
+                val season = back.arguments?.getString("season")?.toIntOrNull() ?: return@composable
+                val episode = back.arguments?.getString("episode")?.toIntOrNull() ?: return@composable
+                EpisodeDetailScreen(
+                    showId = showId,
+                    season = season,
+                    episodeNumber = episode,
+                    onBack = { navController.popBackStack() },
                 )
             }
             composable("tmdb_lists") {
@@ -254,6 +269,9 @@ fun HomeScreen(
                 TraktScreen(
                     onMovieClick = { id -> navController.navigate("movie_detail/$id") },
                     onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                    onEpisodeClick = { showId, season, episode ->
+                        navController.navigate("episode_detail/$showId/$season/$episode")
+                    },
                     onGoToSettings = onGoToSettings,
                 )
             }

@@ -332,6 +332,41 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun playRecentMovie(entry: TraktHistoryEntry) {
+        viewModelScope.launch {
+            val movie = entry.movie ?: return@launch
+            val tmdbId = movie.ids.tmdb ?: return@launch
+            try {
+                val host = app.prefs.kodiHost.first()
+                val port = app.prefs.kodiPort.first()
+                val user = app.prefs.kodiUser.first()
+                val pass = app.prefs.kodiPass.first()
+                KodiRpc(host, port, user, pass).playMovieViaFenLight(tmdbId, movie.title, movie.year ?: 0)
+                _state.update { it.copy(playMessage = "Playing ${movie.title} on Kodi…") }
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed: ${e.message}") }
+            }
+        }
+    }
+
+    fun playRecentEpisode(entry: TraktHistoryEntry) {
+        viewModelScope.launch {
+            val show = entry.show ?: return@launch
+            val ep = entry.episode ?: return@launch
+            val tmdbId = show.ids.tmdb ?: return@launch
+            try {
+                val host = app.prefs.kodiHost.first()
+                val port = app.prefs.kodiPort.first()
+                val user = app.prefs.kodiUser.first()
+                val pass = app.prefs.kodiPass.first()
+                KodiRpc(host, port, user, pass).playEpisodeViaFenLight(tmdbId, show.title, show.year ?: 0, ep.season, ep.number)
+                _state.update { it.copy(playMessage = "Playing S${ep.season}E${ep.number} of ${show.title} on Kodi…") }
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed: ${e.message}") }
+            }
+        }
+    }
+
     fun clearPlayMessage() = _state.update { it.copy(playMessage = null) }
 
     // List management

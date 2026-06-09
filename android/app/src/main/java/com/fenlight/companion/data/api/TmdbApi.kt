@@ -93,6 +93,13 @@ interface TmdbApi {
     @GET("tv/{id}/season/{season}")
     suspend fun seasonDetail(@Path("id") id: Int, @Path("season") season: Int): Season
 
+    @GET("tv/{id}/season/{season}/episode/{episode}")
+    suspend fun episodeDetail(
+        @Path("id") showId: Int,
+        @Path("season") season: Int,
+        @Path("episode") episode: Int,
+    ): Episode
+
     // --- People ---
 
     @GET("person/{id}")
