@@ -16,7 +16,8 @@ import java.util.concurrent.TimeUnit
 //   "versionName": "1.0.1",
 //   "versionCode": 2,
 //   "apkUrl": "https://thejason40.github.io/apk/FenLightCompanion.apk",
-//   "releaseNotes": "Bug fixes and improvements"
+//   "releaseNotes": "Bug fixes and improvements",
+//   "sha256": "<hex sha-256 of the APK>"
 // }
 @JsonClass(generateAdapter = true)
 data class UpdateInfo(
@@ -24,6 +25,8 @@ data class UpdateInfo(
     @Json(name = "versionCode") val versionCode: Int,
     @Json(name = "apkUrl") val apkUrl: String,
     @Json(name = "releaseNotes") val releaseNotes: String = "",
+    // Optional: when present, the downloaded APK is verified against it before install
+    @Json(name = "sha256") val sha256: String? = null,
 )
 
 sealed class UpdateResult {

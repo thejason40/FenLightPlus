@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -137,11 +138,15 @@ fun AddBrowseRowSheet(
                 )
 
                 // Service / Watch Provider
-                val providerLogoMap = watchProviders.associate {
-                    it.providerId.toString() to (it.logoPath?.let { p -> FenLightApp.posterUrl(p, "w92") } ?: "")
+                val providerLogoMap = remember(watchProviders) {
+                    watchProviders.associate {
+                        it.providerId.toString() to (it.logoPath?.let { p -> FenLightApp.posterUrl(p, "w92") } ?: "")
+                    }
                 }
-                val providerOptions = listOf("" to "Any Service") + watchProviders.map {
-                    it.providerId.toString() to it.providerName
+                val providerOptions = remember(watchProviders) {
+                    listOf("" to "Any Service") + watchProviders.map {
+                        it.providerId.toString() to it.providerName
+                    }
                 }
                 ImageDropdownField(
                     label = "Service / Channel",

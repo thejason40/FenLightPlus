@@ -548,7 +548,8 @@ private fun RecentTab(
         return
     }
     val listState = rememberLazyListState()
-    val shouldLoadMore by remember {
+    // Keyed remember, or the lambda keeps the first composition's history/hasMore values
+    val shouldLoadMore by remember(history.size, isLoadingMore, hasMore) {
         derivedStateOf {
             val last = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             last >= history.size - 5 && !isLoadingMore && hasMore

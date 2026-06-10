@@ -48,7 +48,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val token = app.prefs.traktAccessToken.first()
                 if (token.isBlank()) return@launch
-                val api = app.buildAuthedTraktApi(token)
+                val api = app.authedTraktApi
                 val movieItems = api.getWatchlist("movies")
                 val showItems = api.getWatchlist("shows")
                 val ids = buildSet<Int> {
@@ -66,7 +66,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
             try {
                 val token = app.prefs.traktAccessToken.first()
                 if (token.isBlank()) return@launch
-                val lists = app.buildAuthedTraktApi(token).myLists()
+                val lists = app.authedTraktApi.myLists()
                 _state.update { it.copy(traktLists = lists) }
             } catch (_: Exception) {}
         }
@@ -79,7 +79,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
                 val token = app.prefs.tmdbAccessToken.first()
                 val accountId = app.prefs.tmdbAccountId.first()
                 if (token.isBlank() || accountId.isBlank()) return@launch
-                val result = app.buildTmdbV4Api(token).accountLists(accountId)
+                val result = app.tmdbV4Api.accountLists(accountId)
                 _state.update { it.copy(tmdbLists = result.results) }
             } catch (_: Exception) {}
         }
@@ -88,7 +88,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun addToTraktWatchlist(tmdbId: Int, mediaType: String) {
         viewModelScope.launch {
             try {
-                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                val api = app.authedTraktApi
                 api.addToWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 _state.update { it.copy(watchlistedIds = it.watchlistedIds + tmdbId) }
                 toast("Added to Watchlist")
@@ -101,7 +101,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun removeFromTraktWatchlist(tmdbId: Int, mediaType: String) {
         viewModelScope.launch {
             try {
-                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                val api = app.authedTraktApi
                 api.removeFromWatchlist(mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 _state.update { it.copy(watchlistedIds = it.watchlistedIds - tmdbId) }
                 toast("Removed from Watchlist")
@@ -114,7 +114,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun addToTraktList(tmdbId: Int, mediaType: String, slug: String) {
         viewModelScope.launch {
             try {
-                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                val api = app.authedTraktApi
                 api.addToListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 toast("Added to list")
             } catch (e: Exception) {
@@ -126,7 +126,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun removeFromTraktList(tmdbId: Int, mediaType: String, slug: String) {
         viewModelScope.launch {
             try {
-                val api = app.buildAuthedTraktApi(app.prefs.traktAccessToken.first())
+                val api = app.authedTraktApi
                 api.removeFromListItems(slug, mapOf(traktKey(mediaType) to listOf(mapOf("ids" to mapOf("tmdb" to tmdbId)))))
                 toast("Removed from list")
             } catch (e: Exception) {
@@ -138,8 +138,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun addToTmdbList(tmdbId: Int, mediaType: String, listId: Int) {
         viewModelScope.launch {
             try {
-                val token = app.prefs.tmdbAccessToken.first()
-                app.buildTmdbV4Api(token).addItemToList(
+                app.tmdbV4Api.addItemToList(
                     listId,
                     mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
                 )
@@ -153,8 +152,7 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     fun removeFromTmdbList(tmdbId: Int, mediaType: String, listId: Int) {
         viewModelScope.launch {
             try {
-                val token = app.prefs.tmdbAccessToken.first()
-                app.buildTmdbV4Api(token).removeItemFromList(
+                app.tmdbV4Api.removeItemFromList(
                     listId,
                     mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
                 )

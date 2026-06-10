@@ -11,10 +11,14 @@ import com.fenlight.companion.data.api.TraktApi
 import com.fenlight.companion.data.prefs.AppPreferences
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.runBlocking
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.io.File
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class FenLightApp : Application() {
@@ -25,17 +29,20 @@ class FenLightApp : Application() {
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
-    private val baseOkHttp = OkHttpClient.Builder()
-        .connectTimeout(10, TimeUnit.SECONDS)
-        .readTimeout(15, TimeUnit.SECONDS)
-        .apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BASIC
-                })
+    private val baseOkHttp by lazy {
+        OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .cache(Cache(File(cacheDir, "http_cache"), 50L * 1024 * 1024))
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BASIC
+                    })
+                }
             }
-        }
-        .build()
+            .build()
+    }
 
 	val tmdbReadAccessToken = BuildConfig.TMDB_READ_ACCESS_TOKEN
 	val traktClientId = BuildConfig.TRAKT_CLIENT_ID
@@ -61,13 +68,15 @@ class FenLightApp : Application() {
             .create(TmdbApi::class.java)
     }
 
-    fun buildTmdbV4Api(userAccessToken: String): TmdbV4Api {
-        val token = userAccessToken.ifBlank { tmdbReadAccessToken }
-        return Retrofit.Builder()
+    // Shared v4 client; resolves the user token at request time, falling back to the read token.
+    val tmdbV4Api: TmdbV4Api by lazy {
+        Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/4/")
             .client(
                 baseOkHttp.newBuilder()
                     .addInterceptor { chain ->
+                        val userToken = runBlocking { prefs.tmdbAccessToken.first() }
+                        val token = userToken.ifBlank { tmdbReadAccessToken }
                         val req = chain.request().newBuilder()
                             .header("Authorization", "Bearer $token")
                             .header("Content-Type", "application/json;charset=utf-8")
@@ -102,12 +111,17 @@ class FenLightApp : Application() {
             .create(TraktApi::class.java)
     }
 
-    fun buildAuthedTraktApi(accessToken: String): TraktApi {
-        return Retrofit.Builder()
+    // Shared authed client; refreshes the token at request time when close to expiry.
+    val authedTraktApi: TraktApi by lazy {
+        Retrofit.Builder()
             .baseUrl("https://api.trakt.tv/")
             .client(
                 baseOkHttp.newBuilder()
+                    // Own dispatcher: the token refresh below runs on the base client, which must
+                    // not queue behind authed calls blocked in this interceptor (per-host limit).
+                    .dispatcher(okhttp3.Dispatcher())
                     .addInterceptor { chain ->
+                        val accessToken = fetchTokenForRequest { getValidTraktAccessToken() }
                         chain.proceed(
                             chain.request().newBuilder()
                                 .header("Content-Type", "application/json")
@@ -137,12 +151,16 @@ class FenLightApp : Application() {
             .create(RealDebridApi::class.java)
     }
 
-    fun buildAuthedRdApi(accessToken: String): RealDebridApi {
-        return Retrofit.Builder()
+    // Shared authed client; refreshes the token at request time when close to expiry.
+    val authedRdApi: RealDebridApi by lazy {
+        Retrofit.Builder()
             .baseUrl("https://api.real-debrid.com/rest/1.0/")
             .client(
                 baseOkHttp.newBuilder()
+                    // Own dispatcher: keeps the refresh call (base client) out of this client's queue.
+                    .dispatcher(okhttp3.Dispatcher())
                     .addInterceptor { chain ->
+                        val accessToken = fetchTokenForRequest { getValidRdAccessToken() }
                         chain.proceed(
                             chain.request().newBuilder()
                                 .header("Authorization", "Bearer $accessToken")
@@ -154,6 +172,16 @@ class FenLightApp : Application() {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(RealDebridApi::class.java)
+    }
+
+    // Interceptors run on OkHttp threads; surface refresh failures as IOException so
+    // OkHttp delivers them to the caller instead of crashing the dispatcher thread.
+    private fun fetchTokenForRequest(fetch: suspend () -> String): String = try {
+        runBlocking { fetch() }
+    } catch (e: IOException) {
+        throw e
+    } catch (e: Exception) {
+        throw IOException("Token refresh failed: ${e.message}", e)
     }
 
     suspend fun getValidTraktAccessToken(): String = traktRefreshMutex.withLock {

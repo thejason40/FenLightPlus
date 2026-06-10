@@ -115,7 +115,7 @@ fun SettingsScreen(
                                 LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
                                 Text("Downloading…", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             } else {
-                                Button(onClick = { vm.downloadUpdate(info.apkUrl) }, modifier = Modifier.fillMaxWidth()) {
+                                Button(onClick = { vm.downloadUpdate(info) }, modifier = Modifier.fillMaxWidth()) {
                                     Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(18.dp))
                                     Spacer(Modifier.width(8.dp))
                                     Text("Download & Install")

@@ -40,8 +40,9 @@ fun PaginatedGrid(
 ) {
     val listState = rememberLazyGridState()
 
-    // Trigger load more when nearing the end of visible items
-    val shouldLoadMore by remember(isLoading, hasMore) {
+    // Trigger load more when nearing the end of visible items.
+    // items.size must be a key too, or the lambda keeps the previous page's list.
+    val shouldLoadMore by remember(items.size, isLoading, hasMore) {
         derivedStateOf {
             val lastVisible = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             lastVisible >= items.size - 6 && !isLoading && hasMore
@@ -68,7 +69,7 @@ fun PaginatedGrid(
     ) {
         // Featured card for the first item — full width
         if (items.isNotEmpty()) {
-            item(span = { GridItemSpan(maxLineSpan) }) {
+            item(span = { GridItemSpan(maxLineSpan) }, contentType = "featured") {
                 val featured = items.first()
                 Box(
                     modifier = Modifier
@@ -124,7 +125,7 @@ fun PaginatedGrid(
         }
 
         // Remaining items in the standard grid
-        items(items.drop(1), key = { it.id }) { item ->
+        items(items.drop(1), key = { it.id }, contentType = { "card" }) { item ->
             MediaCard(
                 title = item.title,
                 posterUrl = item.posterUrl,
@@ -135,7 +136,7 @@ fun PaginatedGrid(
         }
 
         if (isLoading) {
-            item(span = { GridItemSpan(columns) }) {
+            item(span = { GridItemSpan(columns) }, contentType = "loader") {
                 LoadingIndicator(modifier = Modifier.padding(16.dp))
             }
         }

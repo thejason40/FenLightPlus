@@ -103,7 +103,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val allShows = api.watchedShows()
                     .sortedByDescending { it.lastWatchedAt }
                     .take(30)
@@ -145,7 +145,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val lists = api.myLists()
                 tabFetchedAt[TraktTab.MY_LISTS] = System.currentTimeMillis()
                 _state.update { it.copy(isLoading = false, isRefreshing = false, myLists = lists) }
@@ -159,7 +159,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val response = api.likedLists(page = 1, limit = 50)
                 val liked = response.body() ?: emptyList()
                 tabFetchedAt[TraktTab.LIKED_LISTS] = System.currentTimeMillis()
@@ -174,7 +174,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 coroutineScope {
                     val movies = async { api.getWatchlist("movies") }
                     val shows = async { api.getWatchlist("shows") }
@@ -196,7 +196,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val response = api.history(page = 1, limit = 50)
                 val entries = response.body() ?: emptyList()
                 val totalPages = response.headers()["X-Pagination-Page-Count"]?.toIntOrNull() ?: 1
@@ -222,7 +222,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(recentHistoryIsLoadingMore = true) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val nextPage = s.recentHistoryPage + 1
                 val response = api.history(page = nextPage, limit = 50)
                 val entries = response.body() ?: emptyList()
@@ -267,7 +267,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(listItemIsLoadingMore = append, isLoading = !append) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 val response = if (user == "me") {
                     api.myListItems(slug, page = page)
                 } else {
@@ -379,7 +379,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(showCreateListDialog = false) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 api.createList(mapOf(
                     "name" to name,
                     "description" to description,
@@ -399,7 +399,7 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(listToDelete = null) }
             try {
-                val api = app.buildAuthedTraktApi(app.getValidTraktAccessToken())
+                val api = app.authedTraktApi
                 api.deleteList(slug)
                 tabFetchedAt.remove(TraktTab.MY_LISTS)
                 loadMyLists()

@@ -122,9 +122,8 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
     private suspend fun fetchPage1Items(config: BrowseRowConfig, region: String?, excludeAdult: Boolean): List<PaginatedItem> {
         return when (config.type) {
             RowType.TMDB_LIST -> {
-                val token = app.prefs.tmdbAccessToken.first()
                 val listId = config.listId ?: return emptyList()
-                val detail = app.buildTmdbV4Api(token).listDetail(listId, 1)
+                val detail = app.tmdbV4Api.listDetail(listId, 1)
                 detail.results
                     .filter { it.mediaType == "movie" }
                     .map { item ->
@@ -138,10 +137,9 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                     }
             }
             RowType.TRAKT_LIST -> {
-                val token = app.getValidTraktAccessToken()
                 val slug = config.traktSlug ?: return emptyList()
                 val user = config.traktUser ?: "me"
-                val traktApi = app.buildAuthedTraktApi(token)
+                val traktApi = app.authedTraktApi
                 val response = if (user == "me") traktApi.myListItems(slug, page = 1) else traktApi.listItems(user, slug, page = 1)
                 val movies = (response.body() ?: emptyList()).mapNotNull { item -> item.movie?.takeIf { it.ids.tmdb != null } }
                 supervisorScope {
@@ -265,15 +263,15 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                         val token = app.prefs.tmdbAccessToken.first()
                         val accountId = app.prefs.tmdbAccountId.first()
                         if (token.isNotBlank() && accountId.isNotBlank()) {
-                            val lists = app.buildTmdbV4Api(token).accountLists(accountId).results
+                            val lists = app.tmdbV4Api.accountLists(accountId).results
                             _state.update { it.copy(availableTmdbLists = lists) }
                         }
                     } catch (_: Exception) {}
                 }
                 async {
                     try {
-                        val token = runCatching { app.getValidTraktAccessToken() }.getOrNull() ?: return@async
-                        val traktApi = app.buildAuthedTraktApi(token)
+                        if (app.prefs.traktAccessToken.first().isBlank()) return@async
+                        val traktApi = app.authedTraktApi
                         val myLists = traktApi.myLists().map { TraktListEntry(it.slug, "me", it.name) }
                         val likedLists = (traktApi.likedLists().body() ?: emptyList()).map {
                             TraktListEntry(it.list.slug, it.list.user?.username ?: "me", it.list.name)

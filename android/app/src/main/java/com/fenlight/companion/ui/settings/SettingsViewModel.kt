@@ -16,12 +16,14 @@ import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.update.UpdateChecker
 import com.fenlight.companion.data.update.UpdateInfo
 import com.fenlight.companion.data.update.UpdateResult
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
+import java.security.MessageDigest
 
 data class UpdateUiState(
     val checking: Boolean = false,
@@ -91,11 +93,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun downloadUpdate(apkUrl: String) {
+    fun downloadUpdate(info: UpdateInfo) {
         val context = getApplication<Application>()
         val destFile = File(context.getExternalFilesDir(null), "FenLightCompanion-update.apk")
         val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val request = DownloadManager.Request(Uri.parse(apkUrl))
+        val request = DownloadManager.Request(Uri.parse(info.apkUrl))
             .setTitle("FenLight+ Companion update")
             .setDescription("Downloading…")
             .setMimeType("application/vnd.android.package-archive")
@@ -109,18 +111,29 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1L)
                 if (id != downloadId) return
                 context.unregisterReceiver(this)
-                _state.update { it.copy(update = it.update.copy(downloading = false)) }
-                val uri = FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.fileprovider",
-                    destFile,
-                )
-                context.startActivity(
-                    Intent(Intent.ACTION_VIEW)
-                        .setDataAndType(uri, "application/vnd.android.package-archive")
-                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
+                viewModelScope.launch(Dispatchers.IO) {
+                    val expected = info.sha256?.trim()?.lowercase()
+                    if (expected != null && sha256Of(destFile) != expected) {
+                        destFile.delete()
+                        // Reset to error-only state so the screen shows the failure, not the update offer
+                        _state.update {
+                            it.copy(update = UpdateUiState(error = "Update failed integrity check — download discarded"))
+                        }
+                        return@launch
+                    }
+                    _state.update { it.copy(update = it.update.copy(downloading = false)) }
+                    val uri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.fileprovider",
+                        destFile,
+                    )
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW)
+                            .setDataAndType(uri, "application/vnd.android.package-archive")
+                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    )
+                }
             }
         }
         @Suppress("UnspecifiedRegisterReceiverFlag")
@@ -133,5 +146,18 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         } else {
             context.registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         }
+    }
+
+    private fun sha256Of(file: File): String {
+        val digest = MessageDigest.getInstance("SHA-256")
+        file.inputStream().use { input ->
+            val buf = ByteArray(64 * 1024)
+            while (true) {
+                val read = input.read(buf)
+                if (read < 0) break
+                digest.update(buf, 0, read)
+            }
+        }
+        return digest.digest().joinToString("") { "%02x".format(it) }
     }
 }

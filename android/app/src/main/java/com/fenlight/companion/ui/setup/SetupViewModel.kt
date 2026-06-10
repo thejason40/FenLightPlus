@@ -154,7 +154,7 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             _state.update { it.copy(tmdbLoading = true, tmdbError = null) }
             try {
-                val tokenResp = app.buildTmdbV4Api("").createRequestToken(emptyMap())
+                val tokenResp = app.tmdbV4Api.createRequestToken(emptyMap())
                 val requestToken = tokenResp.requestToken
                 prefs.saveTmdbRequestToken(requestToken)
                 val authUrl = "https://www.themoviedb.org/auth/access?request_token=$requestToken"
@@ -173,13 +173,13 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
             _state.update { it.copy(tmdbLoading = true, tmdbError = null) }
             try {
                 val requestToken = prefs.tmdbRequestToken.first()
-                val v4Api = app.buildTmdbV4Api("")
-                val resp = v4Api.createAccessToken(mapOf("request_token" to requestToken))
+                val resp = app.tmdbV4Api.createAccessToken(mapOf("request_token" to requestToken))
                 if (resp.success) {
                     prefs.saveTmdbSession(resp.accessToken, resp.accountId)
                     _state.update { it.copy(tmdbLoading = false, tmdbPolling = false, tmdbAuthed = true) }
                     runCatching {
-                        val acctInfo = app.buildTmdbV4Api(resp.accessToken).accountDetails(resp.accountId)
+                        // Session was saved above, so the shared client picks up the new token
+                        val acctInfo = app.tmdbV4Api.accountDetails(resp.accountId)
                         val name = acctInfo.username ?: acctInfo.name ?: ""
                         if (name.isNotBlank()) prefs.saveTmdbUsername(name)
                     }
@@ -230,7 +230,7 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                     prefs.saveTraktTokens(token.accessToken, token.refreshToken, token.expiresIn)
                     _state.update { it.copy(traktPolling = false, traktAuthed = true) }
                     runCatching {
-                        val username = app.buildAuthedTraktApi(token.accessToken).userSettings().user.username
+                        val username = app.authedTraktApi.userSettings().user.username
                         prefs.saveTraktUsername(username)
                     }
                     return@launch
@@ -282,7 +282,7 @@ class SetupViewModel(application: Application) : AndroidViewModel(application) {
                     )
                     _state.update { it.copy(rdPolling = false, rdAuthed = true) }
                     runCatching {
-                        val rdUser = app.buildAuthedRdApi(token.accessToken).user()
+                        val rdUser = app.authedRdApi.user()
                         prefs.saveRdUsername(rdUser.username)
                     }
                     return@launch

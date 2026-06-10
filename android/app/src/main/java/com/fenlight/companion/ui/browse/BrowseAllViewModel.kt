@@ -53,9 +53,8 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
 
                 when (cfg.type) {
                     RowType.TMDB_LIST -> {
-                        val token = app.prefs.tmdbAccessToken.first()
                         val listId = cfg.listId ?: return@launch
-                        val detail = app.buildTmdbV4Api(token).listDetail(listId, nextPage)
+                        val detail = app.tmdbV4Api.listDetail(listId, nextPage)
                         val filterMediaType = if (mediaType == "tv") "tv" else "movie"
                         val newItems = detail.results
                             .filter { it.mediaType == filterMediaType }
@@ -78,10 +77,9 @@ class BrowseAllViewModel(application: Application) : AndroidViewModel(applicatio
                         }
                     }
                     RowType.TRAKT_LIST -> {
-                        val token = app.getValidTraktAccessToken()
                         val slug = cfg.traktSlug ?: return@launch
                         val user = cfg.traktUser ?: "me"
-                        val traktApi = app.buildAuthedTraktApi(token)
+                        val traktApi = app.authedTraktApi
                         val response = if (user == "me") traktApi.myListItems(slug, page = nextPage) else traktApi.listItems(user, slug, page = nextPage)
                         val body = response.body() ?: emptyList()
                         val newItems = if (mediaType == "tv") {
