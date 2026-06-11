@@ -2,9 +2,10 @@ package com.fenlight.companion
 
 import android.app.Application
 import com.fenlight.companion.data.api.RealDebridApi
+import com.fenlight.companion.data.auth.RefreshedTokens
+import com.fenlight.companion.data.auth.StoredTokens
+import com.fenlight.companion.data.auth.TokenRefresher
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import com.fenlight.companion.data.api.TmdbApi
 import com.fenlight.companion.data.api.TmdbV4Api
 import com.fenlight.companion.data.api.TraktApi
@@ -138,9 +139,6 @@ class FenLightApp : Application() {
             .create(TraktApi::class.java)
     }
 
-    private val rdRefreshMutex = Mutex()
-    private val traktRefreshMutex = Mutex()
-
     // RD base (no auth) for device code / credential exchange
     val rdBaseApi: RealDebridApi by lazy {
         Retrofit.Builder()
@@ -184,32 +182,57 @@ class FenLightApp : Application() {
         throw IOException("Token refresh failed: ${e.message}", e)
     }
 
-    suspend fun getValidTraktAccessToken(): String = traktRefreshMutex.withLock {
-        val expiresAt = prefs.traktExpiresAt.first()
-        val accessToken = prefs.traktAccessToken.first()
-        if (System.currentTimeMillis() < expiresAt - 5 * 60 * 1000L) return@withLock accessToken
-        val refreshToken = prefs.traktRefreshToken.first()
-        val newToken = traktApi.refreshToken(mapOf(
-            "refresh_token" to refreshToken,
-            "client_id" to traktClientId,
-            "client_secret" to traktClientSecret,
-            "grant_type" to "refresh_token",
-        ))
-        prefs.saveTraktTokens(newToken.accessToken, newToken.refreshToken, newToken.expiresIn)
-        newToken.accessToken
+    private val traktRefresher by lazy {
+        TokenRefresher(
+            readTokens = {
+                StoredTokens(
+                    accessToken = prefs.traktAccessToken.first(),
+                    refreshToken = prefs.traktRefreshToken.first(),
+                    expiresAtMs = prefs.traktExpiresAt.first(),
+                )
+            },
+            refresh = { refreshToken ->
+                val token = traktApi.refreshToken(mapOf(
+                    "refresh_token" to refreshToken,
+                    "client_id" to traktClientId,
+                    "client_secret" to traktClientSecret,
+                    "grant_type" to "refresh_token",
+                ))
+                RefreshedTokens(token.accessToken, token.refreshToken, token.expiresIn)
+            },
+            saveTokens = { prefs.saveTraktTokens(it.accessToken, it.refreshToken, it.expiresInSec) },
+        )
     }
 
-    suspend fun getValidRdAccessToken(): String = rdRefreshMutex.withLock {
-        val expiresAt = prefs.rdExpiresAt.first()
-        val accessToken = prefs.rdAccessToken.first()
-        if (System.currentTimeMillis() < expiresAt - 5 * 60 * 1000L) return@withLock accessToken
-        val clientId = prefs.rdClientId.first()
-        val clientSecret = prefs.rdClientSecret.first()
-        val refreshToken = prefs.rdRefreshToken.first()
-        val newToken = rdBaseApi.refreshToken(clientId, clientSecret, refreshToken)
-        prefs.saveRdTokens(newToken.accessToken, newToken.refreshToken, clientId, clientSecret, newToken.expiresIn)
-        newToken.accessToken
+    private val rdRefresher by lazy {
+        TokenRefresher(
+            readTokens = {
+                StoredTokens(
+                    accessToken = prefs.rdAccessToken.first(),
+                    refreshToken = prefs.rdRefreshToken.first(),
+                    expiresAtMs = prefs.rdExpiresAt.first(),
+                )
+            },
+            refresh = { refreshToken ->
+                val token = rdBaseApi.refreshToken(
+                    prefs.rdClientId.first(),
+                    prefs.rdClientSecret.first(),
+                    refreshToken,
+                )
+                RefreshedTokens(token.accessToken, token.refreshToken, token.expiresIn)
+            },
+            saveTokens = {
+                prefs.saveRdTokens(
+                    it.accessToken, it.refreshToken,
+                    prefs.rdClientId.first(), prefs.rdClientSecret.first(), it.expiresInSec,
+                )
+            },
+        )
     }
+
+    suspend fun getValidTraktAccessToken(): String = traktRefresher.validAccessToken()
+
+    suspend fun getValidRdAccessToken(): String = rdRefresher.validAccessToken()
 
     companion object {
         const val TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/"
