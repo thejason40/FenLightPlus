@@ -26,8 +26,9 @@ jobs:
           gradle-version: "8.7"
       - name: Unit tests and debug build
         run: gradle :app:testDebugUnitTest :app:assembleDebug
+      # settings.gradle.kts redirects the build dir to ~/.gradle-builds
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: test-reports
-          path: android/app/build/reports/tests/
+          path: ~/.gradle-builds/FenLightCompanion/app/reports/tests/
