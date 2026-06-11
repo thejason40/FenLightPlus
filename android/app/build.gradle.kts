@@ -95,4 +95,6 @@ dependencies {
     testImplementation(libs.retrofit)
     testImplementation(libs.retrofit.converter.moshi)
     testImplementation(libs.moshi.kotlin)
+    // Android's org.json is a stub in local unit tests; KodiDiscovery parses with JSONObject
+    testImplementation(libs.org.json)
 }
