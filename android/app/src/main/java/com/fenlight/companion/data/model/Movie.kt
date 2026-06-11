@@ -53,6 +53,9 @@ data class TvShow(
     val seasons: List<SeasonSummary>?,
     val credits: Credits?,
     val videos: VideoResults?,
+    // TMDB sends this on tv details and search/tv results, but not discover/tv
+    // (discover filters server-side via include_adult)
+    val adult: Boolean = false,
 )
 
 @JsonClass(generateAdapter = true)

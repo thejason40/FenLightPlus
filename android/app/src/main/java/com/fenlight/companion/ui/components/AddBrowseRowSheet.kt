@@ -16,8 +16,8 @@ import com.fenlight.companion.data.model.Genre
 import com.fenlight.companion.data.model.RowType
 import com.fenlight.companion.data.model.TmdbList
 import com.fenlight.companion.data.model.WatchProvider
-import com.fenlight.companion.ui.movies.TraktListEntry
-import com.fenlight.companion.ui.movies.displayName
+import com.fenlight.companion.ui.media.TraktListEntry
+import com.fenlight.companion.ui.media.displayName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

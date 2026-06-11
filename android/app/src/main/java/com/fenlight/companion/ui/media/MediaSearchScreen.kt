@@ -1,4 +1,4 @@
-package com.fenlight.companion.ui.tvshows
+package com.fenlight.companion.ui.media
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -10,25 +10,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import com.fenlight.companion.data.model.MediaType
 import com.fenlight.companion.ui.components.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TvSearchScreen(
+fun MediaSearchScreen(
+    mediaType: MediaType,
     onBack: () -> Unit,
-    onShowClick: (Int) -> Unit,
+    onItemClick: (Int) -> Unit,
     onShowRecommendations: (Int) -> Unit = {},
     onShowSimilar: (Int) -> Unit = {},
-    vm: TvSearchViewModel = viewModel(),
+    vm: MediaSearchViewModel,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     var selectedItem by remember { mutableStateOf<PaginatedItem?>(null) }
+    val mediaLabel = if (mediaType == MediaType.TV) "TV shows" else "movies"
 
     selectedItem?.let { item ->
         ListManagementSheet(
             mediaId = item.id,
-            mediaType = "show",
+            mediaType = mediaType.tmdbName,
             title = item.title,
             posterUrl = item.posterUrl,
             onShowRecommendations = { onShowRecommendations(item.id) },
@@ -44,7 +46,7 @@ fun TvSearchScreen(
                     OutlinedTextField(
                         value = state.query,
                         onValueChange = vm::onQueryChange,
-                        placeholder = { Text("Search TV shows…") },
+                        placeholder = { Text("Search $mediaLabel…") },
                         leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                         singleLine = true,
                         colors = OutlinedTextFieldDefaults.colors(
@@ -82,7 +84,7 @@ fun TvSearchScreen(
                 state.query.length < 2 && state.items.isEmpty() -> {
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
-                            "Type to search TV shows",
+                            "Type to search $mediaLabel",
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
@@ -93,7 +95,7 @@ fun TvSearchScreen(
                         isLoading = state.isLoading,
                         hasMore = state.hasMore,
                         onLoadMore = vm::loadNextPage,
-                        onItemClick = { onShowClick(it.id) },
+                        onItemClick = { onItemClick(it.id) },
                         onItemLongClick = { selectedItem = it },
                         modifier = Modifier.fillMaxSize(),
                     )

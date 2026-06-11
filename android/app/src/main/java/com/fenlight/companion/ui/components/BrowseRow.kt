@@ -12,7 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.fenlight.companion.ui.movies.BrowseRowState
+import com.fenlight.companion.ui.media.BrowseRowState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

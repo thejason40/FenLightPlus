@@ -17,23 +17,27 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fenlight.companion.R
 import com.fenlight.companion.data.model.BrowseRowConfig
+import com.fenlight.companion.data.model.MediaType
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.fenlight.companion.ui.browse.BrowseAllScreen
-import com.fenlight.companion.ui.movies.MovieBrowseScreen
+import com.fenlight.companion.ui.media.MediaBrowseScreen
+import com.fenlight.companion.ui.media.MediaSearchScreen
 import com.fenlight.companion.ui.movies.MovieDetailScreen
-import com.fenlight.companion.ui.movies.MovieSearchScreen
+import com.fenlight.companion.ui.movies.MovieSearchViewModel
+import com.fenlight.companion.ui.movies.MovieViewModel
 import com.fenlight.companion.ui.person.PersonScreen
 import com.fenlight.companion.ui.realdebrid.RdScreen
 import com.fenlight.companion.ui.related.RelatedScreen
 import com.fenlight.companion.ui.tmdb.TmdbListsScreen
 import com.fenlight.companion.ui.trakt.TraktScreen
 import com.fenlight.companion.ui.tvshows.EpisodeDetailScreen
-import com.fenlight.companion.ui.tvshows.TvBrowseScreen
 import com.fenlight.companion.ui.tvshows.TvDetailScreen
-import com.fenlight.companion.ui.tvshows.TvSearchScreen
+import com.fenlight.companion.ui.tvshows.TvSearchViewModel
+import com.fenlight.companion.ui.tvshows.TvViewModel
 
 private sealed class TopDest(val route: String, val label: String, @DrawableRes val iconRes: Int) {
     object Movies : TopDest("movies", "Movies", R.drawable.icon_movies)
@@ -146,19 +150,23 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize().padding(padding),
         ) {
             composable("movies") {
-                MovieBrowseScreen(
-                    onMovieClick = { id -> navController.navigate("movie_detail/$id") },
+                MediaBrowseScreen(
+                    mediaType = MediaType.MOVIE,
+                    onItemClick = { id -> navController.navigate("movie_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
                     onSeeAll = { config -> navController.navigate("movie_browse_all/${config.toNavArg()}") },
+                    vm = viewModel<MovieViewModel>(),
                 )
             }
             composable("movie_search") {
-                MovieSearchScreen(
+                MediaSearchScreen(
+                    mediaType = MediaType.MOVIE,
                     onBack = { navController.popBackStack() },
-                    onMovieClick = { id -> navController.navigate("movie_detail/$id") },
+                    onItemClick = { id -> navController.navigate("movie_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/movie/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/movie/$id/similar") },
+                    vm = viewModel<MovieSearchViewModel>(),
                 )
             }
             composable("movie_browse_all/{rowConfigJson}") { back ->
@@ -183,19 +191,23 @@ fun HomeScreen(
                 )
             }
             composable("tv") {
-                TvBrowseScreen(
-                    onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                MediaBrowseScreen(
+                    mediaType = MediaType.TV,
+                    onItemClick = { id -> navController.navigate("tv_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
                     onSeeAll = { config -> navController.navigate("tv_browse_all/${config.toNavArg()}") },
+                    vm = viewModel<TvViewModel>(),
                 )
             }
             composable("tv_search") {
-                TvSearchScreen(
+                MediaSearchScreen(
+                    mediaType = MediaType.TV,
                     onBack = { navController.popBackStack() },
-                    onShowClick = { id -> navController.navigate("tv_detail/$id") },
+                    onItemClick = { id -> navController.navigate("tv_detail/$id") },
                     onShowRecommendations = { id -> navController.navigate("related/tv/$id/recommendations") },
                     onShowSimilar = { id -> navController.navigate("related/tv/$id/similar") },
+                    vm = viewModel<TvSearchViewModel>(),
                 )
             }
             composable("tv_browse_all/{rowConfigJson}") { back ->

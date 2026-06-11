@@ -1,4 +1,4 @@
-package com.fenlight.companion.ui.movies
+package com.fenlight.companion.ui.media
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,18 +11,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.fenlight.companion.data.model.BrowseRowConfig
+import com.fenlight.companion.data.model.MediaType
 import com.fenlight.companion.ui.components.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieBrowseScreen(
-    onMovieClick: (Int) -> Unit,
+fun MediaBrowseScreen(
+    mediaType: MediaType,
+    onItemClick: (Int) -> Unit,
     onShowRecommendations: (Int) -> Unit = {},
     onShowSimilar: (Int) -> Unit = {},
     onSeeAll: (BrowseRowConfig) -> Unit = {},
-    vm: MovieViewModel = viewModel(),
+    vm: MediaHomeViewModel,
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
     var selectedItem by remember { mutableStateOf<PaginatedItem?>(null) }
@@ -30,7 +31,7 @@ fun MovieBrowseScreen(
     selectedItem?.let { item ->
         ListManagementSheet(
             mediaId = item.id,
-            mediaType = "movie",
+            mediaType = mediaType.tmdbName,
             title = item.title,
             posterUrl = item.posterUrl,
             onShowRecommendations = { onShowRecommendations(item.id) },
@@ -41,7 +42,7 @@ fun MovieBrowseScreen(
 
     if (state.showAddRowSheet) {
         AddBrowseRowSheet(
-            mediaType = "movie",
+            mediaType = mediaType.tmdbName,
             pendingType = state.pendingRowType,
             pendingLabel = state.pendingRowLabel,
             pendingFilters = state.pendingRowFilters,
@@ -73,7 +74,7 @@ fun MovieBrowseScreen(
                 val fixedIds = listOf("fixed_popular", "fixed_trending")
                 BrowseRow(
                     state = rowState,
-                    onItemClick = { onMovieClick(it.id) },
+                    onItemClick = { onItemClick(it.id) },
                     onItemLongClick = { selectedItem = it },
                     onSeeAll = { onSeeAll(rowState.config) },
                     onRemove = if (rowState.config.id !in fixedIds) {
