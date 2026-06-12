@@ -2,7 +2,6 @@ package com.fenlight.companion.ui.home
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -10,6 +9,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -101,7 +102,9 @@ fun HomeScreen(
             if (showHomeBar) {
                 TopAppBar(
                     title = {
-                        val logoRes = if (isSystemInDarkTheme()) R.drawable.logo_dark else R.drawable.logo_light
+                        // Follow the applied app theme (user-selectable), not the OS setting
+                        val isDark = MaterialTheme.colorScheme.background.luminance() < 0.5f
+                        val logoRes = if (isDark) R.drawable.logo_dark else R.drawable.logo_light
                         Image(
                             painter = painterResource(logoRes),
                             contentDescription = "FenLight+",
@@ -139,6 +142,7 @@ fun HomeScreen(
                                 painter = painterResource(dest.iconRes),
                                 contentDescription = dest.label,
                                 modifier = Modifier.size(24.dp),
+                                colorFilter = ColorFilter.tint(LocalContentColor.current),
                             )
                         },
                         label = { Text(dest.label) },

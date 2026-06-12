@@ -9,10 +9,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -25,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -113,20 +116,61 @@ fun TraktScreen(
         )
     }
 
+    // Like confirmation (long-press in list search results)
+    state.listToLike?.let { list ->
+        AlertDialog(
+            onDismissRequest = vm::cancelLikeList,
+            title = { Text("Like \"${list.name}\"?") },
+            text = { Text("Liked lists appear in your Liked Lists tab.") },
+            confirmButton = { TextButton(onClick = { vm.likeList(list) }) { Text("Like") } },
+            dismissButton = { TextButton(onClick = vm::cancelLikeList) { Text("Cancel") } },
+        )
+    }
+
+    // Unlike confirmation (long-press in Liked Lists)
+    state.listToUnlike?.let { list ->
+        AlertDialog(
+            onDismissRequest = vm::cancelUnlikeList,
+            title = { Text("Unlike \"${list.name}\"?") },
+            text = { Text("The list will be removed from your Liked Lists.") },
+            confirmButton = {
+                TextButton(
+                    onClick = { vm.unlikeList(list) },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                ) { Text("Unlike") }
+            },
+            dismissButton = { TextButton(onClick = vm::cancelUnlikeList) { Text("Cancel") } },
+        )
+    }
+
     val drilledIn = state.listItems.isNotEmpty() || state.selectedListName.isNotEmpty()
+    val searching = state.listSearchActive && !drilledIn
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text(if (drilledIn) state.selectedListName else "Trakt") },
+                title = {
+                    Text(
+                        when {
+                            drilledIn -> state.selectedListName
+                            searching -> "Search Lists"
+                            else -> "Trakt"
+                        }
+                    )
+                },
                 navigationIcon = {
                     if (drilledIn) {
                         IconButton(onClick = vm::clearListItems) { Icon(Icons.Default.ArrowBack, contentDescription = "Back") }
+                    } else if (searching) {
+                        IconButton(onClick = vm::closeListSearch) { Icon(Icons.Default.ArrowBack, contentDescription = "Back") }
                     }
                 },
                 actions = {
-                    if (!drilledIn) {
+                    if (!drilledIn && !searching) {
+                        IconButton(onClick = vm::openListSearch) {
+                            Icon(Icons.Default.Search, contentDescription = "Search public lists")
+                        }
                         if (state.tab == TraktTab.MY_LISTS) {
                             IconButton(onClick = vm::showCreateListDialog) {
                                 Icon(Icons.Default.Add, contentDescription = "Create list")
@@ -157,6 +201,26 @@ fun TraktScreen(
                     onRefresh = vm::refresh,
                     onMovieClick = onMovieClick,
                     onShowClick = onShowClick,
+                )
+                return@Column
+            }
+
+            if (searching) {
+                ListSearchView(
+                    query = state.listSearchQuery,
+                    results = state.listSearchResults,
+                    isSearching = state.isSearchingLists,
+                    searchPerformed = state.listSearchPerformed,
+                    hasMore = state.listSearchHasMore,
+                    isLoadingMore = state.listSearchIsLoadingMore,
+                    onQueryChange = vm::setListSearchQuery,
+                    onSearch = vm::searchLists,
+                    onLoadMore = vm::loadMoreListSearch,
+                    onListClick = { list ->
+                        val user = list.user?.pathId ?: "me"
+                        vm.loadListItems(list.slug, list.name, user)
+                    },
+                    onListLongClick = vm::confirmLikeList,
                 )
                 return@Column
             }
@@ -196,9 +260,11 @@ fun TraktScreen(
                     TraktTab.LIKED_LISTS -> TraktListList(
                         lists = state.likedLists,
                         onListClick = { list ->
-                            val user = list.user?.username ?: "me"
+                            val user = list.user?.pathId ?: "me"
                             vm.loadListItems(list.slug, list.name, user)
                         },
+                        onListLongClick = { list -> vm.confirmUnlikeList(list) },
+                        showOwner = true,
                     )
                     TraktTab.WATCHLIST -> WatchlistTab(state.watchlistMovies, state.watchlistShows, vm::playListMovie, onMovieClick, onShowClick)
                     TraktTab.RECENT -> RecentTab(
@@ -346,6 +412,7 @@ private fun TraktListList(
     lists: List<TraktList>,
     onListClick: (TraktList) -> Unit,
     onListLongClick: ((TraktList) -> Unit)? = null,
+    showOwner: Boolean = false,
 ) {
     if (lists.isEmpty()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -355,21 +422,103 @@ private fun TraktListList(
     }
     LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
         items(lists) { list ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 4.dp)
-                    .combinedClickable(
-                        onClick = { onListClick(list) },
-                        onLongClick = onListLongClick?.let { { it(list) } },
-                    ),
-            ) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                    Text(list.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                    if (list.description.isNotBlank()) {
-                        Text(list.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+            TraktListCard(list, onListClick, onListLongClick, showOwner)
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun TraktListCard(
+    list: TraktList,
+    onListClick: (TraktList) -> Unit,
+    onListLongClick: ((TraktList) -> Unit)? = null,
+    showOwner: Boolean = false,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .combinedClickable(
+                onClick = { onListClick(list) },
+                onLongClick = onListLongClick?.let { { it(list) } },
+            ),
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(list.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+            if (list.description.isNotBlank()) {
+                Text(list.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2)
+            }
+            val owner = list.user?.username?.takeIf { showOwner && it.isNotBlank() }
+            val meta = buildString {
+                if (owner != null) append("by $owner · ")
+                append("${list.itemCount} items · ♥ ${list.likes}")
+            }
+            Text(meta, style = MaterialTheme.typography.labelSmall)
+        }
+    }
+}
+
+@Composable
+private fun ListSearchView(
+    query: String,
+    results: List<TraktList>,
+    isSearching: Boolean,
+    searchPerformed: Boolean,
+    hasMore: Boolean,
+    isLoadingMore: Boolean,
+    onQueryChange: (String) -> Unit,
+    onSearch: () -> Unit,
+    onLoadMore: () -> Unit,
+    onListClick: (TraktList) -> Unit,
+    onListLongClick: (TraktList) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        OutlinedTextField(
+            value = query,
+            onValueChange = onQueryChange,
+            label = { Text("Search public Trakt lists") },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = { onSearch() }),
+            trailingIcon = {
+                IconButton(onClick = onSearch, enabled = query.isNotBlank()) {
+                    Icon(Icons.Default.Search, contentDescription = "Search")
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        )
+
+        when {
+            isSearching -> LoadingIndicator(modifier = Modifier.padding(32.dp))
+            results.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    if (searchPerformed) "No lists found for \"${query.trim()}\""
+                    else "Tap a result to browse it · long-press to like it",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 32.dp),
+                )
+            }
+            else -> {
+                val listState = rememberLazyListState()
+                // Keyed remember, or the lambda keeps the first composition's values
+                val shouldLoadMore by remember(results.size, isLoadingMore, hasMore) {
+                    derivedStateOf {
+                        val last = listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+                        last >= results.size - 5 && !isLoadingMore && hasMore
                     }
-                    Text("${list.itemCount} items · ♥ ${list.likes}", style = MaterialTheme.typography.labelSmall)
+                }
+                LaunchedEffect(shouldLoadMore) { if (shouldLoadMore) onLoadMore() }
+
+                LazyColumn(state = listState, modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(8.dp)) {
+                    items(results) { list ->
+                        TraktListCard(list, onListClick, onListLongClick, showOwner = true)
+                    }
+                    if (isLoadingMore) {
+                        item { LoadingIndicator(modifier = Modifier.padding(16.dp)) }
+                    }
                 }
             }
         }

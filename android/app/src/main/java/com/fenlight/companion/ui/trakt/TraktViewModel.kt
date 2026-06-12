@@ -48,6 +48,18 @@ data class TraktUiState(
     val showCreateListDialog: Boolean = false,
     val listToDelete: TraktList? = null,
     val playMessage: String? = null,
+    // Public list search
+    val listSearchActive: Boolean = false,
+    val listSearchQuery: String = "",
+    val listSearchResults: List<TraktList> = emptyList(),
+    val listSearchPage: Int = 0,
+    val listSearchHasMore: Boolean = false,
+    val listSearchIsLoadingMore: Boolean = false,
+    val isSearchingLists: Boolean = false,
+    val listSearchPerformed: Boolean = false,
+    // Like / unlike confirmations
+    val listToLike: TraktList? = null,
+    val listToUnlike: TraktList? = null,
 )
 
 class TraktViewModel(application: Application) : AndroidViewModel(application) {
@@ -417,6 +429,114 @@ class TraktViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun clearPlayMessage() = _state.update { it.copy(playMessage = null) }
+
+    // ── Public list search ───────────────────────────────────────────────
+
+    fun openListSearch() = _state.update { it.copy(listSearchActive = true) }
+
+    fun closeListSearch() = _state.update {
+        it.copy(
+            listSearchActive = false,
+            listSearchQuery = "",
+            listSearchResults = emptyList(),
+            listSearchPage = 0,
+            listSearchHasMore = false,
+            listSearchPerformed = false,
+        )
+    }
+
+    fun setListSearchQuery(query: String) = _state.update { it.copy(listSearchQuery = query) }
+
+    fun searchLists() {
+        val query = _state.value.listSearchQuery.trim()
+        if (query.isEmpty()) return
+        _state.update {
+            it.copy(listSearchResults = emptyList(), listSearchPage = 0, listSearchHasMore = false)
+        }
+        fetchListSearchPage(query, page = 1, append = false)
+    }
+
+    fun loadMoreListSearch() {
+        val s = _state.value
+        if (s.listSearchIsLoadingMore || !s.listSearchHasMore) return
+        fetchListSearchPage(s.listSearchQuery.trim(), page = s.listSearchPage + 1, append = true)
+    }
+
+    private fun fetchListSearchPage(query: String, page: Int, append: Boolean) {
+        viewModelScope.launch {
+            _state.update { it.copy(isSearchingLists = !append, listSearchIsLoadingMore = append) }
+            try {
+                val response = app.authedTraktApi.searchLists(query, page = page)
+                val results = response.body().orEmpty().map { it.list }
+                val pagesHeader = response.headers()[Pagination.TRAKT_PAGE_COUNT_HEADER]
+                _state.update {
+                    it.copy(
+                        isSearchingLists = false,
+                        listSearchIsLoadingMore = false,
+                        listSearchPerformed = true,
+                        listSearchResults = if (append) it.listSearchResults + results else results,
+                        listSearchPage = page,
+                        listSearchHasMore = Pagination.hasMoreByTraktHeader(pagesHeader, page),
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(isSearchingLists = false, listSearchIsLoadingMore = false, playMessage = "Search failed: ${e.message}")
+                }
+            }
+        }
+    }
+
+    // ── Like / unlike lists ──────────────────────────────────────────────
+
+    fun confirmLikeList(list: TraktList) = _state.update { it.copy(listToLike = list) }
+    fun cancelLikeList() = _state.update { it.copy(listToLike = null) }
+
+    fun likeList(list: TraktList) {
+        viewModelScope.launch {
+            _state.update { it.copy(listToLike = null) }
+            val user = list.user?.pathId
+            if (user == null) {
+                _state.update { it.copy(playMessage = "Can't like \"${list.name}\" — unknown owner") }
+                return@launch
+            }
+            try {
+                app.authedTraktApi.likeList(user, list.ids.trakt?.toString() ?: list.slug)
+                tabFetchedAt.remove(TraktTab.LIKED_LISTS) // show it on next visit
+                _state.update { it.copy(playMessage = "Liked \"${list.name}\"") }
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to like list: ${e.message}") }
+            }
+        }
+    }
+
+    fun confirmUnlikeList(list: TraktList) = _state.update { it.copy(listToUnlike = list) }
+    fun cancelUnlikeList() = _state.update { it.copy(listToUnlike = null) }
+
+    fun unlikeList(list: TraktList) {
+        viewModelScope.launch {
+            _state.update { it.copy(listToUnlike = null) }
+            val user = list.user?.pathId
+            if (user == null) {
+                _state.update { it.copy(playMessage = "Can't unlike \"${list.name}\" — unknown owner") }
+                return@launch
+            }
+            try {
+                app.authedTraktApi.unlikeList(user, list.ids.trakt?.toString() ?: list.slug)
+                _state.update {
+                    it.copy(
+                        // Slugs are unique per owner; trakt ids may be absent
+                        likedLists = it.likedLists.filterNot { l ->
+                            l.slug == list.slug && l.user?.username == list.user?.username
+                        },
+                        playMessage = "Unliked \"${list.name}\"",
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(playMessage = "Failed to unlike list: ${e.message}") }
+            }
+        }
+    }
 
     // List management
     fun showCreateListDialog() = _state.update { it.copy(showCreateListDialog = true) }

@@ -6,15 +6,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Movie
 import androidx.compose.material.icons.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.PlaylistRemove
 import androidx.compose.material.icons.filled.Recommend
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.TravelExplore
 import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -46,6 +50,66 @@ fun ListManagementSheet(
     var showListManagement by remember { mutableStateOf(false) }
     var showTraktListPicker by remember { mutableStateOf(false) }
     var showTmdbListPicker by remember { mutableStateOf(false) }
+    var showListsContaining by remember { mutableStateOf(false) }
+
+    if (showListsContaining) {
+        ModalBottomSheet(onDismissRequest = { showListsContaining = false }) {
+            Text(
+                "Lists containing \"$title\"",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+            HorizontalDivider()
+            val lists = state.listsContaining
+            when {
+                state.listsContainingLoading || lists == null -> {
+                    Box(
+                        Modifier.fillMaxWidth().padding(32.dp),
+                        contentAlignment = Alignment.Center,
+                    ) { CircularProgressIndicator() }
+                }
+                lists.isEmpty() -> {
+                    Text(
+                        "No public lists found containing this title",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(16.dp),
+                    )
+                }
+                else -> {
+                    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
+                        items(lists) { list ->
+                            val isLiked = list.ids.trakt in state.likedListIds
+                            ListItem(
+                                headlineContent = { Text(list.name) },
+                                supportingContent = {
+                                    val owner = list.user?.username?.takeIf { it.isNotBlank() }
+                                    Text(
+                                        buildString {
+                                            if (owner != null) append("by $owner · ")
+                                            append("${list.itemCount} items · ♥ ${list.likes}")
+                                        }
+                                    )
+                                },
+                                trailingContent = {
+                                    IconButton(onClick = { vm.toggleListLike(list) }) {
+                                        Icon(
+                                            if (isLiked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                            contentDescription = if (isLiked) "Unlike list" else "Like list",
+                                            tint = if (isLiked) MaterialTheme.colorScheme.primary
+                                                   else MaterialTheme.colorScheme.onSurfaceVariant,
+                                        )
+                                    }
+                                },
+                            )
+                            HorizontalDivider()
+                        }
+                    }
+                }
+            }
+        }
+        return
+    }
 
     if (showTraktListPicker) {
         ModalBottomSheet(onDismissRequest = { showTraktListPicker = false }) {
@@ -232,6 +296,18 @@ fun ListManagementSheet(
                     headlineContent = { Text("List Management") },
                     leadingContent = { Icon(Icons.Default.ViewList, contentDescription = null) },
                     modifier = Modifier.clickable { showListManagement = true },
+                )
+            }
+
+            // Find public Trakt lists containing this title
+            if (state.hasTraktAuth) {
+                ListItem(
+                    headlineContent = { Text("Find Lists Containing…") },
+                    leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
+                    modifier = Modifier.clickable {
+                        vm.loadListsContaining(mediaId, mediaType)
+                        showListsContaining = true
+                    },
                 )
             }
 

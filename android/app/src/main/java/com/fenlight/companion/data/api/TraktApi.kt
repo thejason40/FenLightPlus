@@ -95,6 +95,44 @@ interface TraktApi {
         @Query("extended") extended: String = "full",
     ): Response<List<TraktHistoryEntry>>
 
+    // Search public lists by name/description
+    @GET("search/list")
+    suspend fun searchLists(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 30,
+    ): Response<List<TraktListSearchResult>>
+
+    // Like / unlike another user's list
+    @POST("users/{user}/lists/{id}/like")
+    suspend fun likeList(@Path("user") user: String, @Path("id") listId: String): Response<Unit>
+
+    @DELETE("users/{user}/lists/{id}/like")
+    suspend fun unlikeList(@Path("user") user: String, @Path("id") listId: String): Response<Unit>
+
+    // Resolve a TMDB id to Trakt ids; type is "movie" or "show".
+    // Result rows share TraktListItem's shape: {type, movie?, show?}.
+    @GET("search/tmdb/{id}")
+    suspend fun lookupByTmdb(
+        @Path("id") tmdbId: Int,
+        @Query("type") type: String,
+    ): List<TraktListItem>
+
+    // Community lists containing an item; {id} is a Trakt id or slug
+    @GET("movies/{id}/lists/personal/popular")
+    suspend fun movieLists(
+        @Path("id") id: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 50,
+    ): Response<List<TraktList>>
+
+    @GET("shows/{id}/lists/personal/popular")
+    suspend fun showLists(
+        @Path("id") id: String,
+        @Query("page") page: Int = 1,
+        @Query("limit") limit: Int = 50,
+    ): Response<List<TraktList>>
+
     @GET("movies/trending")
     suspend fun moviesTrending(
         @Query("page") page: Int = 1,

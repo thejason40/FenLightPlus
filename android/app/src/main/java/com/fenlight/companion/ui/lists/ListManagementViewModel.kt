@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.fenlight.companion.FenLightApp
+import com.fenlight.companion.data.model.MediaType
 import com.fenlight.companion.data.model.TmdbList
 import com.fenlight.companion.data.model.TraktList
 import com.fenlight.companion.util.MediaTypeMapper
@@ -17,6 +18,10 @@ data class ListManagementState(
     val watchlistedIds: Set<Int> = emptySet(),
     val traktLists: List<TraktList> = emptyList(),
     val tmdbLists: List<TmdbList> = emptyList(),
+    // "Find lists containing" — null until loaded
+    val listsContaining: List<TraktList>? = null,
+    val listsContainingLoading: Boolean = false,
+    val likedListIds: Set<Int> = emptySet(), // Trakt list ids the user has liked
 )
 
 class ListManagementViewModel(application: Application) : AndroidViewModel(application) {
@@ -143,6 +148,67 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
                     mapOf("items" to listOf(mapOf("media_type" to tmdbType(mediaType), "media_id" to tmdbId))),
                 )
                 toast("Added to TMDB list")
+            } catch (e: Exception) {
+                toast("Failed: ${e.message}")
+            }
+        }
+    }
+
+    fun loadListsContaining(tmdbId: Int, mediaType: String) {
+        if (_state.value.listsContaining != null || _state.value.listsContainingLoading) return
+        viewModelScope.launch {
+            _state.update { it.copy(listsContainingLoading = true) }
+            try {
+                val api = app.authedTraktApi
+                // Trakt's search type is "movie"/"show" (not TMDB's "tv")
+                val traktType = if (MediaType.from(mediaType) == MediaType.TV) "show" else "movie"
+                val lookup = api.lookupByTmdb(tmdbId, traktType)
+                val traktId = lookup.firstOrNull { it.type == traktType }
+                    ?.let { if (traktType == "movie") it.movie?.ids?.trakt else it.show?.ids?.trakt }
+                if (traktId == null) {
+                    _state.update { it.copy(listsContaining = emptyList(), listsContainingLoading = false) }
+                    return@launch
+                }
+                val lists = if (traktType == "movie") api.movieLists(traktId.toString())
+                            else api.showLists(traktId.toString())
+                // Mark lists the user already likes so the hearts start filled
+                val likedIds = runCatching {
+                    api.likedLists(page = 1, limit = 100).body().orEmpty().mapNotNull { it.list.ids.trakt }
+                }.getOrDefault(emptyList())
+                _state.update {
+                    it.copy(
+                        listsContaining = lists.body().orEmpty(),
+                        listsContainingLoading = false,
+                        likedListIds = likedIds.toSet(),
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update { it.copy(listsContaining = emptyList(), listsContainingLoading = false) }
+                toast("Failed to find lists: ${e.message}")
+            }
+        }
+    }
+
+    fun toggleListLike(list: TraktList) {
+        viewModelScope.launch {
+            val traktId = list.ids.trakt ?: return@launch
+            val user = list.user?.pathId
+            if (user == null) {
+                toast("Can't like \"${list.name}\" — unknown owner")
+                return@launch
+            }
+            val api = app.authedTraktApi
+            val isLiked = traktId in _state.value.likedListIds
+            try {
+                if (isLiked) {
+                    api.unlikeList(user, traktId.toString())
+                    _state.update { it.copy(likedListIds = it.likedListIds - traktId) }
+                    toast("Unliked \"${list.name}\"")
+                } else {
+                    api.likeList(user, traktId.toString())
+                    _state.update { it.copy(likedListIds = it.likedListIds + traktId) }
+                    toast("Liked \"${list.name}\"")
+                }
             } catch (e: Exception) {
                 toast("Failed: ${e.message}")
             }
