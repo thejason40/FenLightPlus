@@ -8,6 +8,7 @@ import com.fenlight.companion.FenLightApp
 import com.fenlight.companion.data.model.MediaType
 import com.fenlight.companion.data.model.TmdbList
 import com.fenlight.companion.data.model.TraktList
+import com.fenlight.companion.data.model.TraktListItem
 import com.fenlight.companion.util.MediaTypeMapper
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -19,6 +20,7 @@ data class ListManagementState(
     val traktLists: List<TraktList> = emptyList(),
     val tmdbLists: List<TmdbList> = emptyList(),
     // "Find lists containing" — null until loaded
+    val listsContainingForTmdbId: Int? = null,
     val listsContaining: List<TraktList>? = null,
     val listsContainingLoading: Boolean = false,
     val listsContainingPage: Int = 0,
@@ -27,6 +29,10 @@ data class ListManagementState(
     val listsContainingTraktId: String? = null,
     val listsContainingTraktType: String? = null,
     val likedListIds: Set<Int> = emptySet(), // Trakt list ids the user has liked
+    // Opened list items (nested sheet)
+    val openedList: TraktList? = null,
+    val openedListItems: List<TraktListItem>? = null,
+    val openedListLoading: Boolean = false,
 )
 
 class ListManagementViewModel(application: Application) : AndroidViewModel(application) {
@@ -160,9 +166,22 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
     }
 
     fun loadListsContaining(tmdbId: Int, mediaType: String) {
-        if (_state.value.listsContaining != null || _state.value.listsContainingLoading) return
+        val s = _state.value
+        if (s.listsContainingForTmdbId == tmdbId && (s.listsContaining != null || s.listsContainingLoading)) return
+        // Reset all "containing" state for the new title
+        _state.update {
+            it.copy(
+                listsContainingForTmdbId = tmdbId,
+                listsContaining = null,
+                listsContainingLoading = true,
+                listsContainingPage = 0,
+                listsContainingHasMore = false,
+                listsContainingLoadingMore = false,
+                listsContainingTraktId = null,
+                listsContainingTraktType = null,
+            )
+        }
         viewModelScope.launch {
-            _state.update { it.copy(listsContainingLoading = true) }
             try {
                 // Public endpoints — no auth required
                 val publicApi = app.traktApi
@@ -226,6 +245,27 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
                 _state.update { it.copy(listsContainingLoadingMore = false) }
             }
         }
+    }
+
+    fun openList(list: TraktList) {
+        _state.update { it.copy(openedList = list, openedListItems = null, openedListLoading = true) }
+        viewModelScope.launch {
+            try {
+                val user = list.user?.pathId ?: run {
+                    _state.update { it.copy(openedListItems = emptyList(), openedListLoading = false) }
+                    return@launch
+                }
+                val response = app.traktApi.listItems(user, list.ids.slug)
+                _state.update { it.copy(openedListItems = response.body().orEmpty(), openedListLoading = false) }
+            } catch (e: Exception) {
+                _state.update { it.copy(openedListItems = emptyList(), openedListLoading = false) }
+                toast("Failed to load list: ${e.message}")
+            }
+        }
+    }
+
+    fun closeList() {
+        _state.update { it.copy(openedList = null, openedListItems = null, openedListLoading = false) }
     }
 
     fun toggleListLike(list: TraktList) {

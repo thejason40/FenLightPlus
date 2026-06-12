@@ -30,7 +30,7 @@ data class TraktListIds(
 @JsonClass(generateAdapter = true)
 data class TraktList(
     val name: String,
-    val description: String = "",
+    val description: String? = null,
     val ids: TraktListIds,
     val user: TraktUser? = null,
     @Json(name = "item_count") val itemCount: Int = 0,
