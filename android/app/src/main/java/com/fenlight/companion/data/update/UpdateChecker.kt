@@ -1,7 +1,5 @@
 package com.fenlight.companion.data.update
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Dispatchers
@@ -19,14 +17,13 @@ import java.util.concurrent.TimeUnit
 //   "releaseNotes": "Bug fixes and improvements",
 //   "sha256": "<hex sha-256 of the APK>"
 // }
-@JsonClass(generateAdapter = true)
 data class UpdateInfo(
-    @Json(name = "versionName") val versionName: String = "",
-    @Json(name = "versionCode") val versionCode: Int = 0,
-    @Json(name = "apkUrl") val apkUrl: String = "",
-    @Json(name = "releaseNotes") val releaseNotes: String = "",
+    val versionName: String = "",
+    val versionCode: Int = 0,
+    val apkUrl: String = "",
+    val releaseNotes: String = "",
     // Optional: when present, the downloaded APK is verified against it before install
-    @Json(name = "sha256") val sha256: String? = null,
+    val sha256: String? = null,
 )
 
 sealed class UpdateResult {
