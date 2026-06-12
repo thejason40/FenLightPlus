@@ -91,7 +91,7 @@ fun ListManagementSheet(
                                         }
                                     )
                                 },
-                                trailingContent = {
+                                trailingContent = if (state.hasTraktAuth) ({
                                     IconButton(onClick = { vm.toggleListLike(list) }) {
                                         Icon(
                                             if (isLiked) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -100,7 +100,7 @@ fun ListManagementSheet(
                                                    else MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                     }
-                                },
+                                }) else null,
                             )
                             HorizontalDivider()
                         }
@@ -299,17 +299,15 @@ fun ListManagementSheet(
                 )
             }
 
-            // Find public Trakt lists containing this title
-            if (state.hasTraktAuth) {
-                ListItem(
-                    headlineContent = { Text("Find Lists Containing…") },
-                    leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
-                    modifier = Modifier.clickable {
-                        vm.loadListsContaining(mediaId, mediaType)
-                        showListsContaining = true
-                    },
-                )
-            }
+            // Find public Trakt lists containing this title — public endpoint, no auth required
+            ListItem(
+                headlineContent = { Text("Find Lists Containing…") },
+                leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
+                modifier = Modifier.clickable {
+                    vm.loadListsContaining(mediaId, mediaType)
+                    showListsContaining = true
+                },
+            )
 
             if (onShowRecommendations != null) {
                 ListItem(

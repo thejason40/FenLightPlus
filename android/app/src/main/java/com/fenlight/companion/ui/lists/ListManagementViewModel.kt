@@ -159,21 +159,23 @@ class ListManagementViewModel(application: Application) : AndroidViewModel(appli
         viewModelScope.launch {
             _state.update { it.copy(listsContainingLoading = true) }
             try {
-                val api = app.authedTraktApi
-                // Trakt's search type is "movie"/"show" (not TMDB's "tv")
+                // Public endpoints — no auth required
+                val publicApi = app.traktApi
                 val traktType = if (MediaType.from(mediaType) == MediaType.TV) "show" else "movie"
-                val lookup = api.lookupByTmdb(tmdbId, traktType)
+                val lookup = publicApi.lookupByTmdb(tmdbId, traktType)
                 val traktId = lookup.firstOrNull { it.type == traktType }
                     ?.let { if (traktType == "movie") it.movie?.ids?.trakt else it.show?.ids?.trakt }
                 if (traktId == null) {
                     _state.update { it.copy(listsContaining = emptyList(), listsContainingLoading = false) }
                     return@launch
                 }
-                val lists = if (traktType == "movie") api.movieLists(traktId.toString())
-                            else api.showLists(traktId.toString())
-                // Mark lists the user already likes so the hearts start filled
+                val lists = if (traktType == "movie") publicApi.movieLists(traktId.toString())
+                            else publicApi.showLists(traktId.toString())
+                // Mark lists the authenticated user already likes (skip if not logged in)
                 val likedIds = runCatching {
-                    api.likedLists(page = 1, limit = 100).body().orEmpty().mapNotNull { it.list.ids.trakt }
+                    val token = app.prefs.traktAccessToken.first()
+                    if (token.isBlank()) return@runCatching emptyList()
+                    app.authedTraktApi.likedLists(page = 1, limit = 100).body().orEmpty().mapNotNull { it.list.ids.trakt }
                 }.getOrDefault(emptyList())
                 _state.update {
                     it.copy(
