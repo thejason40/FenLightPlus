@@ -54,8 +54,8 @@ fun ListManagementSheet(
     var showListsContaining by remember { mutableStateOf(false) }
     var showOpenedList by remember { mutableStateOf(false) }
 
-    if (showOpenedList && state.openedList != null) {
-        val openedList = state.openedList
+    if (showOpenedList) {
+        val openedList = state.openedList ?: return
         ModalBottomSheet(onDismissRequest = { showOpenedList = false; vm.closeList() }) {
             Text(
                 openedList.name,
@@ -71,14 +71,15 @@ fun ListManagementSheet(
                 )
             }
             HorizontalDivider()
+            val openedListItems = state.openedListItems
             when {
-                state.openedListLoading || state.openedListItems == null -> {
+                state.openedListLoading || openedListItems == null -> {
                     Box(
                         Modifier.fillMaxWidth().padding(32.dp),
                         contentAlignment = Alignment.Center,
                     ) { CircularProgressIndicator() }
                 }
-                state.openedListItems.isEmpty() -> {
+                openedListItems.isEmpty() -> {
                     Text(
                         "No items found",
                         style = MaterialTheme.typography.bodySmall,
@@ -88,7 +89,7 @@ fun ListManagementSheet(
                 }
                 else -> {
                     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp)) {
-                        items(state.openedListItems, key = { it.movie?.ids?.trakt ?: it.show?.ids?.trakt ?: 0 }) { item ->
+                        items(openedListItems, key = { it.movie?.ids?.trakt ?: it.show?.ids?.trakt ?: 0 }) { item ->
                             val itemTitle = item.movie?.title ?: item.show?.title ?: ""
                             val year = item.movie?.year ?: item.show?.year
                             val typeLabel = if (item.type == "movie") "Movie" else "Show"
