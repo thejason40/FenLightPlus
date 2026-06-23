@@ -14,7 +14,7 @@ progressDialogBG = xbmcgui.DialogProgressBG
 endOfDirectory, addSortMethod, listdir, mkdir, mkdirs = xbmcplugin.endOfDirectory, xbmcplugin.addSortMethod, xbmcvfs.listdir, xbmcvfs.mkdir, xbmcvfs.mkdirs
 addDirectoryItem, addDirectoryItems, setContent, setCategory = xbmcplugin.addDirectoryItem, xbmcplugin.addDirectoryItems, xbmcplugin.setContent, xbmcplugin.setPluginCategory
 path_join = osPath.join
-img_url = 'https://i.imgur.com/%s.png'
+img_url = 'https://external-content.duckduckgo.com/iu/?u=https://i.imgur.com/%s.png'
 invoker_switch_dict = {'true': 'false', 'false': 'true'}
 empty_poster, nextpage = img_url % icons.box_office, img_url % icons.nextpage
 nextpage_landscape = img_url % icons.nextpage_landscape
