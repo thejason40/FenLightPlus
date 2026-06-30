@@ -25,6 +25,15 @@ def routing(sys):
 		if mode == 'playback.video':
 			from modules.player import FenLightPlayer
 			return FenLightPlayer().run(_get('url', None), _get('obj', None))
+	if mode == 'app_list_sources':
+		from modules.sources import Sources
+		return Sources().playback_prep({**params, 'device_list': 'true', 'background': 'true'})
+	if mode == 'app_play_source':
+		from modules.sources import Sources
+		return Sources().playback_prep({**params, 'play_selected': _get('request_id', '')})
+	if mode == 'app_capabilities':
+		from modules.device_select import capabilities
+		return capabilities()
 	if 'choice' in mode:
 		from indexers import dialogs
 		return exec('dialogs.%s(params)' % mode)

@@ -70,13 +70,14 @@ class Sources():
 		params_get = self.params.get
 		self.num_episodes = params.get('nextep_settings', {}).get('num_episodes', params.get('num_episodes', None))
 		self.play_type, self.background, self.prescrape = params_get('play_type', ''), params_get('background', 'false') == 'true', params_get('prescrape', self.prescrape) == 'true'
+		self.device_list, self.play_selected = params_get('device_list', 'false') == 'true', params_get('play_selected', None)
 		self.random, self.random_continual = params_get('random', 'false') == 'true', params_get('random_continual', 'false') == 'true'
 		if self.play_type:
 			if self.play_type == 'autoplay_nextep': self.autoplay_nextep, self.autoscrape_nextep = True, False
 			elif self.play_type == 'random_continual': self.autoplay_nextep, self.autoscrape_nextep = False, False
 			else: self.autoplay_nextep, self.autoscrape_nextep = False, True
 		else: self.autoplay_nextep, self.autoscrape_nextep = autoplay_next_episode(), autoscrape_next_episode()
-		self.autoscrape = self.autoscrape_nextep and self.background
+		self.autoscrape = self.autoscrape_nextep and self.background and not (self.device_list or self.play_selected)
 		self.auto_rescrape_with_all, self.auto_episode_group = auto_rescrape_with_all(), auto_episode_group()
 		self.nextep_settings, self.disable_autoplay_next_episode = params_get('nextep_settings', {}), params_get('disable_autoplay_next_episode', 'false') == 'true'
 		self.ignore_scrape_filters = params_get('ignore_scrape_filters', 'false') == 'true'
@@ -126,6 +127,9 @@ class Sources():
 			if not self.ext_folder or not self.ext_name: return self.disable_external('Error Importing External Module')
 
 	def get_sources(self):
+		if self.play_selected:
+			from modules.device_select import play_selected_source
+			return play_selected_source(self)
 		if not self.progress_dialog and not self.background: self._make_progress_dialog()
 		results = []
 		if self.prescrape and any(x in self.active_internal_scrapers for x in default_internal_scrapers):
@@ -140,6 +144,9 @@ class Sources():
 			self.orig_results = self.collect_results()
 			if not self.orig_results and not self.active_external: self._kill_progress_dialog()
 			results = self.process_results(self.orig_results)
+		if self.device_list:
+			from modules.device_select import output_sources_directory
+			return output_sources_directory(self, results)
 		if not results: return self._process_post_results()
 		if self.autoscrape: return results
 		else: return self.play_source(results)
