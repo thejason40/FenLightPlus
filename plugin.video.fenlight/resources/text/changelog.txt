@@ -1,3 +1,7 @@
+[COLOR dodgerblue][B]Version 2.3.0[/B][/COLOR]
+- Added functionality for android FenLight+ Companion app.
+- Fixed imgur images not showing in UK
+
 [COLOR dodgerblue][B]Version 2.2.12[/B][/COLOR]
 - Fixed default TMDB key.
 
