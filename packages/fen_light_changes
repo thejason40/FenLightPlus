@@ -1,3 +1,4 @@
 [COLOR dodgerblue][B]Version 2.3.1[/B][/COLOR]
 - Fixed functionality for android FenLight+ Companion app.
 - Fixed imgur images not showing in UK
+- Made a change to how scraped media is played so that subtitles are controllable from remote app.

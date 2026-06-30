@@ -31,10 +31,20 @@ class FenLightPlayer(xbmc_player):
 	def play_video(self, url, obj, num_episodes=None):
 		self.set_constants(url, obj)
 		volume_checker()
-		self.play(self.url, self.make_listing())
+
+		listing = self.make_listing()
+		self.play(self.url)
 		if not self.is_generic:
 			self.check_playback_start()
-			if self.playback_successful: self.monitor()
+			if self.playback_successful:
+				try: self.updateInfoTag(listing)
+				except Exception: pass
+				if self.playback_percent > 0.0:
+					try:
+						_total = self.getTotalTime()
+						if _total > 0: self.seekTime(_total * self.playback_percent / 100.0)
+					except Exception: pass
+				self.monitor()
 			else:
 				self.sources_object.playback_successful = self.playback_successful
 				self.sources_object.cancel_all_playback = self.cancel_all_playback
