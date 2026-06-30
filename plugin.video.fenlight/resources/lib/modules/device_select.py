@@ -66,11 +66,15 @@ def output_sources_directory(src, results):
             json.dump(results, f)
     except Exception:
         pass
+
+    _drop = ('mode', 'device_list', 'background', 'request_id', 'selected_index', 'meta', 'play_selected')
+    carry = {k: v for k, v in src.params.items() if k not in _drop}
     items = []
     for index, item in enumerate(results):
         meta = _serialise_source(item)
         label = '%s | %s | %s' % (meta['provider'], meta['quality'], meta['size'])
         url = kodi_utils.build_url({
+            **carry,
             'mode': 'app_play_source',
             'request_id': request_id,
             'selected_index': index,
