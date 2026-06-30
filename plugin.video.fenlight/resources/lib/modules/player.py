@@ -39,11 +39,14 @@ class FenLightPlayer(xbmc_player):
 			if self.playback_successful:
 				try: self.updateInfoTag(listing)
 				except Exception: pass
-				if self.playback_percent > 0.0:
-					try:
-						_total = self.getTotalTime()
-						if _total > 0: self.seekTime(_total * self.playback_percent / 100.0)
-					except Exception: pass
+
+				try:
+					_total = self.getTotalTime()
+					if self.playback_percent > 0.0 and _total > 0:
+						self.seekTime(_total * self.playback_percent / 100.0)
+					else:
+						self.seekTime(self.getTime())
+				except Exception: pass
 				self.monitor()
 			else:
 				self.sources_object.playback_successful = self.playback_successful
