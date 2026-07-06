@@ -1,3 +1,7 @@
+[COLOR dodgerblue][B]Version 2.4.0[/B][/COLOR]
+- Fixed Trakt API
+- Updated Torbox login process
+
 [COLOR dodgerblue][B]Version 2.3.2[/B][/COLOR]
 - Made a change to how scraped media is played so that subtitles are controllable from remote app.
 

@@ -91,7 +91,7 @@ def call_trakt(path, params={}, data=None, is_delete=False, with_auth=True, meth
 	if method == 'sort_by_headers' and 'X-Sort-By' in headers and 'X-Sort-How' in headers:
 		try: result = sort_list(headers['X-Sort-By'], headers['X-Sort-How'], result)
 		except: pass
-	if pagination: return (result, headers['X-Pagination-Page-Count'])
+	if pagination: return (result, headers.get('X-Pagination-Page-Count'), headers.get('X-Sort-By'), headers.get('X-Sort-How'))
 	else: return result
 
 def trakt_get_device_code():
@@ -318,7 +318,7 @@ def trakt_get_hidden_items(list_type):
 	results = []
 	results_append = results.append
 	string = 'trakt_hidden_items_%s' % list_type
-	params = {'path': 'users/hidden/%s', 'path_insert': list_type, 'params': {'limit': 1500, 'type': 'show'}, 'with_auth': True, 'pagination': False}
+	params = {'path': 'users/hidden/%s', 'path_insert': list_type, 'params': {'type': 'show'}, 'with_auth': True, 'all_pages': True}
 	return cache_trakt_object(_process, string, params)
 
 def trakt_watched_status_mark(action, media, media_id, tvdb_id=0, season=None, episode=None, key='tmdb'):
@@ -393,8 +393,8 @@ def trakt_fetch_collection_watchlist(list_type, media_type):
 	key, r_key, string_insert = ('movie', 'released', 'movie') if media_type in ('movie', 'movies') else ('show', 'first_aired', 'tvshow')
 	collected_at = 'listed_at' if list_type == 'watchlist' else 'collected_at' if media_type in ('movie', 'movies') else 'last_collected_at'
 	string = 'trakt_%s_%s' % (list_type, string_insert)
-	path = 'sync/%s/%s?extended=full'
-	params = {'path': path, 'path_insert': (list_type, media_type), 'with_auth': True, 'pagination': False}
+	path = 'sync/%s/%s'
+	params = {'path': path, 'path_insert': (list_type, media_type), 'params': {'extended': 'full'}, 'with_auth': True, 'all_pages': True}
 	return cache_trakt_object(_process, string, params)
 
 def add_to_list(user, slug, data):
@@ -467,7 +467,7 @@ def trakt_favorites(media_type, dummy_arg):
 					for i in get_trakt(params)]
 	media_type = 'movies' if media_type in ('movie', 'movies') else 'shows'
 	string = 'trakt_favorites_%s' % media_type
-	params = {'path': 'users/me/favorites/%s/%s', 'path_insert': (media_type, 'title'), 'with_auth': True, 'pagination': False}
+	params = {'path': 'users/me/favorites/%s/%s', 'path_insert': (media_type, 'title'), 'with_auth': True, 'all_pages': True}
 	return cache_trakt_object(_process, string, params)
 
 def trakt_lists_with_media(media_type, imdb_id):
@@ -498,8 +498,8 @@ def get_trakt_list_contents(list_type, user, slug, with_auth):
 			except: pass
 		return results
 	string = 'trakt_list_contents_%s_%s_%s' % (list_type, user, slug)
-	if user == 'Trakt Official': params = {'path': 'lists/%s/items', 'path_insert': slug, 'params': {'extended':'full'}, 'method': 'sort_by_headers'}
-	else: params = {'path': 'users/%s/lists/%s/items', 'path_insert': (user, slug), 'params': {'extended':'full'}, 'with_auth': with_auth, 'method': 'sort_by_headers'}
+	if user == 'Trakt Official': params = {'path': 'lists/%s/items', 'path_insert': slug, 'params': {'extended':'full'}, 'method': 'sort_by_headers', 'all_pages': True}
+	else: params = {'path': 'users/%s/lists/%s/items', 'path_insert': (user, slug), 'params': {'extended':'full'}, 'with_auth': with_auth, 'method': 'sort_by_headers', 'all_pages': True}
 	return cache_trakt_object(_process, string, params)
 
 def trakt_trending_popular_lists(list_type, page_no):
@@ -514,7 +514,7 @@ def trakt_get_lists(list_type):
 	elif list_type == 'liked_lists':
 		string = 'trakt_liked_lists'
 		path = 'users/likes/lists%s'
-	params = {'path': path, 'params': {'limit': 1000}, 'pagination': False, 'with_auth': True}
+	params = {'path': path, 'all_pages': True, 'with_auth': True}
 	return cache_trakt_object(get_trakt, string, params)
 
 def get_trakt_list_selection(list_choice=None):
@@ -657,7 +657,7 @@ def trakt_indicators_movies():
 		insert_append(('movie', tmdb_id, '', '', item['last_watched_at'], movie['title']))
 	insert_list = []
 	insert_append = insert_list.append
-	params = {'path': 'sync/watched/movies%s', 'with_auth': True, 'pagination': False}
+	params = {'path': 'sync/watched/movies%s', 'with_auth': True, 'all_pages': True}
 	result = get_trakt(params)
 	threads = list(make_thread_list(_process, result))
 	[i.join() for i in threads]
@@ -680,7 +680,9 @@ def trakt_indicators_tv():
 				insert_append(('episode', tmdb_id, season_no, e['number'], last_watched_at, title))
 	insert_list = []
 	insert_append = insert_list.append
-	params = {'path': 'users/me/watched/shows?extended=full%s', 'with_auth': True, 'pagination': False}
+	# extended=progress is now REQUIRED to get the seasons/episodes data this parses (the old
+	# extended=full no longer includes season progress). It's heavy, so pagination matters most here.
+	params = {'path': 'sync/watched/shows%s', 'params': {'extended': 'progress'}, 'with_auth': True, 'all_pages': True}
 	result = get_trakt(params)
 	threads = list(make_thread_list(_process, result))
 	[i.join() for i in threads]
@@ -802,9 +804,28 @@ def trakt_get_activity():
 	return get_trakt(params)
 
 def get_trakt(params):
+	if params.get('all_pages'): return get_trakt_all_pages(params)
 	result = call_trakt(params['path'] % params.get('path_insert', '') + '?limit=1000', params=params.get('params', {}), data=params.get('data'), is_delete=params.get('is_delete', False),
 						with_auth=params.get('with_auth', False), method=params.get('method'), pagination=params.get('pagination', True), page_no=params.get('page_no'))
 	return result[0] if params.get('pagination', True) else result
+
+def get_trakt_all_pages(params, limit=250, max_pages=200):
+	base_path = params['path'] % params.get('path_insert', '')
+	call_params = dict(params.get('params', {})); call_params['limit'] = limit
+	with_auth, method = params.get('with_auth', False), params.get('method')
+	items, sort_by, sort_how, page = [], None, None, 1
+	while page <= max_pages:
+		result = call_trakt(base_path, params=call_params, with_auth=with_auth, pagination=True, page_no=page)
+		if not result: break
+		chunk = result[0]
+		if len(result) > 3 and result[2]: sort_by, sort_how = result[2], result[3]
+		if not chunk: break
+		items.extend(chunk)
+		page += 1
+	if method == 'sort_by_headers' and sort_by:
+		try: items = sort_list(sort_by, sort_how, items)
+		except: pass
+	return items
 
 def trakt_sync_activities(force_update=False):
 	# def clear_watched_tvshow_cache():

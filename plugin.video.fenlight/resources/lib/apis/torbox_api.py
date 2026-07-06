@@ -1,10 +1,12 @@
+import time
 import requests
 from threading import Thread
-from urllib.parse import urlencode
+from urllib.parse import urlencode, quote
 from caches.settings_cache import get_setting, set_setting
 from caches.main_cache import cache_object
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
-from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog
+from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog, sleep, progress_dialog
+from modules.utils import copy2clip, get_datetime, jsondate_to_datetime as js2date
 # from modules.kodi_utils import logger
 
 base_url = 'https://api.torbox.app/v1/api/'
@@ -165,17 +167,46 @@ class TorBoxAPI:
 		return False
 
 	def auth(self):
-		api_key = kodi_dialog().input('TorBox API Key:')
-		if not api_key: return
+
 		try:
-			self.token = api_key
-			r = self.account_info()
-			customer = r['data']['customer']
-			set_setting('tb.token', api_key)
+			r = requests.get(base_url + 'user/auth/device/start', params={'app': 'FenLight+ Companion'}, timeout=timeout).json().get('data')
+		except Exception: r = None
+		if not r: return ok_dialog(text='Could not start TorBox authorization')
+		device_code, user_code = r['device_code'], r['code']
+		verify_url = r.get('friendly_verification_url') or r.get('verification_url', 'https://torbox.app/oauth/device')
+		interval = int(r.get('interval', 5))
+		try:
+			expires_in = int((js2date(r['expires_at'], '%Y-%m-%dT%H:%M:%SZ') - get_datetime()).total_seconds())
+			if expires_in <= 0: expires_in = 300
+		except Exception: expires_in = 300
+		try: copy2clip(user_code)
+		except Exception: pass
+		qr_icon = 'https://qrcode.tec-it.com/API/QRCode?data=%s&backcolor=%%23ffffff&size=small&quietzone=1&errorcorrection=H' % quote(verify_url, safe='')
+		content = 'Scan the QR code or navigate to: [B]%s[/B][CR]Enter this code: [B]%s[/B]  (copied to clipboard)' % (verify_url, user_code)
+		progressDialog = progress_dialog('TorBox Authorize', qr_icon)
+		progressDialog.update(content, 0)
+		token, start, time_passed = None, time.time(), 0
+		while not progressDialog.iscanceled() and time_passed < expires_in and not token:
+			sleep(1000 * interval)
+			try: response = requests.post(base_url + 'user/auth/device/token', json={'device_code': device_code}, timeout=timeout).json()
+			except Exception: continue
+
+			if response.get('success'):
+				token = (response.get('data') or {}).get('access_token')
+			if not token:
+				time_passed = time.time() - start
+				progressDialog.update(content, int(100 * time_passed / expires_in))
+		try: progressDialog.close()
+		except Exception: pass
+		if token:
+			self.token = token
+			try: self.account_info()['data']['customer']  # validate the token
+			except Exception: pass
+			set_setting('tb.token', token)
 			set_setting('tb.enabled', 'true')
-			message = 'Success'
-		except: message = 'An Error Occurred'
-		ok_dialog(text=message)
+			ok_dialog(text='Success')
+		else:
+			ok_dialog(text='Authorization cancelled or timed out')
 
 	def revoke(self):
 		if not confirm_dialog(): return
