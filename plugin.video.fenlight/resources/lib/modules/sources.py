@@ -306,7 +306,13 @@ class Sources():
 	def import_external_scrapers(self):
 		try:
 			append_module_to_syspath('special://home/addons/%s/lib' % self.ext_folder)
-			self.ext_sources = manual_module_import('%s.sources_%s' % (self.ext_name, self.ext_name))
+			self.ext_legacy = False
+			try:
+				self.ext_sources = manual_module_import('%s.sources_%s' % (self.ext_name, self.ext_name))  # cocoscrapers
+			except Exception:
+				mod = manual_module_import(self.ext_name)  # magneto: top-level sources()
+				if not callable(getattr(mod, 'sources', None)): return False
+				self.ext_sources, self.ext_legacy = mod, True
 			self.provider_defaults = [k.split('.')[1] for k, v in manual_function_import('%s.modules.control' % self.ext_name, 'getProviderDefaults')().items() if v == 'true']
 		except: return False
 		return True
@@ -325,6 +331,7 @@ class Sources():
 		return sourceDict
 
 	def external_sources(self):
+		if getattr(self, 'ext_legacy', False): return self.legacy_external_sources()
 		try:
 			all_sources = self.ext_sources.total_providers['torrents']
 			if self.disabled_ext_ignored: active_sources = all_sources
@@ -335,7 +342,11 @@ class Sources():
 		return sourceDict
 
 	def legacy_external_sources(self):
-		try: sourceDict = manual_function_import(self.ext_name, 'sources')(specified_folders=['torrents'], ret_all=self.disabled_ext_ignored)
+		try:
+			ret_all = self.disabled_ext_ignored or self.default_ext_only
+			sourceDict = manual_function_import(self.ext_name, 'sources')(specified_folders=['torrents'], ret_all=ret_all)
+			if self.default_ext_only and not self.disabled_ext_ignored:
+				sourceDict = [i for i in sourceDict if i[0] in self.provider_defaults]
 		except: sourceDict = []
 		return sourceDict
 

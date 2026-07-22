@@ -103,8 +103,15 @@ def external_scraper_choice(params):
 	try:
 		append_module_to_syspath('special://home/addons/%s/lib' % module_id)
 		main_folder_name = module_id.split('.')[-1]
-		manual_module_import('%s.sources_%s' % (main_folder_name, main_folder_name))
-		success = True
+		try:
+			manual_module_import('%s.sources_%s' % (main_folder_name, main_folder_name))  # cocoscrapers-style
+			success = True
+		except Exception:
+			try:
+				mod = manual_module_import(main_folder_name)  # magneto-style
+				success = callable(getattr(mod, 'sources', None))
+			except Exception:
+				success = False
 	except: success = False
 	if success:
 		try:

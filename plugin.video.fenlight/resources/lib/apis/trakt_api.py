@@ -82,7 +82,8 @@ def call_trakt(path, params={}, data=None, is_delete=False, with_auth=True, meth
 	elif status_code == 429:
 		headers = response.headers
 		if 'Retry-After' in headers:
-			sleep(1000 * headers['Retry-After'])
+			try: sleep(1000 * int(headers['Retry-After']))
+			except ValueError: sleep(3000)
 			response = send_query()
 	response.encoding = 'utf-8'
 	try: result = response.json()
