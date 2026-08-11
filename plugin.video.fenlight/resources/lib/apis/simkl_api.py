@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 import time
 import requests
 from threading import Lock
@@ -756,6 +757,168 @@ def simkl_hold(media_type, page_no=1):
 
 def simkl_dropped(media_type, page_no=1):
 	return simkl_status_list('dropped', media_type)
+
+# --- Simkl public "discover" data: editorial Browse rows (client-side recipes over one cached file) ---
+_HIDDEN_GEMS_MIN_RANK = 1000
+_HIDDEN_GEMS_MIN_RATING = 7.5
+_HIGHEST_RATED_MIN_VOTES = 1000
+_ACCLAIMED_MIN_RATING = 8.0
+_ACCLAIMED_MIN_VOTES = 10000
+_MARATHON_MIN_EPISODES = 50
+_QUICK_WATCH_MAX_MINUTES = 90
+
+def _fetch_list(url):
+	_rate_gate()
+	try:
+		resp = requests.get(url, params=_base_params(), headers={'User-Agent': '%s/%s' % (APP_NAME, addon_version())}, timeout=timeout)
+		resp.encoding = 'utf-8'
+		data = resp.json()
+	except Exception as e:
+		logger('Simkl discover error', str(e)); return None
+	if isinstance(data, list): return data
+	if isinstance(data, dict):
+		for v in data.values():
+			if isinstance(v, list): return v
+	return None
+
+_DISCOVER_TTL_SECONDS = 12 * 3600
+
+def _cached_discover(key, url):
+	cached = simkl_data_cache.get(key)
+	now = time.time()
+	if isinstance(cached, dict) and (now - cached.get('ts', 0)) < _DISCOVER_TTL_SECONDS:
+		return cached.get('data') or []
+	data = _fetch_list(url)
+	if data:
+		simkl_data_cache.set(key, {'ts': now, 'data': data})
+		return data
+	if isinstance(cached, dict): return cached.get('data') or []
+	return []
+
+def simkl_trending_data(media_type, window='week', size=500):
+	if simkl_client() in empty_setting_check: return []
+	url = 'https://data.simkl.in/discover/trending/%s/%s_%s.json' % (media_type, window, size)
+	return _cached_discover('simkl_trending_%s_%s_%s' % (media_type, window, size), url)
+
+def simkl_dvd_data(size=100):
+	if simkl_client() in empty_setting_check: return []
+	url = 'https://data.simkl.in/discover/dvd/releases_%s.json' % size
+	return _cached_discover('simkl_dvd_releases_%s' % size, url)
+
+def _rating_node(item, source):
+	ratings = item.get('ratings') or {}
+	return ratings.get(source) or ratings.get('simkl') or {}  # imdb/mal primary, simkl fallback
+
+def _rating(item, source):
+	try: return float((_rating_node(item, source)).get('rating') or 0)
+	except: return 0.0
+
+def _votes(item, source):
+	try: return int((_rating_node(item, source)).get('votes') or 0)
+	except: return 0
+
+def _runtime_minutes(runtime):  # "2h 25m" / "45m" / "1h" -> minutes
+	if not runtime: return 0
+	hours, mins = re.search(r'(\d+)\s*h', runtime), re.search(r'(\d+)\s*m', runtime)
+	return (int(hours.group(1)) * 60 if hours else 0) + (int(mins.group(1)) if mins else 0)
+
+def _dvd_sort_key(item):  # dvd_date is "MM/DD/YYYY"
+	try:
+		mm, dd, yy = (item.get('dvd_date') or '').split('/')
+		return (int(yy), int(mm), int(dd))
+	except: return (0, 0, 0)
+
+def _recipe_highest_rated(items, source):
+	pool = [i for i in items if _votes(i, source) >= _HIGHEST_RATED_MIN_VOTES]
+	return sorted(pool, key=lambda i: _rating(i, source), reverse=True)
+
+def _recipe_hidden_gems(items, source):
+	pool = [i for i in items if (i.get('rank') or 0) > _HIDDEN_GEMS_MIN_RANK and _rating(i, source) >= _HIDDEN_GEMS_MIN_RATING]
+	return sorted(pool, key=lambda i: _rating(i, source), reverse=True)
+
+def _recipe_critically_acclaimed(items, source):
+	pool = [i for i in items if _rating(i, source) >= _ACCLAIMED_MIN_RATING and _votes(i, source) >= _ACCLAIMED_MIN_VOTES]
+	return sorted(pool, key=lambda i: _rating(i, source), reverse=True)
+
+def _recipe_marathon(items, source):
+	pool = [i for i in items if (i.get('status') or '').lower() == 'ended' and (i.get('total_episodes') or 0) >= _MARATHON_MIN_EPISODES]
+	return sorted(pool, key=lambda i: _rating(i, source), reverse=True)
+
+def _recipe_quick_watches(items, source):
+	pool = [i for i in items if 0 < _runtime_minutes(i.get('runtime')) <= _QUICK_WATCH_MAX_MINUTES]
+	return sorted(pool, key=lambda i: _rating(i, source), reverse=True)
+
+def _to_media_ids(item, media_type):
+	ids = _ids_object(item.get('ids', {}))
+	tmdb = ids.get('tmdb')
+	if not tmdb: return None  # FenLight resolves via tmdb; skip the rare item without one
+	row = {'media_ids': {'tmdb': tmdb, 'imdb': ids.get('imdb', ''), 'tvdb': ids.get('tvdb', ''),
+			'simkl': ids.get('simkl') or ids.get('simkl_id', '')}, 'title': item.get('title', '')}
+	if media_type == 'anime':  # anime files mix films and series; tag for the mixed renderer
+		row['type'] = 'movie' if (item.get('anime_type') or '').lower() == 'movie' else 'show'
+	return row
+
+def _trending_rows(media_type, recipe, source):
+	rows = []
+	for item in recipe(simkl_trending_data(media_type), source):
+		row = _to_media_ids(item, media_type)
+		if row: rows.append(row)
+	return rows
+
+def simkl_movies_highest_rated(media_type='movies', page_no=1): return _trending_rows('movies', _recipe_highest_rated, 'imdb')
+def simkl_movies_hidden_gems(media_type='movies', page_no=1): return _trending_rows('movies', _recipe_hidden_gems, 'imdb')
+def simkl_movies_critically_acclaimed(media_type='movies', page_no=1): return _trending_rows('movies', _recipe_critically_acclaimed, 'imdb')
+def simkl_movies_quick_watches(media_type='movies', page_no=1): return _trending_rows('movies', _recipe_quick_watches, 'imdb')
+
+def simkl_movies_dvd_releases(media_type='movies', page_no=1):
+	rows = []
+	for item in sorted(simkl_dvd_data(), key=_dvd_sort_key, reverse=True):
+		row = _to_media_ids(item, 'movies')
+		if row: rows.append(row)
+	return rows
+
+def simkl_tv_highest_rated(media_type='tv', page_no=1): return _trending_rows('tv', _recipe_highest_rated, 'imdb')
+def simkl_tv_hidden_gems(media_type='tv', page_no=1): return _trending_rows('tv', _recipe_hidden_gems, 'imdb')
+def simkl_tv_critically_acclaimed(media_type='tv', page_no=1): return _trending_rows('tv', _recipe_critically_acclaimed, 'imdb')
+def simkl_tv_marathon(media_type='tv', page_no=1): return _trending_rows('tv', _recipe_marathon, 'imdb')
+
+def simkl_anime_highest_rated(media_type='anime', page_no=1): return _trending_rows('anime', _recipe_highest_rated, 'mal')
+def simkl_anime_hidden_gems(media_type='anime', page_no=1): return _trending_rows('anime', _recipe_hidden_gems, 'mal')
+def simkl_anime_critically_acclaimed(media_type='anime', page_no=1): return _trending_rows('anime', _recipe_critically_acclaimed, 'mal')
+def simkl_anime_marathon(media_type='anime', page_no=1): return _trending_rows('anime', _recipe_marathon, 'mal')
+
+def build_anime_list(params):
+	# anime mixes films + series - reuse the Trakt mixed-list renderer
+	import sys
+	from modules.utils import paginate_list
+	from indexers.trakt_lists import build_trakt_list
+	handle = int(sys.argv[1])
+	is_external, is_home = kodi_utils.external(), kodi_utils.home()
+	action = params.get('action')
+	name = params.get('category_name') or params.get('name') or 'Anime'
+	try: page_no = int(params.get('new_page', '1'))
+	except: page_no = 1
+	paginate_start = int(params.get('paginate_start', '0'))
+	if page_no == 1 and not is_external: kodi_utils.set_property('fenlight.exit_params', kodi_utils.folder_path())
+	try: items = globals()[action]('anime', page_no)
+	except: items = []
+	if settings.paginate(is_home):
+		limit = settings.page_limit(is_home)
+		page_items, total_pages = paginate_list(items, page_no, limit, paginate_start)
+		if is_home: paginate_start = limit
+	else: page_items, total_pages = items, 1
+	result = [dict(item, order=count) for count, item in enumerate(page_items)]
+	rendered = build_trakt_list({'result': result, 'list_name': name}) or []
+	kodi_utils.add_items(handle, rendered)
+	if total_pages > page_no:
+		new_page = str(page_no + 1)
+		kodi_utils.add_dir({'mode': 'simkl.build_anime_list', 'action': action, 'category_name': name,
+							'new_page': new_page, 'paginate_start': paginate_start},
+							'Next Page (%s) >>' % new_page, handle, 'nextpage', kodi_utils.nextpage_landscape)
+	kodi_utils.set_content(handle, 'tvshows')
+	kodi_utils.set_category(handle, name)
+	kodi_utils.end_directory(handle, cacheToDisc=not is_external)
+	if not is_external: kodi_utils.set_view_mode('view.tvshows', 'tvshows', is_external)
 
 def simkl_get_my_calendar(recently_aired, current_date):
 	def _process(dummy):

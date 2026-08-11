@@ -26,6 +26,7 @@ personal = {'favorites_movies': ('modules.favorites', 'get_favorites'), 'in_prog
 trakt_main = ('trakt_movies_trending', 'trakt_movies_trending_recent', 'trakt_movies_trending_uk', 'trakt_movies_trending_recent_uk','trakt_movies_most_watched', 'trakt_movies_most_favorited', 'trakt_movies_top10_boxoffice')
 trakt_personal = ('trakt_collection', 'trakt_watchlist', 'trakt_collection_lists', 'trakt_watchlist_lists', 'trakt_favorites')
 simkl_personal = ('simkl_watching', 'simkl_plantowatch', 'simkl_completed', 'simkl_hold', 'simkl_dropped')
+simkl_browse = ('simkl_movies_highest_rated', 'simkl_movies_hidden_gems', 'simkl_movies_critically_acclaimed', 'simkl_movies_quick_watches', 'simkl_movies_dvd_releases')
 meta_list_dict = {'tmdb_movies_languages': meta_lists.languages, 'tmdb_movies_providers': meta_lists.watch_providers_movies, 'tmdb_movies_providers_uk': meta_lists.watch_providers_movies_uk, 'tmdb_movies_year': meta_lists.years_movies,
 			'tmdb_movies_decade': meta_lists.decades_movies, 'tmdb_movies_certifications': meta_lists.movie_certifications, 'tmdb_movies_genres': meta_lists.movie_genres}
 view_mode, content_type = 'view.movies', 'movies'
@@ -91,6 +92,13 @@ class Movies:
 				try:
 					if total_pages > page_no: self.new_page = {'new_page': string(page_no + 1), 'paginate_start': self.paginate_start}
 				except: pass
+			elif self.action in simkl_browse:
+				self.id_type = 'ids_dict'
+				data = function('movies', page_no)
+				data, total_pages = self.paginate_list(data, page_no)
+				self.list = [i['media_ids'] for i in data]
+				if total_pages > 2: self.total_pages = total_pages
+				if total_pages > page_no: self.new_page = {'new_page': string(page_no + 1), 'paginate_start': self.paginate_start}
 			elif self.action == 'trakt_recommendations':
 				self.id_type = 'trakt_dict'
 				data = function('movies')

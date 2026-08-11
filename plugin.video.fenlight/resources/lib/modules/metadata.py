@@ -15,7 +15,7 @@ EXPIRES_1_DAYS, EXPIRES_4_DAYS, EXPIRES_7_DAYS, EXPIRES_14_DAYS, EXPIRES_30_DAYS
 invalid_error_codes = (6, 34, 37)
 
 def movie_meta(id_type, media_id, api_key, mpaa_region, current_date, current_time=None):
-	if id_type == 'trakt_dict':
+	if id_type in ('trakt_dict', 'ids_dict'):
 		if media_id.get('tmdb', None): id_type, media_id = 'tmdb_id', media_id['tmdb']
 		elif media_id.get('imdb', None): id_type, media_id = 'imdb_id', media_id['imdb']
 		else: id_type, media_id = None, None
@@ -136,7 +136,7 @@ def movie_meta(id_type, media_id, api_key, mpaa_region, current_date, current_ti
 	return meta
 
 def tvshow_meta(id_type, media_id, api_key, mpaa_region, current_date, current_time=None):
-	if id_type == 'trakt_dict':
+	if id_type in ('trakt_dict', 'ids_dict'):
 		if media_id.get('tmdb', None): id_type, media_id = 'tmdb_id', media_id['tmdb']
 		elif media_id.get('imdb', None): id_type, media_id = 'imdb_id', media_id['imdb']
 		elif media_id.get('tvdb', None): id_type, media_id = 'tvdb_id', media_id['tvdb']
