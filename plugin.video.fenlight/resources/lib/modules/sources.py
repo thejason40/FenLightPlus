@@ -96,7 +96,6 @@ class Sources():
 		if 'autoplay' in self.params: self.autoplay = params_get('autoplay', 'false') == 'true'
 		else: self.autoplay = auto_play(self.media_type)
 		self.get_meta()
-		self._prefetch_skip_segments()
 		self.determine_scrapers_status()
 		self.sleep_time, self.provider_sort_ranks, self.scraper_settings = 100, provider_sort_ranks(), scraping_settings()
 		self.include_prerelease_results, self.ignore_results_filter, self.limit_resolve = include_prerelease_results(), ignore_results_filter(), limit_resolve()
@@ -105,16 +104,6 @@ class Sources():
 		self.make_search_info()
 		if self.autoscrape: self.autoscrape_nextep_handler()
 		else: return self.get_sources()
-
-	def _prefetch_skip_segments(self):
-		try:
-			if self.media_type != 'episode' or not settings.skip_segment_settings(): return
-			imdb_id = self.meta.get('imdb_id')
-			season, episode = self.meta.get('season'), self.meta.get('episode')
-			if not imdb_id or season in (None, '') or episode in (None, ''): return
-			from apis import skip_intro
-			Thread(target=skip_intro.prefetch, args=(imdb_id, season, episode)).start()
-		except: pass
 
 	def check_episode_group(self):
 		try:

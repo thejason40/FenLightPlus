@@ -315,21 +315,22 @@ class FenLightPlayer(xbmc_player):
 		try:
 			kinds = set(skip_settings['kinds'])
 			if 'outro' in kinds and self._play_next_will_fire(): kinds.discard('outro')
-			if not kinds or not self.imdb_id: return
+			if not kinds or not (self.tmdb_id or self.imdb_id): return
 			from apis import skip_intro
 			dismiss = skip_settings['dismiss']
-			windows, handled, waited = None, set(), 0.0
+			# Wait for the duration to be known — TheIntroDB matches the release by duration_ms.
+			total_time = 0
+			while self.isPlayingVideo() and not total_time:
+				try: total_time = self.getTotalTime()
+				except: total_time = 0
+				if not total_time: sleep(500)
+			if not total_time: return
+			windows = skip_intro.get_skip_windows(self.tmdb_id, self.imdb_id, self.season, self.episode, total_time, kinds)
+			if not windows: return
+			handled = set()
 			while self.isPlayingVideo():
-				try: total_time, curr_time = self.getTotalTime(), self.getTime()
+				try: curr_time = self.getTime()
 				except: sleep(500); continue
-				if not total_time: sleep(500); continue
-				if windows is None:
-					windows = skip_intro.get_skip_windows(self.imdb_id, self.season, self.episode, total_time, kinds)
-					if not windows:
-						windows = None
-						waited += 0.5
-						if waited >= 30: return
-						sleep(500); continue
 				for w in windows:
 					if w['kind'] in handled: continue
 					if curr_time >= w['end']: handled.add(w['kind']); continue  # already past (e.g. resume)
