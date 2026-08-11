@@ -320,6 +320,9 @@ def routing(sys):
 	if mode == 'upload_logfile':
 		from modules.kodi_utils import upload_logfile
 		return upload_logfile(params)
+	if mode == 'display.detect_capabilities':
+		from modules.display_capability import detect_capabilities_choice
+		return detect_capabilities_choice(params)
 	if mode == 'toggle_language_invoker':
 		from modules.kodi_utils import toggle_language_invoker
 		return toggle_language_invoker()

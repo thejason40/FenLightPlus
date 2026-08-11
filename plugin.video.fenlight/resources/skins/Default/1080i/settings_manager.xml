@@ -2180,6 +2180,14 @@
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(60)</visible>
+                          <property name="setting_label">Detect Display Capabilities</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">...</property>
+                          <property name="setting_description">Detect what this display supports (HDR10, HDR10+, Dolby Vision) and automatically set the HDR and Dolby Vision filters below to match</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=display.detect_capabilities)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
                           <property name="setting_label">3D Files Filter</property>
                           <property name="setting_type">action</property>
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.filter.3d_name)]</property>
