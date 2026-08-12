@@ -262,6 +262,8 @@ def trakt_authenticate(dummy=''):
 	return False
 
 def trakt_revoke_authentication(dummy=''):
+	# Grab the token before the set_setting calls below wipe it — the revoke POST needs the real value.
+	token = get_setting('fenlight.trakt.token')
 	set_setting('trakt.user', 'empty_setting')
 	set_setting('trakt.expires', '')
 	set_setting('trakt.token', '')
@@ -276,11 +278,13 @@ def trakt_revoke_authentication(dummy=''):
 		else: set_setting('watched_indicators', '0')
 	clear_all_trakt_cache_data(silent=True, refresh=False)
 	notification('Trakt Account Authorization Reset', 3000)
+	# Nothing to revoke server-side if there was never a real token ('0' is the shipped default).
+	if not token or token in empty_setting_check or token == '0': return
 	CLIENT_ID = trakt_client()
 	if CLIENT_ID in empty_setting_check: return no_client_key()
 	CLIENT_SECRET = trakt_secret()
 	if CLIENT_SECRET in empty_setting_check: return no_secret_key()
-	data = {'token': get_setting('fenlight.trakt.token'), 'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
+	data = {'token': token, 'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 	response = call_trakt("oauth/revoke", data=data, with_auth=False)
 
 def trakt_movies_trending(page_no):
