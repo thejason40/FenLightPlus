@@ -75,6 +75,18 @@ def skip_segment_settings():
 		return {'kinds': kinds, 'dismiss': int(get_setting('fenlight.skip_segments_dismiss', '8'))}
 	except: return None
 
+def binge_episode_check_count():
+	try: return int(get_setting('fenlight.binge.episode_check_count', '3'))
+	except: return 3
+
+def binge_timeout_action():
+	try: return int(get_setting('fenlight.binge.timeout_action', '0'))
+	except: return 0
+
+def binge_skip_behavior():
+	try: return int(get_setting('fenlight.binge.skip_behavior', '0'))
+	except: return 0
+
 def limit_resolve():
 	return get_setting('fenlight.playback.limit_resolve', 'false') == 'true'
 

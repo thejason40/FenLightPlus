@@ -69,6 +69,7 @@ class Sources():
 			self.num_episodes = params.get('num_episodes', None)
 		params_get = self.params.get
 		self.num_episodes = params.get('nextep_settings', {}).get('num_episodes', params.get('num_episodes', None))
+		self.binge_mode = params_get('binge_mode', 'false') == 'true' or bool(params_get('nextep_settings', {}).get('binge_mode', False))
 		self.play_type, self.background, self.prescrape = params_get('play_type', ''), params_get('background', 'false') == 'true', params_get('prescrape', self.prescrape) == 'true'
 		self.device_list, self.play_selected = params_get('device_list', 'false') == 'true', params_get('play_selected', None)
 		self.random, self.random_continual = params_get('random', 'false') == 'true', params_get('random_continual', 'false') == 'true'
@@ -77,6 +78,8 @@ class Sources():
 			elif self.play_type == 'random_continual': self.autoplay_nextep, self.autoscrape_nextep = False, False
 			else: self.autoplay_nextep, self.autoscrape_nextep = False, True
 		else: self.autoplay_nextep, self.autoscrape_nextep = autoplay_next_episode(), autoscrape_next_episode()
+		# binge chains regardless of the user's autoplay/autoscrape settings; the forced autoplay also drives the scrape-ahead
+		if self.binge_mode: self.autoplay_nextep, self.autoscrape_nextep = True, False
 		self.autoscrape = self.autoscrape_nextep and self.background and not (self.device_list or self.play_selected)
 		self.auto_rescrape_with_all, self.auto_episode_group = auto_rescrape_with_all(), auto_episode_group()
 		self.nextep_settings, self.disable_autoplay_next_episode = params_get('nextep_settings', {}), params_get('disable_autoplay_next_episode', 'false') == 'true'
@@ -574,6 +577,11 @@ class Sources():
 		except: action = 'cancel'
 		return action
 
+	def _make_still_watching_dialog(self):
+		try: action = open_window(('windows.still_watching', 'StillWatching'), 'still_watching.xml', meta=self.meta)
+		except: action = 'timeout'
+		return action
+
 	def _kill_progress_dialog(self):
 		success = 0
 		try:
@@ -743,6 +751,7 @@ class Sources():
 					sleep(100)
 				except: pass
 			if continue_nextep:
+				if getattr(self, 'binge_mode', False): return self.binge_nextep_handler(player)
 				if self.num_episodes:
 					if int(self.num_episodes) > 1:
 						while player.isPlayingVideo(): sleep(100)
@@ -768,6 +777,36 @@ class Sources():
 					return True
 			else: return False
 		else: return False
+
+	def binge_nextep_handler(self, player):
+		try: count = int(get_property('fenlight.binge.count') or '0')
+		except: count = 0
+		if count < settings.binge_episode_check_count():
+			set_property('fenlight.binge.count', str(count + 1))
+			while player.isPlayingVideo(): sleep(100)
+			self._make_resolve_dialog()
+			return True
+		action = self._make_still_watching_dialog()
+		if action == 'timeout': action = ('stop', 'stop_unmark', 'continue')[settings.binge_timeout_action()]
+		if action == 'continue':
+			set_property('fenlight.binge.count', '0')
+			while player.isPlayingVideo(): sleep(100)
+			self._make_resolve_dialog()
+			return True
+		clear_property('fenlight.binge.count')
+		player.stop()
+		if action == 'stop_unmark': self.binge_unmark_last(self.nextep_settings.get('prev_episode'))
+		return False
+
+	def binge_unmark_last(self, prev):
+		if not prev: return
+		try:
+			# best-effort: give the threaded mark-as-watched from run_next_ep time to land before undoing it
+			sleep(1500)
+			watched_status.mark_episode({'action': 'mark_as_unwatched', 'tmdb_id': prev['tmdb_id'], 'tvdb_id': prev['tvdb_id'],
+										'season': prev['season'], 'episode': prev['episode'], 'title': prev['title'], 'refresh': 'false'})
+			notification('Last Episode Unmarked', 3000)
+		except: pass
 
 	def autoscrape_nextep_handler(self):
 		player = xbmc_player()

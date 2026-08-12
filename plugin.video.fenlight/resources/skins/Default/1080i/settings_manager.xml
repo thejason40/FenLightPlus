@@ -2608,6 +2608,37 @@
                           <property name="setting_description">How long the Skip button stays on screen before it disappears.</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_numeric&amp;setting_id=skip_segments_dismiss)</onclick>
                       </item>
+        <!-- Binge Mode -->
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
+                          <property name="setting_label">Binge Mode</property>
+                          <property name="setting_type">separator</property>
+                          <onclick>noop</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
+                          <property name="setting_label">Episodes Between "Still Watching?" Checks</property>
+                          <property name="setting_type">numeric</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.binge.episode_check_count)]</property>
+                          <property name="setting_description">How many episodes Binge Mode will chain silently before asking if you are still watching.</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_numeric&amp;setting_id=binge.episode_check_count)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
+                          <property name="setting_label">"Still Watching?" Timeout Action</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.binge.timeout_action_name)]</property>
+                          <property name="setting_description">What happens if the "Are You Still Watching?" dialog is not answered before its countdown ends.</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=binge.timeout_action)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
+                          <property name="setting_label">Segment Skipping During Binge</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.binge.skip_behavior_name)]</property>
+                          <property name="setting_description">Use Skip Settings, Silent: your Skip Intro/Recap/Outro toggles are respected but segments are skipped automatically without a button. Skip All Segments: every known segment is skipped silently regardless of your Skip settings. Show Skip Button: normal skip behaviour. Outros are superseded by the episode chain while binging.</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=binge.skip_behavior)</onclick>
+                      </item>
         <!-- Playback Utilities -->
                       <item>
                           <visible>Container(2000).HasFocus(70)</visible>

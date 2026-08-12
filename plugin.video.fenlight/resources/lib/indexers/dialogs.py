@@ -406,6 +406,7 @@ def playback_choice(params):
 	aliases = get_aliases_titles(make_alias_dict(meta, meta['title']))
 	items = []
 	if media_type == 'episode': items.append({'line': 'Play # Episodes', 'function': 'play_number_eps'})
+	if media_type == 'episode': items.append({'line': 'Binge Mode', 'function': 'binge_mode'})
 	items.extend([{'line': 'Select Source', 'function': 'scrape'},
 			{'line': 'Rescrape & Select Source', 'function': 'clear_and_rescrape'},
 			{'line': 'Scrape with DEFAULT External Scrapers', 'function': 'scrape_with_default'},
@@ -431,6 +432,9 @@ def playback_choice(params):
 			return notification('Cancelled', 2500)
 		else:
 			play_params = {'mode': 'playback.media', 'media_type': 'episode', 'tmdb_id': meta['tmdb_id'], 'season': season, 'episode': episode, 'num_episodes': num_episodes}
+	elif choice == 'binge_mode':
+		set_property('fenlight.binge.count', '0')
+		play_params = {'mode': 'playback.media', 'media_type': 'episode', 'tmdb_id': meta['tmdb_id'], 'season': season, 'episode': episode, 'binge_mode': 'true'}
 	elif choice == 'scrape':
 		if media_type == 'movie': play_params = {'mode': 'playback.media', 'media_type': 'movie', 'tmdb_id': meta['tmdb_id'], 'autoplay': 'false'}
 		else: play_params = {'mode': 'playback.media', 'media_type': 'episode', 'tmdb_id': meta['tmdb_id'], 'season': season, 'episode': episode, 'autoplay': 'false'}

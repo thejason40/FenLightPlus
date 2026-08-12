@@ -115,6 +115,7 @@ class FenLightPlayer(xbmc_player):
 					else:
 						playNextNum = False
 					if playNextNum: self.autoplay_nextep = True
+					if self.binge_mode: self.autoplay_nextep = True
 					if self.autoplay_nextep or self.autoscrape_nextep:
 						if not self.nextep_info_gathered: self.info_next_ep()
 						if round(self.total_time - self.curr_time) <= self.start_prep: self.run_next_ep(); break
@@ -242,6 +243,10 @@ class FenLightPlayer(xbmc_player):
 					self.nextep_settings = {'num_episodes': self.num_episodes, 'use_window': use_window, 'window_time': window_time, 'default_action': default_action, 'play_type': play_type}
 				else:
 					self.nextep_settings = {'use_window': use_window, 'window_time': window_time, 'default_action': default_action, 'play_type': play_type}
+				if self.binge_mode:
+					self.nextep_settings['binge_mode'] = True
+					# snapshot the current episode's identity before next_episode_info mutates meta — needed for Stop & Unmark
+					self.nextep_settings['prev_episode'] = {'tmdb_id': self.tmdb_id, 'tvdb_id': self.tvdb_id, 'season': self.season, 'episode': self.episode, 'title': self.title}
 		except: pass
 
 	def final_chapter(self):
@@ -259,6 +264,7 @@ class FenLightPlayer(xbmc_player):
 		self.url = url
 		self.sources_object = obj
 		self.is_generic = self.sources_object == 'video'
+		self.binge_mode = getattr(self.sources_object, 'binge_mode', False)
 		if not self.is_generic:
 			self.meta = self.sources_object.meta
 			self.meta_get, self.kodi_monitor, self.playback_percent = self.meta.get, xbmc_monitor(), self.sources_object.playback_percent or 0.0
@@ -298,8 +304,14 @@ class FenLightPlayer(xbmc_player):
 	def start_skip_watcher(self):
 		try:
 			if self.is_generic or self.media_type != 'episode': return
-			skip_settings = st.skip_segment_settings()
-			if not skip_settings: return
+			behavior = st.binge_skip_behavior() if self.binge_mode else 2
+			if behavior == 1:
+				# binge "Skip All Segments": every kind, silently, regardless of the skip settings
+				skip_settings = {'kinds': {'intro', 'recap', 'outro'}, 'dismiss': 0, 'silent': True}
+			else:
+				skip_settings = st.skip_segment_settings()
+				if not skip_settings: return
+				skip_settings['silent'] = behavior == 0
 			Thread(target=self._skip_watcher, args=(skip_settings,)).start()
 		except: pass
 
@@ -307,6 +319,7 @@ class FenLightPlayer(xbmc_player):
 		try:
 			obj = self.sources_object
 			if any((obj.random_continual, obj.random, obj.disable_autoplay_next_episode)): return False
+			if self.binge_mode: return True
 			if obj.autoplay_nextep or obj.autoscrape_nextep: return True
 			return bool(self.num_episodes and int(self.num_episodes) > 1)
 		except: return False
@@ -317,7 +330,7 @@ class FenLightPlayer(xbmc_player):
 			if 'outro' in kinds and self._play_next_will_fire(): kinds.discard('outro')
 			if not kinds or not (self.tmdb_id or self.imdb_id): return
 			from apis import skip_intro
-			dismiss = skip_settings['dismiss']
+			dismiss, silent = skip_settings['dismiss'], skip_settings.get('silent', False)
 			# Wait for the duration to be known — TheIntroDB matches the release by duration_ms.
 			total_time = 0
 			while self.isPlayingVideo() and not total_time:
@@ -336,14 +349,17 @@ class FenLightPlayer(xbmc_player):
 					if curr_time >= w['end']: handled.add(w['kind']); continue  # already past (e.g. resume)
 					if curr_time >= w['start']:
 						handled.add(w['kind'])
-						self._do_skip(w, dismiss)
+						self._do_skip(w, dismiss, silent)
 						break
 				if len(handled) >= len(windows): return
 				sleep(500)
 		except: pass
 
-	def _do_skip(self, window, dismiss):
+	def _do_skip(self, window, dismiss, silent=False):
 		try:
+			if silent:
+				if self.isPlayingVideo(): self.seekTime(window['end'])
+				return
 			from windows.base_window import open_window
 			choice = open_window(('windows.skip_intro', 'SkipIntro'), 'skip_intro.xml', kind=window['kind'], seconds=dismiss, meta=self.meta)
 			if choice == 'skip' and self.isPlayingVideo(): self.seekTime(window['end'])

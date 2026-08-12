@@ -504,6 +504,10 @@ default_settings = [
 {'setting_id': 'skip_recaps', 'setting_type': 'boolean', 'setting_default': 'true'},
 {'setting_id': 'skip_outros', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'skip_segments_dismiss', 'setting_type': 'action', 'setting_default': '8', 'min_value': '3', 'max_value': '30'},
+#==================== Binge Mode
+{'setting_id': 'binge.episode_check_count', 'setting_type': 'action', 'setting_default': '3', 'min_value': '1', 'max_value': '20'},
+{'setting_id': 'binge.timeout_action', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Stop Playback', '1': 'Stop & Unmark Last Episode', '2': 'Keep Playing'}},
+{'setting_id': 'binge.skip_behavior', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Use Skip Settings, Silent', '1': 'Skip All Segments', '2': 'Show Skip Button'}},
 #==================== Playback Utilities
 {'setting_id': 'playback.limit_resolve', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'playback.volumecheck_enabled', 'setting_type': 'boolean', 'setting_default': 'false'},
