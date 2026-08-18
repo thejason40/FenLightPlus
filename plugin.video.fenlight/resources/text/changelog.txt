@@ -4,6 +4,7 @@
 - Season Pack Continuity (Season packs are cached and remembered to speed up episode resolve)
 - Detect Display Settings (sets your results filters to what your monitor can play - probably needs some testing)
 - New lists available (Quick watch movies, binge worthy shows, Movies released on this day and more. Check for new menu items to see)
+- RealDebrid improvements (thanks to dkori)
 
 [COLOR dodgerblue][B]Version 2.5.1[/B][/COLOR]
 - Simkl API bug fixes.
