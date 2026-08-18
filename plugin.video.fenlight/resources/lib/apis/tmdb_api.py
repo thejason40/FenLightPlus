@@ -230,6 +230,31 @@ def tmdb_movies_premieres(page_no):
 							% (base_url, api_key, previous_date, current_date, page_no)
 	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_DAY)
 
+def tmdb_movies_highest_rated(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_movies_highest_rated_%s' % page_no
+	url = '%s/discover/movie?api_key=%s&language=en-US&region=US&with_original_language=en&sort_by=vote_average.desc&vote_count.gte=2000&release_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_movies_hidden_gems(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_movies_hidden_gems_%s' % page_no
+	# without_genres=10402 (Music) drops recorded concerts/live shows, which flood a low-vote gems list
+	url = '%s/discover/movie?api_key=%s&language=en-US&region=US&with_original_language=en&without_genres=10402&sort_by=vote_average.desc&vote_average.gte=7.5&vote_count.gte=50&vote_count.lte=500&release_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_movies_quick_watches(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_movies_quick_watches_%s' % page_no
+	url = '%s/discover/movie?api_key=%s&language=en-US&region=US&with_original_language=en&without_genres=10402&sort_by=popularity.desc&with_runtime.lte=90&vote_average.gte=6.5&release_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
 def tmdb_movies_genres(genre_id, page_no):
 	api_key = tmdb_api_key()
 	if api_key in empty_setting_check: return no_api_key()
@@ -448,6 +473,30 @@ def tmdb_tv_reviews(tmdb_id, page_no):
 	url = '%s/tv/%s/reviews?api_key=%s&page=%s' % (base_url, tmdb_id, api_key, page_no)
 	return get_tmdb(url).json()
 
+def tmdb_tv_highest_rated(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_tv_highest_rated_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&language=en-US&include_null_first_air_dates=false&sort_by=vote_average.desc&vote_count.gte=1000&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_tv_hidden_gems(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_tv_hidden_gems_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&language=en-US&with_original_language=en&include_null_first_air_dates=false&sort_by=vote_average.desc&vote_average.gte=7.5&vote_count.gte=50&vote_count.lte=500&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_tv_marathon(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_tv_marathon_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&language=en-US&include_null_first_air_dates=false&with_status=3&sort_by=popularity.desc&vote_average.gte=7&vote_count.gte=200&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
 def tmdb_anime_popular(page_no):
 	api_key = tmdb_api_key()
 	if api_key in empty_setting_check: return no_api_key()
@@ -489,6 +538,30 @@ def tmdb_anime_on_the_air(page_no):
 	url = '%s/discover/tv?api_key=%s&with_keywords=210024&air_date.gte=%s&air_date.lte=%s&page=%s' \
 							% (base_url, api_key, current_date, future_date, page_no)
 	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_DAY)
+
+def tmdb_anime_highest_rated(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_anime_highest_rated_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&with_keywords=210024&include_null_first_air_dates=false&sort_by=vote_average.desc&vote_count.gte=100&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_anime_hidden_gems(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_anime_hidden_gems_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&with_keywords=210024&include_null_first_air_dates=false&sort_by=vote_average.desc&vote_average.gte=7.5&vote_count.gte=50&vote_count.lte=500&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
+
+def tmdb_anime_marathon(page_no):
+	api_key = tmdb_api_key()
+	if api_key in empty_setting_check: return no_api_key()
+	string = 'tmdb_anime_marathon_%s' % page_no
+	url = '%s/discover/tv?api_key=%s&with_keywords=210024&include_null_first_air_dates=false&with_status=3&sort_by=popularity.desc&vote_average.gte=7&vote_count.gte=50&first_air_date.lte=%s&page=%s' \
+							% (base_url, api_key, get_current_date(), page_no)
+	return lists_cache_object(get_data, string, url, expiration= EXPIRY_1_WEEK)
 
 def tmdb_anime_genres(genre_id, page_no):
 	api_key = tmdb_api_key()

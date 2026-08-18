@@ -32,21 +32,13 @@ class MainCache(BaseCache):
 			return True
 		except: return False
 
-	def delete_intros(self):
-		dbcon = self.manual_connect('maincache_db')
-		remove_list = [str(i[0]) for i in dbcon.execute(LIKE_SELECT % "'skip_intro.%'").fetchall()]
-		if not remove_list: return True
-		try:
-			dbcon.execute(LIKE_DELETE % "'skip_intro.%'")
-			dbcon.execute('VACUUM')
-			for item in remove_list: self.delete_memory_cache(str(item))
-			return True
-		except: return False
-
 	def clean_database(self):
 		try:
 			dbcon = self.manual_connect('maincache_db')
 			dbcon.execute(CLEAN, (get_timestamp(),))
+			# skip_segments shares this file, so it rides along on the one VACUUM
+			from caches.skip_cache import skip_cache
+			skip_cache.clean_database()
 			dbcon.execute('VACUUM')
 			return True
 		except: return False

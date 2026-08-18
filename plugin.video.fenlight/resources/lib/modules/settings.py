@@ -87,6 +87,9 @@ def binge_skip_behavior():
 	try: return int(get_setting('fenlight.binge.skip_behavior', '0'))
 	except: return 0
 
+def pack_continuity():
+	return get_setting('fenlight.results.pack_continuity', 'true') == 'true'
+
 def limit_resolve():
 	return get_setting('fenlight.playback.limit_resolve', 'false') == 'true'
 

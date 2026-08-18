@@ -100,6 +100,9 @@ class OffcloudAPI:
 			if not isinstance(torrent_files, list): torrent_files = [single_file_torrent]
 			torrent_files = [{'url': item, 'filename': item.split('/')[-1], 'size': 0} for item in torrent_files if item.lower().endswith(tuple(extensions))]
 			if not torrent_files: return None
+			# hand the whole pack up before the season filter narrows it
+			from caches.pack_cache import stash_pack
+			stash_pack(info_hash, [{'filename': i['filename'], 'link': self.requote_uri(i['url']), 'size': 0} for i in torrent_files], direct=True)
 			if season:
 				torrent_files = [i for i in torrent_files if seas_ep_filter(season, episode, i['filename'])]
 				if not torrent_files: return None

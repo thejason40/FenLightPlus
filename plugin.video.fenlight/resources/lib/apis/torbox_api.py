@@ -129,6 +129,9 @@ class TorBoxAPI:
 			selected_files = [{'url': '%d,%d' % (torrent_id, item['id']), 'filename': item['short_name'], 'size': item['size']} \
 							for item in torrent_files['data']['files'] if item['short_name'].lower().endswith(tuple(extensions))]
 			if not selected_files: return None
+			# hand the whole pack up before the season filter narrows it
+			from caches.pack_cache import stash_pack
+			stash_pack(info_hash, [{'filename': i['filename'], 'link': i['url'] if store_to_cloud else '', 'size': i['size']} for i in selected_files])
 			if season:
 				selected_files = [i for i in selected_files if seas_ep_filter(season, episode, i['filename'])]
 			else:

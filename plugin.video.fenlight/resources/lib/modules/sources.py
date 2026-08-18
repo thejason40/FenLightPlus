@@ -5,10 +5,12 @@ from threading import Thread
 import itertools
 from windows.base_window import open_window, create_window
 from caches.episode_groups_cache import episode_groups_cache
+from caches.pack_cache import pack_cache
 from caches.settings_cache import get_setting
 from scrapers import external, folders
 from modules import debrid, kodi_utils, settings, metadata, watched_status
 from modules.player import FenLightPlayer
+from modules.pack_continuity import find_episode_file as pack_continuity_find, build_items as pack_continuity_build
 from modules.source_utils import get_cache_expiry, make_alias_dict
 from modules.utils import clean_file_name, string_to_float, safe_string, remove_accents, get_datetime, append_module_to_syspath, manual_function_import, manual_module_import
 # logger = kodi_utils.logger
@@ -24,6 +26,7 @@ quality_filter, sort_to_top, tmdb_api_key, mpaa_region = settings.quality_filter
 scraping_settings, include_prerelease_results, auto_rescrape_with_all = settings.scraping_settings, settings.include_prerelease_results, settings.auto_rescrape_with_all
 ignore_results_filter, results_sort_order, results_format, filter_status = settings.ignore_results_filter, settings.results_sort_order, settings.results_format, settings.filter_status
 autoplay_next_episode, autoscrape_next_episode, limit_resolve = settings.autoplay_next_episode, settings.autoscrape_next_episode, settings.limit_resolve
+pack_continuity = settings.pack_continuity
 auto_episode_group, preferred_autoplay, debrid_enabled = settings.auto_episode_group, settings.preferred_autoplay, debrid.debrid_enabled
 get_progress_status_movie, get_bookmarks_movie, erase_bookmark = watched_status.get_progress_status_movie, watched_status.get_bookmarks_movie, watched_status.erase_bookmark
 get_progress_status_episode, get_bookmarks_episode = watched_status.get_progress_status_episode, watched_status.get_bookmarks_episode
@@ -53,6 +56,7 @@ class Sources():
 		self.prescrape_scrapers, self.prescrape_threads, self.prescrape_sources, self.uncached_results = [], [], [], []
 		self.threads, self.providers, self.sources, self.internal_scraper_names, self.remove_scrapers = [], [], [], [], ['external']
 		self.rescrape_with_all, self.rescrape_with_episode_group = False, False
+		self.pack_cache_tried, self.in_pack_fast_path = False, False
 		self.clear_properties, self.filters_ignored, self.active_folders, self.resolve_dialog_made, self.episode_group_used = True, False, False, False, False
 		self.sources_total = self.sources_4k = self.sources_1080p = self.sources_720p = self.sources_sd = 0
 		self.prescrape, self.disabled_ext_ignored, self.default_ext_only = 'true', 'false', 'false'
@@ -133,6 +137,8 @@ class Sources():
 		if self.play_selected:
 			from modules.device_select import play_selected_source
 			return play_selected_source(self)
+		pack_result = self.try_pack_cache()
+		if pack_result is not None: return pack_result
 		if not self.progress_dialog and not self.background: self._make_progress_dialog()
 		results = []
 		if self.prescrape and any(x in self.active_internal_scrapers for x in default_internal_scrapers):
@@ -153,6 +159,53 @@ class Sources():
 		if not results: return self._process_post_results()
 		if self.autoscrape: return results
 		else: return self.play_source(results)
+
+	def try_pack_cache(self):
+		# Returns None to fall through to a normal scrape; anything else means handled.
+		try:
+			if not pack_continuity(): return None
+			if self.media_type != 'episode' or self.device_list: return None
+			if not (self.autoplay or self.background): return None  # a manual click expects the source picker
+			if self.pack_cache_tried: return None
+			tmdb_id, season, episode = self.search_info['tmdb_id'], self.search_info['season'], self.search_info['episode']
+			if not tmdb_id or season in (None, '') or episode in (None, ''): return None
+			self.pack_cache_tried = True
+			entry = pack_cache.get(tmdb_id, season)
+			if not entry:
+				kodi_utils.logger('PACK fast-path', 'miss - no entry for %s S%s' % (tmdb_id, season))
+				return None
+			chosen = pack_continuity_find(entry, season, episode, self.search_info['title'])
+			if not chosen:
+				# the episode simply isn't in this pack - costs nothing to re-check next time, so don't evict
+				kodi_utils.logger('PACK fast-path', 'E%s not in pack %s S%s (%d files)' % (episode, tmdb_id, season, len(entry['files'])))
+				return None
+			items = pack_continuity_build(entry, chosen)
+			if not items:
+				kodi_utils.logger('PACK fast-path', 'no playable tier for %s S%sE%s' % (tmdb_id, season, episode))
+				return None
+			kodi_utils.logger('PACK fast-path', 'hit %s S%sE%s via %s (%s): %s | tiers=%s' % (tmdb_id, season, episode, entry['provider'],
+								entry['source_type'], chosen.get('filename'), [i['pack_tier'] for i in items]))
+			if self.autoscrape: return items
+			self.in_pack_fast_path = True
+			# the two entries are two attempts at the SAME file, not two user choices - don't let limit_resolve drop tier 2
+			prev_limit, self.limit_resolve = self.limit_resolve, False
+			try: self.play_source(items)
+			finally: self.limit_resolve, self.in_pack_fast_path = prev_limit, False
+			if self.cancel_all_playback:
+				kodi_utils.logger('PACK fast-path', 'cancelled by user - no eviction')
+				return []
+			if self.playback_successful: return []
+			kodi_utils.logger('PACK fast-path', 'all tiers failed - evicting %s S%s' % (tmdb_id, season))
+			pack_cache.delete(tmdb_id, season)
+			self.resolve_dialog_made, self.sources, self.prescrape_sources = False, [], []
+			# _kill_progress_dialog deletes these attributes outright, so put them back before falling through
+			if not hasattr(self, 'progress_dialog'): self.progress_dialog, self.progress_thread = None, None
+			return None
+		except Exception as e:
+			kodi_utils.logger('PACK fast-path error', str(e))
+			try: self.limit_resolve, self.in_pack_fast_path = prev_limit, False
+			except: pass
+			return None
 
 	def collect_results(self):
 		self.sources.extend(self.prescrape_sources)
@@ -714,6 +767,7 @@ class Sources():
 
 	def playback_failed_action(self):
 		self._kill_progress_dialog()
+		if self.in_pack_fast_path: return  # try_pack_cache owns the retry - don't scrape twice
 		if self.prescrape and self.autoplay:
 			self.resolve_dialog_made, self.prescrape, self.prescrape_sources = False, False, []
 			self.get_sources()
@@ -779,10 +833,15 @@ class Sources():
 		else: return False
 
 	def binge_nextep_handler(self, player):
-		try: count = int(get_property('fenlight.binge.count') or '0')
-		except: count = 0
+		# the tally counts consecutive episodes nobody touched — the flag belongs to the episode that just played, so consume it
+		interacted = get_property('fenlight.binge.interacted') == 'true'
+		clear_property('fenlight.binge.interacted')
+		if interacted: count = 0
+		else:
+			try: count = int(get_property('fenlight.binge.count') or '0') + 1
+			except: count = 1
+		set_property('fenlight.binge.count', str(count))
 		if count < settings.binge_episode_check_count():
-			set_property('fenlight.binge.count', str(count + 1))
 			while player.isPlayingVideo(): sleep(100)
 			self._make_resolve_dialog()
 			return True
@@ -794,6 +853,7 @@ class Sources():
 			self._make_resolve_dialog()
 			return True
 		clear_property('fenlight.binge.count')
+		clear_property('fenlight.binge.interacted')
 		player.stop()
 		if action == 'stop_unmark': self.binge_unmark_last(self.nextep_settings.get('prev_episode'))
 		return False
@@ -833,7 +893,15 @@ class Sources():
 						title, season, episode, pack = self.search_info['title'], self.search_info['season'], self.search_info['episode'], 'package' in item
 					else: title, season, episode, pack = self.get_ep_name(), self.get_season(), self.get_episode(), 'package' in item
 				else: title, season, episode, pack = self.get_search_title(), None, None, False
-				if cache_provider in debrid_providers: url = self.resolve_cached(cache_provider, item['url'], item['hash'], title, season, episode, pack)
+				if cache_provider in debrid_providers:
+					url = self.resolve_cached(cache_provider, item['url'], item['hash'], title, season, episode, pack)
+					# the resolve already had the whole pack in hand; carry it to the player, which seeds the cache.
+					# item is the same dict as self.playing_item / player.playing_item, so this is the whole propagation.
+					if url and pack:
+						from caches.pack_cache import take_pack
+						stashed = take_pack(item['hash'])
+						if stashed: item['pack_info'] = {'source_type': 'debrid', 'provider': cache_provider, 'magnet': item['url'],
+														'hash': item['hash'], 'direct': stashed['direct'], 'files': stashed['files']}
 			elif item.get('scrape_provider', None) in default_internal_scrapers:
 				url = self.resolve_internal(item['scrape_provider'], item['id'], item['url_dl'], item.get('direct_debrid_link', False))
 			else: url = item['url']

@@ -1,0 +1,11 @@
+# Copy this file to fenlight_keys.py (same directory) and fill in real values
+# before running `make zip`.
+#
+# If fenlight_keys.py is absent, the addon falls back to empty defaults and the
+# user must enter their own keys in the addon settings.
+
+tmdb_default_api = ''         # TMDB v3 API key
+tmdb_default_read_token = ''  # TMDB v4 read access token (Bearer)
+trakt_default_id = ''      # Trakt application client_id
+trakt_default_secret = ''  # Trakt application client_secret
+simkl_default_client = ''  # Simkl client_id (API key)

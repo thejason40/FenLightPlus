@@ -259,6 +259,15 @@ class RealDebridAPI:
 				return None
 			selected_files = [(idx, i) for idx, i in enumerate([i for i in torrent_info['files'] if i['selected'] == 1 and i['path'].lower().endswith(tuple(extensions))])]
 			selected_files = sorted(selected_files, key=lambda x: x[1]['bytes'], reverse=True)
+			try:
+				# links[] is indexed over ALL selected files, so pair filenames to links
+				rd_links = torrent_info.get('links') or []
+				pack_items = [dict(i, **{'link': rd_links[idx] if store_to_cloud and idx < len(rd_links) else ''}) \
+								for idx, i in enumerate([i for i in torrent_info['files'] if i['selected'] == 1])]
+				from caches.pack_cache import stash_pack
+				stash_pack(info_hash, [{'link': i['link'], 'filename': i['path'].replace('/', ''), 'size': i['bytes']} \
+										for i in pack_items if i['path'].lower().endswith(tuple(extensions))])
+			except: pass
 			match = False
 			if season:
 				correct_files = []

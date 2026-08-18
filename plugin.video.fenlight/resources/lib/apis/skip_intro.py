@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from apis import theintrodb_api, introdb_api
-from caches.main_cache import main_cache
+from caches.skip_cache import skip_cache
 # from modules.kodi_utils import logger
 
-cache_key = 'skip_intro.v2.%s.%s.%s.%s'  # id . season . episode . duration_seconds
+cache_key = 'v2.%s.%s.%s.%s'  # id . season . episode . duration_seconds - the table is the namespace
 HIT_HOURS, EMPTY_HOURS = 720, 168  # 30 days for real data, 7 days for blank data
 KINDS = ('recap', 'intro', 'outro')  # ordered by where they sit in an episode
 
@@ -70,12 +70,12 @@ def get_segments(tmdb_id, imdb_id, season, episode, total_time, cache_only=False
 	key_id = tmdb_id or imdb_id
 	if not key_id: return None
 	key = cache_key % (key_id, season, episode, int(total_time or 0))
-	cached = main_cache.get(key)
+	cached = skip_cache.get(key)
 	if cached is not None: return cached
 	if cache_only: return None
 	segments, cacheable = _fetch(tmdb_id, imdb_id, season, episode, total_time)
 	if cacheable:
-		main_cache.set(key, segments, expiration=HIT_HOURS if any(segments.values()) else EMPTY_HOURS)
+		skip_cache.set(key, segments, expiration=HIT_HOURS if any(segments.values()) else EMPTY_HOURS)
 	return segments
 
 def get_skip_windows(tmdb_id, imdb_id, season, episode, total_time, enabled_kinds, cache_only=False):

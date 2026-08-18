@@ -39,6 +39,9 @@ class source:
 						source_item = {'name': file_name, 'display_name': display_name, 'quality': video_quality, 'size': size, 'size_label': '%.2f GB' % size,
 									'extraInfo': details, 'url_dl': file_dl, 'id': file_dl, 'downloads': False, 'direct': True, 'source': self.scrape_provider,
 									'scrape_provider': self.scrape_provider}
+						if item.get('pack_files'):
+							source_item['pack_info'] = {'source_type': 'cloud', 'provider': self.scrape_provider, 'magnet': '', 'hash': '',
+														'direct': False, 'files': item['pack_files']}
 						yield source_item
 					except: pass
 			self.sources = list(_process())
@@ -77,9 +80,12 @@ class source:
 			links = _flatten_files(AllDebrid.magnet_files([folder_info['id']]))
 			append = self.scrape_results.append
 			links = [i for i in links if i['filename'].lower().endswith(tuple(extensions))]
+			try: pack_files = [{'filename': i['filename'], 'link': i['link'], 'size': i.get('size', 0)} for i in links]
+			except: pack_files = []
 			for item in links:
 				normalized = normalize(item['filename'])
 				if self.media_type == 'episode' and not seas_ep_filter(self.season, self.episode, normalized): continue
+				if len(pack_files) > 1: item['pack_files'] = pack_files
 				append(item)
 		except: return
 

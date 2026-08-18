@@ -28,14 +28,16 @@ random_episodes_check = {'build_in_progress_episode': 'episode.progress', 'build
 def trakt_items(result):
 	return result[0] if isinstance(result, tuple) else result
 movie_main = ('tmdb_movies_popular', 'tmdb_movies_popular_today','tmdb_movies_blockbusters','tmdb_movies_in_theaters', 'tmdb_movies_upcoming', 'tmdb_movies_latest_releases',
-'tmdb_movies_premieres', 'tmdb_movies_oscar_winners')
+'tmdb_movies_premieres', 'tmdb_movies_oscar_winners', 'moviesthisday_movies_on_this_day',
+'tmdb_movies_highest_rated', 'tmdb_movies_hidden_gems', 'tmdb_movies_quick_watches')
 movie_trakt_main = ('trakt_movies_trending', 'trakt_movies_trending_recent', 'trakt_movies_most_watched', 'trakt_movies_most_favorited',
 'trakt_movies_top10_boxoffice', 'trakt_recommendations')
 discover_personal = ('tmdb_movies_discover', 'tmdb_tv_discover')
 movie_meta_list_dict = {'tmdb_movies_languages': meta_lists.languages, 'tmdb_movies_providers': meta_lists.watch_providers_movies, 'tmdb_movies_year': meta_lists.years_movies,
 'tmdb_movies_decade': meta_lists.decades_movies, 'tmdb_movies_certifications': meta_lists.movie_certifications, 'tmdb_movies_genres': meta_lists.movie_genres}
 tvshow_main = ('tmdb_tv_popular', 'tmdb_tv_popular_today', 'tmdb_tv_premieres', 'tmdb_tv_airing_today','tmdb_tv_on_the_air','tmdb_tv_upcoming',
-'tmdb_anime_popular', 'tmdb_anime_popular_recent', 'tmdb_anime_premieres', 'tmdb_anime_upcoming', 'tmdb_anime_on_the_air')
+'tmdb_anime_popular', 'tmdb_anime_popular_recent', 'tmdb_anime_premieres', 'tmdb_anime_upcoming', 'tmdb_anime_on_the_air',
+'tmdb_tv_highest_rated', 'tmdb_tv_hidden_gems', 'tmdb_tv_marathon', 'tmdb_anime_highest_rated', 'tmdb_anime_hidden_gems', 'tmdb_anime_marathon')
 tvshow_trakt_main = ('trakt_tv_trending', 'trakt_tv_trending_recent', 'trakt_recommendations', 'trakt_tv_most_watched', 'trakt_tv_most_favorited',
 'trakt_anime_trending', 'trakt_anime_trending_recent', 'trakt_anime_most_watched', 'trakt_anime_most_favorited')
 tvshow_meta_list_dict = {'tmdb_tv_languages': meta_lists.languages, 'tmdb_tv_networks': meta_lists.networks, 'tmdb_tv_providers': meta_lists.watch_providers_tvshows,
@@ -44,9 +46,6 @@ tvshow_meta_list_dict = {'tmdb_tv_languages': meta_lists.languages, 'tmdb_tv_net
 'tmdb_anime_genres': meta_lists.anime_genres, 'tmdb_anime_providers': meta_lists.watch_providers_tvshows, 'trakt_anime_certifications': meta_lists.tvshow_certifications}
 tvshow_trakt_special = ('trakt_tv_certifications', 'trakt_anime_certifications')
 trakt_personal = ('trakt_collection_lists', 'trakt_watchlist_lists')
-simkl_browse_media = ('simkl_movies_highest_rated', 'simkl_movies_hidden_gems', 'simkl_movies_critically_acclaimed', 'simkl_movies_quick_watches', 'simkl_movies_dvd_releases',
-'simkl_tv_highest_rated', 'simkl_tv_hidden_gems', 'simkl_tv_critically_acclaimed', 'simkl_tv_marathon')
-simkl_browse_anime = ('simkl_anime_highest_rated', 'simkl_anime_hidden_gems', 'simkl_anime_critically_acclaimed', 'simkl_anime_marathon')
 memory_str = 'fenlight.%s'
 
 def get_persistent_content(menu_type, key, remake_widgets, is_external):
@@ -100,8 +99,6 @@ class RandomLists():
 		if self.action in trakt_personal: return self.random_trakt_personal_lists()
 		if self.action in tvshow_main: return self.random_main()
 		if self.action in tvshow_trakt_main: return self.random_trakt_main()
-		if self.action in simkl_browse_anime: return self.random_simkl_anime()
-		if self.action in simkl_browse_media: return self.random_simkl_browse()
 		if self.action == 'because_you_watched': return self.random_because_you_watched()
 		return self.random_special_main()
 
@@ -254,30 +251,6 @@ class RandomLists():
 			self.category_name =  list_name
 			self.make_directory()
 		except: clear_property(memory_str % 'random_because_you_watched')
-
-	def random_simkl_browse(self):
-		random_list, cache_to_memory = get_persistent_content('random_simkl_browse', self.action, self.remake_widgets, self.is_external)
-		if not random_list:
-			results = self.get_function()('movies' if self.menu_type == 'movie' else 'tv') or []
-			random_list = random.sample(results, min(len(results), 20))
-			if cache_to_memory: set_persistent_content('random_simkl_browse', self.action, random_list)
-		self.params['list'] = [i['media_ids'] for i in random_list]
-		self.params['id_type'] = 'ids_dict'
-		self.list_items = self.function(self.params).worker()
-		self.category_name = self.params_get('category_name', None) or self.base_list_name or ''
-		self.make_directory()
-
-	def random_simkl_anime(self):
-		random_list, cache_to_memory = get_persistent_content('random_simkl_anime', self.action, self.remake_widgets, self.is_external)
-		if not random_list:
-			results = self.get_function()('anime') or []
-			random_list = random.sample(results, min(len(results), 20))
-			if cache_to_memory: set_persistent_content('random_simkl_anime', self.action, random_list)
-		result = [dict(item, order=count) for count, item in enumerate(random_list)]
-		list_name = self.params_get('category_name', None) or self.base_list_name or 'Anime'
-		self.list_items = build_trakt_list({'result': result, 'base_list_name': self.base_list_name, 'list_name': list_name})
-		self.category_name = list_name
-		self.make_directory()
 
 	def make_directory(self, next_page_params={}):
 		add_items(self.handle, self.list_items)

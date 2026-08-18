@@ -104,6 +104,10 @@ class PremiumizeAPI:
 			if not 'status' in result or result['status'] != 'success': return None
 			valid_results = [i for i in result.get('content') if any(i.get('path').lower().endswith(x) for x in extensions) and not i.get('link', '') == '']
 			if len(valid_results) == 0: return
+			# filenames only - Premiumize re-resolves with a single stateless instant_transfer call,
+			# so a stored per-file link would buy nothing.
+			from caches.pack_cache import stash_pack
+			stash_pack(info_hash, [{'filename': i['path'].split('/')[-1], 'link': '', 'size': i.get('size', 0)} for i in valid_results])
 			if season:
 				episode_title = re.sub(r'[^A-Za-z0-9-]+', '.', title.replace('\'', '').replace('&', 'and').replace('%', '.percent')).lower()
 				for item in valid_results:

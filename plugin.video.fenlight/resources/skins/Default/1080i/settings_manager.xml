@@ -2085,6 +2085,14 @@
                           <property name="setting_description">Choose whether to rescrape ignoring filters when there are no results. Choices are Off, Auto or Prompt</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=results.ignore_filter)</onclick>
                       </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <property name="setting_label">Reuse Season Packs for Next Episodes</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.results.pack_continuity)]</property>
+                          <property name="setting_description">After an episode plays from a season pack, remember that pack and use it to play the next episodes of the same season without scraping. Falls back to a normal search whenever the pack cannot supply the episode. Not supported for Premiumize Cloud results.</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=results.pack_continuity)</onclick>
+                      </item>
         <!-- Sorting and Filtering -->
                       <item>
                           <visible>Container(2000).HasFocus(60)</visible>
@@ -2617,10 +2625,10 @@
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(70)</visible>
-                          <property name="setting_label">Episodes Between "Still Watching?" Checks</property>
+                          <property name="setting_label">Episodes Without Interaction Before Asking</property>
                           <property name="setting_type">numeric</property>
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.binge.episode_check_count)]</property>
-                          <property name="setting_description">How many episodes Binge Mode will chain silently before asking if you are still watching.</property>
+                          <property name="setting_description">How many episodes Binge Mode will chain untouched before asking if you are still watching. Anything you do during an episode - pausing, seeking, answering a Skip button, or any other button press - counts as interaction and starts the count again.</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_numeric&amp;setting_id=binge.episode_check_count)</onclick>
                       </item>
                       <item>

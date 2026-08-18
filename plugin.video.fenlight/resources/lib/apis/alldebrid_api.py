@@ -160,6 +160,9 @@ class AllDebridAPI:
 			transfer_files = _flatten_files(self.magnet_files([transfer_id]))
 			valid_results = [i for i in transfer_files if any(i.get('filename').lower().endswith(x) for x in extensions) and not i.get('link', '') == '']
 			if valid_results:
+				# hand the whole pack up before the season filter narrows it
+				from caches.pack_cache import stash_pack
+				stash_pack(info_hash, [{'filename': i['filename'], 'link': i['link'] if store_to_cloud else '', 'size': i.get('size', 0)} for i in valid_results])
 				if season:
 					correct_files = [i for i in valid_results if seas_ep_filter(season, episode, i['filename'])]
 					if correct_files:

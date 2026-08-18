@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+from time import monotonic
 from threading import Thread
 from apis.trakt_api import make_trakt_slug
 from caches.settings_cache import get_setting
@@ -9,6 +10,7 @@ from modules import kodi_utils as ku, settings as st, watched_status as ws
 set_property, clear_property, get_visibility, hide_busy_dialog, xbmc_actor = ku.set_property, ku.clear_property, ku.get_visibility, ku.hide_busy_dialog, ku.xbmc_actor
 xbmc_player, execute_builtin, sleep = ku.xbmc_player, ku.execute_builtin, ku.sleep
 make_listitem, volume_checker, get_infolabel, xbmc_monitor = ku.make_listitem, ku.volume_checker, ku.get_infolabel, ku.xbmc_monitor
+global_idle_time = ku.global_idle_time
 close_all_dialog, notification, poster_empty, fanart_empty = ku.close_all_dialog, ku.notification, ku.empty_poster, ku.get_addon_fanart()
 auto_resume, auto_nextep_settings, store_resolved_to_cloud = st.auto_resume, st.auto_nextep_settings, st.store_resolved_to_cloud
 set_bookmark, mark_movie, mark_episode = ws.set_bookmark, ws.mark_movie, ws.mark_episode
@@ -41,12 +43,17 @@ class FenLightPlayer(xbmc_player):
 				except Exception: pass
 
 				try:
+					self.internal_seek_at = monotonic()
 					_total = self.getTotalTime()
 					if self.playback_percent > 0.0 and _total > 0:
 						self.seekTime(_total * self.playback_percent / 100.0)
 					else:
 						self.seekTime(self.getTime())
 				except Exception: pass
+				try:
+					from modules.pack_continuity import seed_from_playback
+					Thread(target=seed_from_playback, args=(self,)).start()
+				except: pass
 				self.start_skip_watcher()
 				self.monitor()
 			else:
@@ -81,6 +88,7 @@ class FenLightPlayer(xbmc_player):
 		self.kill_dialog()
 		sleep(200)
 		close_all_dialog()
+		self.dialogs_cleared = True
 
 	def monitor(self):
 		try:
@@ -106,6 +114,7 @@ class FenLightPlayer(xbmc_player):
 						ensure_dialog_dead = True
 						self.playback_close_dialogs()
 					sleep(1000)
+					if self.binge_mode: self.check_user_idle()
 					self.current_point = round(float(self.curr_time/self.total_time * 100), 1)
 					if self.current_point >= set_watched:
 						if play_random_continual: self.run_random_continual(); break
@@ -202,8 +211,34 @@ class FenLightPlayer(xbmc_player):
 		try: ku.kodi_refresh()
 		except: pass
 
+	def mark_interaction(self):
+		# binge counts episodes with no sign of a human, so any user input wipes the tally
+		try:
+			if self.binge_mode: set_property('fenlight.binge.interacted', 'true')
+		except: pass
+
+	def check_user_idle(self):
+		# Kodi's idle timer only counts up — a drop means the user pressed something during this episode
+		idle = global_idle_time()
+		if idle is None: return
+		if self.last_idle_time is not None and idle < self.last_idle_time: self.mark_interaction()
+		self.last_idle_time = idle
+
+	def internal_seek(self):
+		# the resume jump and segment skips call seekTime() themselves; those aren't the user
+		try: return (monotonic() - self.internal_seek_at) < 3
+		except: return False
+
+	def onPlayBackPaused(self):
+		self.mark_interaction()
+
+	def onPlayBackResumed(self):
+		self.mark_interaction()
+
 	def onPlayBackSeek(self, time, seekOffset):
 		try:
+			# the idle timer misses playback driven over JSON-RPC by the companion app, so catch it here too
+			if not self.internal_seek(): self.mark_interaction()
 			if self.is_generic or not self.total_time: return
 			self.curr_time = time / 1000.0
 			self.current_point = round(float(self.curr_time / self.total_time * 100), 1)
@@ -265,11 +300,13 @@ class FenLightPlayer(xbmc_player):
 		self.sources_object = obj
 		self.is_generic = self.sources_object == 'video'
 		self.binge_mode = getattr(self.sources_object, 'binge_mode', False)
+		self.last_idle_time, self.internal_seek_at = None, 0
 		if not self.is_generic:
 			self.meta = self.sources_object.meta
 			self.meta_get, self.kodi_monitor, self.playback_percent = self.meta.get, xbmc_monitor(), self.sources_object.playback_percent or 0.0
 			self.playing_filename = self.sources_object.playing_filename
 			self.media_marked, self.nextep_info_gathered = False, False
+			self.dialogs_cleared = False
 			self.current_point, self.total_time, self.curr_time = 0, 0, 0
 			self.playback_successful, self.cancel_all_playback = None, False
 			self.playing_item = self.sources_object.playing_item
@@ -340,6 +377,10 @@ class FenLightPlayer(xbmc_player):
 			if not total_time: return
 			windows = skip_intro.get_skip_windows(self.tmdb_id, self.imdb_id, self.season, self.episode, total_time, kinds)
 			if not windows: return
+			waited = 0
+			while not silent and self.isPlayingVideo() and not self.dialogs_cleared and waited < 15000:
+				sleep(250)
+				waited += 250
 			handled = set()
 			while self.isPlayingVideo():
 				try: curr_time = self.getTime()
@@ -358,9 +399,13 @@ class FenLightPlayer(xbmc_player):
 	def _do_skip(self, window, dismiss, silent=False):
 		try:
 			if silent:
-				if self.isPlayingVideo(): self.seekTime(window['end'])
+				if self.isPlayingVideo():
+					self.internal_seek_at = monotonic()
+					self.seekTime(window['end'])
 				return
 			from windows.base_window import open_window
 			choice = open_window(('windows.skip_intro', 'SkipIntro'), 'skip_intro.xml', kind=window['kind'], seconds=dismiss, meta=self.meta)
-			if choice == 'skip' and self.isPlayingVideo(): self.seekTime(window['end'])
+			if choice == 'skip' and self.isPlayingVideo():
+				self.internal_seek_at = monotonic()
+				self.seekTime(window['end'])
 		except: pass

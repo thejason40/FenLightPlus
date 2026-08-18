@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from windows.base_window import BaseDialog
+from modules.kodi_utils import set_property
 # from modules.kodi_utils import logger
 
 kind_labels = {'intro': 'Skip Intro', 'recap': 'Skip Recap', 'outro': 'Skip Outro'}
@@ -26,13 +27,20 @@ class SkipIntro(BaseDialog):
 
 	def onAction(self, action):
 		if action in self.closing_actions:
+			self.mark_interaction()
 			self.closed = True
 			self.close()
 
 	def onClick(self, controlID):
 		if controlID == 11: self.selected = 'skip'
+		self.mark_interaction()
 		self.closed = True
 		self.close()
+
+	def mark_interaction(self):
+		# answering the button is proof someone's watching — resets the binge "still watching?" tally
+		try: set_property('fenlight.binge.interacted', 'true')
+		except: pass
 
 	def set_properties(self):
 		self.setProperty('skip_label', kind_labels.get(self.kind, 'Skip'))

@@ -175,6 +175,11 @@ def set_property(prop, value):
 def clear_property(prop):
 	return kodi_window().clearProperty(prop)
 
+def global_idle_time():
+	# seconds since Kodi last saw user input (remote/keyboard/mouse/CEC); only counts up, so a drop means someone pressed something
+	try: return xbmc.getGlobalIdleTime()
+	except: return None
+
 def mask_key(value, visible=6, max_stars=12):
 	if not value or value in ('empty_setting', 'None'): return value
 	value = str(value)

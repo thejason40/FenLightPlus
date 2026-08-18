@@ -17,7 +17,8 @@ widget_hide_next_page, widget_hide_watched, watched_indicators = settings.widget
 mpaa_region = settings.mpaa_region
 run_plugin, container_update = 'RunPlugin(%s)', 'Container.Update(%s)'
 main = ('tmdb_tv_popular', 'tmdb_tv_popular_today', 'tmdb_tv_premieres', 'tmdb_tv_airing_today','tmdb_tv_on_the_air','tmdb_tv_upcoming',
-'tmdb_anime_popular', 'tmdb_anime_popular_recent', 'tmdb_anime_premieres', 'tmdb_anime_upcoming', 'tmdb_anime_on_the_air')
+'tmdb_anime_popular', 'tmdb_anime_popular_recent', 'tmdb_anime_premieres', 'tmdb_anime_upcoming', 'tmdb_anime_on_the_air',
+'tmdb_tv_highest_rated', 'tmdb_tv_hidden_gems', 'tmdb_tv_marathon', 'tmdb_anime_highest_rated', 'tmdb_anime_hidden_gems', 'tmdb_anime_marathon')
 special = ('tmdb_tv_languages', 'tmdb_tv_networks', 'tmdb_tv_providers', 'tmdb_tv_providers_uk', 'tmdb_tv_year', 'tmdb_tv_decade', 'tmdb_tv_recommendations', 'tmdb_tv_genres',
 'tmdb_tv_search', 'tmdb_tv_keyword_results', 'tmdb_tv_keyword_results_direct', 'tmdb_anime_year', 'tmdb_anime_decade', 'tmdb_anime_genres',
 'tmdb_anime_providers', 'tmdb_anime_search')
@@ -28,7 +29,6 @@ trakt_main = ('trakt_tv_trending', 'trakt_tv_trending_recent', 'trakt_tv_trendin
 trakt_special = ('trakt_tv_certifications', 'trakt_anime_certifications')
 trakt_personal = ('trakt_collection', 'trakt_watchlist', 'trakt_collection_lists', 'trakt_watchlist_lists', 'trakt_favorites')
 simkl_personal = ('simkl_watching', 'simkl_plantowatch', 'simkl_completed', 'simkl_hold', 'simkl_dropped')
-simkl_browse = ('simkl_tv_highest_rated', 'simkl_tv_hidden_gems', 'simkl_tv_critically_acclaimed', 'simkl_tv_marathon')
 view_mode, content_type = 'view.tvshows', 'tvshows'
 internal_nav_check = ('build_season_list', 'build_episode_list')
 
@@ -106,13 +106,6 @@ class TVShows:
 				try:
 					if total_pages > page_no: self.new_page = {'new_page': string(page_no + 1), 'paginate_start': self.paginate_start}
 				except: pass
-			elif self.action in simkl_browse:
-				self.id_type = 'ids_dict'
-				data = function('tv', page_no)
-				data, total_pages = self.paginate_list(data, page_no)
-				self.list = [i['media_ids'] for i in data]
-				if total_pages > 2: self.total_pages = total_pages
-				if total_pages > page_no: self.new_page = {'new_page': string(page_no + 1), 'paginate_start': self.paginate_start}
 			elif self.action == 'trakt_recommendations':
 				self.id_type = 'trakt_dict'
 				data = function('shows')

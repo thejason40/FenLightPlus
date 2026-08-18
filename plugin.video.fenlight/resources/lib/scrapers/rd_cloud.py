@@ -40,6 +40,9 @@ class source:
 						source_item = {'name': file_name, 'display_name': display_name, 'quality': video_quality, 'size': size, 'size_label': '%.2f GB' % size,
 									'extraInfo': details, 'url_dl': file_dl, 'id': file_dl, 'downloads': False, 'direct': True, 'source': self.scrape_provider,
 									'scrape_provider': self.scrape_provider, 'direct_debrid_link': direct_debrid_link, 'delete_id': item.get('delete_id', None), 'dl_id': item.get('dl_id', None)}
+						if item.get('pack_files'):
+							source_item['pack_info'] = {'source_type': 'cloud', 'provider': self.scrape_provider, 'magnet': '', 'hash': '',
+														'direct': False, 'files': item['pack_files']}
 						yield source_item
 					except: pass
 			self.sources = list(_process())
@@ -84,12 +87,19 @@ class source:
 				try: i.update({'url_link': file_urls[c]})
 				except: pass
 			contents.sort(key=lambda k: k['path'])
+			try:
+				# links[] is indexed over ALL selected files, so pair filenames to links off the unfiltered list
+				all_selected = [i for i in folder_files['files'] if i['selected'] == 1]
+				pack_files = [{'filename': f['path'].replace('/', ''), 'link': file_urls[idx], 'size': f['bytes']} \
+								for idx, f in enumerate(all_selected) if idx < len(file_urls) and f['path'].lower().endswith(tuple(extensions))]
+			except: pack_files = []
 			for item in contents:
 				normalized = normalize(item['path'])
 				if self.media_type == 'episode' and not seas_ep_filter(self.season, self.episode, normalized): continue
 				if item['path'].replace('/', '').lower() not in [d['path'].replace('/', '').lower() for d in self.scrape_results]:
 					# === CHANGE: Add pack info for files in a pack ===
 					item['delete_id'] = FolderId
+					if len(pack_files) > 1: item['pack_files'] = pack_files
 					# === END CHANGE ===
 					scrape_results_append(item)
 		except: pass

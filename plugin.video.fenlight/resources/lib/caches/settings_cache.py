@@ -20,6 +20,7 @@ default_key_label = '**DEFAULT**'
 BASE_GET = 'SELECT setting_value from settings WHERE setting_id = ?'
 GET_MANY = 'SELECT setting_id, setting_value FROM settings WHERE setting_id in (%s)'
 GET_ALL = 'SELECT setting_id, setting_value FROM settings'
+GET_ALL_ROWS = 'SELECT setting_id, setting_type, setting_value FROM settings'
 BASE_SET = 'INSERT OR REPLACE INTO settings VALUES (?, ?, ?, ?)'
 BASE_DELETE = 'DELETE FROM settings WHERE setting_id = ?'
 CLEAR_SETTINGS = 'DELETE FROM settings'
@@ -49,6 +50,12 @@ class SettingsCache:
 	def get_all(self):
 		dbcon = connect_database('settings_db')
 		try: all_settings = dict(dbcon.execute(GET_ALL).fetchall())
+		except: all_settings = {}
+		return all_settings
+
+	def get_all_rows(self):
+		dbcon = connect_database('settings_db')
+		try: all_settings = {i[0]: (i[1], i[2]) for i in dbcon.execute(GET_ALL_ROWS).fetchall()}
 		except: all_settings = {}
 		return all_settings
 
@@ -116,11 +123,19 @@ def get_setting(setting_id, fallback=''):
 def get_many(settings_list):
 	return settings_cache.get_many(settings_list)
 
+def stale_setting_row(item, stored_row):
+	stored_type, stored_value = stored_row
+	if stored_type != item['setting_type']: return True
+	if stored_type == 'boolean': return stored_value not in boolean_dict
+	if 'settings_options' in item: return stored_value not in item['settings_options']
+	return False
+
 def sync_settings(params={}):
 	silent = params.get('silent', 'true') == 'true'
 	insert_list = []
 	insert_list_append = insert_list.append
-	currentsettings = settings_cache.get_all()
+	currentrows = settings_cache.get_all_rows()
+	currentsettings = {k: v[1] for k, v in currentrows.items()}
 	defaultsettings_ids = [i['setting_id'] for i in default_settings]
 	defaultsettings_names = [i['setting_id'] for i in default_settings if 'settings_options' in i]
 	defaultsettings_ids.extend(['%s_name' % i for i in defaultsettings_names])
@@ -133,7 +148,7 @@ def sync_settings(params={}):
 		for k, v  in currentsettings.items(): settings_cache.set_memory_cache(k, v)
 	for item in default_settings:
 		setting_id = item['setting_id']
-		if setting_id in currentsettings: continue
+		if setting_id in currentrows and not stale_setting_row(item, currentrows[setting_id]): continue
 		setting_type = item['setting_type']
 		setting_default = item['setting_default']
 		if setting_type == 'action' and 'settings_options' in item:
@@ -153,7 +168,7 @@ def set_default(setting_ids):
 
 def set_boolean(params):
 	setting = params['setting_id']
-	new_value = boolean_dict[get_setting('fenlight.%s' % setting)]
+	new_value = boolean_dict.get(get_setting('fenlight.%s' % setting), 'true')
 	set_setting(setting, new_value)
 	if setting == 'skip_segments' and new_value == 'true':
 		skip_segments_disclaimer()
@@ -437,6 +452,7 @@ default_settings = [
 {'setting_id': 'results.auto_rescrape_with_all', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Off', '1': 'Auto', '2': 'Prompt'}},
 {'setting_id': 'results.auto_episode_group', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Off', '1': 'Auto', '2': 'Prompt'}},
 {'setting_id': 'results.ignore_filter', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Off', '1': 'Auto', '2': 'Prompt'}},
+{'setting_id': 'results.pack_continuity', 'setting_type': 'boolean', 'setting_default': 'true'},
 #==================== Sorting and Filtering
 {'setting_id': 'results.sort_order_display', 'setting_type': 'string', 'setting_default': 'Quality, Size, Provider'},
 {'setting_id': 'results.size_sort_direction', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Descending', '1': 'Ascending'}},

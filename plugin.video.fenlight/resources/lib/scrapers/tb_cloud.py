@@ -43,6 +43,9 @@ class source:
 						source_item = {'name': file_name, 'display_name': display_name, 'quality': video_quality, 'size': size, 'size_label': '%.2f GB' % size,
 									'extraInfo': details, 'url_dl': file_dl, 'id': file_dl, 'downloads': False, 'direct': True, 'source': self.scrape_provider,
 									'scrape_provider': self.scrape_provider, 'direct_debrid_link': direct_debrid_link}
+						if item.get('pack_files'):
+							source_item['pack_info'] = {'source_type': 'cloud', 'provider': self.scrape_provider, 'magnet': '', 'hash': '',
+														'direct': False, 'files': item['pack_files']}
 						yield source_item
 					except: pass
 			self.sources = list(_process())
@@ -62,6 +65,10 @@ class source:
 				if not item['download_finished']: continue
 				if not self.folder_query in clean_title(normalize(item['name'])): continue
 				folder_id = item['id']
+				try:
+					pack_files = [{'filename': f['short_name'], 'link': '%d,%d' % (int(folder_id), f['id']), 'size': f['size']} \
+									for f in item['files'] if f['short_name'].endswith(tuple(extensions))]
+				except: pack_files = []
 				for file in item['files']:
 					if not file['short_name'].endswith(tuple(extensions)): continue
 					normalized = normalize(file['short_name'])
@@ -70,6 +77,7 @@ class source:
 						if not any(x in normalized for x in year_query_list): continue
 					elif not seas_ep_filter(self.season, self.episode, normalized): continue
 					file['folder_id'] = folder_id
+					if len(pack_files) > 1: file['pack_files'] = pack_files
 					append(file)
 		except: return
 

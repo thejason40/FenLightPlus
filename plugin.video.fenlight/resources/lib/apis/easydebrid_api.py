@@ -61,6 +61,8 @@ class EasyDebridAPI:
 			torrent_files = torrent['files']
 			torrent_files = [item for item in torrent_files if item['filename'].lower().endswith(tuple(extensions))]
 			if not torrent_files: return None
+			from caches.pack_cache import stash_pack
+			stash_pack(info_hash, [{'filename': i['filename'], 'link': '', 'size': i.get('size', 0)} for i in torrent_files])
 			if season:
 				torrent_files = [i for i in torrent_files if seas_ep_filter(season, episode, i['filename'])]
 				if not torrent_files: return None

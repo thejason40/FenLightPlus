@@ -39,6 +39,9 @@ class source:
 						source_item = {'name': file_name, 'display_name': display_name, 'quality': video_quality, 'size': size, 'size_label': '%.2f GB' % size,
 									'extraInfo': details, 'url_dl': file_dl, 'id': file_dl, 'downloads': False, 'direct': True, 'source': self.scrape_provider,
 									'scrape_provider': self.scrape_provider, 'direct_debrid_link': True}
+						if item.get('pack_files'):
+							source_item['pack_info'] = {'source_type': 'cloud', 'provider': self.scrape_provider, 'magnet': '', 'hash': '',
+														'direct': True, 'files': item['pack_files']}
 						yield source_item
 					except: pass
 			self.sources = list(_process())
@@ -75,6 +78,10 @@ class source:
 		try:
 			results_append = self.scrape_results.append
 			torrent_info = Offcloud.torrent_info(folder_info)
+			try:
+				pack_files = [{'filename': normalize(i.split('/')[-1]), 'link': Offcloud.requote_uri(i), 'size': 0} \
+								for i in torrent_info if i.endswith(tuple(extensions))]
+			except: pack_files = []
 			for item in torrent_info:
 				try:
 					if not item.endswith(tuple(extensions)): continue
@@ -84,7 +91,10 @@ class source:
 					if self.media_type == 'movie':
 						if any(x in filename for x in self.year_query_list) and self.folder_query in filename: match = True
 					elif seas_ep_filter(self.season, self.episode, normalized): match = True
-					if match: results_append({'filename': normalized, 'url': item})
+					if match:
+						result_item = {'filename': normalized, 'url': item}
+						if len(pack_files) > 1: result_item['pack_files'] = pack_files
+						results_append(result_item)
 				except: continue
 		except: return
 
