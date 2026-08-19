@@ -8,6 +8,8 @@ Since then I've also added more features, such as:
  - Simkl as an alternative to Trakt for watched status and scrobbling, with a one-off import of your Trakt histroy.
  - Magneto scraper compatibility
  - 'Play # episodes' to play a set number of episodes before your usual autoplay settings take back over
+ - 'Binge' mode
+ - Skip-intro feature
  
 I've also released a companion android app because I got fed up with searching for movies using a TV Remote. You can download it here: `https://thejason40.github.io/apk/`
 
@@ -30,7 +32,7 @@ Go to Kodi -> File Manager -> Add Source -> add
 
 call it "FenPlus"
 
-Then go to Kodi -> Settings -> Add Ons -> Install from Zip -> FenPlus -> Install FenLight+ 2.5.0
+Then go to Kodi -> Settings -> Add Ons -> Install from Zip -> FenPlus -> Install FenLight+ 2.5.2
 
 <hr>
 <i>Full credit to Tikipeter for creating Fen and FenLight. Thanks to minicoz for forking Tiki's repository before it was taken down.</i>
