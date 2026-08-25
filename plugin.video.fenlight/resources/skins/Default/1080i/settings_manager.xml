@@ -1923,6 +1923,16 @@
                           <visible>Container(2000).HasFocus(50)</visible>
                           <visible>String.IsEqual(Window(10000).Property(fenlight.provider.easynews),true)</visible>
                           <visible>![String.IsEmpty(Window(10000).Property(fenlight.easynews_user)) + String.IsEmpty(Window(10000).Property(fenlight.easynews_password))]</visible>
+                          <property name="setting_label">Playback Method</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.easynews.playback_method_name)]</property>
+                          <property name="setting_description">Default play method for Easynews. Standard allows seeking and resume. No Seek disables seeking/resume but can help streams start faster. You can also pick the opposite per-play from a source's options menu.</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=easynews.playback_method)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(50)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.provider.easynews),true)</visible>
+                          <visible>![String.IsEmpty(Window(10000).Property(fenlight.easynews_user)) + String.IsEmpty(Window(10000).Property(fenlight.easynews_password))]</visible>
                           <property name="setting_label">Filter Results by Name</property>
                           <property name="setting_type">boolean</property>
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.easynews.title_filter)]</property>

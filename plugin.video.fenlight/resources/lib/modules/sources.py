@@ -459,6 +459,8 @@ class Sources():
 				scraper_settings=self.scraper_settings, prescrape=self.prescrape, filters_ignored=self.filters_ignored, uncached_results=self.uncached_results)
 		if not action: self._kill_progress_dialog()
 		elif action == 'play': return self.play_file(results, chosen_item)
+		elif action in ('play_noseek', 'play_seek'):
+			return self.play_file(results, chosen_item, no_seek_override=(action == 'play_noseek'))
 		elif self.prescrape and action == 'perform_full_search':
 			self.prescrape, self.clear_properties = False, False
 			return self.get_sources()
@@ -670,7 +672,7 @@ class Sources():
 		self._kill_progress_dialog()
 		return FenLightPlayer().run(link, 'video')
 
-	def play_file(self, results, source={}):
+	def play_file(self, results, source={}, no_seek_override=None):
 		self.playback_successful, self.cancel_all_playback = None, False
 		try:
 			hide_busy_dialog()
@@ -727,7 +729,7 @@ class Sources():
 					player = FenLightPlayer()
 					try:
 						if self.progress_dialog.iscanceled() or monitor.abortRequested(): break
-						url = self.resolve_sources(item)
+						url = self.resolve_sources(item, no_seek_override=no_seek_override)
 						if url:
 							resolve_percent = 0
 							self.progress_dialog.busy_spinner('false')
@@ -882,7 +884,7 @@ class Sources():
 	def debrid_importer(self, debrid_provider):
 		return manual_function_import(*debrids[debrid_provider])
 
-	def resolve_sources(self, item, meta=None):
+	def resolve_sources(self, item, meta=None, no_seek_override=None):
 		if meta: self.meta = meta
 		url = None
 		try:
@@ -903,7 +905,7 @@ class Sources():
 						if stashed: item['pack_info'] = {'source_type': 'debrid', 'provider': cache_provider, 'magnet': item['url'],
 														'hash': item['hash'], 'direct': stashed['direct'], 'files': stashed['files']}
 			elif item.get('scrape_provider', None) in default_internal_scrapers:
-				url = self.resolve_internal(item['scrape_provider'], item['id'], item['url_dl'], item.get('direct_debrid_link', False))
+				url = self.resolve_internal(item['scrape_provider'], item['id'], item['url_dl'], item.get('direct_debrid_link', False), no_seek_override)
 			else: url = item['url']
 		except: pass
 		return url
@@ -919,13 +921,14 @@ class Sources():
 			kodi_utils.logger('resolve_cached', 'Failed to resolve %s [%s] hash=%s' % (title, debrid_provider, _hash[:16] if _hash else 'N/A'))
 		return url
 
-	def resolve_internal(self, scrape_provider, item_id, url_dl, direct_debrid_link=False):
+	def resolve_internal(self, scrape_provider, item_id, url_dl, direct_debrid_link=False, no_seek_override=None):
 		url = None
 		try:
 			if direct_debrid_link or scrape_provider == 'folders': url = url_dl
 			elif scrape_provider == 'easynews':
 				from indexers.easynews import resolve_easynews
-				url = resolve_easynews({'url_dl': url_dl, 'play': 'false'})
+				no_seek = None if no_seek_override is None else ('true' if no_seek_override else 'false')
+				url = resolve_easynews({'url_dl': url_dl, 'play': 'false', 'no_seek': no_seek})
 			else:
 				debrid_function = self.debrid_importer(scrape_provider)
 				if any(i in scrape_provider for i in ('rd_', 'ad_', 'tb_')):

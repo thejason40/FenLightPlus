@@ -203,6 +203,9 @@ def easynews_active():
 	else: easynews_status = False
 	return easynews_status
 
+def easynews_no_seek_default():
+	return get_setting('fenlight.easynews.playback_method', '0') == '1'
+
 def easynews_authorized():
 	easynews_user = get_setting('fenlight.easynews_user', 'empty_setting')
 	easynews_password = get_setting('fenlight.easynews_password', 'empty_setting')

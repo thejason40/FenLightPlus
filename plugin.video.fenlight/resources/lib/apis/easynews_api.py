@@ -221,17 +221,24 @@ class EasyNewsAPI:
 		try: return json.loads(response)
 		except: return response
 
-	def resolve_easynews(self, url_dl):
-		return self.base_resolver(url_dl)
+	def resolve_easynews(self, url_dl, no_seek=None):
+		return self.base_resolver(url_dl, no_seek)
 
-	def resolver(self, url_dl):
+	def resolver(self, url_dl, no_seek=None):
+		# 'No Seek': mark the stream non-seekable so Kodi skips the seek/length handshake
+		if no_seek is None:
+			no_seek = get_setting('fenlight.easynews.playback_method', '0') == '1'
+		else:
+			no_seek = no_seek in (True, 'true')
+		apply_flag = no_seek and '|Authorization=' not in url_dl   # never on downloads
 		try:
 			headers = {'Authorization': self.auth}
 			resolved_link = session.get(url_dl, headers=headers, stream=True, timeout=timeout).url
 		except: resolved_link = url_dl
+		if apply_flag: resolved_link += '|seekable=0'
 		return resolved_link
 
-	def resolver_v3(self, url_dl):
+	def resolver_v3(self, url_dl, no_seek=None):
 		headers = {'Authorization': self.auth}
 		response = session.get(url_dl, headers=headers, stream=True, timeout=timeout)
 		stream_url = response.url

@@ -66,7 +66,7 @@ def easynews_file_browser(files, handle):
 	add_items(handle, list(_builder()))
 
 def resolve_easynews(params):
-	resolved_link = EasyNews.resolve_easynews(params['url_dl'])
+	resolved_link = EasyNews.resolve_easynews(params['url_dl'], params.get('no_seek'))
 	if params.get('play', 'false') != 'true': return resolved_link
 	from modules.player import FenLightPlayer
 	FenLightPlayer().run(resolved_link, 'video')

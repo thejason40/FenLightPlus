@@ -2,7 +2,7 @@
 import json
 from windows.base_window import BaseDialog, select_dialog, ok_dialog
 from modules.source_utils import source_filters
-from modules.settings import provider_sort_ranks
+from modules.settings import provider_sort_ranks, easynews_active, easynews_no_seek_default
 from modules import kodi_utils
 # logger = kodi_utils.logger
 
@@ -117,6 +117,9 @@ class SourcesResults(BaseDialog):
 			source = json.loads(chosen_listitem.getProperty('source'))
 			choice = self.context_menu(source)
 			if choice:
+				if choice in ('play_noseek', 'play_seek'):
+					self.selected = (choice, source)
+					return self.close()
 				if isinstance(choice, dict): return self.execute_code(run_plugin_str % self.build_url(choice))
 				if choice == 'results_info': return self.open_window(('windows.sources', 'SourcesInfo'), 'sources_info.xml', item=chosen_listitem)
 
@@ -221,7 +224,6 @@ class SourcesResults(BaseDialog):
 		source, meta_json = json.dumps(item), json.dumps(self.meta)
 		choices = []
 		choices_append = choices.append
-		# === CHANGE: Check if the item is part of a pack ===
 		delete_id = item_get('delete_id', None)  # Retrieve pack info from the item dictionary
 		download_id = item_get('dl_id', None)
 		if provider_source == 'rd_cloud':
@@ -232,7 +234,6 @@ class SourcesResults(BaseDialog):
 				delete_params = {'mode': 'real_debrid.delete', 'id': download_id, 'cache_type': 'download'}
 				pack_or_file = 'File'
 		if delete_params: choices_append((f"Delete {pack_or_file}",delete_params))
-		# === END CHANGE ===
 		if not uncached and scrape_provider != 'folders':
 			down_file_params = {'mode': 'downloader.runner', 'action': 'meta.single', 'name': self.meta.get('rootname', ''), 'source': source,
 								'url': None, 'provider': scrape_provider, 'meta': meta_json}
@@ -248,6 +249,9 @@ class SourcesResults(BaseDialog):
 		if browse_pack_params: choices_append(('Browse', browse_pack_params))
 		if down_pack_params: choices_append(('Download Pack', down_pack_params))
 		if down_file_params: choices_append(('Download File', down_file_params))
+		if scrape_provider == 'easynews' and easynews_active():
+			if easynews_no_seek_default(): choices.insert(0, ('Play With Seeking', 'play_seek'))
+			else: choices.insert(0, ('Play With No Seek', 'play_noseek'))
 		list_items = [{'line1': i[0], 'icon': self.poster} for i in choices]
 		kwargs = {'items': json.dumps(list_items)}
 		choice = select_dialog([i[1] for i in choices], **kwargs)

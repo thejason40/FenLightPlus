@@ -433,6 +433,7 @@ default_settings = [
 {'setting_id': 'easynews.filter_lang', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'easynews.lang_filters', 'setting_type': 'string', 'setting_default': '0'},
 {'setting_id': 'check.easynews', 'setting_type': 'boolean', 'setting_default': 'false'},
+{'setting_id': 'easynews.playback_method', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Standard', '1': 'No Seek'}},
 {'setting_id': 'en.priority', 'setting_type': 'action', 'setting_default': '7', 'min_value': '1', 'max_value': '10'},
 #=========+========== Folders
 {'setting_id': 'provider.folders', 'setting_type': 'boolean', 'setting_default': 'false'},
