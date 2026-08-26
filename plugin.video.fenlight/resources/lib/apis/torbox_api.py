@@ -7,7 +7,7 @@ from caches.main_cache import cache_object
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
 from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog, sleep, progress_dialog, make_qr
 from modules.utils import copy2clip, get_datetime, jsondate_to_datetime as js2date
-# from modules.kodi_utils import logger
+from modules.kodi_utils import logger
 
 base_url = 'https://api.torbox.app/v1/api/'
 stats = 'user/me'
@@ -45,6 +45,7 @@ class TorBoxAPI:
 		return response.json()
 
 	def add_headers_to_url(self, url):
+		if not url: return url
 		return url + '|' + urlencode({'User-Agent': user_agent})
 
 	def account_info(self):
@@ -54,6 +55,11 @@ class TorBoxAPI:
 		string = 'tb_user_cloud'
 		url = history
 		return cache_object(self._get, string, url, False, 0.03)
+
+	def hash_in_user_cloud(self, info_hash):
+		# is this transfer already in the user's cloud? (so callers don't delete the user's own item)
+		try: return any((i.get('hash') or '').lower() == (info_hash or '').lower() for i in self.user_cloud()['data'])
+		except: return False
 
 	def user_cloud_usenet(self):
 		string = 'tb_user_cloud_usenet'
@@ -93,13 +99,13 @@ class TorBoxAPI:
 		torrent_id, file_id = file_id.split(',')
 		data = {'token': self.token, 'torrent_id': torrent_id, 'file_id': file_id}
 		try: return self._get(download, data=data)['data']
-		except: return None
+		except Exception as e: logger('TorBox unrestrict_link', str(e)); return None
 
 	def unrestrict_usenet(self, file_id):
 		usenet_id, file_id = file_id.split(',')
-		params = {'token': self.token, 'usenet_id': usenet_id, 'file_id': file_id, 'user_ip': True}
-		try: return self._get(download_usenet, params=params)['data']
-		except: return None
+		params = {'token': self.token, 'usenet_id': usenet_id, 'file_id': file_id, 'user_ip': 'true'}
+		try: return self._get(download_usenet, data=params)['data']
+		except Exception as e: logger('TorBox unrestrict_usenet', str(e)); return None
 
 	def add_magnet(self, magnet):
 		data = {'magnet': magnet, 'seed': 3, 'allow_zip': False}
@@ -123,12 +129,12 @@ class TorBoxAPI:
 			extensions = supported_video_extensions()
 			extras_filtering_list = tuple(i for i in EXTRAS if not i in title.lower())
 			torrent = self.add_magnet(magnet_url)
-			if not torrent['success']: return None
+			if not torrent['success']: logger('TorBox resolve_magnet', 'add_magnet failed. Response: %s' % str(torrent)); return None
 			torrent_id = torrent['data']['torrent_id']
 			torrent_files = self.torrent_info(torrent_id)
 			selected_files = [{'url': '%d,%d' % (torrent_id, item['id']), 'filename': item['short_name'], 'size': item['size']} \
 							for item in torrent_files['data']['files'] if item['short_name'].lower().endswith(tuple(extensions))]
-			if not selected_files: return None
+			if not selected_files: logger('TorBox resolve_magnet', 'no video files in torrent'); return None
 			# hand the whole pack up before the season filter narrows it
 			from caches.pack_cache import stash_pack
 			stash_pack(info_hash, [{'filename': i['filename'], 'link': i['url'] if store_to_cloud else '', 'size': i['size']} for i in selected_files])
@@ -138,12 +144,13 @@ class TorBoxAPI:
 				if self._m2ts_check(selected_files): return None
 				selected_files = [i for i in selected_files if not any(x in i['filename'] for x in extras_filtering_list)]
 				selected_files.sort(key=lambda k: k['size'], reverse=True)
-			if not selected_files: return None
+			if not selected_files: logger('TorBox resolve_magnet', 'no file matched season %s episode %s' % (season, episode)); return None
 			file_key = selected_files[0]['url']
 			file_url = self.unrestrict_link(file_key)
 			if not store_to_cloud: Thread(target=self.delete_torrent, args=(torrent_id,)).start()
 			return file_url
-		except:
+		except Exception as e:
+			logger('TorBox resolve_magnet', str(e))
 			if torrent_id: self.delete_torrent(torrent_id)
 			return None
 
@@ -153,14 +160,16 @@ class TorBoxAPI:
 			torrent_id = None
 			extensions = supported_video_extensions()
 			torrent = self.add_magnet(magnet_url)
-			if not torrent['success']: return None
+			if not torrent['success']: logger('TorBox display_magnet_pack', 'add_magnet failed. Response: %s' % str(torrent)); return None
 			torrent_id = torrent['data']['torrent_id']
 			torrent_files = self.torrent_info(torrent_id)
 			torrent_files = [{'link': '%d,%d' % (torrent_id, item['id']), 'filename': item['short_name'], 'size': item['size']} \
 							for item in torrent_files['data']['files'] if item['short_name'].lower().endswith(tuple(extensions))]
-			Thread(target=self.delete_torrent, args=(torrent_id,)).start()
-			return torrent_files or None
-		except Exception:
+			if torrent_files: return torrent_files
+			if not self.hash_in_user_cloud(info_hash): self.delete_torrent(torrent_id)
+			return None
+		except Exception as e:
+			logger('TorBox display_magnet_pack', str(e))
 			if torrent_id: self.delete_torrent(torrent_id)
 			return None
 

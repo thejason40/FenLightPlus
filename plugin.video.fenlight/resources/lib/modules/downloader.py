@@ -8,7 +8,7 @@ from urllib.request import Request, urlopen
 from urllib.parse import parse_qsl, urlparse, unquote
 from caches.settings_cache import get_setting
 from modules import kodi_utils
-from modules.sources import Sources
+from modules.sources import Sources, delete_pack_transfer
 from modules.settings import download_directory
 from modules.source_utils import clean_title
 from modules.utils import clean_file_name, safe_string, remove_accents, normalize
@@ -25,7 +25,7 @@ set_view_mode, make_listitem, list_dirs = kodi_utils.set_view_mode, kodi_utils.m
 fanart = kodi_utils.get_addon_fanart()
 sources = Sources()
 ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-icons = {'Real-Debrid': 'realdebrid', 'Premiumize.me': 'premiumize', 'AllDebrid': 'alldebrid', 'Offcloud': 'offcloud', 'EasyDebrid': 'easydebrid', 'Torbox': 'torbox'}
+icons = {'Real-Debrid': 'realdebrid', 'Premiumize.me': 'premiumize', 'AllDebrid': 'alldebrid', 'Offcloud': 'offcloud', 'EasyDebrid': 'easydebrid', 'TorBox': 'torbox'}
 levels =['../../../..', '../../..', '../..', '..']
 status_property_string = 'fenlight.download_status.%s'
 
@@ -40,6 +40,11 @@ def runner(params):
 	elif action == 'meta.pack':
 		from modules.source_utils import find_season_in_release_title
 		provider = params['provider']
+		# don't remove a file the user already had in their cloud
+		tb_preexisting = False
+		if provider == 'TorBox':
+			from apis.torbox_api import TorBoxAPI
+			tb_preexisting = TorBoxAPI().hash_in_user_cloud(params['info_hash'])
 		try:
 			debrid_files, debrid_function = sources.debridPacks(provider, params['name'], params['magnet_url'], params['info_hash'], download=True)
 			pack_choices = [dict(params, **{'pack_files':item}) for item in debrid_files]
@@ -47,7 +52,9 @@ def runner(params):
 		except: return notification('No URL found for Download. Pick another Source.')
 		default_icon = get_icon(icon)
 		chosen_list = select_pack_item(pack_choices, default_icon)
-		if not chosen_list: return
+		if not chosen_list:
+			if provider == 'TorBox' and not tb_preexisting: delete_pack_transfer(debrid_function, debrid_files[0]['link'])
+			return
 		show_package = json.loads(params['source']).get('package') == 'show'
 		meta  = json.loads(chosen_list[0].get('meta'))
 		image = meta.get('poster') or poster_empty
@@ -64,6 +71,9 @@ def runner(params):
 					item['default_foldername'] = default_foldername
 			multi_downloads_append((Thread(target=Downloader(item).run), clean_file_name(item['pack_files']['filename'])))
 		download_threads_manager(multi_downloads, image)
+		if provider == 'TorBox' and not tb_preexisting:
+			Thread(target=_delete_tb_pack_when_done,
+				args=([t for t, _n in multi_downloads], debrid_function, chosen_list[0]['pack_files']['link'])).start()
 	else: Downloader(params).run()
 
 def download_threads_manager(multi_downloads, image):
@@ -79,6 +89,10 @@ def download_threads_manager(multi_downloads, image):
 		remaining_downloads = [x[1] for x in multi_downloads if not x in started_downloads]
 		set_property('fenlight.active_queued_downloads', json.dumps(remaining_downloads))
 	clear_property('fenlight.active_queued_downloads')
+
+def _delete_tb_pack_when_done(threads, debrid_function, link):
+	for t in threads: t.join()
+	delete_pack_transfer(debrid_function, link)
 
 def select_pack_item(pack_choices, icon):
 	list_items = [{'line1': '%.2f GB | %s' % (float(item['pack_files']['size'])/1073741824, clean_file_name(item['pack_files']['filename']).upper()), 'icon': icon} \
@@ -129,7 +143,8 @@ class Downloader:
 			self.image = self.meta_get('poster') or poster_empty
 			self.name = self.params_get('name')
 		else:
-			self.meta, self.name, self.year, self.season = None, None, None, None
+			self.meta, self.year, self.season = None, None, None
+			self.name = self.params_get('name')
 			self.media_type = self.params_get('media_type')
 			self.title = clean_file_name(self.params_get('name'))
 			self.image = self.params_get('image')
@@ -264,9 +279,12 @@ class Downloader:
 			file_name = clean_title(name_url.split('/')[-1])
 			if clean_title(self.title).lower() in file_name.lower():
 				final_name = os.path.splitext(urlparse(name_url).path)[0].split('/')[-1]
+			elif self.name:
+				base, ext = os.path.splitext(self.name)
+				if ext[1:].lower() not in video_extensions: base = self.name  # keep dotted release titles whole
+				final_name = base.translate({ord(c): None for c in r'\/:*?"<>|'}).strip('.')
 			else:
-				try: final_name = self.name.translate(None, r'\/:*?"<>|').strip('.')
-				except: final_name = os.path.splitext(urlparse(name_url).path)[0].split('/')[-1]
+				final_name = os.path.splitext(urlparse(name_url).path)[0].split('/')[-1]
 		self.final_name = safe_string(remove_accents(final_name))
 
 	def get_extension(self):
@@ -277,7 +295,10 @@ class Downloader:
 			if not ext in image_extensions: ext = 'jpg'
 		else:
 			ext = os.path.splitext(urlparse(self.url).path)[1][1:]
-			if not ext in video_extensions: ext = 'mp4'
+			if not ext in video_extensions:
+				real = self.params_get('pack_files', {}).get('filename', '') if self.action == 'meta.pack' else (self.name or '')
+				name_ext = os.path.splitext(real)[1][1:].lower()
+				ext = name_ext if name_ext in video_extensions else 'mp4'
 		ext = '.%s' % ext
 		self.extension = ext
 

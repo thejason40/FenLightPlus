@@ -235,7 +235,7 @@ class SourcesResults(BaseDialog):
 				pack_or_file = 'File'
 		if delete_params: choices_append((f"Delete {pack_or_file}",delete_params))
 		if not uncached and scrape_provider != 'folders':
-			down_file_params = {'mode': 'downloader.runner', 'action': 'meta.single', 'name': self.meta.get('rootname', ''), 'source': source,
+			down_file_params = {'mode': 'downloader.runner', 'action': 'meta.single', 'name': name, 'source': source,
 								'url': None, 'provider': scrape_provider, 'meta': meta_json}
 		if 'package' in item and not uncached and cache_provider != 'EasyDebrid':
 			down_pack_params = {'mode': 'downloader.runner', 'action': 'meta.pack', 'name': self.meta.get('rootname', ''), 'source': source, 'url': None,

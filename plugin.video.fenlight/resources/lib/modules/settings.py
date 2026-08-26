@@ -6,6 +6,7 @@ from modules import kodi_utils
 translate_path, get_property = kodi_utils.translate_path, kodi_utils.get_property
 download_directories_dict = {'movie': 'fenlight.movie_download_directory', 'episode': 'fenlight.tvshow_download_directory', 'thumb_url': 'fenlight.image_download_directory',
 							'image_url': 'fenlight.image_download_directory','image': 'fenlight.image_download_directory', 'premium': 'fenlight.premium_download_directory',
+							'torrent': 'fenlight.premium_download_directory', 'usenet': 'fenlight.premium_download_directory',
 							None: 'fenlight.premium_download_directory', 'None': False}
 results_window_numbers_dict = {'List': 2000, 'Rows': 2001, 'WideList': 2002}
 default_action_dict = {'0': 'play', '1': 'cancel', '2': 'pause'}

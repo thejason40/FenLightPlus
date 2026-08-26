@@ -239,10 +239,16 @@ class EasyNewsAPI:
 		return resolved_link
 
 	def resolver_v3(self, url_dl, no_seek=None):
+		if no_seek is None:
+			no_seek = get_setting('fenlight.easynews.playback_method', '0') == '1'
+		else:
+			no_seek = no_seek in (True, 'true')
+		apply_flag = no_seek and '|Authorization=' not in url_dl   # never on downloads
 		headers = {'Authorization': self.auth}
 		response = session.get(url_dl, headers=headers, stream=True, timeout=timeout)
 		stream_url = response.url
 		resolved_link = stream_url + '|Authorization=%s' % self.auth_quoted
+		if apply_flag: resolved_link += '&seekable=0'
 		return resolved_link
 
 class EasyNewsAPIv3(EasyNewsAPI):

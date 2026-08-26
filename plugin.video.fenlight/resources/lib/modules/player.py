@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 from time import monotonic
-from threading import Thread
+from threading import Thread, Lock
 from apis.trakt_api import make_trakt_slug
 from caches.settings_cache import get_setting
 from modules import kodi_utils as ku, settings as st, watched_status as ws
@@ -185,7 +185,9 @@ class FenLightPlayer(xbmc_player):
 		return listitem
 
 	def media_watched_marker(self, force_watched=False):
-		self.media_marked = True
+		with self.marker_lock:
+			if self.media_marked: return
+			self.media_marked = True
 		try:
 			if self.current_point >= set_watched or force_watched:
 				if self.media_type == 'movie': watched_function = mark_movie
@@ -301,6 +303,7 @@ class FenLightPlayer(xbmc_player):
 		self.is_generic = self.sources_object == 'video'
 		self.binge_mode = getattr(self.sources_object, 'binge_mode', False)
 		self.last_idle_time, self.internal_seek_at = None, 0
+		self.marker_lock = Lock()
 		if not self.is_generic:
 			self.meta = self.sources_object.meta
 			self.meta_get, self.kodi_monitor, self.playback_percent = self.meta.get, xbmc_monitor(), self.sources_object.playback_percent or 0.0

@@ -42,7 +42,7 @@ class source:
 						video_quality, details = get_file_info(name_info=release_info_format(file_name))
 						source_item = {'name': file_name, 'display_name': display_name, 'quality': video_quality, 'size': size, 'size_label': '%.2f GB' % size,
 									'extraInfo': details, 'url_dl': file_dl, 'id': file_dl, 'downloads': False, 'direct': True, 'source': self.scrape_provider,
-									'scrape_provider': self.scrape_provider, 'direct_debrid_link': direct_debrid_link}
+									'scrape_provider': self.scrape_provider, 'direct_debrid_link': direct_debrid_link, 'usenet': item.get('usenet', False)}
 						if item.get('pack_files'):
 							source_item['pack_info'] = {'source_type': 'cloud', 'provider': self.scrape_provider, 'magnet': '', 'hash': '',
 														'direct': False, 'files': item['pack_files']}
@@ -99,7 +99,7 @@ class source:
 						if not any(x in normalized for x in year_query_list): continue
 					elif not seas_ep_filter(self.season, self.episode, normalized): continue
 					file['folder_id'] = folder_id
-					file['direct_debrid_link'] = True
+					file['usenet'] = True
 					append(file)
 		except: return
 

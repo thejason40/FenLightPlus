@@ -51,7 +51,7 @@ def browse_tb_cloud(folder_id, media_type):
 				display = '%02d | [B]FILE[/B] | %.2f GB | [I]%s [/I]' % (count, size, name)
 				url_link = '%d,%d' % (int(folder_id), item['id'])
 				url_params = {'mode': 'torbox.resolve_tb', 'play': 'true', 'url': url_link, 'media_type': item['media_type']}
-				down_file_params = {'mode': 'downloader.runner', 'name': name, 'url': url_link, 'media_type': item['media_type'], 'action': 'cloud.torbox', 'image': default_tb_icon}
+				down_file_params = {'mode': 'downloader.runner', 'name': item['short_name'], 'url': url_link, 'media_type': item['media_type'], 'action': 'cloud.torbox', 'image': default_tb_icon}
 				cm.append(('[B]Download File[/B]','RunPlugin(%s)' % build_url(down_file_params)))
 				url = build_url(url_params)
 				listitem = make_listitem()
