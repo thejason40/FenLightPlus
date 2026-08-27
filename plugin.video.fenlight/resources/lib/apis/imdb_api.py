@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-import re
 import json
 import requests
 from caches.base_cache import connect_database
 from caches.main_cache import cache_object, main_cache
-from modules.dom_parser import parseDOM
 from modules.kodi_utils import logger
-from modules.utils import remove_accents
 
 gql_url = 'https://graphql.imdb.com/'
 gql_headers = {
@@ -14,8 +11,6 @@ gql_headers = {
 	'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
 	'Accept': 'application/json', 'Origin': 'https://www.imdb.com', 'Referer': 'https://www.imdb.com/',
 	'x-imdb-client-name': 'imdb-web-next-localized', 'x-imdb-user-language': 'en-US', 'x-imdb-user-country': 'US'}
-people_search_url = 'https://sg.media-imdb.com/suggests/%s/%s.json'
-people_search_url_backup = 'https://www.imdb.com/search/name/?name=%s'
 timeout = 20.0
 
 # GraphQL queries. $id is a title id (tt...) except name_trivia, which takes a name id (nm...).
@@ -68,33 +63,10 @@ def imdb_parentsguide(imdb_id):
 def imdb_people_trivia(imdb_id):
 	return _cached('imdb_people_trivia_%s' % imdb_id, {'action': 'imdb_people_trivia', 'id': imdb_id}, 168)
 
-def imdb_people_id(actor_name):
-	name = actor_name.lower()
-	string = 'imdb_people_id_%s' % name
-	url, url_backup = people_search_url % (name[0], name.replace(' ', '%20')), people_search_url_backup % name
-	params = {'url': url, 'action': 'imdb_people_id', 'name': name, 'url_backup': url_backup}
-	return cache_object(get_imdb, string, params, False, 8736)[0]
-
 def get_imdb(params):
 	imdb_list = []
 	next_page = None
 	action = params.get('action')
-	if action == 'imdb_people_id':
-		try:
-			name = params['name']
-			result = requests.get(params['url'], timeout=timeout)
-			results = json.loads(re.sub(r'imdb\$(.+?)\(', '', result.text)[:-1])['d']
-			imdb_list = [i['id'] for i in results if i['id'].startswith('nm') and i['l'].lower() == name][0]
-		except: imdb_list = []
-		if not imdb_list:
-			try:
-				result = requests.get(params['url_backup'], timeout=timeout, headers=gql_headers)
-				result = remove_accents(result.text).replace('\n', ' ')
-				result = parseDOM(result, 'div', attrs={'class': 'lister-item-image'})[0]
-				imdb_list = re.search(r'href="/name/(.+?)"', result, re.DOTALL).group(1)
-			except: pass
-		return (imdb_list, next_page)
-
 	imdb_id = params.get('id')
 	if action == 'imdb_more_like_this':
 		seen = set()
@@ -144,9 +116,6 @@ def get_imdb(params):
 							'content': '\n\n'.join('%02d. %s' % (n, t) for n, t in enumerate(listings, 1)) if listings else ''}
 				imdb_list.append(item_dict)
 			except: pass
-	try: _count = len(imdb_list)
-	except: _count = imdb_list
-	logger('FenLight IMDB', 'get_imdb action=%s count=%s' % (action, _count))
 	return (imdb_list, next_page)
 
 def clear_imdb_cache(silent=False):

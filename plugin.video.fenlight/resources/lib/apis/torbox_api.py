@@ -58,7 +58,7 @@ class TorBoxAPI:
 
 	def hash_in_user_cloud(self, info_hash):
 		# is this transfer already in the user's cloud? (so callers don't delete the user's own item)
-		try: return any((i.get('hash') or '').lower() == (info_hash or '').lower() for i in self.user_cloud()['data'])
+		try: return any((i.get('hash') or '').lower() == (info_hash or '').lower() for i in self._get(history)['data'])
 		except: return False
 
 	def user_cloud_usenet(self):

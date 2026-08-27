@@ -329,7 +329,7 @@ class Extras(BaseDialog):
 					ranking = item['ranking'].upper()
 					if ranking == 'NONE': ranking = 'NO RANK'
 					if item['content']: ranking += ' (x%02d)' % item['total_count']
-					icon = parentsguide_icons[name]
+					icon = parentsguide_icons.get(name, self.poster)
 					listitem.setProperty('name', name)
 					listitem.setProperty('ranking', ranking)
 					listitem.setProperty('thumbnail', icon)

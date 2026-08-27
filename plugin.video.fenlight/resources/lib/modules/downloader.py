@@ -40,20 +40,15 @@ def runner(params):
 	elif action == 'meta.pack':
 		from modules.source_utils import find_season_in_release_title
 		provider = params['provider']
-		# don't remove a file the user already had in their cloud
-		tb_preexisting = False
-		if provider == 'TorBox':
-			from apis.torbox_api import TorBoxAPI
-			tb_preexisting = TorBoxAPI().hash_in_user_cloud(params['info_hash'])
 		try:
-			debrid_files, debrid_function = sources.debridPacks(provider, params['name'], params['magnet_url'], params['info_hash'], download=True)
+			debrid_files, debrid_function, tb_cleanup = sources.debridPacks(provider, params['name'], params['magnet_url'], params['info_hash'], download=True)
 			pack_choices = [dict(params, **{'pack_files':item}) for item in debrid_files]
 			icon = icons[provider]
 		except: return notification('No URL found for Download. Pick another Source.')
 		default_icon = get_icon(icon)
 		chosen_list = select_pack_item(pack_choices, default_icon)
 		if not chosen_list:
-			if provider == 'TorBox' and not tb_preexisting: delete_pack_transfer(debrid_function, debrid_files[0]['link'])
+			if tb_cleanup: delete_pack_transfer(debrid_function, debrid_files[0]['link'])
 			return
 		show_package = json.loads(params['source']).get('package') == 'show'
 		meta  = json.loads(chosen_list[0].get('meta'))
@@ -71,7 +66,7 @@ def runner(params):
 					item['default_foldername'] = default_foldername
 			multi_downloads_append((Thread(target=Downloader(item).run), clean_file_name(item['pack_files']['filename'])))
 		download_threads_manager(multi_downloads, image)
-		if provider == 'TorBox' and not tb_preexisting:
+		if tb_cleanup:
 			Thread(target=_delete_tb_pack_when_done,
 				args=([t for t, _n in multi_downloads], debrid_function, chosen_list[0]['pack_files']['link'])).start()
 	else: Downloader(params).run()
@@ -91,7 +86,9 @@ def download_threads_manager(multi_downloads, image):
 	clear_property('fenlight.active_queued_downloads')
 
 def _delete_tb_pack_when_done(threads, debrid_function, link):
-	for t in threads: t.join()
+	try:
+		for t in threads: t.join()
+	except Exception as e: kodi_utils.logger('TorBox pack cleanup', 'join failed: %s' % e)
 	delete_pack_transfer(debrid_function, link)
 
 def select_pack_item(pack_choices, icon):

@@ -50,7 +50,9 @@ filter_keys = {'hevc': '[B]HEVC[/B]', '3d': '[B]3D[/B]', 'hdr': '[B]HDR[/B]', 'd
 preference_values = {0:100, 1:50, 2:20, 3:10, 4:5, 5:2}
 
 def delete_pack_transfer(debrid_function, link):
-	try: debrid_function().delete_torrent(link.split(',')[0])
+	try:
+		result = debrid_function().delete_torrent(int(link.split(',')[0]))
+		if not (result or {}).get('success'): kodi_utils.logger('TorBox pack cleanup', 'delete refused: %s' % str(result))
 	except Exception as e: kodi_utils.logger('TorBox pack cleanup', str(e))
 
 class Sources():
@@ -667,7 +669,7 @@ class Sources():
 		hide_busy_dialog()
 		if not debrid_files: return notification('Error')
 		debrid_files.sort(key=lambda k: k['filename'].lower())
-		if download: return debrid_files, debrid_function
+		if download: return debrid_files, debrid_function, tb_cleanup
 		list_items = [{'line1': '%.2f GB | %s' % (float(item['size'])/1073741824, clean_file_name(item['filename']).upper())} for item in debrid_files]
 		kwargs = {'items': json.dumps(list_items), 'heading': name, 'enumerate': 'true', 'narrow_window': 'true'}
 		chosen_result = select_dialog(debrid_files, **kwargs)
