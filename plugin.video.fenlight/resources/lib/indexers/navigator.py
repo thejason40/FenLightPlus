@@ -224,6 +224,7 @@ class Navigator:
 			self.add({'mode': 'simkl.import_from_trakt', 'isFolder': 'false'}, 'Import Trakt Data to Simkl', 'simkl')
 		self.add({'mode': 'navigator.shortcut_folders'}, 'Shortcut Folders Manager', 'settings2')
 		self.add({'mode': 'navigator.maintenance'}, 'Database & Cache Maintenance', 'settings2')
+		self.add({'mode': 'navigator.config_transfer'}, 'Import/Export FenLight+ Config', 'settings2')
 		self.add({'mode': 'navigator.update_utils'}, 'Update Utilities', 'settings2')
 		self.add({'mode': 'toggle_language_invoker', 'isFolder': 'false'}, 'Toggle Language Invoker (ADVANCED!!)', 'settings2')
 		self.end_directory()
@@ -251,6 +252,12 @@ class Navigator:
 		self.add({'mode': 'clear_cache', 'cache': 'oc_cloud', 'isFolder': 'false'}, 'Clear Off Cloud Cache', 'settings')
 		self.add({'mode': 'clear_cache', 'cache': 'ed_cloud', 'isFolder': 'false'}, 'Clear Easy Debrid Cache', 'settings')
 		self.add({'mode': 'clear_cache', 'cache': 'tb_cloud', 'isFolder': 'false'}, 'Clear TorBox Cache', 'settings')
+		self.end_directory()
+
+	def config_transfer(self):
+		self.add({'mode': 'config.pull_device', 'isFolder': 'false'}, 'Copy Settings From Another Device', 'settings')
+		self.add({'mode': 'config.export_file', 'isFolder': 'false'}, 'Export Settings to a File', 'settings')
+		self.add({'mode': 'config.import_file', 'isFolder': 'false'}, 'Import Settings From a File', 'settings')
 		self.end_directory()
 
 	def set_view_modes(self):

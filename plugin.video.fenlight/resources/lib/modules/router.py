@@ -34,6 +34,9 @@ def routing(sys):
 	if mode == 'app_capabilities':
 		from modules.device_select import capabilities
 		return capabilities()
+	if mode == 'app_export_config':
+		from modules.config_transfer import app_export_config
+		return app_export_config(params)
 	if 'choice' in mode:
 		from indexers import dialogs
 		return exec('dialogs.%s(params)' % mode)
@@ -323,6 +326,9 @@ def routing(sys):
 	if mode == 'display.detect_capabilities':
 		from modules.display_capability import detect_capabilities_choice
 		return detect_capabilities_choice(params)
+	if mode == 'speedtest.run':
+		from modules.speedtest import run_speedtest_choice
+		return run_speedtest_choice(params)
 	if mode == 'toggle_language_invoker':
 		from modules.kodi_utils import toggle_language_invoker
 		return toggle_language_invoker()
@@ -341,3 +347,12 @@ def routing(sys):
 	if mode == 'open_external_scraper_settings':
 		from modules.kodi_utils import external_scraper_settings
 		return external_scraper_settings()
+	if mode == 'config.export_file':
+		from modules.config_transfer import export_file
+		return export_file(params)
+	if mode == 'config.import_file':
+		from modules.config_transfer import import_file
+		return import_file(params)
+	if mode == 'config.pull_device':
+		from modules.config_transfer import pull_device
+		return pull_device(params)

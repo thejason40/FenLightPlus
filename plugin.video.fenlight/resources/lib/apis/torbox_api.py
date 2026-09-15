@@ -185,7 +185,7 @@ class TorBoxAPI:
 		except Exception: r = None
 		if not r: return ok_dialog(text='Could not start TorBox authorization')
 		device_code, user_code = r['device_code'], r['code']
-		verify_url = r.get('friendly_verification_url') or r.get('verification_url', 'https://torbox.app/oauth/device')
+		verify_url = r.get('verification_url', 'https://torbox.app/oauth/device')
 		interval = int(r.get('interval', 5))
 		try:
 			expires_in = int((js2date(r['expires_at'], '%Y-%m-%dT%H:%M:%SZ') - get_datetime()).total_seconds())

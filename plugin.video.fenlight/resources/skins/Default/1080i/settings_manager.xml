@@ -2145,6 +2145,15 @@
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.results.filter_size_method),1)</visible>
+                          <property name="setting_label">    - Test Internet Speed</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">...</property>
+                          <property name="setting_description">Measure this device's download speed and set the Internet Speed above to match. The test downloads a throwaway file for a few seconds and keeps nothing</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=speedtest.run)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
                           <visible>String.IsEqual(Window(10000).Property(fenlight.results.filter_size_method),2)</visible>
                           <property name="setting_label">    - Movies Maximum Size (MB)</property>
                           <property name="setting_type">numeric</property>

@@ -11,7 +11,7 @@ from scrapers import external, folders
 from modules import debrid, kodi_utils, settings, metadata, watched_status
 from modules.player import FenLightPlayer
 from modules.pack_continuity import find_episode_file as pack_continuity_find, build_items as pack_continuity_build
-from modules.source_utils import get_cache_expiry, make_alias_dict
+from modules.source_utils import get_cache_expiry, make_alias_dict, max_size_for_line_speed
 from modules.utils import clean_file_name, string_to_float, safe_string, remove_accents, get_datetime, append_module_to_syspath, manual_function_import, manual_module_import
 # logger = kodi_utils.logger
 
@@ -290,7 +290,7 @@ class Sources():
 			if min_size == 0.0 and not self.include_unknown_size: min_size = 0.02
 			if self.filter_size_method == 1:
 				duration = self.meta['duration'] or (5400 if self.media_type == 'movie' else 2400)
-				max_size = ((0.125 * (0.90 * string_to_float(get_setting('results.line_speed', '25'), '25'))) * duration)/1000
+				max_size = max_size_for_line_speed(string_to_float(get_setting('fenlight.results.line_speed', '25'), '25'), duration)
 			elif self.filter_size_method == 2:
 				max_size = string_to_float(get_setting('fenlight.results.%s_size_max' % self.media_type, '10000'), '10000') / 1000
 			results = [i for i in results if i['scrape_provider'] == 'folders' or min_size <= i['size'] <= max_size]

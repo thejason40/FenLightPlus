@@ -318,6 +318,9 @@ def get_info(title):
 	if any(i in title for i in SUBS): info_append('SUBS')
 	return ' | '.join(filter(None, info))
 
+def max_size_for_line_speed(line_speed, duration):
+	return ((0.125 * (0.90 * line_speed)) * duration) / 1000
+
 def get_cache_expiry(media_type, meta, season):
 	try:
 		current_date = get_datetime()

@@ -11,7 +11,7 @@
     <extension point="xbmc.addon.metadata">
         <reuselanguageinvoker>true</reuselanguageinvoker>
         <summary lang="en">Access your content from Easynews and Debrid Clouds.</summary>
-        <description lang="en">Fen Light+ is a fork of the Fen Light addon by Tikipeter. This add-on is intended for advanced Kodi users only. You must own the content of any media you play through this addon. This is an English language only add-on.</description>
+        <description lang="en">Fen Light+ is a fork of the Fen Light add-on by Tikipeter. This add-on is intended for advanced Kodi users only. You must own the content of any media you play through this add-on. This is an English language only add-on.</description>
         <platform>all</platform>
 		<disclaimer lang="en">The author of this addon does not host any of the content which is found and has no affiliation with any of the content providers.</disclaimer>
         <assets>
