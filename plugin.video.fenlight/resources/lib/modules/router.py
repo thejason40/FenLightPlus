@@ -344,6 +344,9 @@ def routing(sys):
 	if mode == 'hide_unhide_progress_items':
 		from modules.watched_status import hide_unhide_progress_items
 		hide_unhide_progress_items(params)
+	if mode == 'drop_undrop_show':
+		from modules.watched_status import drop_undrop_show
+		return drop_undrop_show(params)
 	if mode == 'open_external_scraper_settings':
 		from modules.kodi_utils import external_scraper_settings
 		return external_scraper_settings()

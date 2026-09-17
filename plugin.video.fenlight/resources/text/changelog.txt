@@ -1,3 +1,13 @@
+[COLOR dodgerblue][B]Version 2.5.3[/B][/COLOR]
+- Copy Config to Another Device (Tools menu)
+- Test Internet Speed (Settings > Results > when filtering by line speed
+- Easynews 'No Seek' playback method
+- Fixed IMDb integration (for 'Extras' menu content and 'More Like This')
+- TorBox file downloader fixes
+- Fixed a repeated next episode prompt when the next episode came from a remembered season pack.
+- Next Episodes and In Progress shows now exclude shows dropped on the active tracker (Trakt or Simkl)
+- Drop/Undrop shows on the active tracker (Trakt or Simkl) from the context menu
+
 [COLOR dodgerblue][B]Version 2.5.2[/B][/COLOR]
 - Skip Intros feature (configure in settings)
 - Binge mode (Access in 'Playback Options' and configure in settings)

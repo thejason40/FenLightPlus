@@ -180,14 +180,22 @@ def random_choice(params):
 def trakt_manager_choice(params):
 	if not trakt_user_active(): return notification('No Active Trakt Account', 3500)
 	icon = params.get('icon', None) or get_icon('trakt')
+	from apis import trakt_api
+	from modules.watched_status import get_dropped_shows, drop_undrop_show
 	choices = [('Add To Trakt List...', 'Add'), ('Remove From Trakt List...', 'Remove')]
+	# Drop follows the active tracker, so only offer it here when that's Trakt.
+	if params.get('media_type') not in ('movie', 'movies') and settings.watched_indicators() == 1:
+		try:
+			is_dropped = int(params.get('tmdb_id')) in get_dropped_shows(1)
+			choices.append(('Undrop Show', 'undrop') if is_dropped else ('Drop Show', 'drop'))
+		except: pass
 	list_items = [{'line1': item[0], 'icon': icon} for item in choices]
 	kwargs = {'items': json.dumps(list_items), 'heading': 'Trakt Lists Manager'}
 	choice = select_dialog([i[1] for i in choices], **kwargs)
 	if choice == None: return
-	from apis import trakt_api
 	if choice == 'Add': trakt_api.trakt_add_to_list(params)
-	else: trakt_api.trakt_remove_from_list(params)
+	elif choice == 'Remove': trakt_api.trakt_remove_from_list(params)
+	else: drop_undrop_show({'action': choice, 'tmdb_id': params.get('tmdb_id'), 'imdb_id': params.get('imdb_id'), 'tvdb_id': params.get('tvdb_id')})
 
 def simkl_manager_choice(params):
 	if not settings.simkl_user_active(): return notification('No Active Simkl Account', 3500)
@@ -743,6 +751,13 @@ def options_menu_choice(params, meta=None):
 		if settings.simkl_user_active(): listing_append(('Simkl Manager', '', 'simkl_manager'))
 		listing_append(('Favorites Manager', '', 'favorites_choice'))
 	if menu_type == 'tvshow': listing_append(('Play Random', 'Based On %s' % rootname, 'random'))
+	indicators = settings.watched_indicators()
+	if indicators in (1, 2) and (menu_type in ('tvshow', 'season', 'episode') or menu_type in single_ep_list):
+		from modules.watched_status import get_dropped_shows, watched_info_episode, get_database
+		try: drop_action = 'undrop' if int(tmdb_id) in get_dropped_shows(indicators) else 'drop'
+		except: drop_action = 'drop'
+		if drop_action == 'undrop' or indicators == 2 or watched_info_episode(tmdb_id, get_database(indicators)):
+			listing_append(('%s %s' % (drop_action.capitalize(), rootname), 'On %s' % ('Trakt' if indicators == 1 else 'Simkl'), 'drop_undrop'))
 	if menu_type in ('tvshow', 'season'):
 		listing_append(('Assign an Episode Group to %s' % rootname, 'Currently %s' % episode_groups_cache.get(tmdb_id).get('name', 'None'), 'episode_group'))
 	if menu_type in ('movie', 'episode') or menu_type in single_ep_list:
@@ -802,6 +817,9 @@ def options_menu_choice(params, meta=None):
 	if choice == 'random':
 		close_all_dialog()
 		return random_choice({'meta': meta, 'poster': poster})
+	if choice == 'drop_undrop':
+		from modules.watched_status import drop_undrop_show
+		return drop_undrop_show({'action': drop_action, 'tmdb_id': tmdb_id, 'imdb_id': imdb_id, 'tvdb_id': tvdb_id})
 	if choice == 'trakt_manager':
 		return trakt_manager_choice({'tmdb_id': tmdb_id, 'imdb_id': imdb_id, 'tvdb_id': tvdb_id or 'None', 'media_type': content, 'icon': poster})
 	if choice == 'simkl_manager':

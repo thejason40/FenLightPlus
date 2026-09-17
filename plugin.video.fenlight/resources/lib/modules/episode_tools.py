@@ -6,7 +6,7 @@ from datetime import date
 from modules import kodi_utils, settings
 from modules.sources import Sources
 from modules.metadata import episodes_meta, all_episodes_meta
-from modules.watched_status import get_next_episodes, get_hidden_progress_items, watched_info_episode, get_next
+from modules.watched_status import get_next_episodes, get_hidden_progress_items, get_dropped_shows, watched_info_episode, get_next
 from modules.utils import adjust_premiered_date, get_datetime, make_thread_list, title_key
 # logger = kodi_utils.logger
 
@@ -116,9 +116,13 @@ def build_next_episode_manager():
 		try:
 			listitem = make_listitem()
 			tmdb_id, title = item['media_ids']['tmdb'], item['title']
-			if int(tmdb_id) in hidden_list: display, action = 'Unhide [B]%s[/B] [COLOR=red][HIDDEN][/COLOR]' % title, 'unhide'
-			else: display, action = 'Hide [B]%s[/B]' % title, 'hide'
-			url_params = {'mode': mode, 'action': action, 'media_type': 'shows', 'media_id': tmdb_id, 'section': 'progress_watched'}
+			if int(tmdb_id) in dropped_list:
+				display = 'Undrop [B]%s[/B] [COLOR=red][DROPPED][/COLOR]' % title
+				url_params = {'mode': 'drop_undrop_show', 'action': 'undrop', 'tmdb_id': tmdb_id}
+			else:
+				if int(tmdb_id) in hidden_list: display, action = 'Unhide [B]%s[/B] [COLOR=red][HIDDEN][/COLOR]' % title, 'unhide'
+				else: display, action = 'Hide [B]%s[/B]' % title, 'hide'
+				url_params = {'mode': mode, 'action': action, 'media_type': 'shows', 'media_id': tmdb_id, 'section': 'progress_watched'}
 			url = build_url(url_params)
 			listitem.setLabel(display)
 			listitem.setArt({'poster': icon, 'fanart': addon_fanart, 'icon': icon})
@@ -131,7 +135,8 @@ def build_next_episode_manager():
 	append = list_items.append
 	indicators = watched_indicators()
 	show_list = get_next_episodes(0)
-	hidden_list = get_hidden_progress_items(indicators)
+	hidden_list = get_hidden_progress_items(indicators, include_dropped=False)
+	dropped_list = get_dropped_shows(indicators) if indicators == 1 else set()
 	if indicators == 1: icon, mode = get_icon('trakt'), 'trakt.hide_unhide_progress_items'
 	else: icon, mode = get_icon('folder'), 'hide_unhide_progress_items'
 	threads = list(make_thread_list(_process, show_list))

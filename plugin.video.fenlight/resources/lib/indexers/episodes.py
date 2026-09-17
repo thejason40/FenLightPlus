@@ -21,6 +21,7 @@ get_in_progress_episodes, get_next_episodes, get_recently_watched = ws.get_in_pr
 get_bookmarks_all_episode, get_progress_status_all_episode = ws.get_bookmarks_all_episode, ws.get_progress_status_all_episode
 get_hidden_progress_items, get_database, watched_info_episode, get_next = ws.get_hidden_progress_items, ws.get_database, ws.watched_info_episode, ws.get_next
 get_watched_status_tvshow, watched_info_tvshow = ws.get_watched_status_tvshow, ws.watched_info_tvshow
+get_dropped_shows, drop_context_item = ws.get_dropped_shows, ws.drop_context_item
 string =  str
 poster_empty, fanart_empty = kodi_utils.empty_poster, kodi_utils.addon_fanart()
 run_plugin, unaired_label, tmdb_poster = 'RunPlugin(%s)', '[COLOR red][I]%s[/I][/COLOR]', 'https://image.tmdb.org/t/p/w780%s'
@@ -73,6 +74,7 @@ def build_episode_list(params):
 													'tmdb_id': tmdb_id, 'tvdb_id': tvdb_id, 'season': season, 'episode': episode,  'title': title})))
 					if progress: cm_append(('[B]Clear Progress[/B]', run_plugin % build_url({'mode': 'watched_status.erase_bookmark', 'media_type': 'episode', 'tmdb_id': tmdb_id,
 													'season': season, 'episode': episode, 'refresh': 'true'})))
+				if drop_item: cm_append(drop_item)
 				if is_external:
 					cm_append(('[B]Refresh Widgets[/B]', run_plugin % build_url({'mode': 'refresh_widgets'})))
 					cm_append(('[B]Reload Widgets[/B]', run_plugin % build_url({'mode': 'kodi_refresh'})))
@@ -114,6 +116,7 @@ def build_episode_list(params):
 	show_landscape = meta_get('landscape') or ''
 	watched_db = get_database(watched_indicators)
 	watched_info = watched_info_episode(tmdb_id, watched_db)
+	drop_item = drop_context_item(watched_indicators, tmdb_id, imdb_id, tvdb_id, get_dropped_shows(watched_indicators), bool(watched_info))
 	if season == 'all':
 		total_seasons = meta_get('total_seasons')
 		episodes_data = sorted(all_episodes_meta(meta, show_specials()), key=lambda x: (x['season'], x['episode']))
@@ -264,6 +267,8 @@ def build_single_episode(list_type, params={}):
 				if all_episodes == 1 and meta_get('total_seasons') > 1: browse_params = {'mode': 'build_season_list', 'tmdb_id': tmdb_id}
 				else: browse_params = {'mode': 'build_episode_list', 'tmdb_id': tmdb_id, 'season': 'all'}
 			else: browse_params = {'mode': 'build_season_list', 'tmdb_id': tmdb_id}
+			drop_item = drop_context_item(watched_indicators, tmdb_id, imdb_id, tvdb_id, dropped_shows, bool(watched_info))
+			if drop_item: cm_append(drop_item)
 			cm_append(('[B]Browse[/B]', window_command % build_url(browse_params)))
 			if is_external:
 				cm_append(('[B]Refresh Widgets[/B]', run_plugin % build_url({'mode': 'refresh_widgets'})))
@@ -298,6 +303,7 @@ def build_single_episode(list_type, params={}):
 	api_key, mpaa_region_value = tmdb_api_key(), mpaa_region()
 	watched_db = get_database(watched_indicators)
 	watched_title = 'Trakt' if watched_indicators == 1 else 'Simkl' if watched_indicators == 2 else 'Fen Light'
+	dropped_shows = get_dropped_shows(watched_indicators)
 	category_name = _get_category_name()
 	if list_type == 'episode.next':
 		if watched_indicators == 2: _simkl_nextep_sync()

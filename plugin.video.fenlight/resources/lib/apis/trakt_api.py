@@ -24,6 +24,7 @@ clear_all_trakt_cache_data, cache_trakt_object, clear_trakt_calendar = trakt_cac
 trakt_watched_cache, reset_activity, clear_trakt_list_contents_data = trakt_cache.trakt_watched_cache, trakt_cache.reset_activity, trakt_cache.clear_trakt_list_contents_data
 clear_daily_cache = trakt_cache.clear_daily_cache
 clear_trakt_collection_watchlist_data, clear_trakt_hidden_data = trakt_cache.clear_trakt_collection_watchlist_data, trakt_cache.clear_trakt_hidden_data
+update_trakt_hidden_data = trakt_cache.update_trakt_hidden_data
 clear_trakt_recommendations, clear_trakt_list_data = trakt_cache.clear_trakt_recommendations, trakt_cache.clear_trakt_list_data
 clear_trakt_favorites = trakt_cache.clear_trakt_favorites
 empty_setting_check = (None, 'empty_setting', '')
@@ -401,17 +402,22 @@ def trakt_anime_certifications(certification, page_no):
 def trakt_get_hidden_items(list_type):
 	def _get_trakt_ids(item):
 		tmdb_id = get_trakt_tvshow_id(item['show']['ids'])
-		results_append(tmdb_id)
-	def _process(params):
-		hidden_data = get_trakt(params)
-		threads = list(make_thread_list(_get_trakt_ids, hidden_data))
-		[i.join() for i in threads]
-		return results
-	results = []
-	results_append = results.append
+		if tmdb_id: results_append(int(tmdb_id))
 	string = 'trakt_hidden_items_%s' % list_type
-	params = {'path': 'users/hidden/%s', 'path_insert': list_type, 'params': {'type': 'show'}, 'with_auth': True, 'all_pages': True}
-	return cache_trakt_object(_process, string, params)
+	cached = trakt_cache.trakt_cache.get(string)
+	if cached is not None: return cached
+	results, outcome = [], {}
+	results_append = results.append
+	params = {'path': 'users/hidden/%s', 'path_insert': list_type, 'params': {'type': 'show'}, 'with_auth': True}
+	hidden_data = get_trakt_all_pages(params, outcome=outcome)
+	threads = list(make_thread_list(_get_trakt_ids, hidden_data))
+	[i.join() for i in threads]
+	if outcome.get('complete', True): trakt_cache.trakt_cache.set(string, results)
+	return results
+
+def trakt_show_started(tmdb_id):
+	try: return trakt_watched_cache.show_has_watched(tmdb_id)
+	except: return False
 
 def trakt_watched_status_mark(action, media, media_id, tvdb_id=0, season=None, episode=None, key='tmdb'):
 	if action == 'mark_as_watched': url, result_key = 'sync/history', 'added'
@@ -542,10 +548,22 @@ def hide_unhide_progress_items(params):
 	action, media_type, media_id, list_type = params['action'], params['media_type'], params['media_id'], params['section']
 	media_type = 'movies' if media_type in ('movie', 'movies') else 'shows'
 	url = 'users/hidden/%s' % list_type if action == 'hide' else 'users/hidden/%s/remove' % list_type
-	data = {media_type: [{'ids': {'tmdb': media_id}}]}
-	call_trakt(url, data=data)
-	trakt_sync_activities()
+	ids = {}
+	for key, value in (('tmdb', media_id), ('imdb', params.get('imdb_id')), ('tvdb', params.get('tvdb_id'))):
+		if value in (None, '', 'None', 0, '0'): continue
+		if key == 'imdb': ids[key] = str(value)
+		else:
+			try: ids[key] = int(value)
+			except: pass
+	data = {media_type: [{'ids': ids}]}
+	result = call_trakt(url, data=data)
+	try: success = result['added' if action == 'hide' else 'deleted'][media_type] > 0
+	except: success = False
+	if success:
+		update_trakt_hidden_data(list_type, media_id, action == 'hide')
+		trakt_sync_activities(skip_hidden_clear=True)
 	kodi_refresh()
+	return success
 
 def trakt_search_lists(search_title, page_no):
 	def _process(dummy_arg):
@@ -909,14 +927,16 @@ def get_trakt(params):
 		return (result[0], page_count)
 	return result[0]
 
-def get_trakt_all_pages(params, limit=250, max_pages=200):
+def get_trakt_all_pages(params, limit=250, max_pages=200, outcome=None):
 	base_path = params['path'] % params.get('path_insert', '')
 	call_params = dict(params.get('params', {})); call_params['limit'] = limit
 	with_auth, method = params.get('with_auth', False), params.get('method')
 	items, sort_by, sort_how, page = [], None, None, 1
 	while page <= max_pages:
 		result = call_trakt(base_path, params=call_params, with_auth=with_auth, pagination=True, page_no=page)
-		if not result: break
+		if not result:
+			if outcome is not None: outcome['complete'] = False
+			break
 		chunk = result[0]
 		if len(result) > 3 and result[2]: sort_by, sort_how = result[2], result[3]
 		if not chunk: break
@@ -927,7 +947,7 @@ def get_trakt_all_pages(params, limit=250, max_pages=200):
 		except: pass
 	return items
 
-def trakt_sync_activities(force_update=False):
+def trakt_sync_activities(force_update=False, skip_hidden_clear=False):
 	# def clear_watched_tvshow_cache():
 	# 	from modules.watched_status import clear_cache_watched_tvshow_status
 	# 	clear_cache_watched_tvshow_status(watched_indicators=1)
@@ -961,14 +981,19 @@ def trakt_sync_activities(force_update=False):
 	if _compare(latest_episodes['collected_at'], cached_episodes['collected_at']): clear_trakt_collection_watchlist_data('collection', 'tvshow')
 	if _compare(latest_movies['watchlisted_at'], cached_movies['watchlisted_at']): clear_trakt_collection_watchlist_data('watchlist', 'movie')
 	if _compare(latest_shows['watchlisted_at'], cached_shows['watchlisted_at']): clear_trakt_collection_watchlist_data('watchlist', 'tvshow')
-	if _compare(latest_shows['hidden_at'], cached_shows['hidden_at']):
-		clear_properties('episode')
-		clear_trakt_hidden_data('progress_watched')
+	if not skip_hidden_clear:
+		if _compare(latest_shows['hidden_at'], cached_shows['hidden_at']):
+			clear_properties('episode')
+			clear_trakt_hidden_data('progress_watched')
+		if latest_shows.get('dropped_at') and _compare(latest_shows['dropped_at'], cached_shows.get('dropped_at')):
+			clear_properties('episode')
+			clear_trakt_hidden_data('dropped')
 	if _compare(latest_movies['watched_at'], cached_movies['watched_at']):
 		clear_properties('movie')
 		trakt_indicators_movies()
 	if _compare(latest_episodes['watched_at'], cached_episodes['watched_at']):
 		clear_properties('episode')
+		if trakt_cache.trakt_cache.get('trakt_hidden_items_dropped'): clear_trakt_hidden_data('dropped')
 		trakt_indicators_tv()
 		# clear_tvshow_watched_cache = True
 	if _compare(latest_movies['paused_at'], cached_movies['paused_at']): refresh_movies_progress = True

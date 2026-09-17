@@ -463,8 +463,50 @@ def get_recently_watched(media_type, short_list=1):
 						key=lambda x: (x['last_played'], x['media_ids']['tmdb'], x['season'], x['episode']), reverse=True)
 	return data
 
-def get_hidden_progress_items(watched_indicators):
+def get_hidden_progress_items(watched_indicators, include_dropped=True):
 	try:
-		if watched_indicators == 1: return trakt_get_hidden_items('progress_watched')
-		else: return main_cache.get(progress_db_string) or []
-	except: return []
+		if watched_indicators == 1: hidden = list(trakt_get_hidden_items('progress_watched'))
+		else: hidden = list(main_cache.get(progress_db_string) or [])
+	except: hidden = []
+	if include_dropped: hidden.extend(get_dropped_shows(watched_indicators))
+	return hidden
+
+def get_dropped_shows(watched_indicators):
+	dropped = set()
+	try:
+		if watched_indicators == 1: items = trakt_get_hidden_items('dropped')
+		elif watched_indicators == 2:
+			from apis.simkl_api import simkl_status_list
+			items = [i['media_ids']['tmdb'] for i in simkl_status_list('dropped', 'tvshow')]
+		else: items = []
+		for tmdb_id in items:
+			try: dropped.add(int(tmdb_id))
+			except: pass
+	except: pass
+	return dropped
+
+def drop_context_item(watched_indicators, tmdb_id, imdb_id, tvdb_id, dropped_shows, started):
+	if watched_indicators not in (1, 2): return None
+	try: is_dropped = int(tmdb_id) in dropped_shows
+	except: return None
+	# Trakt ignores a drop for a show with no watch history
+	if not is_dropped and watched_indicators == 1 and not started: return None
+	action = 'undrop' if is_dropped else 'drop'
+	url = kodi_utils.build_url({'mode': 'drop_undrop_show', 'action': action, 'tmdb_id': tmdb_id, 'imdb_id': imdb_id, 'tvdb_id': tvdb_id})
+	return ('[B]%s Show %s[/B]' % (action.capitalize(), 'Trakt' if watched_indicators == 1 else 'Simkl'), 'RunPlugin(%s)' % url)
+
+def drop_undrop_show(params):
+	watched_indicators, action = watched_indicators_function(), params.get('action')
+	tmdb_id = params.get('tmdb_id')
+	if watched_indicators == 1:
+		from apis.trakt_api import hide_unhide_progress_items, trakt_show_started
+		if action == 'drop' and not trakt_show_started(tmdb_id):
+			return notification('Trakt only drops shows you have started watching', 4000)
+		success = hide_unhide_progress_items({'action': 'hide' if action == 'drop' else 'unhide', 'media_type': 'shows', 'media_id': tmdb_id,
+											'section': 'dropped', 'imdb_id': params.get('imdb_id'), 'tvdb_id': params.get('tvdb_id')})
+		notification(('Show Dropped' if action == 'drop' else 'Show Undropped') if success else 'Error', 3000)
+	elif watched_indicators == 2:
+		from apis.simkl_api import simkl_add_to_list
+		# Simkl has no "undropped" - set to Watching instead
+		simkl_add_to_list('shows', tmdb_id, to='dropped' if action == 'drop' else 'watching')
+		kodi_refresh()

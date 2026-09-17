@@ -68,6 +68,10 @@ class TraktWatched():
 		self._delete(PROGRESS_DELETE, ('episode',))
 		self._executemany(PROGRESS_INSERT, insert_list)
 
+	def show_has_watched(self, tmdb_id):
+		dbcon = connect_database('trakt_db')
+		return dbcon.execute('SELECT 1 FROM watched WHERE db_type = ? AND media_id = ? LIMIT 1', ('episode', str(tmdb_id))).fetchone() is not None
+
 	def _executemany(self, command, insert_list):
 		dbcon = connect_database('trakt_db')
 		dbcon.executemany(command, insert_list)
@@ -103,6 +107,7 @@ def clear_daily_cache():
 	clear_trakt_list_contents_data('my_lists')
 	clear_trakt_list_contents_data('liked_lists')
 	clear_trakt_list_contents_data('user_lists')
+	clear_trakt_hidden_data('dropped')
 
 def clear_trakt_hidden_data(list_type):
 	string = 'trakt_hidden_items_%s' % list_type
@@ -110,6 +115,16 @@ def clear_trakt_hidden_data(list_type):
 		dbcon = connect_database('trakt_db')
 		dbcon.execute(DELETE, (string,))
 	except: pass
+
+def update_trakt_hidden_data(list_type, tmdb_id, add):
+	string = 'trakt_hidden_items_%s' % list_type
+	cached = trakt_cache.get(string)
+	if cached is None: return
+	try: tmdb_id = int(tmdb_id)
+	except: return clear_trakt_hidden_data(list_type)
+	cached = [i for i in cached if i != tmdb_id]
+	if add: cached.append(tmdb_id)
+	trakt_cache.set(string, cached)
 
 def clear_trakt_collection_watchlist_data(list_type, media_type):
 	if media_type == 'movies': media_type = 'movie'
@@ -203,7 +218,8 @@ def default_activities():
 				'favorited_at': '2020-01-01T00:00:01.000Z',
 				'recommendations_at': '2020-01-01T00:00:01.000Z',
 				'commented_at': '2020-01-01T00:00:01.000Z',
-				'hidden_at': '2020-01-01T00:00:01.000Z'
+				'hidden_at': '2020-01-01T00:00:01.000Z',
+				'dropped_at': '2020-01-01T00:00:01.000Z'
 				},
 			'seasons':
 				{

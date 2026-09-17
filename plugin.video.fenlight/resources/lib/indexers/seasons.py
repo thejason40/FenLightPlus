@@ -3,7 +3,7 @@ import sys
 from modules import kodi_utils, settings
 from modules.metadata import tvshow_meta
 from modules.utils import get_datetime, adjust_premiered_date, make_thread_list
-from modules.watched_status import get_database, watched_info_season, get_watched_status_season, get_progress_status_season
+from modules.watched_status import get_database, watched_info_season, get_watched_status_season, get_progress_status_season, get_dropped_shows, drop_context_item
 # logger = kodi_utils.logger
 
 poster_empty, fanart_empty, xbmc_actor, set_category, home = kodi_utils.empty_poster, kodi_utils.addon_fanart(), kodi_utils.xbmc_actor, kodi_utils.set_category, kodi_utils.home
@@ -62,6 +62,7 @@ def build_season_list(params):
 				if progress:
 					cm_append(('[B]Mark Unwatched %s[/B]' % watched_title, run_plugin % build_url({'mode': 'watched_status.mark_season', 'action': 'mark_as_unwatched',
 														'title': show_title, 'tmdb_id': tmdb_id, 'tvdb_id': tvdb_id, 'season': season_number})))
+				if drop_item: cm_append(drop_item)
 				set_properties({'watchedepisodes': string(watched), 'unwatchedepisodes': string(unwatched)})
 				set_properties({'totalepisodes': string(aired_eps), 'watchedprogress': string(visible_progress),
 								'fenlight.extras_params': extras_params, 'fenlight.options_params': options_params})
@@ -102,6 +103,7 @@ def build_season_list(params):
 			season_data = [i for i in season_data if not i['season_number'] == 0]
 			season_data.sort(key=lambda k: k['season_number'])
 		watched_info = watched_info_season(tmdb_id, get_database(watched_indicators))
+		drop_item = drop_context_item(watched_indicators, tmdb_id, imdb_id, tvdb_id, get_dropped_shows(watched_indicators), bool(watched_info))
 		list_items = list(list(_process()))
 		if custom_order is not None: return (list_items[0], custom_order)
 		add_items(handle, list_items)

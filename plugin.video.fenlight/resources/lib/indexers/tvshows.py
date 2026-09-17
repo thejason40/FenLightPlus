@@ -4,7 +4,7 @@ from modules import meta_lists
 from modules import kodi_utils, settings
 from modules.metadata import tvshow_meta
 from modules.utils import manual_function_import, get_datetime, make_thread_list_enumerate, make_thread_list_multi_arg, get_current_timestamp, paginate_list
-from modules.watched_status import get_database, watched_info_tvshow, get_watched_status_tvshow, get_progress_status_tvshow
+from modules.watched_status import get_database, watched_info_tvshow, get_watched_status_tvshow, get_progress_status_tvshow, get_dropped_shows, drop_context_item
 # logger = kodi_utils.logger
 
 string, external, add_items, add_dir = str, kodi_utils.external, kodi_utils.add_items, kodi_utils.add_dir
@@ -198,6 +198,8 @@ class TVShows:
 			if progress:
 				cm_append(('[B]Mark Unwatched %s[/B]' % self.watched_title, run_plugin % build_url({'mode': 'watched_status.mark_tvshow', 'action': 'mark_as_unwatched',
 																			'title': title, 'tmdb_id': tmdb_id, 'tvdb_id': tvdb_id})))
+			drop_item = drop_context_item(self.watched_indicators, tmdb_id, imdb_id, tvdb_id, self.dropped_shows, bool(total_watched))
+			if drop_item: cm_append(drop_item)
 			set_properties({'watchedepisodes': string(total_watched), 'unwatchedepisodes': string(total_unwatched)})
 			set_properties({'watchedprogress': visible_progress, 'totalepisodes': string(total_aired_eps), 'totalseasons': string(total_seasons)})
 			if self.is_external:
@@ -229,6 +231,7 @@ class TVShows:
 		self.watched_indicators = watched_indicators()
 		self.watched_title = 'Trakt' if self.watched_indicators == 1 else 'Simkl' if self.watched_indicators == 2 else 'Fen Light'
 		self.watched_info = watched_info_tvshow(get_database(self.watched_indicators))
+		self.dropped_shows = get_dropped_shows(self.watched_indicators)
 		self.window_command = 'ActivateWindow(Videos,%s,return)' if self.is_external else 'Container.Update(%s)'
 		if self.custom_order:
 			threads = list(make_thread_list_multi_arg(self.build_tvshow_content, self.list))
