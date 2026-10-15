@@ -1,0 +1,51 @@
+name: Update top shows
+
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+    inputs:
+      discover:
+        description: 'Refresh service-map.json first (uses 1 API call)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: top-shows
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refresh service map (manual runs only)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.discover }}
+        shell: pwsh
+        env:
+          STREAMING_API_KEY: ${{ secrets.STREAMING_API_KEY }}
+        run: ./Get-TopShows.ps1 -OutputFolder data -DiscoverServices
+
+      - name: Fetch top shows
+        shell: pwsh
+        env:
+          STREAMING_API_KEY: ${{ secrets.STREAMING_API_KEY }}
+        run: ./Get-TopShows.ps1 -OutputFolder data
+
+      - name: Commit changes
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update top shows $(date -u +%F)"
+            git push
+          fi
