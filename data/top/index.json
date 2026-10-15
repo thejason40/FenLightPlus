@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-10-15T13:18:20+00:00",
+  "attribution": {
+    "text": "Streaming data by Movie of the Night (Streaming Availability API)",
+    "url": "https://www.movieofthenight.com/about/api"
+  },
+  "countries": {
+    "au": {
+      "file": "au.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "disney",
+        "hbo",
+        "apple"
+      ]
+    },
+    "ca": {
+      "file": "ca.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "disney",
+        "apple",
+        "crave"
+      ]
+    },
+    "de": {
+      "file": "de.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "disney",
+        "hbo",
+        "apple"
+      ]
+    },
+    "gb": {
+      "file": "gb.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "disney",
+        "hbo",
+        "apple"
+      ]
+    },
+    "th": {
+      "file": "th.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "hbo",
+        "apple"
+      ]
+    },
+    "us": {
+      "file": "us.json",
+      "updatedAt": "2026-10-15T13:18:20+00:00",
+      "services": [
+        "netflix",
+        "prime",
+        "disney",
+        "hbo",
+        "hulu",
+        "apple"
+      ]
+    }
+  }
+}

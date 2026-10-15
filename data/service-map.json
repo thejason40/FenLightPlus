@@ -1,0 +1,410 @@
+{
+  "ae": [
+    "netflix",
+    "prime",
+    "apple"
+  ],
+  "ar": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "at": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "au": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "az": [
+    "netflix"
+  ],
+  "be": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "bg": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "bo": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "br": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "ca": [
+    "netflix",
+    "prime",
+    "disney",
+    "apple",
+    "crave"
+  ],
+  "ch": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "cl": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "co": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "cr": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "cy": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "cz": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "de": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "dk": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "ec": [
+    "netflix",
+    "disney",
+    "hbo"
+  ],
+  "ee": [
+    "netflix",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "es": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "fi": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "fr": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "gb": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "gr": [
+    "netflix",
+    "prime",
+    "disney",
+    "apple"
+  ],
+  "gt": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "hk": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "hn": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "hr": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "hu": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "id": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "ie": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "il": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "in": [
+    "netflix",
+    "prime",
+    "apple"
+  ],
+  "is": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "it": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "jp": [
+    "netflix",
+    "prime",
+    "disney",
+    "apple"
+  ],
+  "kr": [
+    "netflix",
+    "prime",
+    "disney",
+    "apple"
+  ],
+  "lt": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "md": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "mk": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "mx": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "my": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "nl": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "no": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "nz": [
+    "netflix",
+    "prime",
+    "disney",
+    "apple"
+  ],
+  "pa": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "pe": [
+    "netflix",
+    "disney",
+    "hbo"
+  ],
+  "ph": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "pl": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "pt": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "ro": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "rs": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "se": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "sg": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "apple"
+  ],
+  "si": [
+    "netflix",
+    "disney",
+    "hbo"
+  ],
+  "sk": [
+    "netflix"
+  ],
+  "sv": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "th": [
+    "netflix",
+    "prime",
+    "hbo",
+    "apple"
+  ],
+  "tr": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "ua": [
+    "netflix",
+    "prime",
+    "apple"
+  ],
+  "us": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo",
+    "hulu",
+    "apple"
+  ],
+  "ve": [
+    "netflix",
+    "prime",
+    "disney",
+    "hbo"
+  ],
+  "vn": [
+    "netflix",
+    "apple"
+  ],
+  "za": [
+    "netflix",
+    "prime",
+    "apple"
+  ]
+}
