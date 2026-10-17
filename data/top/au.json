@@ -1,25 +1,16 @@
 {
   "country": "au",
-  "generatedAt": "2026-10-16T12:24:40+00:00",
+  "generatedAt": "2026-10-17T11:37:38+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-16T12:24:40+00:00",
+      "fetchedAt": "2026-10-17T11:37:38+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 2,
           "type": "series",
           "typeRank": 1,
           "title": "Below",
@@ -28,16 +19,34 @@
           "tmdbId": "tv/285322"
         },
         {
-          "rank": 3,
+          "rank": 2,
           "type": "series",
           "typeRank": 2,
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
+        },
+        {
+          "rank": 3,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Animals",
+          "year": 2026,
+          "imdbId": "tt31049299",
+          "tmdbId": "movie/1236045"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 3,
           "title": "TYSON",
           "year": 2026,
           "imdbId": "tt35051210",
           "tmdbId": "tv/335536"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "type": "movie",
           "typeRank": 2,
           "title": "Tomb Raider",
@@ -46,7 +55,7 @@
           "tmdbId": "movie/338970"
         },
         {
-          "rank": 5,
+          "rank": 6,
           "type": "movie",
           "typeRank": 3,
           "title": "Reminders of Him",
@@ -55,52 +64,16 @@
           "tmdbId": "movie/1367642"
         },
         {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Within",
-          "year": 2016,
-          "imdbId": "tt3612320",
-          "tmdbId": "movie/291413"
-        },
-        {
           "rank": 7,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Ice Age: Collision Course",
-          "year": 2016,
-          "imdbId": "tt3416828",
-          "tmdbId": "movie/278154"
-        },
-        {
-          "rank": 8,
           "type": "series",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "East of Eden",
           "year": 2026,
           "imdbId": "tt21097264",
           "tmdbId": "tv/258165"
         },
         {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Ben-Hur",
-          "year": 2016,
-          "imdbId": "tt2638144",
-          "tmdbId": "movie/271969"
-        },
-        {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
-        },
-        {
-          "rank": 11,
+          "rank": 8,
           "type": "series",
           "typeRank": 5,
           "title": "Matlock",
@@ -109,7 +82,61 @@
           "tmdbId": "tv/226174"
         },
         {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The Trap",
+          "year": 2026,
+          "imdbId": "tt36470958",
+          "tmdbId": "tv/283371"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Within",
+          "year": 2016,
+          "imdbId": "tt3612320",
+          "tmdbId": "movie/291413"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Ice Age: Collision Course",
+          "year": 2016,
+          "imdbId": "tt3416828",
+          "tmdbId": "movie/278154"
+        },
+        {
           "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Ben-Hur",
+          "year": 2016,
+          "imdbId": "tt2638144",
+          "tmdbId": "movie/271969"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Unforgettable",
+          "year": 2011,
+          "imdbId": "tt1842530",
+          "tmdbId": "tv/39276"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Hollywood Arts",
+          "year": 2026,
+          "imdbId": "tt35673115",
+          "tmdbId": "tv/286183"
+        },
+        {
+          "rank": 15,
           "type": "movie",
           "typeRank": 7,
           "title": "Doing Life",
@@ -118,16 +145,7 @@
           "tmdbId": "movie/1458857"
         },
         {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Unforgettable",
-          "year": 2011,
-          "imdbId": "tt1842530",
-          "tmdbId": "tv/39276"
-        },
-        {
-          "rank": 14,
+          "rank": 16,
           "type": "movie",
           "typeRank": 8,
           "title": "Ice Age: Dawn of the Dinosaurs",
@@ -136,27 +154,9 @@
           "tmdbId": "movie/8355"
         },
         {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Trap",
-          "year": 2026,
-          "imdbId": "tt36470958",
-          "tmdbId": "tv/283371"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Widower: 'Til Death Do Us Part",
-          "year": 2026,
-          "imdbId": "tt44568097",
-          "tmdbId": "movie/1758536"
-        },
-        {
           "rank": 17,
           "type": "movie",
-          "typeRank": 10,
+          "typeRank": 9,
           "title": "Ice Age: Continental Drift",
           "year": 2012,
           "imdbId": "tt1667889",
@@ -164,17 +164,17 @@
         },
         {
           "rank": 18,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Ice Age",
+          "year": 2002,
+          "imdbId": "tt0268380",
+          "tmdbId": "movie/425"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-16T12:24:40+00:00",
+      "fetchedAt": "2026-10-17T11:37:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-16T12:24:40+00:00",
+      "fetchedAt": "2026-10-17T11:37:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -392,37 +392,37 @@
           "rank": 5,
           "type": "series",
           "typeRank": 5,
-          "title": "The Kardashians",
-          "year": 2022,
-          "imdbId": "tt15791630",
-          "tmdbId": "tv/154521"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
           "title": "WandaVision",
           "year": 2021,
           "imdbId": "tt9140560",
           "tmdbId": "tv/85271"
         },
         {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The Kardashians",
+          "year": 2022,
+          "imdbId": "tt15791630",
+          "tmdbId": "tv/154521"
+        },
+        {
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Welcome to the Family: The Murder of Dan Markel",
+          "title": "Somebody Knows Something",
           "year": 2026,
-          "imdbId": "tt44842745",
-          "tmdbId": "tv/333058"
+          "imdbId": "tt43739197",
+          "tmdbId": "tv/330654"
         },
         {
           "rank": 8,
           "type": "series",
           "typeRank": 8,
-          "title": "Somebody Knows Something",
+          "title": "Welcome to the Family: The Murder of Dan Markel",
           "year": 2026,
-          "imdbId": "tt43739197",
-          "tmdbId": "tv/330654"
+          "imdbId": "tt44842745",
+          "tmdbId": "tv/333058"
         },
         {
           "rank": 9,
@@ -435,15 +435,6 @@
         },
         {
           "rank": 10,
-          "type": "series",
-          "typeRank": 10,
-          "title": "The Drop: A Snowfall Saga",
-          "year": 2026,
-          "imdbId": "tt36210894",
-          "tmdbId": "tv/304842"
-        },
-        {
-          "rank": 11,
           "type": "movie",
           "typeRank": 1,
           "title": "PAW Patrol: The Movie",
@@ -452,9 +443,18 @@
           "tmdbId": "movie/675445"
         },
         {
-          "rank": 12,
+          "rank": 11,
           "type": "movie",
           "typeRank": 2,
+          "title": "Toy Story 5",
+          "year": 2026,
+          "imdbId": "tt29355505",
+          "tmdbId": "movie/1084244"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 3,
           "title": "Moana",
           "year": 2016,
           "imdbId": "tt3521164",
@@ -463,7 +463,7 @@
         {
           "rank": 13,
           "type": "movie",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "Family Guy Happy Hell-o-ween",
           "year": 2026,
           "imdbId": "tt43665190",
@@ -472,15 +472,6 @@
         {
           "rank": 14,
           "type": "movie",
-          "typeRank": 4,
-          "title": "Toy Story 5",
-          "year": 2026,
-          "imdbId": "tt29355505",
-          "tmdbId": "movie/1084244"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
           "typeRank": 5,
           "title": "Scooby-Doo",
           "year": 2002,
@@ -488,7 +479,7 @@
           "tmdbId": "movie/9637"
         },
         {
-          "rank": 16,
+          "rank": 15,
           "type": "movie",
           "typeRank": 6,
           "title": "Moana 2",
@@ -497,45 +488,45 @@
           "tmdbId": "movie/1241982"
         },
         {
-          "rank": 17,
+          "rank": 16,
           "type": "movie",
           "typeRank": 7,
-          "title": "Oasis: Don't Look Back in Anger",
-          "year": 2026,
-          "imdbId": "tt36150957",
-          "tmdbId": "movie/1447853"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 8,
           "title": "The Mandalorian and Grogu",
           "year": 2026,
           "imdbId": "tt30825738",
           "tmdbId": "movie/1228710"
         },
         {
-          "rank": 19,
+          "rank": 17,
           "type": "movie",
-          "typeRank": 9,
-          "title": "Scooby-Doo 2: Monsters Unleashed",
-          "year": 2004,
-          "imdbId": "tt0331632",
-          "tmdbId": "movie/11024"
+          "typeRank": 8,
+          "title": "The Secret Life of Pets",
+          "year": 2016,
+          "imdbId": "tt2709768",
+          "tmdbId": "movie/328111"
         },
         {
-          "rank": 20,
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The Secret Life of Pets 2",
+          "year": 2019,
+          "imdbId": "tt5113040",
+          "tmdbId": "movie/412117"
+        },
+        {
+          "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Avengers: Endgame",
-          "year": 2019,
-          "imdbId": "tt4154796",
-          "tmdbId": "movie/299534"
+          "title": "Oasis: Don't Look Back in Anger",
+          "year": 2026,
+          "imdbId": "tt36150957",
+          "tmdbId": "movie/1447853"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-16T12:24:40+00:00",
+      "fetchedAt": "2026-10-17T11:37:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -720,7 +711,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-16T12:24:40+00:00",
+      "fetchedAt": "2026-10-17T11:37:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -744,55 +735,55 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Last Seen",
-          "year": 2026,
-          "imdbId": "tt6037988",
-          "tmdbId": "tv/258230"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
           "title": "Dark Matter",
           "year": 2024,
           "imdbId": "tt19231492",
           "tmdbId": "tv/196322"
         },
         {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Last Seen",
+          "year": 2026,
+          "imdbId": "tt6037988",
+          "tmdbId": "tv/258230"
+        },
+        {
           "rank": 5,
           "type": "movie",
           "typeRank": 1,
-          "title": "Matchbox the Movie",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 6,
           "type": "series",
           "typeRank": 5,
-          "title": "Brothers",
-          "year": 2026,
-          "imdbId": "tt6773088",
-          "tmdbId": "tv/250203"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 6,
           "title": "Small Prophets",
           "year": 2026,
           "imdbId": "tt38504111",
           "tmdbId": "tv/312693"
         },
         {
-          "rank": 8,
+          "rank": 7,
           "type": "movie",
           "typeRank": 2,
-          "title": "Tenzing",
+          "title": "Matchbox the Movie",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Brothers",
+          "year": 2026,
+          "imdbId": "tt6773088",
+          "tmdbId": "tv/250203"
         },
         {
           "rank": 9,
