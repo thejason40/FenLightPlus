@@ -1,31 +1,31 @@
 {
   "country": "th",
-  "generatedAt": "2026-10-18T12:03:30+00:00",
+  "generatedAt": "2026-10-19T14:40:31+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-18T12:03:30+00:00",
+      "fetchedAt": "2026-10-19T14:40:31+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Where the Mask Ends",
-          "year": 2026,
-          "imdbId": "tt42576855",
-          "tmdbId": "tv/300146"
-        },
-        {
-          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "Evil Dead Burn",
           "year": 2026,
           "imdbId": "tt31170389",
           "tmdbId": "movie/1212763"
+        },
+        {
+          "rank": 2,
+          "type": "series",
+          "typeRank": 1,
+          "title": "Where the Mask Ends",
+          "year": 2026,
+          "imdbId": "tt42576855",
+          "tmdbId": "tv/300146"
         },
         {
           "rank": 3,
@@ -56,24 +56,6 @@
         },
         {
           "rank": 6,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Khadam",
-          "year": 2026,
-          "imdbId": "tt38267329",
-          "tmdbId": "movie/1552493"
-        },
-        {
-          "rank": 8,
           "type": "series",
           "typeRank": 3,
           "title": "Below",
@@ -82,7 +64,52 @@
           "tmdbId": "tv/285322"
         },
         {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Animals",
+          "year": 2026,
+          "imdbId": "tt31049299",
+          "tmdbId": "movie/1236045"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Tomb Raider",
+          "year": 2018,
+          "imdbId": "tt1365519",
+          "tmdbId": "movie/338970"
+        },
+        {
           "rank": 9,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Forever Purge",
+          "year": 2021,
+          "imdbId": "tt10327252",
+          "tmdbId": "movie/602223"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Khadam",
+          "year": 2026,
+          "imdbId": "tt38267329",
+          "tmdbId": "movie/1552493"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Within",
+          "year": 2016,
+          "imdbId": "tt3612320",
+          "tmdbId": "movie/291413"
+        },
+        {
+          "rank": 12,
           "type": "series",
           "typeRank": 4,
           "title": "Take Charge of My Heart",
@@ -91,81 +118,54 @@
           "tmdbId": "tv/289423"
         },
         {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Within",
-          "year": 2016,
-          "imdbId": "tt3612320",
-          "tmdbId": "movie/291413"
-        },
-        {
-          "rank": 11,
+          "rank": 13,
           "type": "series",
           "typeRank": 5,
-          "title": "The Apothecary Diaries",
-          "year": 2023,
-          "imdbId": "tt26743760",
-          "tmdbId": "tv/220542"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Tomb Raider",
-          "year": 2018,
-          "imdbId": "tt1365519",
-          "tmdbId": "movie/338970"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Forever Purge",
-          "year": 2021,
-          "imdbId": "tt10327252",
-          "tmdbId": "movie/602223"
-        },
-        {
-          "rank": 14,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Firefly Wedding",
-          "year": 2026,
-          "imdbId": "tt39394153",
-          "tmdbId": "tv/320909"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 7,
           "title": "100 Days of Deception",
           "year": 2026,
           "imdbId": "tt39201866",
           "tmdbId": "tv/293607"
         },
         {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The Apothecary Diaries",
+          "year": 2023,
+          "imdbId": "tt26743760",
+          "tmdbId": "tv/220542"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Firefly Wedding",
+          "year": 2026,
+          "imdbId": "tt39394153",
+          "tmdbId": "tv/320909"
+        },
+        {
           "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "Irreplaceable",
-          "year": 2026,
-          "imdbId": "tt37819415",
-          "tmdbId": "tv/297982"
+          "title": "Percy Jackson and the Olympians",
+          "year": 2023,
+          "imdbId": "tt12324366",
+          "tmdbId": "tv/103540"
         },
         {
           "rank": 17,
           "type": "series",
           "typeRank": 9,
-          "title": "Percy Jackson and the Olympians",
-          "year": 2023,
-          "imdbId": "tt12324366",
-          "tmdbId": "tv/103540"
+          "title": "Irreplaceable",
+          "year": 2026,
+          "imdbId": "tt37819415",
+          "tmdbId": "tv/297982"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-18T12:03:30+00:00",
+      "fetchedAt": "2026-10-19T14:40:31+00:00",
       "items": [
         {
           "rank": 1,
@@ -270,10 +270,10 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "A Working Man",
-          "year": 2025,
-          "imdbId": "tt9150192",
-          "tmdbId": "movie/1197306"
+          "title": "Shelter",
+          "year": 2026,
+          "imdbId": "tt32357218",
+          "tmdbId": "movie/1290821"
         },
         {
           "rank": 13,
@@ -288,51 +288,51 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 7,
-          "title": "Shelter",
-          "year": 2026,
-          "imdbId": "tt32357218",
-          "tmdbId": "movie/1290821"
+          "title": "Apocalypse Z: The Beginning of the End",
+          "year": 2024,
+          "imdbId": "tt27599851",
+          "tmdbId": "movie/1118031"
         },
         {
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Confidence Queen",
-          "year": 2025,
-          "imdbId": "tt37262316",
-          "tmdbId": "tv/259710"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Sheep Detectives",
-          "year": 2026,
-          "imdbId": "tt32565993",
-          "tmdbId": "movie/1301421"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
           "title": "Head Over Heels",
           "year": 2025,
           "imdbId": "tt37146661",
           "tmdbId": "tv/258025"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "A Working Man",
+          "year": 2025,
+          "imdbId": "tt9150192",
+          "tmdbId": "movie/1197306"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Confidence Queen",
+          "year": 2025,
+          "imdbId": "tt37262316",
+          "tmdbId": "tv/259710"
+        },
+        {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "The Hobbit: An Unexpected Journey",
-          "year": 2012,
-          "imdbId": "tt0903624",
-          "tmdbId": "movie/49051"
+          "title": "The Runner",
+          "year": 2026,
+          "imdbId": "tt34564059",
+          "tmdbId": "movie/1386315"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-18T12:03:30+00:00",
+      "fetchedAt": "2026-10-19T14:40:31+00:00",
       "items": [
         {
           "rank": 1,
@@ -365,10 +365,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Rampage",
-          "year": 2018,
-          "imdbId": "tt2231461",
-          "tmdbId": "movie/427641"
+          "title": "Brothers Under Fire",
+          "year": 2026,
+          "imdbId": "tt32394984",
+          "tmdbId": "movie/1414413"
         },
         {
           "rank": 5,
@@ -383,10 +383,10 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Brothers Under Fire",
-          "year": 2026,
-          "imdbId": "tt32394984",
-          "tmdbId": "movie/1414413"
+          "title": "Rampage",
+          "year": 2018,
+          "imdbId": "tt2231461",
+          "tmdbId": "movie/427641"
         },
         {
           "rank": 7,
@@ -401,10 +401,10 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Michael",
-          "year": 2026,
-          "imdbId": "tt11378946",
-          "tmdbId": "movie/936075"
+          "title": "Lights Out",
+          "year": 2016,
+          "imdbId": "tt4786282",
+          "tmdbId": "movie/345911"
         },
         {
           "rank": 9,
@@ -419,10 +419,10 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Lights Out",
-          "year": 2016,
-          "imdbId": "tt4786282",
-          "tmdbId": "movie/345911"
+          "title": "Michael",
+          "year": 2026,
+          "imdbId": "tt11378946",
+          "tmdbId": "movie/936075"
         },
         {
           "rank": 11,
@@ -473,10 +473,10 @@
           "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "Fired Up!",
-          "year": 2026,
-          "imdbId": "tt29932775",
-          "tmdbId": "tv/239156"
+          "title": "The Penguin",
+          "year": 2024,
+          "imdbId": "tt15435876",
+          "tmdbId": "tv/194764"
         },
         {
           "rank": 17,
@@ -508,7 +508,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-18T12:03:30+00:00",
+      "fetchedAt": "2026-10-19T14:40:31+00:00",
       "items": [
         {
           "rank": 1,
@@ -548,15 +548,6 @@
         },
         {
           "rank": 5,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Matchbox the Movie",
-          "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
-        },
-        {
-          "rank": 6,
           "type": "series",
           "typeRank": 3,
           "title": "Dark Matter",
@@ -565,13 +556,22 @@
           "tmdbId": "tv/196322"
         },
         {
-          "rank": 7,
+          "rank": 6,
           "type": "series",
           "typeRank": 4,
           "title": "Silo",
           "year": 2023,
           "imdbId": "tt14688458",
           "tmdbId": "tv/125988"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Matchbox the Movie",
+          "year": 2026,
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 8,
@@ -658,37 +658,37 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "Greyhound",
-          "year": 2020,
-          "imdbId": "tt6048922",
-          "tmdbId": "movie/516486"
+          "title": "Fountain of Youth",
+          "year": 2025,
+          "imdbId": "tt27075958",
+          "tmdbId": "movie/1098006"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "The Family Plan",
-          "year": 2023,
-          "imdbId": "tt16431870",
-          "tmdbId": "movie/1029575"
-        },
-        {
-          "rank": 19,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Luck",
           "year": 2022,
           "imdbId": "tt7214954",
           "tmdbId": "movie/585511"
         },
         {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Greyhound",
+          "year": 2020,
+          "imdbId": "tt6048922",
+          "tmdbId": "movie/516486"
+        },
+        {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Fountain of Youth",
-          "year": 2025,
-          "imdbId": "tt27075958",
-          "tmdbId": "movie/1098006"
+          "title": "The Last First: Winter K2",
+          "year": 2026,
+          "imdbId": "tt39150288",
+          "tmdbId": "movie/1596303"
         }
       ]
     }
