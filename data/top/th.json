@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-10-21T12:56:17+00:00",
+  "generatedAt": "2026-10-22T12:58:29+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-21T12:56:17+00:00",
+      "fetchedAt": "2026-10-22T12:58:29+00:00",
       "items": [
         {
           "rank": 1,
@@ -29,42 +29,6 @@
         },
         {
           "rank": 3,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Doctor X: Mafia in White",
-          "year": 2026,
-          "imdbId": "tt39328047",
-          "tmdbId": "tv/293610"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Take Charge of My Heart",
-          "year": 2026,
-          "imdbId": "tt37737331",
-          "tmdbId": "tv/289423"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Cyberpunk: Edgerunners",
-          "year": 2022,
-          "imdbId": "tt12590266",
-          "tmdbId": "tv/105248"
-        },
-        {
-          "rank": 7,
           "type": "movie",
           "typeRank": 2,
           "title": "Evil Dead Burn",
@@ -73,7 +37,25 @@
           "tmdbId": "movie/1212763"
         },
         {
-          "rank": 8,
+          "rank": 4,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Doctor X: Mafia in White",
+          "year": 2026,
+          "imdbId": "tt39328047",
+          "tmdbId": "tv/293610"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Cyberpunk: Edgerunners",
+          "year": 2022,
+          "imdbId": "tt12590266",
+          "tmdbId": "tv/105248"
+        },
+        {
+          "rank": 6,
           "type": "movie",
           "typeRank": 3,
           "title": "Haunted Universities 4",
@@ -82,7 +64,70 @@
           "tmdbId": "movie/1610936"
         },
         {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Tomb Raider",
+          "year": 2018,
+          "imdbId": "tt1365519",
+          "tmdbId": "movie/338970"
+        },
+        {
           "rank": 9,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "The Unborn Child",
+          "year": 2011,
+          "imdbId": "tt2372429",
+          "tmdbId": "movie/72745"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Forever Purge",
+          "year": 2021,
+          "imdbId": "tt10327252",
+          "tmdbId": "movie/602223"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Take Charge of My Heart",
+          "year": 2026,
+          "imdbId": "tt37737331",
+          "tmdbId": "tv/289423"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Animals",
+          "year": 2026,
+          "imdbId": "tt31049299",
+          "tmdbId": "movie/1236045"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Within",
+          "year": 2016,
+          "imdbId": "tt3612320",
+          "tmdbId": "movie/291413"
+        },
+        {
+          "rank": 14,
           "type": "series",
           "typeRank": 6,
           "title": "100 Days of Deception",
@@ -91,63 +136,27 @@
           "tmdbId": "tv/293607"
         },
         {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Forever Purge",
-          "year": 2021,
-          "imdbId": "tt10327252",
-          "tmdbId": "movie/602223"
-        },
-        {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Within",
-          "year": 2016,
-          "imdbId": "tt3612320",
-          "tmdbId": "movie/291413"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
+          "rank": 15,
+          "type": "series",
           "typeRank": 7,
-          "title": "Tomb Raider",
-          "year": 2018,
-          "imdbId": "tt1365519",
-          "tmdbId": "movie/338970"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Unborn Child",
-          "year": 2011,
-          "imdbId": "tt2372429",
-          "tmdbId": "movie/72745"
+          "title": "The Exiled Heavy Knight Knows How to Game the System",
+          "year": 2026,
+          "imdbId": "tt33334216",
+          "tmdbId": "tv/270603"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-21T12:56:17+00:00",
+      "fetchedAt": "2026-10-22T12:58:29+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "A Love Other Than Yours",
-          "year": 2026,
-          "imdbId": "tt43736405",
-          "tmdbId": "tv/314939"
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
         },
         {
           "rank": 2,
@@ -180,10 +189,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Carrie",
+          "title": "A Love Other Than Yours",
           "year": 2026,
-          "imdbId": "tt11540908",
-          "tmdbId": "tv/288673"
+          "imdbId": "tt43736405",
+          "tmdbId": "tv/314939"
         },
         {
           "rank": 6,
@@ -196,6 +205,15 @@
         },
         {
           "rank": 7,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Carrie",
+          "year": 2026,
+          "imdbId": "tt11540908",
+          "tmdbId": "tv/288673"
+        },
+        {
+          "rank": 8,
           "type": "movie",
           "typeRank": 4,
           "title": "Love of Your Life",
@@ -204,22 +222,13 @@
           "tmdbId": "movie/1381078"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Neagley",
-          "year": 2026,
-          "imdbId": "tt33539520",
-          "tmdbId": "tv/273207"
-        },
-        {
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
+          "title": "Helluva Boss",
+          "year": 2020,
+          "imdbId": "tt10691770",
+          "tmdbId": "tv/289892"
         },
         {
           "rank": 10,
@@ -234,46 +243,46 @@
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "The Terminal List: Dark Wolf",
-          "year": 2025,
-          "imdbId": "tt26576161",
-          "tmdbId": "tv/219760"
+          "title": "Neagley",
+          "year": 2026,
+          "imdbId": "tt33539520",
+          "tmdbId": "tv/273207"
         },
         {
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "Tom Clancy's Jack Ryan: Ghost War",
-          "year": 2026,
-          "imdbId": "tt34378301",
-          "tmdbId": "movie/1380291"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Reacher",
-          "year": 2022,
-          "imdbId": "tt9288030",
-          "tmdbId": "tv/108978"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
           "title": "Project Hail Mary",
           "year": 2026,
           "imdbId": "tt12042730",
           "tmdbId": "movie/687163"
         },
         {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "The Terminal List: Dark Wolf",
+          "year": 2025,
+          "imdbId": "tt26576161",
+          "tmdbId": "tv/219760"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Tom Clancy's Jack Ryan: Ghost War",
+          "year": 2026,
+          "imdbId": "tt34378301",
+          "tmdbId": "movie/1380291"
+        },
+        {
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "See You at Work Tomorrow!",
-          "year": 2026,
-          "imdbId": "tt38960812",
-          "tmdbId": "tv/289763"
+          "title": "Reacher",
+          "year": 2022,
+          "imdbId": "tt9288030",
+          "tmdbId": "tv/108978"
         },
         {
           "rank": 16,
@@ -288,24 +297,24 @@
           "rank": 17,
           "type": "series",
           "typeRank": 9,
-          "title": "Bleach",
-          "year": 2004,
-          "imdbId": "tt0434665",
-          "tmdbId": "tv/30984"
+          "title": "See You at Work Tomorrow!",
+          "year": 2026,
+          "imdbId": "tt38960812",
+          "tmdbId": "tv/289763"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "Top Gun: Maverick",
-          "year": 2022,
-          "imdbId": "tt1745960",
-          "tmdbId": "movie/361743"
+          "title": "Crime 101",
+          "year": 2026,
+          "imdbId": "tt32430579",
+          "tmdbId": "movie/1171145"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-21T12:56:17+00:00",
+      "fetchedAt": "2026-10-22T12:58:29+00:00",
       "items": [
         {
           "rank": 1,
@@ -356,10 +365,10 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Brothers Under Fire",
-          "year": 2026,
-          "imdbId": "tt32394984",
-          "tmdbId": "movie/1414413"
+          "title": "Lights Out",
+          "year": 2016,
+          "imdbId": "tt4786282",
+          "tmdbId": "movie/345911"
         },
         {
           "rank": 7,
@@ -374,28 +383,28 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Lights Out",
-          "year": 2016,
-          "imdbId": "tt4786282",
-          "tmdbId": "movie/345911"
+          "title": "Rampage",
+          "year": 2018,
+          "imdbId": "tt2231461",
+          "tmdbId": "movie/427641"
         },
         {
           "rank": 9,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Brothers Under Fire",
+          "year": 2026,
+          "imdbId": "tt32394984",
+          "tmdbId": "movie/1414413"
+        },
+        {
+          "rank": 10,
           "type": "series",
           "typeRank": 5,
           "title": "Line of Fire",
           "year": 2026,
           "imdbId": "tt39365612",
           "tmdbId": "tv/321958"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Rampage",
-          "year": 2018,
-          "imdbId": "tt2231461",
-          "tmdbId": "movie/427641"
         },
         {
           "rank": 11,
@@ -410,10 +419,10 @@
           "rank": 12,
           "type": "series",
           "typeRank": 6,
-          "title": "WAR",
+          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
           "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "imdbId": "tt43619474",
+          "tmdbId": "tv/319990"
         },
         {
           "rank": 13,
@@ -428,10 +437,10 @@
           "rank": 14,
           "type": "series",
           "typeRank": 7,
-          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
-          "year": 2026,
-          "imdbId": "tt43619474",
-          "tmdbId": "tv/319990"
+          "title": "Warrior",
+          "year": 2019,
+          "imdbId": "tt5743796",
+          "tmdbId": "tv/73544"
         },
         {
           "rank": 15,
@@ -464,10 +473,10 @@
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "Adventure Time: Side Quests",
+          "title": "WAR",
           "year": 2026,
-          "imdbId": "tt32603995",
-          "tmdbId": "tv/256694"
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 19,
@@ -481,7 +490,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-21T12:56:17+00:00",
+      "fetchedAt": "2026-10-22T12:58:29+00:00",
       "items": [
         {
           "rank": 1,
