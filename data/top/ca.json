@@ -1,43 +1,16 @@
 {
   "country": "ca",
-  "generatedAt": "2026-10-22T12:58:29+00:00",
+  "generatedAt": "2026-10-23T12:37:37+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-22T12:58:29+00:00",
+      "fetchedAt": "2026-10-23T12:37:37+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
-        },
-        {
-          "rank": 4,
           "type": "movie",
           "typeRank": 1,
           "title": "Animals",
@@ -46,16 +19,25 @@
           "tmdbId": "movie/1236045"
         },
         {
-          "rank": 5,
+          "rank": 2,
           "type": "series",
-          "typeRank": 4,
-          "title": "Cyberpunk: Edgerunners",
-          "year": 2022,
-          "imdbId": "tt12590266",
-          "tmdbId": "tv/105248"
+          "typeRank": 1,
+          "title": "Love Is Blind",
+          "year": 2020,
+          "imdbId": "tt11704040",
+          "tmdbId": "tv/99353"
         },
         {
-          "rank": 6,
+          "rank": 3,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
+        },
+        {
+          "rank": 4,
           "type": "movie",
           "typeRank": 2,
           "title": "Armored",
@@ -64,9 +46,27 @@
           "tmdbId": "movie/4597"
         },
         {
-          "rank": 7,
+          "rank": 5,
           "type": "movie",
           "typeRank": 3,
+          "title": "Hollywood Dirt",
+          "year": 2017,
+          "imdbId": "tt6649066",
+          "tmdbId": "movie/465080"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 4,
           "title": "Norm: The Tale of Norm Macdonald",
           "year": 2026,
           "imdbId": "tt44822485",
@@ -74,24 +74,51 @@
         },
         {
           "rank": 8,
-          "type": "series",
+          "type": "movie",
           "typeRank": 5,
-          "title": "Raw",
-          "year": 1993,
-          "imdbId": "tt0185103",
-          "tmdbId": "tv/4656"
+          "title": "Blackout",
+          "year": 2022,
+          "imdbId": "tt8363392",
+          "tmdbId": "movie/759507"
         },
         {
           "rank": 9,
-          "type": "movie",
+          "type": "series",
           "typeRank": 4,
+          "title": "Cyberpunk: Edgerunners",
+          "year": 2022,
+          "imdbId": "tt12590266",
+          "tmdbId": "tv/105248"
+        },
+        {
+          "rank": 10,
+          "type": "series",
+          "typeRank": 5,
+          "title": "The New Stanford Prison Experiment",
+          "year": 2026,
+          "imdbId": "tt46658083",
+          "tmdbId": "tv/335319"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Minions",
+          "year": 2015,
+          "imdbId": "tt2293640",
+          "tmdbId": "movie/211672"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Tomb Raider",
           "year": 2018,
           "imdbId": "tt1365519",
           "tmdbId": "movie/338970"
         },
         {
-          "rank": 10,
+          "rank": 13,
           "type": "series",
           "typeRank": 6,
           "title": "TYSON",
@@ -100,7 +127,16 @@
           "tmdbId": "tv/335536"
         },
         {
-          "rank": 11,
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "40 Dates and 40 Nights",
+          "year": 2026,
+          "imdbId": "tt33219707",
+          "tmdbId": "movie/1431804"
+        },
+        {
+          "rank": 15,
           "type": "series",
           "typeRank": 7,
           "title": "East of Eden",
@@ -109,72 +145,36 @@
           "tmdbId": "tv/258165"
         },
         {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 8,
-          "title": "The Trap",
-          "year": 2026,
-          "imdbId": "tt36470958",
-          "tmdbId": "tv/283371"
-        },
-        {
-          "rank": 13,
-          "type": "series",
+          "rank": 16,
+          "type": "movie",
           "typeRank": 9,
-          "title": "WWE NXT",
-          "year": 2010,
-          "imdbId": "tt1601141",
-          "tmdbId": "tv/31991"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "40 Dates and 40 Nights",
-          "year": 2026,
-          "imdbId": "tt33219707",
-          "tmdbId": "movie/1431804"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 6,
           "title": "A Minecraft Movie",
           "year": 2025,
           "imdbId": "tt3566834",
           "tmdbId": "movie/950387"
         },
         {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Minions",
-          "year": 2015,
-          "imdbId": "tt2293640",
-          "tmdbId": "movie/211672"
-        },
-        {
           "rank": 17,
-          "type": "movie",
+          "type": "series",
           "typeRank": 8,
-          "title": "UNABOMBER",
-          "year": 2026,
-          "imdbId": "tt6933238",
-          "tmdbId": "movie/1492640"
+          "title": "Unforgettable",
+          "year": 2011,
+          "imdbId": "tt1842530",
+          "tmdbId": "tv/39276"
         },
         {
           "rank": 18,
-          "type": "movie",
+          "type": "series",
           "typeRank": 9,
-          "title": "Blackout",
-          "year": 2022,
-          "imdbId": "tt8363392",
-          "tmdbId": "movie/759507"
+          "title": "Ghosts",
+          "year": 2021,
+          "imdbId": "tt11379026",
+          "tmdbId": "tv/126027"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-22T12:58:29+00:00",
+      "fetchedAt": "2026-10-23T12:37:37+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-22T12:58:29+00:00",
+      "fetchedAt": "2026-10-23T12:37:37+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +535,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-22T12:58:29+00:00",
+      "fetchedAt": "2026-10-23T12:37:37+00:00",
       "items": [
         {
           "rank": 1,
@@ -720,7 +720,7 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-10-22T12:58:29+00:00",
+      "fetchedAt": "2026-10-23T12:37:37+00:00",
       "items": [
         {
           "rank": 1,
@@ -753,64 +753,64 @@
           "rank": 4,
           "type": "series",
           "typeRank": 4,
+          "title": "MasterChef Canada",
+          "year": 2014,
+          "imdbId": "tt3219166",
+          "tmdbId": "tv/64958"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Doc",
+          "year": 2025,
+          "imdbId": "tt26748321",
+          "tmdbId": "tv/255055"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Best Medicine",
+          "year": 2026,
+          "imdbId": "tt36885662",
+          "tmdbId": "tv/291084"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "The Inventor: Out for Blood in Silicon Valley",
+          "year": 2019,
+          "imdbId": "tt8488126",
+          "tmdbId": "movie/566228"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 7,
           "title": "The Traitors",
           "year": 2023,
           "imdbId": "tt15557874",
           "tmdbId": "tv/215943"
         },
         {
-          "rank": 5,
+          "rank": 9,
           "type": "series",
-          "typeRank": 5,
-          "title": "Tracker",
-          "year": 2024,
-          "imdbId": "tt13875494",
-          "tmdbId": "tv/211288"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
+          "typeRank": 8,
           "title": "The Celebrity Traitors",
           "year": 2025,
           "imdbId": "tt33248156",
           "tmdbId": "tv/291431"
         },
         {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 7,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Grey's Anatomy",
-          "year": 2005,
-          "imdbId": "tt0413573",
-          "tmdbId": "tv/1416"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Dracula",
-          "year": 2025,
-          "imdbId": "tt31434030",
-          "tmdbId": "movie/1246049"
-        },
-        {
           "rank": 10,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "The Inventor: Out for Blood in Silicon Valley",
-          "year": 2019,
-          "imdbId": "tt8488126",
-          "tmdbId": "movie/566228"
+          "type": "series",
+          "typeRank": 9,
+          "title": "Tracker",
+          "year": 2024,
+          "imdbId": "tt13875494",
+          "tmdbId": "tv/211288"
         }
       ]
     }
