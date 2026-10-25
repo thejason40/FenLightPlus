@@ -1,13 +1,13 @@
 {
   "country": "au",
-  "generatedAt": "2026-10-24T11:59:56+00:00",
+  "generatedAt": "2026-10-25T12:34:28+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,91 +350,10 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "VisionQuest",
-          "year": 2026,
-          "imdbId": "tt23112594",
-          "tmdbId": "tv/213375"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Phony",
-          "year": 2026,
-          "imdbId": "tt21952924",
-          "tmdbId": "tv/275139"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Coven Academy",
-          "year": 2026,
-          "imdbId": "tt36064406",
-          "tmdbId": "tv/298505"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Scrubs",
-          "year": 2026,
-          "imdbId": "tt40197357",
-          "tmdbId": "tv/295778"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Modern Family",
-          "year": 2009,
-          "imdbId": "tt1442437",
-          "tmdbId": "tv/1421"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The Kardashians",
-          "year": 2022,
-          "imdbId": "tt15791630",
-          "tmdbId": "tv/154521"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Abbott Elementary",
-          "year": 2021,
-          "imdbId": "tt14218830",
-          "tmdbId": "tv/125935"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 8,
-          "title": "9-1-1: Nashville",
-          "year": 2025,
-          "imdbId": "tt33550053",
-          "tmdbId": "tv/284838"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 9,
-          "title": "WandaVision",
-          "year": 2021,
-          "imdbId": "tt9140560",
-          "tmdbId": "tv/85271"
-        },
-        {
-          "rank": 10,
           "type": "movie",
           "typeRank": 1,
           "title": "Moana",
@@ -443,52 +362,52 @@
           "tmdbId": "movie/1108427"
         },
         {
-          "rank": 11,
+          "rank": 2,
           "type": "movie",
           "typeRank": 2,
-          "title": "Moana",
-          "year": 2016,
-          "imdbId": "tt3521164",
-          "tmdbId": "movie/277834"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Moana 2",
-          "year": 2024,
-          "imdbId": "tt13622970",
-          "tmdbId": "movie/1241982"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Toy Story 5",
-          "year": 2026,
-          "imdbId": "tt29355505",
-          "tmdbId": "movie/1084244"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "10 Things I Hate About You",
-          "year": 1999,
-          "imdbId": "tt0147800",
-          "tmdbId": "movie/4951"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 6,
           "title": "Lilo & Stitch",
           "year": 2025,
           "imdbId": "tt11655566",
           "tmdbId": "movie/552524"
         },
         {
-          "rank": 16,
+          "rank": 3,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Toy Story 5",
+          "year": 2026,
+          "imdbId": "tt29355505",
+          "tmdbId": "movie/1084244"
+        },
+        {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Moana 2",
+          "year": 2024,
+          "imdbId": "tt13622970",
+          "tmdbId": "movie/1241982"
+        },
+        {
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Moana",
+          "year": 2016,
+          "imdbId": "tt3521164",
+          "tmdbId": "movie/277834"
+        },
+        {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "10 Things I Hate About You",
+          "year": 1999,
+          "imdbId": "tt0147800",
+          "tmdbId": "movie/4951"
+        },
+        {
+          "rank": 7,
           "type": "movie",
           "typeRank": 7,
           "title": "Scooby-Doo",
@@ -497,7 +416,7 @@
           "tmdbId": "movie/9637"
         },
         {
-          "rank": 17,
+          "rank": 8,
           "type": "movie",
           "typeRank": 8,
           "title": "The Nightmare Before Christmas",
@@ -506,27 +425,108 @@
           "tmdbId": "movie/9479"
         },
         {
-          "rank": 18,
+          "rank": 9,
           "type": "movie",
           "typeRank": 9,
-          "title": "Super Scam Me",
+          "title": "The Devil Wears Prada 2",
           "year": 2026,
-          "imdbId": "tt46027225",
-          "tmdbId": "movie/1771323"
+          "imdbId": "tt33612209",
+          "tmdbId": "movie/1314481"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "PAW Patrol: The Movie",
+          "year": 2021,
+          "imdbId": "tt11832046",
+          "tmdbId": "movie/675445"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 1,
+          "title": "VisionQuest",
+          "year": 2026,
+          "imdbId": "tt23112594",
+          "tmdbId": "tv/213375"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Phony",
+          "year": 2026,
+          "imdbId": "tt21952924",
+          "tmdbId": "tv/275139"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Coven Academy",
+          "year": 2026,
+          "imdbId": "tt36064406",
+          "tmdbId": "tv/298505"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Scrubs",
+          "year": 2026,
+          "imdbId": "tt40197357",
+          "tmdbId": "tv/295778"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Modern Family",
+          "year": 2009,
+          "imdbId": "tt1442437",
+          "tmdbId": "tv/1421"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Abbott Elementary",
+          "year": 2021,
+          "imdbId": "tt14218830",
+          "tmdbId": "tv/125935"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 7,
+          "title": "9-1-1: Nashville",
+          "year": 2025,
+          "imdbId": "tt33550053",
+          "tmdbId": "tv/284838"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 8,
+          "title": "The Kardashians",
+          "year": 2022,
+          "imdbId": "tt15791630",
+          "tmdbId": "tv/154521"
         },
         {
           "rank": 19,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Avengers: Age of Ultron",
-          "year": 2015,
-          "imdbId": "tt2395427",
-          "tmdbId": "movie/99861"
+          "type": "series",
+          "typeRank": 9,
+          "title": "Welcome to the Family: The Murder of Dan Markel",
+          "year": 2026,
+          "imdbId": "tt44842745",
+          "tmdbId": "tv/333058"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -568,10 +568,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "The Last Ship",
-          "year": 2014,
-          "imdbId": "tt2402207",
-          "tmdbId": "tv/60802"
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
           "rank": 6,
@@ -586,10 +586,10 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Youth",
-          "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
+          "title": "The Last Ship",
+          "year": 2014,
+          "imdbId": "tt2402207",
+          "tmdbId": "tv/60802"
         },
         {
           "rank": 8,
@@ -613,19 +613,19 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Lee",
-          "year": 2024,
-          "imdbId": "tt5112584",
-          "tmdbId": "movie/832964"
+          "title": "V for Vendetta",
+          "year": 2006,
+          "imdbId": "tt0434409",
+          "tmdbId": "movie/752"
         },
         {
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "Girls",
-          "year": 2012,
-          "imdbId": "tt1723816",
-          "tmdbId": "tv/42282"
+          "title": "Lanterns",
+          "year": 2026,
+          "imdbId": "tt26545992",
+          "tmdbId": "tv/95350"
         },
         {
           "rank": 12,
@@ -640,10 +640,10 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Lanterns",
-          "year": 2026,
-          "imdbId": "tt26545992",
-          "tmdbId": "tv/95350"
+          "title": "Girls",
+          "year": 2012,
+          "imdbId": "tt1723816",
+          "tmdbId": "tv/42282"
         },
         {
           "rank": 14,
@@ -667,51 +667,51 @@
           "rank": 16,
           "type": "movie",
           "typeRank": 8,
+          "title": "Lee",
+          "year": 2024,
+          "imdbId": "tt5112584",
+          "tmdbId": "movie/832964"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Newlyweds",
+          "year": 2026,
+          "imdbId": "tt39469996",
+          "tmdbId": "tv/322267"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
           "title": "Mountainhead",
           "year": 2025,
           "imdbId": "tt35396529",
           "tmdbId": "movie/1417059"
         },
         {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Gold Rush",
-          "year": 2010,
-          "imdbId": "tt1800864",
-          "tmdbId": "tv/34634"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Lethal Weapon",
-          "year": 1987,
-          "imdbId": "tt0093409",
-          "tmdbId": "movie/941"
-        },
-        {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "Baylen Out Loud",
-          "year": 2025,
-          "imdbId": "tt34881067",
-          "tmdbId": "tv/279644"
+          "title": "The Pet Cemetery Murders: A Ghost Story",
+          "year": 2026,
+          "imdbId": "tt46683025",
+          "tmdbId": "tv/336418"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Lethal Weapon 3",
-          "year": 1992,
-          "imdbId": "tt0104714",
-          "tmdbId": "movie/943"
+          "title": "Lethal Weapon",
+          "year": 1987,
+          "imdbId": "tt0093409",
+          "tmdbId": "movie/941"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,

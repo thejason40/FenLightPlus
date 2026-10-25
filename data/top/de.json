@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-10-24T11:59:56+00:00",
+  "generatedAt": "2026-10-25T12:34:28+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -383,19 +383,19 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Modern Family",
-          "year": 2009,
-          "imdbId": "tt1442437",
-          "tmdbId": "tv/1421"
+          "title": "A Discovery of Witches",
+          "year": 2018,
+          "imdbId": "tt2177461",
+          "tmdbId": "tv/77236"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "A Discovery of Witches",
-          "year": 2018,
-          "imdbId": "tt2177461",
-          "tmdbId": "tv/77236"
+          "title": "Modern Family",
+          "year": 2009,
+          "imdbId": "tt1442437",
+          "tmdbId": "tv/1421"
         },
         {
           "rank": 5,
@@ -410,10 +410,10 @@
           "rank": 6,
           "type": "series",
           "typeRank": 6,
-          "title": "WandaVision",
-          "year": 2021,
-          "imdbId": "tt9140560",
-          "tmdbId": "tv/85271"
+          "title": "Sandokan",
+          "year": 2025,
+          "imdbId": "tt13924304",
+          "tmdbId": "tv/271855"
         },
         {
           "rank": 7,
@@ -428,19 +428,19 @@
           "rank": 8,
           "type": "series",
           "typeRank": 8,
-          "title": "Loki",
+          "title": "WandaVision",
           "year": 2021,
-          "imdbId": "tt9140554",
-          "tmdbId": "tv/84958"
+          "imdbId": "tt9140560",
+          "tmdbId": "tv/85271"
         },
         {
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "Sandokan",
-          "year": 2025,
-          "imdbId": "tt13924304",
-          "tmdbId": "tv/271855"
+          "title": "Loki",
+          "year": 2021,
+          "imdbId": "tt9140554",
+          "tmdbId": "tv/84958"
         },
         {
           "rank": 10,
@@ -491,19 +491,19 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 6,
-          "title": "Moana",
-          "year": 2016,
-          "imdbId": "tt3521164",
-          "tmdbId": "movie/277834"
+          "title": "The Mandalorian and Grogu",
+          "year": 2026,
+          "imdbId": "tt30825738",
+          "tmdbId": "movie/1228710"
         },
         {
           "rank": 16,
           "type": "movie",
           "typeRank": 7,
-          "title": "The Mandalorian and Grogu",
-          "year": 2026,
-          "imdbId": "tt30825738",
-          "tmdbId": "movie/1228710"
+          "title": "Moana",
+          "year": 2016,
+          "imdbId": "tt3521164",
+          "tmdbId": "movie/277834"
         },
         {
           "rank": 17,
@@ -518,10 +518,10 @@
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "Coco",
-          "year": 2017,
-          "imdbId": "tt2380307",
-          "tmdbId": "movie/354912"
+          "title": "Halloweentown",
+          "year": 1998,
+          "imdbId": "tt0173886",
+          "tmdbId": "movie/27850"
         },
         {
           "rank": 19,
@@ -535,7 +535,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -550,10 +550,10 @@
           "rank": 2,
           "type": "movie",
           "typeRank": 1,
-          "title": "Civil War",
-          "year": 2024,
-          "imdbId": "tt17279496",
-          "tmdbId": "movie/929590"
+          "title": "Dead of Winter",
+          "year": 2025,
+          "imdbId": "tt7574556",
+          "tmdbId": "movie/1235746"
         },
         {
           "rank": 3,
@@ -568,10 +568,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "In the Grey",
-          "year": 2026,
-          "imdbId": "tt27681354",
-          "tmdbId": "movie/1122573"
+          "title": "Civil War",
+          "year": 2024,
+          "imdbId": "tt17279496",
+          "tmdbId": "movie/929590"
         },
         {
           "rank": 5,
@@ -586,10 +586,10 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Return to Silent Hill",
+          "title": "In the Grey",
           "year": 2026,
-          "imdbId": "tt22868010",
-          "tmdbId": "movie/680493"
+          "imdbId": "tt27681354",
+          "tmdbId": "movie/1122573"
         },
         {
           "rank": 7,
@@ -604,10 +604,10 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Dead of Winter",
-          "year": 2025,
-          "imdbId": "tt7574556",
-          "tmdbId": "movie/1235746"
+          "title": "Return to Silent Hill",
+          "year": 2026,
+          "imdbId": "tt22868010",
+          "tmdbId": "movie/680493"
         },
         {
           "rank": 9,
@@ -622,10 +622,10 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "The Boondock Saints",
-          "year": 1999,
-          "imdbId": "tt0144117",
-          "tmdbId": "movie/8374"
+          "title": "A Nightmare on Elm Street",
+          "year": 1984,
+          "imdbId": "tt0087800",
+          "tmdbId": "movie/377"
         },
         {
           "rank": 11,
@@ -640,10 +640,10 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "Friday the 13th",
-          "year": 1980,
-          "imdbId": "tt0080761",
-          "tmdbId": "movie/4488"
+          "title": "The Boondock Saints",
+          "year": 1999,
+          "imdbId": "tt0144117",
+          "tmdbId": "movie/8374"
         },
         {
           "rank": 13,
@@ -667,10 +667,10 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Apollo Has Fallen",
-          "year": 2026,
-          "imdbId": "tt36350690",
-          "tmdbId": "tv/287453"
+          "title": "Shameless",
+          "year": 2011,
+          "imdbId": "tt1586680",
+          "tmdbId": "tv/34307"
         },
         {
           "rank": 16,
@@ -685,42 +685,42 @@
           "rank": 17,
           "type": "series",
           "typeRank": 9,
-          "title": "Shameless",
-          "year": 2011,
-          "imdbId": "tt1586680",
-          "tmdbId": "tv/34307"
+          "title": "Unmasking a Monster: Aileen Wuornos",
+          "year": 2026,
+          "imdbId": "tt43706317",
+          "tmdbId": "tv/329524"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "It Follows",
-          "year": 2015,
-          "imdbId": "tt3235888",
-          "tmdbId": "movie/270303"
+          "title": "Friday the 13th",
+          "year": 1980,
+          "imdbId": "tt0080761",
+          "tmdbId": "movie/4488"
         },
         {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "Paolo",
+          "title": "Apollo Has Fallen",
           "year": 2026,
-          "imdbId": "tt40407840",
-          "tmdbId": "tv/288385"
+          "imdbId": "tt36350690",
+          "tmdbId": "tv/287453"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Krabat",
-          "year": 2008,
-          "imdbId": "tt0772181",
-          "tmdbId": "movie/4627"
+          "title": "It Follows",
+          "year": 2015,
+          "imdbId": "tt3235888",
+          "tmdbId": "movie/270303"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,

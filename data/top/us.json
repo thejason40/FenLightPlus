@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-10-24T11:59:56+00:00",
+  "generatedAt": "2026-10-25T12:34:28+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +341,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -365,37 +365,37 @@
           "rank": 3,
           "type": "movie",
           "typeRank": 3,
-          "title": "Moana",
-          "year": 2016,
-          "imdbId": "tt3521164",
-          "tmdbId": "movie/277834"
-        },
-        {
-          "rank": 4,
-          "type": "movie",
-          "typeRank": 4,
           "title": "Hocus Pocus",
           "year": 1993,
           "imdbId": "tt0107120",
           "tmdbId": "movie/10439"
         },
         {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Moana",
+          "year": 2016,
+          "imdbId": "tt3521164",
+          "tmdbId": "movie/277834"
+        },
+        {
           "rank": 5,
           "type": "movie",
           "typeRank": 5,
-          "title": "Moana 2",
-          "year": 2024,
-          "imdbId": "tt13622970",
-          "tmdbId": "movie/1241982"
+          "title": "Halloweentown",
+          "year": 1998,
+          "imdbId": "tt0173886",
+          "tmdbId": "movie/27850"
         },
         {
           "rank": 6,
           "type": "movie",
           "typeRank": 6,
-          "title": "Halloweentown",
-          "year": 1998,
-          "imdbId": "tt0173886",
-          "tmdbId": "movie/27850"
+          "title": "Moana 2",
+          "year": 2024,
+          "imdbId": "tt13622970",
+          "tmdbId": "movie/1241982"
         },
         {
           "rank": 7,
@@ -410,22 +410,31 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 8,
-          "title": "10 Things I Hate About You",
-          "year": 1999,
-          "imdbId": "tt0147800",
-          "tmdbId": "movie/4951"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Lilo & Stitch",
           "year": 2025,
           "imdbId": "tt11655566",
           "tmdbId": "movie/552524"
         },
         {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Edward Scissorhands",
+          "year": 1990,
+          "imdbId": "tt0099487",
+          "tmdbId": "movie/162"
+        },
+        {
           "rank": 10,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "10 Things I Hate About You",
+          "year": 1999,
+          "imdbId": "tt0147800",
+          "tmdbId": "movie/4951"
+        },
+        {
+          "rank": 11,
           "type": "series",
           "typeRank": 1,
           "title": "VisionQuest",
@@ -434,25 +443,25 @@
           "tmdbId": "tv/213375"
         },
         {
-          "rank": 11,
+          "rank": 12,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Phony",
+          "year": 2026,
+          "imdbId": "tt21952924",
+          "tmdbId": "tv/275139"
+        },
+        {
+          "rank": 13,
           "type": "movie",
-          "typeRank": 10,
+          "typeRank": 11,
           "title": "Family Guy Happy Hell-o-ween",
           "year": 2026,
           "imdbId": "tt43665190",
           "tmdbId": "movie/1788735"
         },
         {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 2,
-          "title": "The Drop: A Snowfall Saga",
-          "year": 2026,
-          "imdbId": "tt36210894",
-          "tmdbId": "tv/304842"
-        },
-        {
-          "rank": 13,
+          "rank": 14,
           "type": "series",
           "typeRank": 3,
           "title": "Coven Academy",
@@ -461,16 +470,16 @@
           "tmdbId": "tv/298505"
         },
         {
-          "rank": 14,
+          "rank": 15,
           "type": "series",
           "typeRank": 4,
-          "title": "Phony",
+          "title": "The Drop: A Snowfall Saga",
           "year": 2026,
-          "imdbId": "tt21952924",
-          "tmdbId": "tv/275139"
+          "imdbId": "tt36210894",
+          "tmdbId": "tv/304842"
         },
         {
-          "rank": 15,
+          "rank": 16,
           "type": "series",
           "typeRank": 5,
           "title": "WandaVision",
@@ -479,27 +488,18 @@
           "tmdbId": "tv/85271"
         },
         {
-          "rank": 16,
+          "rank": 17,
           "type": "series",
           "typeRank": 6,
           "title": "Abbott Elementary",
           "year": 2021,
           "imdbId": "tt14218830",
           "tmdbId": "tv/125935"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Interrogation Tapes - A Special Edition of 20/20",
-          "year": 2024,
-          "imdbId": "tt31975239",
-          "tmdbId": "tv/250858"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -541,10 +541,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "The Serial Killer Connection",
-          "year": 2026,
-          "imdbId": "tt46066662",
-          "tmdbId": "tv/337700"
+          "title": "Gold Rush",
+          "year": 2010,
+          "imdbId": "tt1800864",
+          "tmdbId": "tv/34634"
         },
         {
           "rank": 6,
@@ -559,10 +559,10 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
+          "title": "Scariest House in America",
+          "year": 2024,
+          "imdbId": "tt33305795",
+          "tmdbId": "tv/272390"
         },
         {
           "rank": 8,
@@ -586,37 +586,37 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Coraline",
-          "year": 2009,
-          "imdbId": "tt0327597",
-          "tmdbId": "movie/14836"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Lanterns",
-          "year": 2026,
-          "imdbId": "tt26545992",
-          "tmdbId": "tv/95350"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 6,
           "title": "Freddy vs. Jason",
           "year": 2003,
           "imdbId": "tt0329101",
           "tmdbId": "movie/6466"
         },
         {
-          "rank": 13,
+          "rank": 11,
           "type": "series",
-          "typeRank": 7,
+          "typeRank": 6,
           "title": "Youth",
           "year": 2026,
           "imdbId": "tt35949226",
           "tmdbId": "tv/285418"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Coraline",
+          "year": 2009,
+          "imdbId": "tt0327597",
+          "tmdbId": "movie/14836"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "The Serial Killer Connection",
+          "year": 2026,
+          "imdbId": "tt46066662",
+          "tmdbId": "tv/337700"
         },
         {
           "rank": 14,
@@ -631,10 +631,10 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Halloween Baking Championship",
-          "year": 2015,
-          "imdbId": "tt5227038",
-          "tmdbId": "tv/74676"
+          "title": "Lanterns",
+          "year": 2026,
+          "imdbId": "tt26545992",
+          "tmdbId": "tv/95350"
         },
         {
           "rank": 16,
@@ -649,10 +649,10 @@
           "rank": 17,
           "type": "series",
           "typeRank": 9,
-          "title": "The Rehearsal",
-          "year": 2022,
-          "imdbId": "tt10802170",
-          "tmdbId": "tv/204284"
+          "title": "1000-lb Sisters",
+          "year": 2020,
+          "imdbId": "tt11617414",
+          "tmdbId": "tv/98410"
         },
         {
           "rank": 18,
@@ -667,10 +667,10 @@
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "90 Day Fiancé: The Other Way",
-          "year": 2019,
-          "imdbId": "tt9170070",
-          "tmdbId": "tv/90046"
+          "title": "The Rehearsal",
+          "year": 2022,
+          "imdbId": "tt10802170",
+          "tmdbId": "tv/204284"
         },
         {
           "rank": 20,
@@ -684,7 +684,7 @@
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -950,7 +950,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,

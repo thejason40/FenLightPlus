@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-10-24T11:59:56+00:00",
+  "generatedAt": "2026-10-25T12:34:28+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,91 +350,10 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "VisionQuest",
-          "year": 2026,
-          "imdbId": "tt23112594",
-          "tmdbId": "tv/213375"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Phony",
-          "year": 2026,
-          "imdbId": "tt21952924",
-          "tmdbId": "tv/275139"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Abbott Elementary",
-          "year": 2021,
-          "imdbId": "tt14218830",
-          "tmdbId": "tv/125935"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Coven Academy",
-          "year": 2026,
-          "imdbId": "tt36064406",
-          "tmdbId": "tv/298505"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
-          "title": "The Dropout",
-          "year": 2022,
-          "imdbId": "tt10166622",
-          "tmdbId": "tv/122066"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
-          "title": "WandaVision",
-          "year": 2021,
-          "imdbId": "tt9140560",
-          "tmdbId": "tv/85271"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Kardashians",
-          "year": 2022,
-          "imdbId": "tt15791630",
-          "tmdbId": "tv/154521"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Scrubs",
-          "year": 2026,
-          "imdbId": "tt40197357",
-          "tmdbId": "tv/295778"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Dragon Ball Super: Beerus",
-          "year": 2026,
-          "imdbId": "tt39395275",
-          "tmdbId": "tv/312359"
-        },
-        {
-          "rank": 10,
           "type": "movie",
           "typeRank": 1,
           "title": "Moana",
@@ -443,7 +362,7 @@
           "tmdbId": "movie/1108427"
         },
         {
-          "rank": 11,
+          "rank": 2,
           "type": "movie",
           "typeRank": 2,
           "title": "The Nightmare Before Christmas",
@@ -452,72 +371,144 @@
           "tmdbId": "movie/9479"
         },
         {
-          "rank": 12,
+          "rank": 3,
           "type": "movie",
           "typeRank": 3,
-          "title": "Moana",
-          "year": 2016,
-          "imdbId": "tt3521164",
-          "tmdbId": "movie/277834"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 4,
           "title": "Hocus Pocus",
           "year": 1993,
           "imdbId": "tt0107120",
           "tmdbId": "movie/10439"
         },
         {
-          "rank": 14,
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Lilo & Stitch",
+          "year": 2025,
+          "imdbId": "tt11655566",
+          "tmdbId": "movie/552524"
+        },
+        {
+          "rank": 5,
           "type": "movie",
           "typeRank": 5,
-          "title": "Moana 2",
-          "year": 2024,
-          "imdbId": "tt13622970",
-          "tmdbId": "movie/1241982"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "10 Things I Hate About You",
-          "year": 1999,
-          "imdbId": "tt0147800",
-          "tmdbId": "movie/4951"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Family Guy Happy Hell-o-ween",
-          "year": 2026,
-          "imdbId": "tt43665190",
-          "tmdbId": "movie/1788735"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 8,
           "title": "Halloweentown",
           "year": 1998,
           "imdbId": "tt0173886",
           "tmdbId": "movie/27850"
         },
         {
-          "rank": 18,
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Moana",
+          "year": 2016,
+          "imdbId": "tt3521164",
+          "tmdbId": "movie/277834"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Moana 2",
+          "year": 2024,
+          "imdbId": "tt13622970",
+          "tmdbId": "movie/1241982"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Toy Story 5",
+          "year": 2026,
+          "imdbId": "tt29355505",
+          "tmdbId": "movie/1084244"
+        },
+        {
+          "rank": 9,
           "type": "movie",
           "typeRank": 9,
           "title": "Hocus Pocus 2",
           "year": 2022,
           "imdbId": "tt11909878",
           "tmdbId": "movie/642885"
+        },
+        {
+          "rank": 10,
+          "type": "series",
+          "typeRank": 1,
+          "title": "VisionQuest",
+          "year": 2026,
+          "imdbId": "tt23112594",
+          "tmdbId": "tv/213375"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Phony",
+          "year": 2026,
+          "imdbId": "tt21952924",
+          "tmdbId": "tv/275139"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Abbott Elementary",
+          "year": 2021,
+          "imdbId": "tt14218830",
+          "tmdbId": "tv/125935"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Coven Academy",
+          "year": 2026,
+          "imdbId": "tt36064406",
+          "tmdbId": "tv/298505"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 5,
+          "title": "9-1-1: Nashville",
+          "year": 2025,
+          "imdbId": "tt33550053",
+          "tmdbId": "tv/284838"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The Dropout",
+          "year": 2022,
+          "imdbId": "tt10166622",
+          "tmdbId": "tv/122066"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 7,
+          "title": "WandaVision",
+          "year": 2021,
+          "imdbId": "tt9140560",
+          "tmdbId": "tv/85271"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Dragon Ball Super: Beerus",
+          "year": 2026,
+          "imdbId": "tt39395275",
+          "tmdbId": "tv/312359"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
@@ -702,73 +693,64 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-10-24T11:59:56+00:00",
+      "fetchedAt": "2026-10-25T12:34:28+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "Crystal Lake",
-          "year": 2026,
-          "imdbId": "tt23148340",
-          "tmdbId": "tv/213562"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
           "title": "YAGA",
           "year": 2026,
           "imdbId": "tt39980704",
           "tmdbId": "tv/314360"
         },
         {
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The Traitors",
+          "year": 2023,
+          "imdbId": "tt15557874",
+          "tmdbId": "tv/215943"
+        },
+        {
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "The Amazing Race",
-          "year": 2001,
-          "imdbId": "tt0285335",
-          "tmdbId": "tv/30957"
+          "title": "The Celebrity Traitors",
+          "year": 2025,
+          "imdbId": "tt33248156",
+          "tmdbId": "tv/291431"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "The Traitors Canada",
-          "year": 2023,
-          "imdbId": "tt28251824",
-          "tmdbId": "tv/234613"
+          "title": "Grey's Anatomy",
+          "year": 2005,
+          "imdbId": "tt0413573",
+          "tmdbId": "tv/1416"
         },
         {
           "rank": 5,
           "type": "series",
           "typeRank": 5,
+          "title": "Crystal Lake",
+          "year": 2026,
+          "imdbId": "tt23148340",
+          "tmdbId": "tv/213562"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
           "title": "RuPaul's Drag Race UK",
           "year": 2019,
           "imdbId": "tt9780442",
           "tmdbId": "tv/92611"
         },
         {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The Voice",
-          "year": 2011,
-          "imdbId": "tt1839337",
-          "tmdbId": "tv/37678"
-        },
-        {
           "rank": 7,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "The Inventor: Out for Blood in Silicon Valley",
-          "year": 2019,
-          "imdbId": "tt8488126",
-          "tmdbId": "movie/566228"
-        },
-        {
-          "rank": 8,
           "type": "series",
           "typeRank": 7,
           "title": "WAR",
@@ -777,22 +759,31 @@
           "tmdbId": "tv/298852"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "series",
           "typeRank": 8,
-          "title": "Doc",
-          "year": 2025,
-          "imdbId": "tt26748321",
-          "tmdbId": "tv/255055"
+          "title": "Hell's Kitchen",
+          "year": 2005,
+          "imdbId": "tt0437005",
+          "tmdbId": "tv/2370"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 9,
+          "title": "The Amazing Race",
+          "year": 2001,
+          "imdbId": "tt0285335",
+          "tmdbId": "tv/30957"
         },
         {
           "rank": 10,
           "type": "series",
-          "typeRank": 9,
-          "title": "MasterChef Canada",
-          "year": 2014,
-          "imdbId": "tt3219166",
-          "tmdbId": "tv/64958"
+          "typeRank": 10,
+          "title": "Georgie & Mandy's First Marriage",
+          "year": 2024,
+          "imdbId": "tt31589662",
+          "tmdbId": "tv/243875"
         }
       ]
     }
