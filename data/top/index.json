@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T12:34:28+00:00",
+  "generatedAt": "2026-10-26T14:15:59+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
@@ -7,7 +7,7 @@
   "countries": {
     "au": {
       "file": "au.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
@@ -18,7 +18,7 @@
     },
     "ca": {
       "file": "ca.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
@@ -29,7 +29,7 @@
     },
     "de": {
       "file": "de.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
@@ -40,7 +40,7 @@
     },
     "gb": {
       "file": "gb.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
@@ -51,7 +51,7 @@
     },
     "th": {
       "file": "th.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
@@ -61,7 +61,7 @@
     },
     "us": {
       "file": "us.json",
-      "updatedAt": "2026-10-25T12:34:28+00:00",
+      "updatedAt": "2026-10-26T14:15:59+00:00",
       "services": [
         "netflix",
         "prime",
