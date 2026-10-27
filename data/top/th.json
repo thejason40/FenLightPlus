@@ -1,34 +1,16 @@
 {
   "country": "th",
-  "generatedAt": "2026-10-26T14:15:59+00:00",
+  "generatedAt": "2026-10-27T13:12:12+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-26T14:15:59+00:00",
+      "fetchedAt": "2026-10-27T13:12:12+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "The Djinn's Curse 2",
-          "year": 2026,
-          "imdbId": "tt43619342",
-          "tmdbId": "movie/1469229"
-        },
-        {
-          "rank": 2,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Surviving Hurricane Otis",
-          "year": 2026,
-          "imdbId": "tt37961714",
-          "tmdbId": "movie/1780005"
-        },
-        {
-          "rank": 3,
           "type": "series",
           "typeRank": 1,
           "title": "Where the Mask Ends",
@@ -37,34 +19,7 @@
           "tmdbId": "tv/300146"
         },
         {
-          "rank": 4,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "The Ministry of Ungentlemanly Warfare",
-          "year": 2024,
-          "imdbId": "tt5177120",
-          "tmdbId": "movie/799583"
-        },
-        {
-          "rank": 5,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Haunted Universities 4",
-          "year": 2026,
-          "imdbId": "tt43380212",
-          "tmdbId": "movie/1610936"
-        },
-        {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "The Addams Family",
-          "year": 2019,
-          "imdbId": "tt1620981",
-          "tmdbId": "movie/481084"
-        },
-        {
-          "rank": 7,
+          "rank": 2,
           "type": "series",
           "typeRank": 2,
           "title": "Doctor X: Mafia in White",
@@ -73,25 +28,34 @@
           "tmdbId": "tv/293610"
         },
         {
-          "rank": 8,
+          "rank": 3,
           "type": "movie",
-          "typeRank": 6,
-          "title": "Evil Dead Burn",
+          "typeRank": 1,
+          "title": "The Djinn's Curse 2",
           "year": 2026,
-          "imdbId": "tt31170389",
-          "tmdbId": "movie/1212763"
+          "imdbId": "tt43619342",
+          "tmdbId": "movie/1469229"
         },
         {
-          "rank": 9,
+          "rank": 4,
           "type": "movie",
-          "typeRank": 7,
-          "title": "Gajab Raat",
+          "typeRank": 2,
+          "title": "Surviving Hurricane Otis",
           "year": 2026,
-          "imdbId": "tt39631280",
-          "tmdbId": "movie/1453407"
+          "imdbId": "tt37961714",
+          "tmdbId": "movie/1780005"
         },
         {
-          "rank": 10,
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "The Ministry of Ungentlemanly Warfare",
+          "year": 2024,
+          "imdbId": "tt5177120",
+          "tmdbId": "movie/799583"
+        },
+        {
+          "rank": 6,
           "type": "series",
           "typeRank": 3,
           "title": "Lupin",
@@ -100,43 +64,43 @@
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Djinn's Curse",
-          "year": 2023,
-          "imdbId": "tt29928796",
-          "tmdbId": "movie/1072492"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Unborn Child",
-          "year": 2011,
-          "imdbId": "tt2372429",
-          "tmdbId": "movie/72745"
-        },
-        {
-          "rank": 13,
+          "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 14,
-          "type": "series",
-          "typeRank": 5,
           "title": "100 Days of Deception",
           "year": 2026,
           "imdbId": "tt39201866",
           "tmdbId": "tv/293607"
         },
         {
-          "rank": 15,
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Haunted Universities 4",
+          "year": 2026,
+          "imdbId": "tt43380212",
+          "tmdbId": "movie/1610936"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Gajab Raat",
+          "year": 2026,
+          "imdbId": "tt39631280",
+          "tmdbId": "movie/1453407"
+        },
+        {
+          "rank": 11,
           "type": "series",
           "typeRank": 6,
           "title": "Take Charge of My Heart",
@@ -145,7 +109,34 @@
           "tmdbId": "tv/289423"
         },
         {
-          "rank": 16,
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Last Heroes",
+          "year": 2018,
+          "imdbId": "tt9214660",
+          "tmdbId": "movie/529772"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "The Addams Family",
+          "year": 2019,
+          "imdbId": "tt1620981",
+          "tmdbId": "movie/481084"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Ritual",
+          "year": 2025,
+          "imdbId": "tt32194932",
+          "tmdbId": "movie/1278950"
+        },
+        {
+          "rank": 15,
           "type": "series",
           "typeRank": 7,
           "title": "The Apothecary Diaries",
@@ -154,18 +145,27 @@
           "tmdbId": "tv/220542"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The Djinn's Curse",
+          "year": 2023,
+          "imdbId": "tt29928796",
+          "tmdbId": "movie/1072492"
+        },
+        {
           "rank": 17,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Cyberpunk: Edgerunners",
-          "year": 2022,
-          "imdbId": "tt12590266",
-          "tmdbId": "tv/105248"
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Evil Dead Burn",
+          "year": 2026,
+          "imdbId": "tt31170389",
+          "tmdbId": "movie/1212763"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-26T14:15:59+00:00",
+      "fetchedAt": "2026-10-27T13:12:12+00:00",
       "items": [
         {
           "rank": 1,
@@ -323,7 +323,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-26T14:15:59+00:00",
+      "fetchedAt": "2026-10-27T13:12:12+00:00",
       "items": [
         {
           "rank": 1,
@@ -356,10 +356,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Rampage",
-          "year": 2018,
-          "imdbId": "tt2231461",
-          "tmdbId": "movie/427641"
+          "title": "The Super Mario Galaxy Movie",
+          "year": 2026,
+          "imdbId": "tt28650488",
+          "tmdbId": "movie/1226863"
         },
         {
           "rank": 5,
@@ -374,10 +374,10 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "The Super Mario Galaxy Movie",
-          "year": 2026,
-          "imdbId": "tt28650488",
-          "tmdbId": "movie/1226863"
+          "title": "Rampage",
+          "year": 2018,
+          "imdbId": "tt2231461",
+          "tmdbId": "movie/427641"
         },
         {
           "rank": 7,
@@ -401,10 +401,10 @@
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
+          "title": "Adventure Time: Side Quests",
           "year": 2026,
-          "imdbId": "tt43619474",
-          "tmdbId": "tv/319990"
+          "imdbId": "tt32603995",
+          "tmdbId": "tv/256694"
         },
         {
           "rank": 10,
@@ -435,39 +435,39 @@
         },
         {
           "rank": 13,
-          "type": "movie",
+          "type": "series",
           "typeRank": 7,
-          "title": "Michael",
+          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
           "year": 2026,
-          "imdbId": "tt11378946",
-          "tmdbId": "movie/936075"
+          "imdbId": "tt43619474",
+          "tmdbId": "tv/319990"
         },
         {
           "rank": 14,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Warrior",
-          "year": 2019,
-          "imdbId": "tt5743796",
-          "tmdbId": "tv/73544"
-        },
-        {
-          "rank": 15,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 7,
           "title": "Brothers Under Fire",
           "year": 2026,
           "imdbId": "tt32394984",
           "tmdbId": "movie/1414413"
         },
         {
-          "rank": 16,
+          "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Common Side Effects",
-          "year": 2025,
-          "imdbId": "tt28093628",
-          "tmdbId": "tv/228878"
+          "title": "Warrior",
+          "year": 2019,
+          "imdbId": "tt5743796",
+          "tmdbId": "tv/73544"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Michael",
+          "year": 2026,
+          "imdbId": "tt11378946",
+          "tmdbId": "movie/936075"
         },
         {
           "rank": 17,
@@ -482,10 +482,10 @@
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "Cupertino",
+          "title": "Youth",
           "year": 2026,
-          "imdbId": "tt33270224",
-          "tmdbId": "tv/303630"
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
           "rank": 19,
@@ -499,7 +499,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-26T14:15:59+00:00",
+      "fetchedAt": "2026-10-27T13:12:12+00:00",
       "items": [
         {
           "rank": 1,
