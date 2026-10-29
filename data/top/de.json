@@ -1,25 +1,16 @@
 {
   "country": "de",
-  "generatedAt": "2026-10-28T14:01:21+00:00",
+  "generatedAt": "2026-10-29T14:18:35+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Surviving Hurricane Otis",
-          "year": 2026,
-          "imdbId": "tt37961714",
-          "tmdbId": "movie/1780005"
-        },
-        {
-          "rank": 2,
           "type": "series",
           "typeRank": 1,
           "title": "Lupin",
@@ -28,25 +19,7 @@
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "A Minecraft Movie",
-          "year": 2025,
-          "imdbId": "tt3566834",
-          "tmdbId": "movie/950387"
-        },
-        {
-          "rank": 4,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "The Holy Grill",
-          "year": 2026,
-          "imdbId": "tt36586751",
-          "tmdbId": "movie/1427838"
-        },
-        {
-          "rank": 5,
+          "rank": 2,
           "type": "series",
           "typeRank": 2,
           "title": "The One About Matthew Perry",
@@ -55,7 +28,7 @@
           "tmdbId": "tv/333533"
         },
         {
-          "rank": 6,
+          "rank": 3,
           "type": "series",
           "typeRank": 3,
           "title": "Nobody Wants This",
@@ -64,88 +37,79 @@
           "tmdbId": "tv/250923"
         },
         {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Surviving Hurricane Otis",
+          "year": 2026,
+          "imdbId": "tt37961714",
+          "tmdbId": "movie/1780005"
+        },
+        {
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "A Minecraft Movie",
+          "year": 2025,
+          "imdbId": "tt3566834",
+          "tmdbId": "movie/950387"
+        },
+        {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "The Holy Grill",
+          "year": 2026,
+          "imdbId": "tt36586751",
+          "tmdbId": "movie/1427838"
+        },
+        {
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
           "title": "The Trap",
           "year": 2026,
           "imdbId": "tt36470958",
           "tmdbId": "tv/283371"
         },
         {
-          "rank": 10,
+          "rank": 8,
           "type": "series",
-          "typeRank": 6,
-          "title": "Cyberpunk: Edgerunners",
-          "year": 2022,
-          "imdbId": "tt12590266",
-          "tmdbId": "tv/105248"
+          "typeRank": 5,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
         },
         {
-          "rank": 11,
+          "rank": 9,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Love Is Blind",
+          "year": 2020,
+          "imdbId": "tt11704040",
+          "tmdbId": "tv/99353"
+        },
+        {
+          "rank": 10,
           "type": "movie",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "The Perfect Secret",
           "year": 2019,
           "imdbId": "tt10145122",
           "tmdbId": "movie/620881"
         },
         {
-          "rank": 12,
+          "rank": 11,
           "type": "series",
           "typeRank": 7,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
+          "title": "Cyberpunk: Edgerunners",
+          "year": 2022,
+          "imdbId": "tt12590266",
+          "tmdbId": "tv/105248"
         },
         {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Halloween Kills",
-          "year": 2021,
-          "imdbId": "tt10665338",
-          "tmdbId": "movie/610253"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Evil Dead Burn",
-          "year": 2026,
-          "imdbId": "tt31170389",
-          "tmdbId": "movie/1212763"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Center Stage: Turn It Up",
-          "year": 2008,
-          "imdbId": "tt1145144",
-          "tmdbId": "movie/16346"
-        },
-        {
-          "rank": 16,
+          "rank": 12,
           "type": "series",
           "typeRank": 8,
           "title": "Unforgettable",
@@ -154,45 +118,81 @@
           "tmdbId": "tv/39276"
         },
         {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Money Train",
-          "year": 1995,
-          "imdbId": "tt0113845",
-          "tmdbId": "movie/11517"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Halloween",
-          "year": 2018,
-          "imdbId": "tt1502407",
-          "tmdbId": "movie/424139"
-        },
-        {
-          "rank": 19,
+          "rank": 13,
           "type": "series",
           "typeRank": 9,
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 10,
           "title": "East of Eden",
           "year": 2026,
           "imdbId": "tt21097264",
           "tmdbId": "tv/258165"
         },
         {
-          "rank": 20,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Ghosts",
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Animals",
+          "year": 2026,
+          "imdbId": "tt31049299",
+          "tmdbId": "movie/1236045"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Money Train",
+          "year": 1995,
+          "imdbId": "tt0113845",
+          "tmdbId": "movie/11517"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Evil Dead Burn",
+          "year": 2026,
+          "imdbId": "tt31170389",
+          "tmdbId": "movie/1212763"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Halloween Kills",
           "year": 2021,
-          "imdbId": "tt11379026",
-          "tmdbId": "tv/126027"
+          "imdbId": "tt10665338",
+          "tmdbId": "movie/610253"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Halloween",
+          "year": 2018,
+          "imdbId": "tt1502407",
+          "tmdbId": "movie/424139"
+        },
+        {
+          "rank": 20,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Center Stage: Turn It Up",
+          "year": 2008,
+          "imdbId": "tt1145144",
+          "tmdbId": "movie/16346"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,16 +535,16 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "4 Blocks Zero",
+          "title": "Crystal Lake",
           "year": 2026,
-          "imdbId": "tt39379365",
-          "tmdbId": "tv/310133"
+          "imdbId": "tt23148340",
+          "tmdbId": "tv/213562"
         },
         {
           "rank": 2,
@@ -559,10 +559,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "Crystal Lake",
+          "title": "4 Blocks Zero",
           "year": 2026,
-          "imdbId": "tt23148340",
-          "tmdbId": "tv/213562"
+          "imdbId": "tt39379365",
+          "tmdbId": "tv/310133"
         },
         {
           "rank": 4,
@@ -577,10 +577,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Youth",
+          "title": "YAGA",
           "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
+          "imdbId": "tt39980704",
+          "tmdbId": "tv/314360"
         },
         {
           "rank": 6,
@@ -595,10 +595,10 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "YAGA",
+          "title": "Youth",
           "year": 2026,
-          "imdbId": "tt39980704",
-          "tmdbId": "tv/314360"
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
           "rank": 8,
@@ -613,10 +613,10 @@
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
+          "title": "Apollo Has Fallen",
+          "year": 2026,
+          "imdbId": "tt36350690",
+          "tmdbId": "tv/287453"
         },
         {
           "rank": 10,
@@ -631,10 +631,10 @@
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "The Torment",
-          "year": 2026,
-          "imdbId": "tt47816221",
-          "tmdbId": "tv/279185"
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
         },
         {
           "rank": 12,
@@ -649,10 +649,10 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Apollo Has Fallen",
-          "year": 2026,
-          "imdbId": "tt36350690",
-          "tmdbId": "tv/287453"
+          "title": "Girls",
+          "year": 2012,
+          "imdbId": "tt1723816",
+          "tmdbId": "tv/42282"
         },
         {
           "rank": 14,
@@ -667,46 +667,46 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Lanterns",
+          "title": "The Torment",
           "year": 2026,
-          "imdbId": "tt26545992",
-          "tmdbId": "tv/95350"
+          "imdbId": "tt47816221",
+          "tmdbId": "tv/279185"
         },
         {
           "rank": 16,
           "type": "movie",
           "typeRank": 8,
-          "title": "In the Grey",
-          "year": 2026,
-          "imdbId": "tt27681354",
-          "tmdbId": "movie/1122573"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Girls",
-          "year": 2012,
-          "imdbId": "tt1723816",
-          "tmdbId": "tv/42282"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Return to Silent Hill",
           "year": 2026,
           "imdbId": "tt22868010",
           "tmdbId": "movie/680493"
         },
         {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Lanterns",
+          "year": 2026,
+          "imdbId": "tt26545992",
+          "tmdbId": "tv/95350"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "In the Grey",
+          "year": 2026,
+          "imdbId": "tt27681354",
+          "tmdbId": "movie/1122573"
+        },
+        {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "Shameless",
+          "year": 2011,
+          "imdbId": "tt1586680",
+          "tmdbId": "tv/34307"
         },
         {
           "rank": 20,
@@ -720,7 +720,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,

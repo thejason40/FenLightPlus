@@ -1,16 +1,25 @@
 {
   "country": "au",
-  "generatedAt": "2026-10-28T14:01:21+00:00",
+  "generatedAt": "2026-10-29T14:18:35+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
+          "type": "series",
+          "typeRank": 1,
+          "title": "The One About Matthew Perry",
+          "year": 2026,
+          "imdbId": "tt44941753",
+          "tmdbId": "tv/333533"
+        },
+        {
+          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "Weapons",
@@ -19,7 +28,43 @@
           "tmdbId": "movie/1078605"
         },
         {
-          "rank": 2,
+          "rank": 3,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Nobody Wants This",
+          "year": 2024,
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Minimum Wage",
+          "year": 2026,
+          "imdbId": "tt42220724",
+          "tmdbId": "tv/321221"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
+        },
+        {
+          "rank": 7,
           "type": "movie",
           "typeRank": 2,
           "title": "Greenfingers",
@@ -28,7 +73,43 @@
           "tmdbId": "movie/33379"
         },
         {
-          "rank": 3,
+          "rank": 8,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Lupin",
+          "year": 2021,
+          "imdbId": "tt2531336",
+          "tmdbId": "tv/96677"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 7,
+          "title": "East of Eden",
+          "year": 2026,
+          "imdbId": "tt21097264",
+          "tmdbId": "tv/258165"
+        },
+        {
+          "rank": 10,
+          "type": "series",
+          "typeRank": 8,
+          "title": "The New Stanford Prison Experiment",
+          "year": 2026,
+          "imdbId": "tt46658083",
+          "tmdbId": "tv/335319"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 9,
+          "title": "TYSON",
+          "year": 2026,
+          "imdbId": "tt35051210",
+          "tmdbId": "tv/335536"
+        },
+        {
+          "rank": 12,
           "type": "movie",
           "typeRank": 3,
           "title": "The Addams Family",
@@ -37,61 +118,34 @@
           "tmdbId": "movie/481084"
         },
         {
-          "rank": 4,
+          "rank": 13,
           "type": "series",
-          "typeRank": 1,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
+          "typeRank": 10,
+          "title": "Unforgettable",
+          "year": 2011,
+          "imdbId": "tt1842530",
+          "tmdbId": "tv/39276"
         },
         {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 2,
-          "title": "The One About Matthew Perry",
-          "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Raw",
-          "year": 1993,
-          "imdbId": "tt0185103",
-          "tmdbId": "tv/4656"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
-        },
-        {
-          "rank": 8,
+          "rank": 14,
           "type": "movie",
           "typeRank": 4,
+          "title": "The Addams Family 2",
+          "year": 2021,
+          "imdbId": "tt11125620",
+          "tmdbId": "movie/639721"
+        },
+        {
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 5,
           "title": "Glenrothan",
           "year": 2026,
           "imdbId": "tt16112292",
           "tmdbId": "movie/1335666"
         },
         {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Gajab Raat",
-          "year": 2026,
-          "imdbId": "tt39631280",
-          "tmdbId": "movie/1453407"
-        },
-        {
-          "rank": 10,
+          "rank": 16,
           "type": "movie",
           "typeRank": 6,
           "title": "Surviving Hurricane Otis",
@@ -100,99 +154,45 @@
           "tmdbId": "movie/1780005"
         },
         {
-          "rank": 11,
+          "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "The Addams Family 2",
-          "year": 2021,
-          "imdbId": "tt11125620",
-          "tmdbId": "movie/639721"
+          "title": "Gajab Raat",
+          "year": 2026,
+          "imdbId": "tt39631280",
+          "tmdbId": "movie/1453407"
         },
         {
-          "rank": 12,
+          "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "Money Train",
-          "year": 1995,
-          "imdbId": "tt0113845",
-          "tmdbId": "movie/11517"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Minimum Wage",
-          "year": 2026,
-          "imdbId": "tt42220724",
-          "tmdbId": "tv/321221"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Animals",
           "year": 2026,
           "imdbId": "tt31049299",
           "tmdbId": "movie/1236045"
         },
         {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Armored",
-          "year": 2009,
-          "imdbId": "tt0913354",
-          "tmdbId": "movie/4597"
-        },
-        {
-          "rank": 16,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The New Stanford Prison Experiment",
-          "year": 2026,
-          "imdbId": "tt46658083",
-          "tmdbId": "tv/335319"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Lupin",
-          "year": 2021,
-          "imdbId": "tt2531336",
-          "tmdbId": "tv/96677"
-        },
-        {
           "rank": 19,
-          "type": "series",
+          "type": "movie",
           "typeRank": 9,
-          "title": "East of Eden",
-          "year": 2026,
-          "imdbId": "tt21097264",
-          "tmdbId": "tv/258165"
+          "title": "Money Train",
+          "year": 1995,
+          "imdbId": "tt0113845",
+          "tmdbId": "movie/11517"
         },
         {
           "rank": 20,
-          "type": "series",
+          "type": "movie",
           "typeRank": 10,
-          "title": "TYSON",
-          "year": 2026,
-          "imdbId": "tt35051210",
-          "tmdbId": "tv/335536"
+          "title": "Aliens in the Attic",
+          "year": 2009,
+          "imdbId": "tt0775552",
+          "tmdbId": "movie/20856"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -368,7 +368,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -544,7 +544,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -568,10 +568,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "Youth",
+          "title": "Line of Fire",
           "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
+          "imdbId": "tt39365612",
+          "tmdbId": "tv/321958"
         },
         {
           "rank": 4,
@@ -586,10 +586,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Line of Fire",
+          "title": "Youth",
           "year": 2026,
-          "imdbId": "tt39365612",
-          "tmdbId": "tv/321958"
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
           "rank": 6,
@@ -604,10 +604,10 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
+          "title": "The Last Ship",
+          "year": 2014,
+          "imdbId": "tt2402207",
+          "tmdbId": "tv/60802"
         },
         {
           "rank": 8,
@@ -622,10 +622,10 @@
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "The Last Ship",
-          "year": 2014,
-          "imdbId": "tt2402207",
-          "tmdbId": "tv/60802"
+          "title": "1000-lb Sisters",
+          "year": 2020,
+          "imdbId": "tt11617414",
+          "tmdbId": "tv/98410"
         },
         {
           "rank": 10,
@@ -640,10 +640,10 @@
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "The Pet Cemetery Murders: A Ghost Story",
-          "year": 2026,
-          "imdbId": "tt46683025",
-          "tmdbId": "tv/336418"
+          "title": "Georgie & Mandy's First Marriage",
+          "year": 2024,
+          "imdbId": "tt31589662",
+          "tmdbId": "tv/243875"
         },
         {
           "rank": 12,
@@ -658,10 +658,10 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Georgie & Mandy's First Marriage",
-          "year": 2024,
-          "imdbId": "tt31589662",
-          "tmdbId": "tv/243875"
+          "title": "The Pet Cemetery Murders: A Ghost Story",
+          "year": 2026,
+          "imdbId": "tt46683025",
+          "tmdbId": "tv/336418"
         },
         {
           "rank": 14,
@@ -694,42 +694,42 @@
           "rank": 17,
           "type": "series",
           "typeRank": 9,
+          "title": "Lanterns",
+          "year": 2026,
+          "imdbId": "tt26545992",
+          "tmdbId": "tv/95350"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Doctor Sleep",
+          "year": 2019,
+          "imdbId": "tt5606664",
+          "tmdbId": "movie/501170"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 10,
           "title": "Newlyweds",
           "year": 2026,
           "imdbId": "tt39469996",
           "tmdbId": "tv/322267"
         },
         {
-          "rank": 18,
+          "rank": 20,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 10,
           "title": "Mountainhead",
           "year": 2025,
           "imdbId": "tt35396529",
           "tmdbId": "movie/1417059"
-        },
-        {
-          "rank": 19,
-          "type": "series",
-          "typeRank": 10,
-          "title": "90 Day Fiancé",
-          "year": 2014,
-          "imdbId": "tt3469050",
-          "tmdbId": "tv/61575"
-        },
-        {
-          "rank": 20,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Doctor Sleep",
-          "year": 2019,
-          "imdbId": "tt5606664",
-          "tmdbId": "movie/501170"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,

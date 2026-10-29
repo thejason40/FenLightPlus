@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-10-28T14:01:21+00:00",
+  "generatedAt": "2026-10-29T14:18:35+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -20,42 +20,6 @@
         },
         {
           "rank": 2,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "The Addams Family",
-          "year": 2019,
-          "imdbId": "tt1620981",
-          "tmdbId": "movie/481084"
-        },
-        {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Gajab Raat",
-          "year": 2026,
-          "imdbId": "tt39631280",
-          "tmdbId": "movie/1453407"
-        },
-        {
-          "rank": 4,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Addams Family 2",
-          "year": 2021,
-          "imdbId": "tt11125620",
-          "tmdbId": "movie/639721"
-        },
-        {
-          "rank": 5,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 6,
           "type": "series",
           "typeRank": 1,
           "title": "The One About Matthew Perry",
@@ -64,16 +28,7 @@
           "tmdbId": "tv/333533"
         },
         {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Money Train",
-          "year": 1995,
-          "imdbId": "tt0113845",
-          "tmdbId": "movie/11517"
-        },
-        {
-          "rank": 8,
+          "rank": 3,
           "type": "series",
           "typeRank": 2,
           "title": "Nobody Wants This",
@@ -82,7 +37,34 @@
           "tmdbId": "tv/250923"
         },
         {
-          "rank": 9,
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "The Addams Family",
+          "year": 2019,
+          "imdbId": "tt1620981",
+          "tmdbId": "movie/481084"
+        },
+        {
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Gajab Raat",
+          "year": 2026,
+          "imdbId": "tt39631280",
+          "tmdbId": "movie/1453407"
+        },
+        {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "The Addams Family 2",
+          "year": 2021,
+          "imdbId": "tt11125620",
+          "tmdbId": "movie/639721"
+        },
+        {
+          "rank": 7,
           "type": "series",
           "typeRank": 3,
           "title": "Lupin",
@@ -91,16 +73,7 @@
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Survive",
-          "year": 2024,
-          "imdbId": "tt27032708",
-          "tmdbId": "movie/1196470"
-        },
-        {
-          "rank": 11,
+          "rank": 8,
           "type": "series",
           "typeRank": 4,
           "title": "Below",
@@ -109,7 +82,7 @@
           "tmdbId": "tv/285322"
         },
         {
-          "rank": 12,
+          "rank": 9,
           "type": "series",
           "typeRank": 5,
           "title": "Raw",
@@ -118,13 +91,40 @@
           "tmdbId": "tv/4656"
         },
         {
-          "rank": 13,
+          "rank": 10,
           "type": "series",
           "typeRank": 6,
           "title": "Minimum Wage",
           "year": 2026,
           "imdbId": "tt42220724",
           "tmdbId": "tv/321221"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Animals",
+          "year": 2026,
+          "imdbId": "tt31049299",
+          "tmdbId": "movie/1236045"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Money Train",
+          "year": 1995,
+          "imdbId": "tt0113845",
+          "tmdbId": "movie/11517"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Survive",
+          "year": 2024,
+          "imdbId": "tt27032708",
+          "tmdbId": "movie/1196470"
         },
         {
           "rank": 14,
@@ -146,33 +146,6 @@
         },
         {
           "rank": 16,
-          "type": "series",
-          "typeRank": 8,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "The New Stanford Prison Experiment",
-          "year": 2026,
-          "imdbId": "tt46658083",
-          "tmdbId": "tv/335319"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 10,
-          "title": "WWE NXT",
-          "year": 2010,
-          "imdbId": "tt1601141",
-          "tmdbId": "tv/31991"
-        },
-        {
-          "rank": 19,
           "type": "movie",
           "typeRank": 9,
           "title": "Greenfingers",
@@ -181,18 +154,45 @@
           "tmdbId": "movie/33379"
         },
         {
-          "rank": 20,
+          "rank": 17,
+          "type": "series",
+          "typeRank": 8,
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
+        },
+        {
+          "rank": 18,
           "type": "movie",
           "typeRank": 10,
           "title": "Hollywood Dirt",
           "year": 2017,
           "imdbId": "tt6649066",
           "tmdbId": "movie/465080"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 9,
+          "title": "The New Stanford Prison Experiment",
+          "year": 2026,
+          "imdbId": "tt46658083",
+          "tmdbId": "tv/335319"
+        },
+        {
+          "rank": 20,
+          "type": "series",
+          "typeRank": 10,
+          "title": "WWE NXT",
+          "year": 2010,
+          "imdbId": "tt1601141",
+          "tmdbId": "tv/31991"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -368,7 +368,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -526,7 +526,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -711,7 +711,7 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-10-28T14:01:21+00:00",
+      "fetchedAt": "2026-10-29T14:18:35+00:00",
       "items": [
         {
           "rank": 1,
@@ -744,37 +744,37 @@
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
           "title": "Crystal Lake",
           "year": 2026,
           "imdbId": "tt23148340",
           "tmdbId": "tv/213562"
         },
         {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 5,
+          "title": "MasterChef Canada",
+          "year": 2014,
+          "imdbId": "tt3219166",
+          "tmdbId": "tv/64958"
+        },
+        {
           "rank": 6,
           "type": "series",
           "typeRank": 6,
-          "title": "The Traitors",
-          "year": 2023,
-          "imdbId": "tt15557874",
-          "tmdbId": "tv/215943"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Tracker",
-          "year": 2024,
-          "imdbId": "tt13875494",
-          "tmdbId": "tv/211288"
+          "title": "The Traitors",
+          "year": 2023,
+          "imdbId": "tt15557874",
+          "tmdbId": "tv/215943"
         },
         {
           "rank": 8,
@@ -789,19 +789,19 @@
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "WAR",
+          "title": "R.J. Decker",
           "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "imdbId": "tt37063558",
+          "tmdbId": "tv/302074"
         },
         {
           "rank": 10,
           "type": "series",
           "typeRank": 10,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
+          "title": "Tracker",
+          "year": 2024,
+          "imdbId": "tt13875494",
+          "tmdbId": "tv/211288"
         }
       ]
     }
