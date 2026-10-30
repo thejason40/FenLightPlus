@@ -1,25 +1,16 @@
 {
   "country": "th",
-  "generatedAt": "2026-10-29T14:18:35+00:00",
+  "generatedAt": "2026-10-30T14:07:39+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-29T14:18:35+00:00",
+      "fetchedAt": "2026-10-30T14:07:39+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Where the Mask Ends",
-          "year": 2026,
-          "imdbId": "tt42576855",
-          "tmdbId": "tv/300146"
-        },
-        {
-          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "The Djinn's Curse 2",
@@ -28,16 +19,16 @@
           "tmdbId": "movie/1469229"
         },
         {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Surviving Hurricane Otis",
+          "rank": 2,
+          "type": "series",
+          "typeRank": 1,
+          "title": "Where the Mask Ends",
           "year": 2026,
-          "imdbId": "tt37961714",
-          "tmdbId": "movie/1780005"
+          "imdbId": "tt42576855",
+          "tmdbId": "tv/300146"
         },
         {
-          "rank": 4,
+          "rank": 3,
           "type": "series",
           "typeRank": 2,
           "title": "Lupin",
@@ -46,16 +37,16 @@
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Doctor X: Mafia in White",
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "Surviving Hurricane Otis",
           "year": 2026,
-          "imdbId": "tt39328047",
-          "tmdbId": "tv/293610"
+          "imdbId": "tt37961714",
+          "tmdbId": "movie/1780005"
         },
         {
-          "rank": 6,
+          "rank": 5,
           "type": "movie",
           "typeRank": 3,
           "title": "The Last Heroes",
@@ -64,7 +55,61 @@
           "tmdbId": "movie/529772"
         },
         {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Nakee 2",
+          "year": 2018,
+          "imdbId": "tt9169974",
+          "tmdbId": "movie/554792"
+        },
+        {
           "rank": 7,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "The Ministry of Ungentlemanly Warfare",
+          "year": 2024,
+          "imdbId": "tt5177120",
+          "tmdbId": "movie/799583"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Ritual",
+          "year": 2025,
+          "imdbId": "tt32194932",
+          "tmdbId": "movie/1278950"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Haunted Universities 4",
+          "year": 2026,
+          "imdbId": "tt43380212",
+          "tmdbId": "movie/1610936"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Khun Phaen Begins",
+          "year": 2019,
+          "imdbId": "tt10374770",
+          "tmdbId": "movie/628005"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Doctor X: Mafia in White",
+          "year": 2026,
+          "imdbId": "tt39328047",
+          "tmdbId": "tv/293610"
+        },
+        {
+          "rank": 12,
           "type": "series",
           "typeRank": 4,
           "title": "Take Charge of My Heart",
@@ -73,7 +118,16 @@
           "tmdbId": "tv/289423"
         },
         {
-          "rank": 8,
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Gajab Raat",
+          "year": 2026,
+          "imdbId": "tt39631280",
+          "tmdbId": "movie/1453407"
+        },
+        {
+          "rank": 14,
           "type": "series",
           "typeRank": 5,
           "title": "Below",
@@ -82,90 +136,27 @@
           "tmdbId": "tv/285322"
         },
         {
-          "rank": 9,
+          "rank": 15,
           "type": "series",
           "typeRank": 6,
-          "title": "100 Days of Deception",
-          "year": 2026,
-          "imdbId": "tt39201866",
-          "tmdbId": "tv/293607"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Ministry of Ungentlemanly Warfare",
-          "year": 2024,
-          "imdbId": "tt5177120",
-          "tmdbId": "movie/799583"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 7,
           "title": "Pursuit of Jade",
           "year": 2026,
           "imdbId": "tt35316225",
           "tmdbId": "tv/279388"
         },
         {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "The Ritual",
-          "year": 2025,
-          "imdbId": "tt32194932",
-          "tmdbId": "movie/1278950"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Haunted Universities 4",
-          "year": 2026,
-          "imdbId": "tt43380212",
-          "tmdbId": "movie/1610936"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Gajab Raat",
-          "year": 2026,
-          "imdbId": "tt39631280",
-          "tmdbId": "movie/1453407"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Addams Family",
-          "year": 2019,
-          "imdbId": "tt1620981",
-          "tmdbId": "movie/481084"
-        },
-        {
           "rank": 16,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Khun Phaen Begins",
-          "year": 2019,
-          "imdbId": "tt10374770",
-          "tmdbId": "movie/628005"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Nakee 2",
-          "year": 2018,
-          "imdbId": "tt9169974",
-          "tmdbId": "movie/554792"
+          "type": "series",
+          "typeRank": 7,
+          "title": "100 Days of Deception",
+          "year": 2026,
+          "imdbId": "tt39201866",
+          "tmdbId": "tv/293607"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-29T14:18:35+00:00",
+      "fetchedAt": "2026-10-30T14:07:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -332,7 +323,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-29T14:18:35+00:00",
+      "fetchedAt": "2026-10-30T14:07:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -374,46 +365,46 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
-          "year": 2026,
-          "imdbId": "tt43619474",
-          "tmdbId": "tv/319990"
-        },
-        {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Lights Out",
-          "year": 2016,
-          "imdbId": "tt4786282",
-          "tmdbId": "movie/345911"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
           "title": "The Ordinary Jackpot",
           "year": 2026,
           "imdbId": "tt44072314",
           "tmdbId": "tv/294636"
         },
         {
-          "rank": 8,
+          "rank": 6,
           "type": "movie",
-          "typeRank": 4,
+          "typeRank": 3,
           "title": "Rampage",
           "year": 2018,
           "imdbId": "tt2231461",
           "tmdbId": "movie/427641"
         },
         {
-          "rank": 9,
+          "rank": 7,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "Lanterns",
           "year": 2026,
           "imdbId": "tt26545992",
           "tmdbId": "tv/95350"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Lights Out",
+          "year": 2016,
+          "imdbId": "tt4786282",
+          "tmdbId": "movie/345911"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
+          "year": 2026,
+          "imdbId": "tt43619474",
+          "tmdbId": "tv/319990"
         },
         {
           "rank": 10,
@@ -437,10 +428,10 @@
           "rank": 12,
           "type": "series",
           "typeRank": 6,
-          "title": "Line of Fire",
+          "title": "WAR",
           "year": 2026,
-          "imdbId": "tt39365612",
-          "tmdbId": "tv/321958"
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 13,
@@ -455,10 +446,10 @@
           "rank": 14,
           "type": "series",
           "typeRank": 7,
-          "title": "WAR",
+          "title": "Line of Fire",
           "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "imdbId": "tt39365612",
+          "tmdbId": "tv/321958"
         },
         {
           "rank": 15,
@@ -491,10 +482,10 @@
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "Warrior",
-          "year": 2019,
-          "imdbId": "tt5743796",
-          "tmdbId": "tv/73544"
+          "title": "Young Sheldon",
+          "year": 2017,
+          "imdbId": "tt6226232",
+          "tmdbId": "tv/71728"
         },
         {
           "rank": 19,
@@ -508,7 +499,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-29T14:18:35+00:00",
+      "fetchedAt": "2026-10-30T14:07:39+00:00",
       "items": [
         {
           "rank": 1,
