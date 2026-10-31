@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-10-30T14:07:39+00:00",
+  "generatedAt": "2026-10-31T13:39:15+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -29,21 +29,21 @@
         },
         {
           "rank": 3,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Champions",
-          "year": 2023,
-          "imdbId": "tt15339570",
-          "tmdbId": "movie/933419"
-        },
-        {
-          "rank": 4,
           "type": "series",
           "typeRank": 1,
           "title": "The One About Matthew Perry",
           "year": 2026,
           "imdbId": "tt44941753",
           "tmdbId": "tv/333533"
+        },
+        {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Champions",
+          "year": 2023,
+          "imdbId": "tt15339570",
+          "tmdbId": "movie/933419"
         },
         {
           "rank": 5,
@@ -56,15 +56,6 @@
         },
         {
           "rank": 6,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 7,
           "type": "movie",
           "typeRank": 5,
           "title": "Animals",
@@ -73,16 +64,7 @@
           "tmdbId": "movie/1236045"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
-        },
-        {
-          "rank": 9,
+          "rank": 7,
           "type": "movie",
           "typeRank": 6,
           "title": "Twilight",
@@ -91,43 +73,25 @@
           "tmdbId": "movie/8966"
         },
         {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "KPop Demon Hunters",
-          "year": 2025,
-          "imdbId": "tt14205554",
-          "tmdbId": "movie/803796"
+          "rank": 8,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Nobody Wants This",
+          "year": 2024,
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
         },
         {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Hubie Halloween",
+          "rank": 9,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Love Is Blind",
           "year": 2020,
-          "imdbId": "tt10682266",
-          "tmdbId": "movie/617505"
+          "imdbId": "tt11704040",
+          "tmdbId": "tv/99353"
         },
         {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Breadwinner",
-          "year": 2026,
-          "imdbId": "tt34459219",
-          "tmdbId": "movie/1440050"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Gladiator",
-          "year": 2000,
-          "imdbId": "tt0172495",
-          "tmdbId": "movie/98"
-        },
-        {
-          "rank": 14,
+          "rank": 10,
           "type": "series",
           "typeRank": 4,
           "title": "FROM",
@@ -136,7 +100,7 @@
           "tmdbId": "tv/124364"
         },
         {
-          "rank": 15,
+          "rank": 11,
           "type": "series",
           "typeRank": 5,
           "title": "Minimum Wage",
@@ -145,7 +109,25 @@
           "tmdbId": "tv/321221"
         },
         {
-          "rank": 16,
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "KPop Demon Hunters",
+          "year": 2025,
+          "imdbId": "tt14205554",
+          "tmdbId": "movie/803796"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Hubie Halloween",
+          "year": 2020,
+          "imdbId": "tt10682266",
+          "tmdbId": "movie/617505"
+        },
+        {
+          "rank": 14,
           "type": "series",
           "typeRank": 6,
           "title": "The Diplomat",
@@ -154,7 +136,7 @@
           "tmdbId": "tv/203857"
         },
         {
-          "rank": 17,
+          "rank": 15,
           "type": "series",
           "typeRank": 7,
           "title": "Below",
@@ -163,18 +145,36 @@
           "tmdbId": "tv/285322"
         },
         {
-          "rank": 18,
+          "rank": 16,
           "type": "series",
           "typeRank": 8,
           "title": "Lupin",
           "year": 2021,
           "imdbId": "tt2531336",
           "tmdbId": "tv/96677"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The Breadwinner",
+          "year": 2026,
+          "imdbId": "tt34459219",
+          "tmdbId": "movie/1440050"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Gladiator",
+          "year": 2000,
+          "imdbId": "tt0172495",
+          "tmdbId": "movie/98"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -187,21 +187,21 @@
         },
         {
           "rank": 2,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Ali G: Who Iz I?",
+          "year": 2026,
+          "imdbId": "tt43655467",
+          "tmdbId": "movie/1727734"
+        },
+        {
+          "rank": 3,
           "type": "series",
           "typeRank": 2,
           "title": "Carrie",
           "year": 2026,
           "imdbId": "tt11540908",
           "tmdbId": "tv/288673"
-        },
-        {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Hungry",
-          "year": 2026,
-          "imdbId": "tt34494076",
-          "tmdbId": "movie/1382832"
         },
         {
           "rank": 4,
@@ -216,10 +216,10 @@
           "rank": 5,
           "type": "movie",
           "typeRank": 2,
-          "title": "Love of Your Life",
+          "title": "Hungry",
           "year": 2026,
-          "imdbId": "tt34384900",
-          "tmdbId": "movie/1381078"
+          "imdbId": "tt34494076",
+          "tmdbId": "movie/1382832"
         },
         {
           "rank": 6,
@@ -234,58 +234,67 @@
           "rank": 7,
           "type": "movie",
           "typeRank": 3,
-          "title": "Masterplan",
+          "title": "Apocalypse Z: New World",
           "year": 2026,
-          "imdbId": "tt38672588",
-          "tmdbId": "movie/1561726"
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
         },
         {
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "First Winter",
-          "year": 1982,
-          "imdbId": "tt0082383",
-          "tmdbId": "movie/244395"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Forget Me Never",
           "year": 1999,
           "imdbId": "tt0217498",
           "tmdbId": "movie/201736"
         },
         {
-          "rank": 10,
+          "rank": 9,
           "type": "series",
           "typeRank": 5,
+          "title": "Helluva Boss",
+          "year": 2020,
+          "imdbId": "tt10691770",
+          "tmdbId": "tv/289892"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Drive - The Pretenders",
+          "year": 2026,
+          "imdbId": "tt37180686",
+          "tmdbId": "movie/1596275"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Love of Your Life",
+          "year": 2026,
+          "imdbId": "tt34384900",
+          "tmdbId": "movie/1381078"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 6,
           "title": "Off Campus",
           "year": 2026,
           "imdbId": "tt33546863",
           "tmdbId": "tv/273240"
         },
         {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Wild Cards",
-          "year": 2024,
-          "imdbId": "tt29780951",
-          "tmdbId": "tv/240932"
-        },
-        {
-          "rank": 12,
+          "rank": 13,
           "type": "movie",
-          "typeRank": 6,
+          "typeRank": 7,
           "title": "Scream 7",
           "year": 2026,
           "imdbId": "tt27047903",
           "tmdbId": "movie/1159559"
         },
         {
-          "rank": 13,
+          "rank": 14,
           "type": "series",
           "typeRank": 7,
           "title": "Seeking Persephone",
@@ -294,54 +303,45 @@
           "tmdbId": "tv/316830"
         },
         {
-          "rank": 14,
+          "rank": 15,
           "type": "movie",
-          "typeRank": 7,
-          "title": "Dark Nature",
-          "year": 2023,
-          "imdbId": "tt16427398",
-          "tmdbId": "movie/994138"
+          "typeRank": 8,
+          "title": "The Secret of Moonacre",
+          "year": 2009,
+          "imdbId": "tt0396707",
+          "tmdbId": "movie/18032"
         },
         {
-          "rank": 15,
+          "rank": 16,
           "type": "series",
           "typeRank": 8,
+          "title": "On Call",
+          "year": 2025,
+          "imdbId": "tt14582876",
+          "tmdbId": "tv/236429"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Masterplan",
+          "year": 2026,
+          "imdbId": "tt38672588",
+          "tmdbId": "movie/1561726"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 9,
           "title": "Sterling Point",
           "year": 2026,
           "imdbId": "tt35618070",
           "tmdbId": "tv/283297"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Now You See Me: Now You Don't",
-          "year": 2025,
-          "imdbId": "tt4712810",
-          "tmdbId": "movie/425274"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Undercover: Caught on Tape",
-          "year": 2024,
-          "imdbId": "tt17524192",
-          "tmdbId": "tv/243357"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "John Wick: Chapter 4",
-          "year": 2023,
-          "imdbId": "tt10366206",
-          "tmdbId": "movie/603692"
         }
       ]
     },
     "disney": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -499,7 +499,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -523,10 +523,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
+          "title": "Real Time with Bill Maher",
+          "year": 2003,
+          "imdbId": "tt0350448",
+          "tmdbId": "tv/4419"
         },
         {
           "rank": 4,
@@ -559,28 +559,28 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "The Pet Cemetery Murders: A Ghost Story",
-          "year": 2026,
-          "imdbId": "tt46683025",
-          "tmdbId": "tv/336418"
+          "title": "1000-lb Sisters",
+          "year": 2020,
+          "imdbId": "tt11617414",
+          "tmdbId": "tv/98410"
         },
         {
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Corpse Bride",
-          "year": 2005,
-          "imdbId": "tt0121164",
-          "tmdbId": "movie/3933"
+          "title": "Backrooms",
+          "year": 2026,
+          "imdbId": "tt26657236",
+          "tmdbId": "movie/1083381"
         },
         {
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "Toxic",
-          "year": 2025,
-          "imdbId": "tt26735683",
-          "tmdbId": "tv/289196"
+          "title": "The Pet Cemetery Murders: A Ghost Story",
+          "year": 2026,
+          "imdbId": "tt46683025",
+          "tmdbId": "tv/336418"
         },
         {
           "rank": 10,
@@ -604,171 +604,162 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "Backrooms",
-          "year": 2026,
-          "imdbId": "tt26657236",
-          "tmdbId": "movie/1083381"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Ghost Adventures",
-          "year": 2008,
-          "imdbId": "tt1319900",
-          "tmdbId": "tv/17937"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Freddy vs. Jason",
-          "year": 2003,
-          "imdbId": "tt0329101",
-          "tmdbId": "movie/6466"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
           "title": "Anyone but You",
           "year": 2023,
           "imdbId": "tt26047818",
           "tmdbId": "movie/1072790"
         },
         {
-          "rank": 17,
+          "rank": 13,
           "type": "series",
-          "typeRank": 9,
-          "title": "1000-lb Roomies",
-          "year": 2025,
-          "imdbId": "tt36857388",
-          "tmdbId": "tv/291934"
+          "typeRank": 7,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
-          "rank": 18,
+          "rank": 14,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 7,
           "title": "Kordell Stewart / Slash & Burn",
           "year": 2026,
           "imdbId": "tt49164308",
           "tmdbId": "movie/1797392"
         },
         {
-          "rank": 19,
+          "rank": 15,
           "type": "series",
-          "typeRank": 10,
+          "typeRank": 8,
+          "title": "Toxic",
+          "year": 2025,
+          "imdbId": "tt26735683",
+          "tmdbId": "tv/289196"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Evil Dead Burn",
+          "year": 2026,
+          "imdbId": "tt31170389",
+          "tmdbId": "movie/1212763"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
           "title": "90 Day Fiancé: The Other Way",
           "year": 2019,
           "imdbId": "tt9170070",
           "tmdbId": "tv/90046"
         },
         {
-          "rank": 20,
+          "rank": 18,
           "type": "movie",
-          "typeRank": 10,
+          "typeRank": 9,
           "title": "The Inventor: Out for Blood in Silicon Valley",
           "year": 2019,
           "imdbId": "tt8488126",
           "tmdbId": "movie/566228"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Ghost Adventures",
+          "year": 2008,
+          "imdbId": "tt1319900",
+          "tmdbId": "tv/17937"
+        },
+        {
+          "rank": 20,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "The Conjuring",
+          "year": 2013,
+          "imdbId": "tt1457767",
+          "tmdbId": "movie/138843"
         }
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Drop: A Snowfall Saga",
-          "year": 2026,
-          "imdbId": "tt36210894",
-          "tmdbId": "tv/304842"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Dancing with the Stars",
-          "year": 2005,
-          "imdbId": "tt0463398",
-          "tmdbId": "tv/1508"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "R.J. Decker",
-          "year": 2026,
-          "imdbId": "tt37063558",
-          "tmdbId": "tv/302074"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Reasonable Doubt",
-          "year": 2022,
-          "imdbId": "tt11231226",
-          "tmdbId": "tv/205272"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
-          "title": "General Hospital",
-          "year": 1963,
-          "imdbId": "tt0056758",
-          "tmdbId": "tv/987"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Phony",
-          "year": 2026,
-          "imdbId": "tt21952924",
-          "tmdbId": "tv/275139"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 7,
           "title": "The Kardashians",
           "year": 2022,
           "imdbId": "tt15791630",
           "tmdbId": "tv/154521"
         },
         {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Lucky Strike",
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Abbott Elementary",
+          "year": 2021,
+          "imdbId": "tt14218830",
+          "tmdbId": "tv/125935"
+        },
+        {
+          "rank": 3,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Drop: A Snowfall Saga",
           "year": 2026,
-          "imdbId": "tt19035928",
-          "tmdbId": "movie/1594914"
+          "imdbId": "tt36210894",
+          "tmdbId": "tv/304842"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Dancing with the Stars",
+          "year": 2005,
+          "imdbId": "tt0463398",
+          "tmdbId": "tv/1508"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Reasonable Doubt",
+          "year": 2022,
+          "imdbId": "tt11231226",
+          "tmdbId": "tv/205272"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
+          "title": "General Hospital",
+          "year": 1963,
+          "imdbId": "tt0056758",
+          "tmdbId": "tv/987"
+        },
+        {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 7,
+          "title": "American Horror Story",
+          "year": 2011,
+          "imdbId": "tt1844624",
+          "tmdbId": "tv/1413"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 8,
+          "title": "R.J. Decker",
+          "year": 2026,
+          "imdbId": "tt37063558",
+          "tmdbId": "tv/302074"
         },
         {
           "rank": 9,
-          "type": "series",
-          "typeRank": 8,
-          "title": "9-1-1",
-          "year": 2018,
-          "imdbId": "tt7235466",
-          "tmdbId": "tv/75219"
-        },
-        {
-          "rank": 10,
           "type": "series",
           "typeRank": 9,
           "title": "Grey's Anatomy",
@@ -777,27 +768,36 @@
           "tmdbId": "tv/1416"
         },
         {
-          "rank": 11,
+          "rank": 10,
           "type": "series",
           "typeRank": 10,
-          "title": "Abbott Elementary",
-          "year": 2021,
-          "imdbId": "tt14218830",
-          "tmdbId": "tv/125935"
+          "title": "9-1-1",
+          "year": 2018,
+          "imdbId": "tt7235466",
+          "tmdbId": "tv/75219"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 11,
+          "title": "Phony",
+          "year": 2026,
+          "imdbId": "tt21952924",
+          "tmdbId": "tv/275139"
         },
         {
           "rank": 12,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Coraline",
-          "year": 2009,
-          "imdbId": "tt0327597",
-          "tmdbId": "movie/14836"
+          "type": "series",
+          "typeRank": 12,
+          "title": "Scrubs",
+          "year": 2026,
+          "imdbId": "tt40197357",
+          "tmdbId": "tv/295778"
         },
         {
           "rank": 13,
           "type": "series",
-          "typeRank": 11,
+          "typeRank": 13,
           "title": "9-1-1: Nashville",
           "year": 2025,
           "imdbId": "tt33550053",
@@ -806,32 +806,41 @@
         {
           "rank": 14,
           "type": "series",
-          "typeRank": 12,
-          "title": "Best Medicine",
-          "year": 2026,
-          "imdbId": "tt36885662",
-          "tmdbId": "tv/291084"
+          "typeRank": 14,
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
         },
         {
           "rank": 15,
-          "type": "series",
-          "typeRank": 13,
-          "title": "Doc",
-          "year": 2025,
-          "imdbId": "tt26748321",
-          "tmdbId": "tv/255055"
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Lucky Strike",
+          "year": 2026,
+          "imdbId": "tt19035928",
+          "tmdbId": "movie/1594914"
         },
         {
           "rank": 16,
           "type": "movie",
-          "typeRank": 3,
-          "title": "Hokum",
-          "year": 2026,
-          "imdbId": "tt35672862",
-          "tmdbId": "movie/1430077"
+          "typeRank": 2,
+          "title": "Coraline",
+          "year": 2009,
+          "imdbId": "tt0327597",
+          "tmdbId": "movie/14836"
         },
         {
           "rank": 17,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Grown Ups",
+          "year": 2010,
+          "imdbId": "tt1375670",
+          "tmdbId": "movie/38365"
+        },
+        {
+          "rank": 18,
           "type": "movie",
           "typeRank": 4,
           "title": "Monsters University",
@@ -840,16 +849,16 @@
           "tmdbId": "movie/62211"
         },
         {
-          "rank": 18,
+          "rank": 19,
           "type": "movie",
           "typeRank": 5,
-          "title": "Grown Ups",
-          "year": 2010,
-          "imdbId": "tt1375670",
-          "tmdbId": "movie/38365"
+          "title": "Hokum",
+          "year": 2026,
+          "imdbId": "tt35672862",
+          "tmdbId": "movie/1430077"
         },
         {
-          "rank": 19,
+          "rank": 20,
           "type": "movie",
           "typeRank": 6,
           "title": "Hocus Pocus 2",
@@ -858,7 +867,7 @@
           "tmdbId": "movie/642885"
         },
         {
-          "rank": 20,
+          "rank": 21,
           "type": "movie",
           "typeRank": 7,
           "title": "The Hunger Games",
@@ -867,7 +876,7 @@
           "tmdbId": "movie/70160"
         },
         {
-          "rank": 21,
+          "rank": 22,
           "type": "movie",
           "typeRank": 8,
           "title": "Hotel Transylvania",
@@ -876,7 +885,7 @@
           "tmdbId": "movie/76492"
         },
         {
-          "rank": 22,
+          "rank": 23,
           "type": "movie",
           "typeRank": 9,
           "title": "Grown Ups 2",
@@ -885,95 +894,95 @@
           "tmdbId": "movie/109418"
         },
         {
-          "rank": 23,
+          "rank": 24,
           "type": "movie",
           "typeRank": 10,
+          "title": "The Gentleman Thief",
+          "year": 2026,
+          "imdbId": "tt36415524",
+          "tmdbId": "movie/1458215"
+        },
+        {
+          "rank": 25,
+          "type": "movie",
+          "typeRank": 11,
+          "title": "Soulm8te",
+          "year": 2026,
+          "imdbId": "tt32654916",
+          "tmdbId": "movie/1307118"
+        },
+        {
+          "rank": 26,
+          "type": "movie",
+          "typeRank": 12,
           "title": "Halloweentown",
           "year": 1998,
           "imdbId": "tt0173886",
           "tmdbId": "movie/27850"
         },
         {
-          "rank": 24,
+          "rank": 27,
           "type": "movie",
-          "typeRank": 11,
-          "title": "Toy Story 2",
-          "year": 1999,
-          "imdbId": "tt0120363",
-          "tmdbId": "movie/863"
+          "typeRank": 13,
+          "title": "The Substance",
+          "year": 2024,
+          "imdbId": "tt17526714",
+          "tmdbId": "movie/933260"
         },
         {
-          "rank": 25,
+          "rank": 28,
           "type": "movie",
-          "typeRank": 12,
+          "typeRank": 14,
           "title": "The Hunger Games: Catching Fire",
           "year": 2013,
           "imdbId": "tt1951264",
           "tmdbId": "movie/101299"
         },
         {
-          "rank": 26,
-          "type": "movie",
-          "typeRank": 13,
-          "title": "The Devil Wears Prada 2",
-          "year": 2026,
-          "imdbId": "tt33612209",
-          "tmdbId": "movie/1314481"
-        },
-        {
-          "rank": 27,
-          "type": "movie",
-          "typeRank": 14,
-          "title": "Neglected",
-          "year": 2026,
-          "imdbId": "tt35224721",
-          "tmdbId": "movie/1409853"
-        },
-        {
-          "rank": 28,
+          "rank": 29,
           "type": "movie",
           "typeRank": 15,
-          "title": "Ready or Not: Here I Come",
-          "year": 2026,
-          "imdbId": "tt33978029",
-          "tmdbId": "movie/1266127"
+          "title": "Toy Story 2",
+          "year": 1999,
+          "imdbId": "tt0120363",
+          "tmdbId": "movie/863"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-10-30T14:07:39+00:00",
+      "fetchedAt": "2026-10-31T13:39:15+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
+        },
+        {
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
           "title": "Ted Lasso",
           "year": 2020,
           "imdbId": "tt10986410",
           "tmdbId": "tv/97546"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "type": "series",
-          "typeRank": 2,
+          "typeRank": 3,
           "title": "Slow Horses",
           "year": 2022,
           "imdbId": "tt5875444",
           "tmdbId": "tv/95480"
         },
         {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Tenzing",
-          "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
-        },
-        {
           "rank": 4,
           "type": "series",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "Dark Matter",
           "year": 2024,
           "imdbId": "tt19231492",
@@ -981,51 +990,42 @@
         },
         {
           "rank": 5,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "It's the Great Pumpkin, Charlie Brown",
+          "year": 1966,
+          "imdbId": "tt0060550",
+          "tmdbId": "movie/13353"
+        },
+        {
+          "rank": 6,
           "type": "series",
-          "typeRank": 4,
+          "typeRank": 5,
           "title": "Brothers",
           "year": 2026,
           "imdbId": "tt6773088",
           "tmdbId": "tv/250203"
         },
         {
-          "rank": 6,
+          "rank": 7,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 6,
           "title": "Widow's Bay",
           "year": 2026,
           "imdbId": "tt33332385",
           "tmdbId": "tv/270476"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "type": "series",
-          "typeRank": 6,
+          "typeRank": 7,
           "title": "Silo",
           "year": 2023,
           "imdbId": "tt14688458",
           "tmdbId": "tv/125988"
         },
         {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Matchbox the Movie",
-          "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
-        },
-        {
           "rank": 9,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Shrinking",
-          "year": 2023,
-          "imdbId": "tt15677150",
-          "tmdbId": "tv/136311"
-        },
-        {
-          "rank": 10,
           "type": "series",
           "typeRank": 8,
           "title": "Small Prophets",
@@ -1034,40 +1034,49 @@
           "tmdbId": "tv/312693"
         },
         {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "A Charlie Brown Thanksgiving",
+          "year": 1973,
+          "imdbId": "tt0068359",
+          "tmdbId": "movie/13479"
+        },
+        {
           "rank": 11,
           "type": "series",
           "typeRank": 9,
-          "title": "Your Friends & Neighbors",
-          "year": 2025,
-          "imdbId": "tt30459041",
-          "tmdbId": "tv/241609"
+          "title": "Shrinking",
+          "year": 2023,
+          "imdbId": "tt15677150",
+          "tmdbId": "tv/136311"
         },
         {
           "rank": 12,
           "type": "series",
           "typeRank": 10,
-          "title": "Last Seen",
-          "year": 2026,
-          "imdbId": "tt6037988",
-          "tmdbId": "tv/258230"
+          "title": "Stillwater",
+          "year": 2020,
+          "imdbId": "tt13135714",
+          "tmdbId": "tv/111834"
         },
         {
           "rank": 13,
           "type": "movie",
           "typeRank": 3,
-          "title": "It's the Great Pumpkin, Charlie Brown",
-          "year": 1966,
-          "imdbId": "tt0060550",
-          "tmdbId": "movie/13353"
+          "title": "Matchbox the Movie",
+          "year": 2026,
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "The Last First: Winter K2",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt39150288",
-          "tmdbId": "movie/1596303"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 15,
@@ -1082,28 +1091,28 @@
           "rank": 16,
           "type": "movie",
           "typeRank": 6,
+          "title": "F1",
+          "year": 2025,
+          "imdbId": "tt16311594",
+          "tmdbId": "movie/911430"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Fury",
           "year": 2014,
           "imdbId": "tt2713180",
           "tmdbId": "movie/228150"
         },
         {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
-        },
-        {
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "F1",
-          "year": 2025,
-          "imdbId": "tt16311594",
-          "tmdbId": "movie/911430"
+          "title": "The Last First: Winter K2",
+          "year": 2026,
+          "imdbId": "tt39150288",
+          "tmdbId": "movie/1596303"
         },
         {
           "rank": 19,
