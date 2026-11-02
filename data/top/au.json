@@ -1,13 +1,13 @@
 {
   "country": "au",
-  "generatedAt": "2026-11-01T14:15:58+00:00",
+  "generatedAt": "2026-11-02T17:04:15+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -216,19 +216,19 @@
           "rank": 5,
           "type": "movie",
           "typeRank": 3,
-          "title": "Tuner",
+          "title": "Love of Your Life",
           "year": 2026,
-          "imdbId": "tt33296751",
-          "tmdbId": "movie/1340206"
+          "imdbId": "tt34384900",
+          "tmdbId": "movie/1381078"
         },
         {
           "rank": 6,
           "type": "movie",
           "typeRank": 4,
-          "title": "Love of Your Life",
+          "title": "Tuner",
           "year": 2026,
-          "imdbId": "tt34384900",
-          "tmdbId": "movie/1381078"
+          "imdbId": "tt33296751",
+          "tmdbId": "movie/1340206"
         },
         {
           "rank": 7,
@@ -252,40 +252,31 @@
           "rank": 9,
           "type": "series",
           "typeRank": 3,
-          "title": "LOL: Last One Laughing UK",
-          "year": 2025,
-          "imdbId": "tt35050741",
-          "tmdbId": "tv/262819"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Altered",
-          "year": 2025,
-          "imdbId": "tt32123395",
-          "tmdbId": "movie/1309012"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 4,
           "title": "Neagley",
           "year": 2026,
           "imdbId": "tt33539520",
           "tmdbId": "tv/273207"
         },
         {
-          "rank": 12,
+          "rank": 10,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "Off Campus",
           "year": 2026,
           "imdbId": "tt33546863",
           "tmdbId": "tv/273240"
         },
         {
-          "rank": 13,
+          "rank": 11,
+          "type": "series",
+          "typeRank": 5,
+          "title": "LOL: Last One Laughing UK",
+          "year": 2025,
+          "imdbId": "tt35050741",
+          "tmdbId": "tv/262819"
+        },
+        {
+          "rank": 12,
           "type": "series",
           "typeRank": 6,
           "title": "Reacher",
@@ -294,16 +285,7 @@
           "tmdbId": "tv/108978"
         },
         {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Flood",
-          "year": 2007,
-          "imdbId": "tt0790665",
-          "tmdbId": "movie/6309"
-        },
-        {
-          "rank": 15,
+          "rank": 13,
           "type": "series",
           "typeRank": 7,
           "title": "Sterling Point",
@@ -312,13 +294,31 @@
           "tmdbId": "tv/283297"
         },
         {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Altered",
+          "year": 2025,
+          "imdbId": "tt32123395",
+          "tmdbId": "movie/1309012"
+        },
+        {
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Flood",
+          "year": 2007,
+          "imdbId": "tt0790665",
+          "tmdbId": "movie/6309"
+        },
+        {
           "rank": 16,
           "type": "movie",
           "typeRank": 9,
-          "title": "Masterplan",
-          "year": 2026,
-          "imdbId": "tt38672588",
-          "tmdbId": "movie/1561726"
+          "title": "Harry Potter and the Philosopher's Stone",
+          "year": 2001,
+          "imdbId": "tt0241527",
+          "tmdbId": "movie/671"
         },
         {
           "rank": 17,
@@ -333,10 +333,10 @@
           "rank": 18,
           "type": "movie",
           "typeRank": 10,
-          "title": "Harry Potter and the Philosopher's Stone",
-          "year": 2001,
-          "imdbId": "tt0241527",
-          "tmdbId": "movie/671"
+          "title": "Masterplan",
+          "year": 2026,
+          "imdbId": "tt38672588",
+          "tmdbId": "movie/1561726"
         },
         {
           "rank": 19,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +535,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -586,46 +586,46 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Freddy vs. Jason",
-          "year": 2003,
-          "imdbId": "tt0329101",
-          "tmdbId": "movie/6466"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Line of Fire",
-          "year": 2026,
-          "imdbId": "tt39365612",
-          "tmdbId": "tv/321958"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
           "title": "V for Vendetta",
           "year": 2006,
           "imdbId": "tt0434409",
           "tmdbId": "movie/752"
         },
         {
-          "rank": 9,
+          "rank": 7,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "Newlyweds",
           "year": 2026,
           "imdbId": "tt39469996",
           "tmdbId": "tv/322267"
         },
         {
-          "rank": 10,
+          "rank": 8,
           "type": "movie",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "The Housemaid",
           "year": 2025,
           "imdbId": "tt27543632",
           "tmdbId": "movie/1368166"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Line of Fire",
+          "year": 2026,
+          "imdbId": "tt39365612",
+          "tmdbId": "tv/321958"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Freddy vs. Jason",
+          "year": 2003,
+          "imdbId": "tt0329101",
+          "tmdbId": "movie/6466"
         },
         {
           "rank": 11,
@@ -640,87 +640,87 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
+          "title": "Beetlejuice",
+          "year": 1988,
+          "imdbId": "tt0094721",
+          "tmdbId": "movie/4011"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Adultery",
+          "year": 2026,
+          "imdbId": "tt36119015",
+          "tmdbId": "tv/338641"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "The Substance",
+          "year": 2024,
+          "imdbId": "tt17526714",
+          "tmdbId": "movie/933260"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 8,
+          "title": "90 Day Fiancé",
+          "year": 2014,
+          "imdbId": "tt3469050",
+          "tmdbId": "tv/61575"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
           "title": "Little Shop of Horrors",
           "year": 1986,
           "imdbId": "tt0091419",
           "tmdbId": "movie/10776"
         },
         {
-          "rank": 13,
+          "rank": 17,
           "type": "series",
-          "typeRank": 7,
-          "title": "Gold Rush",
-          "year": 2010,
-          "imdbId": "tt1800864",
-          "tmdbId": "tv/34634"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "The Inventor: Out for Blood in Silicon Valley",
-          "year": 2019,
-          "imdbId": "tt8488126",
-          "tmdbId": "movie/566228"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 8,
+          "typeRank": 9,
           "title": "The Pet Cemetery Murders: A Ghost Story",
           "year": 2026,
           "imdbId": "tt46683025",
           "tmdbId": "tv/336418"
         },
         {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Doctor Sleep",
-          "year": 2019,
-          "imdbId": "tt5606664",
-          "tmdbId": "movie/501170"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
-        },
-        {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "Mountainhead",
-          "year": 2025,
-          "imdbId": "tt35396529",
-          "tmdbId": "movie/1417059"
+          "title": "The Inventor: Out for Blood in Silicon Valley",
+          "year": 2019,
+          "imdbId": "tt8488126",
+          "tmdbId": "movie/566228"
         },
         {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "Aussie Gold Hunters",
-          "year": 2016,
-          "imdbId": "tt6186672",
-          "tmdbId": "tv/71322"
+          "title": "Gold Rush",
+          "year": 2010,
+          "imdbId": "tt1800864",
+          "tmdbId": "tv/34634"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Supergirl",
-          "year": 2026,
-          "imdbId": "tt8814476",
-          "tmdbId": "movie/1081003"
+          "title": "The Shining",
+          "year": 1980,
+          "imdbId": "tt0081505",
+          "tmdbId": "movie/694"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -762,33 +762,33 @@
           "rank": 5,
           "type": "series",
           "typeRank": 5,
-          "title": "Small Prophets",
-          "year": 2026,
-          "imdbId": "tt38504111",
-          "tmdbId": "tv/312693"
-        },
-        {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Tenzing",
-          "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 6,
           "title": "Silo",
           "year": 2023,
           "imdbId": "tt14688458",
           "tmdbId": "tv/125988"
         },
         {
-          "rank": 8,
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Small Prophets",
+          "year": 2026,
+          "imdbId": "tt38504111",
+          "tmdbId": "tv/312693"
+        },
+        {
+          "rank": 7,
           "type": "series",
           "typeRank": 7,
+          "title": "Last Seen",
+          "year": 2026,
+          "imdbId": "tt6037988",
+          "tmdbId": "tv/258230"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 8,
           "title": "Brothers",
           "year": 2026,
           "imdbId": "tt6773088",
@@ -797,20 +797,20 @@
         {
           "rank": 9,
           "type": "series",
-          "typeRank": 8,
-          "title": "Last Seen",
-          "year": 2026,
-          "imdbId": "tt6037988",
-          "tmdbId": "tv/258230"
+          "typeRank": 9,
+          "title": "Stick",
+          "year": 2025,
+          "imdbId": "tt31710249",
+          "tmdbId": "tv/248830"
         },
         {
           "rank": 10,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Widow's Bay",
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt33332385",
-          "tmdbId": "tv/270476"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 11,
@@ -879,10 +879,10 @@
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "The Dink",
-          "year": 2026,
-          "imdbId": "tt33499146",
-          "tmdbId": "movie/1361774"
+          "title": "The Martian",
+          "year": 2015,
+          "imdbId": "tt3659388",
+          "tmdbId": "movie/286217"
         },
         {
           "rank": 19,
@@ -897,10 +897,10 @@
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "The Martian",
-          "year": 2015,
-          "imdbId": "tt3659388",
-          "tmdbId": "movie/286217"
+          "title": "The Dink",
+          "year": 2026,
+          "imdbId": "tt33499146",
+          "tmdbId": "movie/1361774"
         }
       ]
     }

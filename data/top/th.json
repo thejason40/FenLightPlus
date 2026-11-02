@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-01T14:15:58+00:00",
+  "generatedAt": "2026-11-02T17:04:15+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -156,7 +156,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -178,21 +178,21 @@
         },
         {
           "rank": 3,
-          "type": "series",
-          "typeRank": 2,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
-        },
-        {
-          "rank": 4,
           "type": "movie",
           "typeRank": 2,
           "title": "Backrooms",
           "year": 2026,
           "imdbId": "tt26657236",
           "tmdbId": "movie/1083381"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
         },
         {
           "rank": 5,
@@ -234,19 +234,19 @@
           "rank": 9,
           "type": "movie",
           "typeRank": 5,
-          "title": "Drive - The Pretenders",
-          "year": 2026,
-          "imdbId": "tt37180686",
-          "tmdbId": "movie/1596275"
+          "title": "Apocalypse Z: The Beginning of the End",
+          "year": 2024,
+          "imdbId": "tt27599851",
+          "tmdbId": "movie/1118031"
         },
         {
           "rank": 10,
           "type": "movie",
           "typeRank": 6,
-          "title": "Apocalypse Z: The Beginning of the End",
-          "year": 2024,
-          "imdbId": "tt27599851",
-          "tmdbId": "movie/1118031"
+          "title": "Drive - The Pretenders",
+          "year": 2026,
+          "imdbId": "tt37180686",
+          "tmdbId": "movie/1596275"
         },
         {
           "rank": 11,
@@ -314,7 +314,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -329,10 +329,10 @@
           "rank": 2,
           "type": "movie",
           "typeRank": 1,
-          "title": "The Super Mario Galaxy Movie",
+          "title": "Wardriver",
           "year": 2026,
-          "imdbId": "tt28650488",
-          "tmdbId": "movie/1226863"
+          "imdbId": "tt5095076",
+          "tmdbId": "movie/938150"
         },
         {
           "rank": 3,
@@ -347,10 +347,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Wardriver",
+          "title": "The Super Mario Galaxy Movie",
           "year": 2026,
-          "imdbId": "tt5095076",
-          "tmdbId": "movie/938150"
+          "imdbId": "tt28650488",
+          "tmdbId": "movie/1226863"
         },
         {
           "rank": 5,
@@ -383,10 +383,10 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Forbidden Fruits",
-          "year": 2026,
-          "imdbId": "tt30691214",
-          "tmdbId": "movie/1450527"
+          "title": "Lights Out",
+          "year": 2016,
+          "imdbId": "tt4786282",
+          "tmdbId": "movie/345911"
         },
         {
           "rank": 9,
@@ -401,10 +401,10 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Lights Out",
-          "year": 2016,
-          "imdbId": "tt4786282",
-          "tmdbId": "movie/345911"
+          "title": "Brothers Under Fire",
+          "year": 2026,
+          "imdbId": "tt32394984",
+          "tmdbId": "movie/1414413"
         },
         {
           "rank": 11,
@@ -428,69 +428,69 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Cupertino",
-          "year": 2026,
-          "imdbId": "tt33270224",
-          "tmdbId": "tv/303630"
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
         },
         {
           "rank": 14,
           "type": "movie",
           "typeRank": 7,
+          "title": "Forbidden Fruits",
+          "year": 2026,
+          "imdbId": "tt30691214",
+          "tmdbId": "movie/1450527"
+        },
+        {
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 8,
           "title": "Scream 7",
           "year": 2026,
           "imdbId": "tt27047903",
           "tmdbId": "movie/1159559"
         },
         {
-          "rank": 15,
-          "type": "movie",
+          "rank": 16,
+          "type": "series",
           "typeRank": 8,
+          "title": "Cupertino",
+          "year": 2026,
+          "imdbId": "tt33270224",
+          "tmdbId": "tv/303630"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
           "title": "Black Adam",
           "year": 2022,
           "imdbId": "tt6443346",
           "tmdbId": "movie/436270"
         },
         {
-          "rank": 16,
+          "rank": 18,
           "type": "series",
-          "typeRank": 8,
+          "typeRank": 9,
           "title": "Common Side Effects",
           "year": 2025,
           "imdbId": "tt28093628",
           "tmdbId": "tv/228878"
         },
         {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Brothers Under Fire",
-          "year": 2026,
-          "imdbId": "tt32394984",
-          "tmdbId": "movie/1414413"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Line of Fire",
-          "year": 2026,
-          "imdbId": "tt39365612",
-          "tmdbId": "tv/321958"
-        },
-        {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Wonder Woman 1984",
-          "year": 2020,
-          "imdbId": "tt7126948",
-          "tmdbId": "movie/464052"
+          "title": "Dune",
+          "year": 2021,
+          "imdbId": "tt1160419",
+          "tmdbId": "movie/438631"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-01T14:15:58+00:00",
+      "fetchedAt": "2026-11-02T17:04:15+00:00",
       "items": [
         {
           "rank": 1,
@@ -514,19 +514,19 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Dark Matter",
-          "year": 2024,
-          "imdbId": "tt19231492",
-          "tmdbId": "tv/196322"
+          "title": "Ted Lasso",
+          "year": 2020,
+          "imdbId": "tt10986410",
+          "tmdbId": "tv/97546"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Ted Lasso",
-          "year": 2020,
-          "imdbId": "tt10986410",
-          "tmdbId": "tv/97546"
+          "title": "Dark Matter",
+          "year": 2024,
+          "imdbId": "tt19231492",
+          "tmdbId": "tv/196322"
         },
         {
           "rank": 5,
@@ -539,15 +539,6 @@
         },
         {
           "rank": 6,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Matchbox the Movie",
-          "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
-        },
-        {
-          "rank": 7,
           "type": "series",
           "typeRank": 5,
           "title": "Silo",
@@ -556,7 +547,7 @@
           "tmdbId": "tv/125988"
         },
         {
-          "rank": 8,
+          "rank": 7,
           "type": "series",
           "typeRank": 6,
           "title": "Monarch: Legacy of Monsters",
@@ -565,22 +556,31 @@
           "tmdbId": "tv/202411"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "movie",
-          "typeRank": 3,
-          "title": "Tenzing",
+          "typeRank": 2,
+          "title": "Matchbox the Movie",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
-          "rank": 10,
+          "rank": 9,
           "type": "series",
           "typeRank": 7,
           "title": "Widow's Bay",
           "year": 2026,
           "imdbId": "tt33332385",
           "tmdbId": "tv/270476"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Tenzing",
+          "year": 2026,
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 11,
@@ -604,28 +604,28 @@
           "rank": 13,
           "type": "series",
           "typeRank": 10,
-          "title": "Brothers",
-          "year": 2026,
-          "imdbId": "tt6773088",
-          "tmdbId": "tv/250203"
+          "title": "Severance",
+          "year": 2022,
+          "imdbId": "tt11280740",
+          "tmdbId": "tv/95396"
         },
         {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Mayday",
-          "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "title": "Eternity",
+          "year": 2025,
+          "imdbId": "tt24950660",
+          "tmdbId": "movie/1259102"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Eternity",
-          "year": 2025,
-          "imdbId": "tt24950660",
-          "tmdbId": "movie/1259102"
+          "title": "Mayday",
+          "year": 2026,
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 16,
@@ -640,19 +640,19 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "Luck",
-          "year": 2022,
-          "imdbId": "tt7214954",
-          "tmdbId": "movie/585511"
+          "title": "Greyhound",
+          "year": 2020,
+          "imdbId": "tt6048922",
+          "tmdbId": "movie/516486"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "Greyhound",
-          "year": 2020,
-          "imdbId": "tt6048922",
-          "tmdbId": "movie/516486"
+          "title": "Luck",
+          "year": 2022,
+          "imdbId": "tt7214954",
+          "tmdbId": "movie/585511"
         },
         {
           "rank": 19,
