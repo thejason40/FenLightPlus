@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-02T17:04:15+00:00",
+  "generatedAt": "2026-11-03T15:06:16+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -165,7 +165,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +341,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -532,10 +532,10 @@
           "rank": 2,
           "type": "movie",
           "typeRank": 1,
-          "title": "Harry Potter and the Philosopher's Stone",
-          "year": 2001,
-          "imdbId": "tt0241527",
-          "tmdbId": "movie/671"
+          "title": "Dead of Winter",
+          "year": 2025,
+          "imdbId": "tt7574556",
+          "tmdbId": "movie/1235746"
         },
         {
           "rank": 3,
@@ -550,159 +550,159 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "year": 2004,
-          "imdbId": "tt0304141",
-          "tmdbId": "movie/673"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 3,
-          "title": "YAGA",
-          "year": 2026,
-          "imdbId": "tt39980704",
-          "tmdbId": "tv/314360"
-        },
-        {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Harry Potter and the Goblet of Fire",
-          "year": 2005,
-          "imdbId": "tt0330373",
-          "tmdbId": "movie/674"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Torment",
-          "year": 2026,
-          "imdbId": "tt47816221",
-          "tmdbId": "tv/279185"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Harry Potter and the Order of the Phoenix",
-          "year": 2007,
-          "imdbId": "tt0373889",
-          "tmdbId": "movie/675"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Harry Potter and the Half-Blood Prince",
-          "year": 2009,
-          "imdbId": "tt0417741",
-          "tmdbId": "movie/767"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Dead of Winter",
-          "year": 2025,
-          "imdbId": "tt7574556",
-          "tmdbId": "movie/1235746"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Youth",
-          "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
           "title": "Corpse Bride",
           "year": 2005,
           "imdbId": "tt0121164",
           "tmdbId": "movie/3933"
         },
         {
-          "rank": 15,
+          "rank": 5,
           "type": "series",
-          "typeRank": 8,
-          "title": "GET JIRO",
-          "year": 2026,
-          "imdbId": "tt33406999",
-          "tmdbId": "tv/231801"
+          "typeRank": 3,
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
         },
         {
-          "rank": 16,
+          "rank": 6,
           "type": "movie",
-          "typeRank": 8,
-          "title": "Harry Potter and the Deathly Hallows: Part 1",
+          "typeRank": 3,
+          "title": "A Nightmare on Elm Street",
           "year": 2010,
-          "imdbId": "tt0926084",
-          "tmdbId": "movie/12444"
+          "imdbId": "tt1179056",
+          "tmdbId": "movie/23437"
         },
         {
-          "rank": 17,
+          "rank": 7,
           "type": "series",
-          "typeRank": 9,
-          "title": "High Maintenance",
-          "year": 2016,
-          "imdbId": "tt6078096",
-          "tmdbId": "tv/67243"
+          "typeRank": 4,
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
-          "rank": 18,
+          "rank": 8,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 4,
+          "title": "The Baader Meinhof Complex",
+          "year": 2008,
+          "imdbId": "tt0765432",
+          "tmdbId": "movie/6968"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "YAGA",
+          "year": 2026,
+          "imdbId": "tt39980704",
+          "tmdbId": "tv/314360"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
           "title": "A Nightmare on Elm Street",
           "year": 1984,
           "imdbId": "tt0087800",
           "tmdbId": "movie/377"
         },
         {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Civil War",
+          "year": 2024,
+          "imdbId": "tt17279496",
+          "tmdbId": "movie/929590"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Return to Silent Hill",
+          "year": 2026,
+          "imdbId": "tt22868010",
+          "tmdbId": "movie/680493"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 8,
+          "title": "The Torment",
+          "year": 2026,
+          "imdbId": "tt47816221",
+          "tmdbId": "tv/279185"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Devil's Bath",
+          "year": 2024,
+          "imdbId": "tt29141112",
+          "tmdbId": "movie/931944"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "GET JIRO",
+          "year": 2026,
+          "imdbId": "tt33406999",
+          "tmdbId": "tv/231801"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "A Nightmare on Elm Street Part 2: Freddy's Revenge",
+          "year": 1985,
+          "imdbId": "tt0089686",
+          "tmdbId": "movie/10014"
+        },
+        {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "Apollo Has Fallen",
-          "year": 2026,
-          "imdbId": "tt36350690",
-          "tmdbId": "tv/287453"
+          "title": "High Maintenance",
+          "year": 2016,
+          "imdbId": "tt6078096",
+          "tmdbId": "tv/67243"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Harry Potter and the Deathly Hallows: Part 2",
-          "year": 2011,
-          "imdbId": "tt1201607",
-          "tmdbId": "movie/12445"
+          "title": "A Nightmare on Elm Street 3: Dream Warriors",
+          "year": 1987,
+          "imdbId": "tt0093629",
+          "tmdbId": "movie/10072"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -798,19 +798,19 @@
           "rank": 11,
           "type": "series",
           "typeRank": 9,
-          "title": "Small Prophets",
-          "year": 2026,
-          "imdbId": "tt38504111",
-          "tmdbId": "tv/312693"
+          "title": "Shrinking",
+          "year": 2023,
+          "imdbId": "tt15677150",
+          "tmdbId": "tv/136311"
         },
         {
           "rank": 12,
           "type": "series",
           "typeRank": 10,
-          "title": "Widow's Bay",
+          "title": "Small Prophets",
           "year": 2026,
-          "imdbId": "tt33332385",
-          "tmdbId": "tv/270476"
+          "imdbId": "tt38504111",
+          "tmdbId": "tv/312693"
         },
         {
           "rank": 13,
@@ -852,10 +852,10 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "The Last First: Winter K2",
-          "year": 2026,
-          "imdbId": "tt39150288",
-          "tmdbId": "movie/1596303"
+          "title": "Ready Player One",
+          "year": 2018,
+          "imdbId": "tt1677720",
+          "tmdbId": "movie/333339"
         },
         {
           "rank": 18,
@@ -870,19 +870,19 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "Ready Player One",
-          "year": 2018,
-          "imdbId": "tt1677720",
-          "tmdbId": "movie/333339"
+          "title": "The Last First: Winter K2",
+          "year": 2026,
+          "imdbId": "tt39150288",
+          "tmdbId": "movie/1596303"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "It's the Great Pumpkin, Charlie Brown",
-          "year": 1966,
-          "imdbId": "tt0060550",
-          "tmdbId": "movie/13353"
+          "title": "Sunshine",
+          "year": 2007,
+          "imdbId": "tt0448134",
+          "tmdbId": "movie/1272"
         }
       ]
     }

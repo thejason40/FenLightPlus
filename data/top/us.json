@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-02T17:04:15+00:00",
+  "generatedAt": "2026-11-03T15:06:16+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -508,7 +508,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -532,10 +532,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 4,
@@ -550,10 +550,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "90 Day Fiancé: The Other Way",
+          "year": 2019,
+          "imdbId": "tt9170070",
+          "tmdbId": "tv/90046"
         },
         {
           "rank": 6,
@@ -568,123 +568,123 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Youth",
+          "title": "WAR",
           "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "Harry Potter and the Philosopher's Stone",
-          "year": 2001,
-          "imdbId": "tt0241527",
-          "tmdbId": "movie/671"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Real Time with Bill Maher",
-          "year": 2003,
-          "imdbId": "tt0350448",
-          "tmdbId": "tv/4419"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Backrooms",
-          "year": 2026,
-          "imdbId": "tt26657236",
-          "tmdbId": "movie/1083381"
-        },
-        {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Coraline",
-          "year": 2009,
-          "imdbId": "tt0327597",
-          "tmdbId": "movie/14836"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The Pet Cemetery Murders: A Ghost Story",
-          "year": 2026,
-          "imdbId": "tt46683025",
-          "tmdbId": "tv/336418"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 7,
           "title": "Elf",
           "year": 2003,
           "imdbId": "tt0319343",
           "tmdbId": "movie/10719"
         },
         {
-          "rank": 14,
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Sister Wives",
+          "year": 2010,
+          "imdbId": "tt1721666",
+          "tmdbId": "tv/34045"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "National Lampoon's Christmas Vacation",
+          "year": 1989,
+          "imdbId": "tt0097958",
+          "tmdbId": "movie/5825"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Backrooms",
+          "year": 2026,
+          "imdbId": "tt26657236",
+          "tmdbId": "movie/1083381"
+        },
+        {
+          "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Gold Rush",
-          "year": 2010,
-          "imdbId": "tt1800864",
-          "tmdbId": "tv/34634"
+          "title": "Real Time with Bill Maher",
+          "year": 2003,
+          "imdbId": "tt0350448",
+          "tmdbId": "tv/4419"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Project X",
+          "year": 2012,
+          "imdbId": "tt1636826",
+          "tmdbId": "movie/57214"
         },
         {
           "rank": 15,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Evil Dead Burn",
-          "year": 2026,
-          "imdbId": "tt31170389",
-          "tmdbId": "movie/1212763"
-        },
-        {
-          "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Anyone but You",
-          "year": 2023,
-          "imdbId": "tt26047818",
-          "tmdbId": "movie/1072790"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 9,
           "title": "1000-lb Sisters",
           "year": 2020,
           "imdbId": "tt11617414",
           "tmdbId": "tv/98410"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Polar Express",
+          "year": 2004,
+          "imdbId": "tt0338348",
+          "tmdbId": "movie/5255"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Coraline",
+          "year": 2009,
+          "imdbId": "tt0327597",
+          "tmdbId": "movie/14836"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 9,
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
+        },
+        {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "National Lampoon's Christmas Vacation",
-          "year": 1989,
-          "imdbId": "tt0097958",
-          "tmdbId": "movie/5825"
+          "title": "Anyone but You",
+          "year": 2023,
+          "imdbId": "tt26047818",
+          "tmdbId": "movie/1072790"
         }
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -932,7 +932,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -983,13 +983,22 @@
           "rank": 6,
           "type": "series",
           "typeRank": 6,
+          "title": "Silo",
+          "year": 2023,
+          "imdbId": "tt14688458",
+          "tmdbId": "tv/125988"
+        },
+        {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 7,
           "title": "Widow's Bay",
           "year": 2026,
           "imdbId": "tt33332385",
           "tmdbId": "tv/270476"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "type": "movie",
           "typeRank": 1,
           "title": "It's the Great Pumpkin, Charlie Brown",
@@ -998,31 +1007,22 @@
           "tmdbId": "movie/13353"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Silo",
-          "year": 2023,
-          "imdbId": "tt14688458",
-          "tmdbId": "tv/125988"
-        },
-        {
           "rank": 9,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
-        },
-        {
-          "rank": 10,
           "type": "series",
           "typeRank": 8,
           "title": "Small Prophets",
           "year": 2026,
           "imdbId": "tt38504111",
           "tmdbId": "tv/312693"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "A Charlie Brown Thanksgiving",
+          "year": 1973,
+          "imdbId": "tt0068359",
+          "tmdbId": "movie/13479"
         },
         {
           "rank": 11,
@@ -1082,19 +1082,19 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "F1",
-          "year": 2025,
-          "imdbId": "tt16311594",
-          "tmdbId": "movie/911430"
+          "title": "Prisoners",
+          "year": 2013,
+          "imdbId": "tt1392214",
+          "tmdbId": "movie/146233"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "Prisoners",
-          "year": 2013,
-          "imdbId": "tt1392214",
-          "tmdbId": "movie/146233"
+          "title": "F1",
+          "year": 2025,
+          "imdbId": "tt16311594",
+          "tmdbId": "movie/911430"
         },
         {
           "rank": 19,

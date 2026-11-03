@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-02T17:04:15+00:00",
+  "generatedAt": "2026-11-03T15:06:16+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
@@ -667,28 +667,28 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 8,
           "title": "F1",
           "year": 2025,
           "imdbId": "tt16311594",
           "tmdbId": "movie/911430"
         },
         {
-          "rank": 19,
+          "rank": 18,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 8,
           "title": "Inception",
           "year": 2010,
           "imdbId": "tt1375666",
           "tmdbId": "movie/27205"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "A Charlie Brown Thanksgiving",
+          "year": 1973,
+          "imdbId": "tt0068359",
+          "tmdbId": "movie/13479"
         },
         {
           "rank": 20,
@@ -702,7 +702,7 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-02T17:04:15+00:00",
+      "fetchedAt": "2026-11-03T15:06:16+00:00",
       "items": [
         {
           "rank": 1,
