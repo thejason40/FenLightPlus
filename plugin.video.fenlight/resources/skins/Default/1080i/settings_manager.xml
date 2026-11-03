@@ -813,10 +813,10 @@
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(30)</visible>
-                          <property name="setting_label">Set MPAA Region</property>
+                          <property name="setting_label">Set Age Rating Region</property>
                           <property name="setting_type">action</property>
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.mpaa_region_display_name)]</property>
-                          <property name="setting_description">Choose the region from which the MPAA advisories will be displayed</property>
+                          <property name="setting_description">Choose the country whose age ratings are shown (for example MPAA in the US, BBFC in the UK)</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=mpaa_region_choice)</onclick>
                       </item>
                       <item>
@@ -2064,6 +2064,68 @@
                           <property name="setting_description">Choose the format in which Fen Light+ will display the results of a source search. Lists, Rows and WideList are provided</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=results_format_choice)</onclick>
                       </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <property name="setting_label">Scraper Window</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.style_name)]</property>
+                          <property name="setting_description">Choose the window shown while Fen Light+ searches for sources. Classic is the original window. FenLight+ shows the title, plot and details of what you are about to watch, with a live count of results by quality and the status of each scraper along the bottom</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=scraper_window.style)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - TV Plot</property>
+                          <property name="setting_type">action</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.tv_plot_name)]</property>
+                          <property name="setting_description">Choose which plot to show for episodes. If the chosen plot is empty, the next broader one is used (Episode, then Season, then Show). Choices are Episode, Season, Show or Off</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_from_list&amp;setting_id=scraper_window.tv_plot)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - Show Movie Plot</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.movie_plot)]</property>
+                          <property name="setting_description">Enable this to show the plot for movies</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=scraper_window.movie_plot)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - Show Details</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.details)]</property>
+                          <property name="setting_description">Enable this to show the runtime (and year for movies) and a line with the age rating, genres and rating. Episodes also show a premiere or finale label</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=scraper_window.details)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - Show Director / Creators</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.crew)]</property>
+                          <property name="setting_description">Enable this to show who directed the movie, or created the show, at the bottom of the text</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=scraper_window.crew)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - Show Starring</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.cast)]</property>
+                          <property name="setting_description">Enable this to show the names of the first three cast members at the bottom of the text</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=scraper_window.cast)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(60)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.scraper_window.style),1)</visible>
+                          <property name="setting_label">    - Show Ends At Time</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.scraper_window.ends_at)]</property>
+                          <property name="setting_description">Enable this to show the time playback will finish if started now, shown after the runtime</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=scraper_window.ends_at)</onclick>
+                      </item>
         <!-- General -->
                       <item>
                           <visible>Container(2000).HasFocus(60)</visible>
@@ -2558,6 +2620,15 @@
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(70)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.auto_play_episode),true) + String.IsEqual(Window(10000).Property(fenlight.autoplay_next_episode),true)</visible>
+                          <property name="setting_label">    - Use Outro Timestamps For Alert When Available</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.autoplay_use_outro)]</property>
+                          <property name="setting_description">Show the Next Episode alert when the end credits begin, using timestamps from TheIntroDB / IntroDB. Takes priority over Chapter Info, and falls back to it (then the percentage of playback) when no credits timestamp is found. These timestamps are crowd-sourced and may occasionally be missing or inaccurate</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=autoplay_use_outro)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
                           <visible>String.IsEqual(Window(10000).Property(fenlight.auto_play_episode),false)</visible>
                           <property name="setting_label">Autoscrape Next Episode</property>
                           <property name="setting_type">boolean</property>
@@ -2582,6 +2653,15 @@
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.autoscrape_use_chapters)]</property>
                           <property name="setting_description">Enable this and Fen Light+ will attempt to use video file Chapter information to ascertain when to show the Next Episode alert. If unsuccessful, then the percentage of playback value will be used instead</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=autoscrape_use_chapters)</onclick>
+                      </item>
+                      <item>
+                          <visible>Container(2000).HasFocus(70)</visible>
+                          <visible>String.IsEqual(Window(10000).Property(fenlight.auto_play_episode),false) + String.IsEqual(Window(10000).Property(fenlight.autoscrape_next_episode),true)</visible>
+                          <property name="setting_label">    - Use Outro Timestamps For Alert When Available</property>
+                          <property name="setting_type">boolean</property>
+                          <property name="setting_value">$INFO[Window(10000).Property(fenlight.autoscrape_use_outro)]</property>
+                          <property name="setting_description">Show the Next Episode alert when the end credits begin, using timestamps from TheIntroDB / IntroDB. Takes priority over Chapter Info, and falls back to it (then the percentage of playback) when no credits timestamp is found. These timestamps are crowd-sourced and may occasionally be missing or inaccurate</property>
+                          <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=autoscrape_use_outro)</onclick>
                       </item>
                       <item>
                           <visible>Container(2000).HasFocus(70)</visible>
@@ -2623,7 +2703,7 @@
                           <property name="setting_label">    - Skip Outros</property>
                           <property name="setting_type">boolean</property>
                           <property name="setting_value">$INFO[Window(10000).Property(fenlight.skip_outros)]</property>
-                          <property name="setting_description">Offer to skip end credits/outros. Ignored at the end of an episode when Autoplay/Autoscrape Next Episode is active.</property>
+                          <property name="setting_description">Offer to skip end credits/outros. Ignored at the end of an episode when Autoplay/Autoscrape Next Episode is active (those can use the outro to time their alert instead, see Use Outro Timestamps For Alert).</property>
                           <onclick>RunPlugin(plugin://plugin.video.fenlight/?mode=settings_manager.set_boolean&amp;setting_id=skip_outros)</onclick>
                       </item>
                       <item>

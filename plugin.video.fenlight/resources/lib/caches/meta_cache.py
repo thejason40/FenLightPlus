@@ -12,8 +12,8 @@ GET_FUNCTION = 'SELECT string_id, data, expires FROM function_cache WHERE string
 GET_ALL = 'SELECT db_type, tmdb_id FROM metadata'
 GET_ALL_SEASON = 'SELECT tmdb_id FROM season_metadata'
 SET_MOVIE_SHOW = 'INSERT OR REPLACE INTO metadata VALUES (?, ?, ?, ?, ?, ?)'
-SET_SEASON = 'INSERT INTO season_metadata VALUES (?, ?, ?)'
-SET_FUNCTION = 'INSERT INTO function_cache VALUES (?, ?, ?)'
+SET_SEASON = 'INSERT OR REPLACE INTO season_metadata VALUES (?, ?, ?)'
+SET_FUNCTION = 'INSERT OR REPLACE INTO function_cache VALUES (?, ?, ?)'
 DELETE_MOVIE_SHOW = 'DELETE FROM metadata WHERE db_type = ? AND %s = ?'
 DELETE_SEASON = 'DELETE FROM season_metadata WHERE tmdb_id = ?'
 DELETE_FUNCTION = 'DELETE FROM function_cache WHERE string_id = ?'
@@ -146,7 +146,11 @@ class MetaCache:
 		except: return
 
 	def delete_all_seasons(self, media_id):
-		for item in range(1,51): self.delete_season('%s_%s' % (media_id, string(item)))
+		try:
+			dbcon = connect_database('metacache_db')
+			dbcon.execute("DELETE FROM season_metadata WHERE tmdb_id LIKE ? ESCAPE '\\'", ('%s\\_%%' % media_id,))
+		except: pass
+		for item in range(0, 51): self.delete_memory_cache_season('%s_%s' % (media_id, string(item)))
 
 	def delete_all(self):
 		try:
@@ -175,7 +179,10 @@ meta_cache = MetaCache()
 def cache_function(function, prop_string, url, expiration=720, json=True):
 	data = meta_cache.get_function(prop_string)
 	if data: return data
-	if json: result = function(url).json()
+	if json:
+		response = function(url)
+		if response is None or response.status_code != 200: return None
+		result = response.json()
 	else: result = function(url)
 	meta_cache.set_function(prop_string, result, expiration=expiration)
 	return result

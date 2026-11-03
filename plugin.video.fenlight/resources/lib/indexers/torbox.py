@@ -3,7 +3,7 @@ from apis.torbox_api import TorBoxAPI
 from modules import kodi_utils
 from modules.source_utils import supported_video_extensions
 from modules.utils import clean_file_name, normalize
-# from modules.kodi_utils import logger
+from modules.kodi_utils import logger
 
 show_busy_dialog, hide_busy_dialog, show_text, execute_builtin = kodi_utils.show_busy_dialog, kodi_utils.hide_busy_dialog, kodi_utils.show_text, kodi_utils.execute_builtin
 build_url, make_listitem, confirm_dialog, notification = kodi_utils.build_url, kodi_utils.make_listitem, kodi_utils.confirm_dialog, kodi_utils.notification
@@ -29,16 +29,17 @@ def tb_cloud():
 				listitem.setArt({'icon': default_tb_icon, 'poster': default_tb_icon, 'thumb': default_tb_icon, 'fanart': fanart, 'banner': default_tb_icon})
 				yield (url, listitem, True)
 			except: pass
-	torrents_folders, usenets_folders = TorBox.user_cloud(), TorBox.user_cloud_usenet()
-	folders_torrents = [{**i, 'media_type': 'torrent'} for i in torrents_folders['data'] if i['download_finished']]
-	folders_usenets = [{**i, 'media_type': 'usenet'} for i in usenets_folders['data'] if i['download_finished']]
-	folders = folders_torrents + folders_usenets
-	
-	folders.sort(key=lambda k: k['updated_at'], reverse=True)
 	handle = int(sys.argv[1])
-	add_items(handle, list(_builder()))
+	try:
+		torrents_folders, usenets_folders = TorBox.user_cloud(), TorBox.user_cloud_usenet()
+		folders_torrents = [{**i, 'media_type': 'torrent'} for i in (torrents_folders or {}).get('data') or [] if i['download_finished']]
+		folders_usenets = [{**i, 'media_type': 'usenet'} for i in (usenets_folders or {}).get('data') or [] if i['download_finished']]
+		folders = folders_torrents + folders_usenets
+		folders.sort(key=lambda k: k['updated_at'], reverse=True)
+		add_items(handle, list(_builder()))
+	except Exception as e: logger('TorBox Cloud', str(e))
 	set_content(handle, 'files')
-	end_directory(handle)
+	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
 
 def browse_tb_cloud(folder_id, media_type):
@@ -61,13 +62,15 @@ def browse_tb_cloud(folder_id, media_type):
 				listitem.setInfo('video', {})
 				yield (url, listitem, False)
 			except: pass
-	if media_type == 'torrent': files = TorBox.user_cloud_info(folder_id)
-	else: files = TorBox.user_cloud_info_usenet(folder_id)
-	video_files = [{**i, 'media_type': media_type} for i in files['data']['files'] if i['short_name'].lower().endswith(tuple(extensions))]
 	handle = int(sys.argv[1])
-	add_items(handle, list(_builder()))
+	try:
+		if media_type == 'torrent': files = TorBox.user_cloud_info(folder_id)
+		else: files = TorBox.user_cloud_info_usenet(folder_id)
+		video_files = [{**i, 'media_type': media_type} for i in files['data']['files'] if i['short_name'].lower().endswith(tuple(extensions))]
+		add_items(handle, list(_builder()))
+	except Exception as e: logger('TorBox Cloud', str(e))
 	set_content(handle, 'files')
-	end_directory(handle)
+	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
 
 def tb_delete(folder_id, media_type):

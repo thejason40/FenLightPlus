@@ -7,7 +7,7 @@ import random
 import _strptime
 import unicodedata
 from html import unescape
-from threading import Thread, activeCount
+from threading import Thread, active_count
 from zipfile import ZipFile
 from importlib import import_module, reload as rel_module
 from datetime import datetime, timedelta, date
@@ -33,7 +33,7 @@ def manual_module_import(location):
 def make_thread_list(_target, _list):
 	_max_threads = max_threads()
 	for item in _list:
-		while activeCount() > _max_threads: sleep(1)
+		while active_count() > _max_threads: sleep(20)
 		threaded_object = Thread(target=_target, args=(item,))
 		threaded_object.start()
 		yield threaded_object
@@ -41,7 +41,7 @@ def make_thread_list(_target, _list):
 def make_thread_list_multi_arg(_target, _list):
 	_max_threads = max_threads()
 	for item in _list:
-		while activeCount() > _max_threads: sleep(1)
+		while active_count() > _max_threads: sleep(20)
 		threaded_object = Thread(target=_target, args=item)
 		threaded_object.start()
 		yield threaded_object
@@ -49,7 +49,7 @@ def make_thread_list_multi_arg(_target, _list):
 def make_thread_list_enumerate(_target, _list):
 	_max_threads = max_threads()
 	for count, item in enumerate(_list):
-		while activeCount() > _max_threads: sleep(1)
+		while active_count() > _max_threads: sleep(20)
 		threaded_object = Thread(target=_target, args=(count, item))
 		threaded_object.start()
 		yield threaded_object
@@ -292,21 +292,11 @@ def unzip(zip_location, destination_location, destination_check, show_busy=True)
 	return status
 
 def copy2clip(txt):
-	if sys.platform == "win32":
-		try:
-			from subprocess import check_call
-			cmd = 'echo ' + txt.replace('&', '^&').strip() + '|clip'
-			return check_call(cmd, shell=True)
-		except: return
-	if sys.platform == "darwin":
-		try:
-			from subprocess import check_call
-			cmd = 'echo ' + txt.strip() + '|pbcopy'
-			return check_call(cmd, shell=True)
-		except: return
-	if sys.platform == "linux":
-		try:
-			from subprocess import Popen, PIPE
-			p = Popen(['xsel', '-pi'], stdin=PIPE)
-			p.communicate(input=txt)
-		except: return
+	from subprocess import run
+	data = str(txt).strip().encode('utf-8')
+	if sys.platform == "win32": command = ['clip']
+	elif sys.platform == "darwin": command = ['pbcopy']
+	elif sys.platform.startswith("linux"): command = ['xsel', '-pi']
+	else: return
+	try: return run(command, input=data, timeout=5)
+	except: return

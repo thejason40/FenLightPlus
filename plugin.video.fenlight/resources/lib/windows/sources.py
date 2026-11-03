@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import json
+from datetime import datetime, timedelta
+from xbmc import getRegion
 from windows.base_window import BaseDialog, select_dialog, ok_dialog
 from modules.source_utils import source_filters
-from modules.settings import provider_sort_ranks, easynews_active, easynews_no_seek_default
+from modules.settings import provider_sort_ranks, easynews_active, easynews_no_seek_default, scraper_window_settings
 from modules import kodi_utils
 # logger = kodi_utils.logger
 
@@ -23,6 +25,13 @@ run_plugin_str = 'RunPlugin(%s)'
 string = str
 upper, lower = string.upper, string.lower
 resume_timeout = 10000
+plus_separator, plus_progress_id = '  |  ', 5000
+plus_chips_id, plus_tally_id, plus_chips_pos, plus_tally_pos = 2200, 2210, (90, 980), (90, 828)
+plus_chips_per_row, plus_chips_max_rows, plus_chips_row_height = 7, 4, 56
+plus_provider_names = {'rd_cloud': 'RD Cloud', 'pm_cloud': 'PM Cloud', 'ad_cloud': 'AD Cloud', 'oc_cloud': 'OC Cloud', 'tb_cloud': 'TB Cloud', 'easynews': 'Easynews'}
+episode_type_labels = {'series_premiere': 'Series Premiere', 'season_premiere': 'Season Premiere', 'mid_season_premiere': 'Mid-Season Premiere',
+'mid_season_finale': 'Mid-Season Finale', 'season_finale': 'Season Finale', 'series_finale': 'Series Finale'}
+tv_plot_order = {'0': ('episode', 'season', 'show'), '1': ('season', 'show'), '2': ('show',), '3': ()}
 
 class SourcesResults(BaseDialog):
 	def __init__(self, *args, **kwargs):
@@ -79,8 +88,7 @@ class SourcesResults(BaseDialog):
 				if filter_value == 'title':
 					keywords = kodi_dialog().input('Enter Keyword (Comma Separated for Multiple)')
 					if not keywords: return
-					keywords.replace(' ', '')
-					keywords = keywords.split(',')
+					keywords = keywords.replace(' ', '').split(',')
 					choice = [upper(i) for i in keywords]
 					filtered_list = [i for i in self.item_list if all(x in i.getProperty('name') for x in choice)]
 				elif filter_value == 'extraInfo':
@@ -282,6 +290,10 @@ class SourcesPlayback(BaseDialog):
 		self.meta = kwargs.get('meta')
 		self.is_canceled, self.skip_resolve, self.resume_choice = False, False, None
 		self.meta_get = self.meta.get
+		self.plus = args[0] == 'sources_playback_plus.xml'
+		if self.plus:
+			self.plus_settings = scraper_window_settings()
+			self.plus_chip_names, self.plus_chip_items, self.plus_chip_state = None, [], []
 		self.enable_scraper()
 
 	def run(self):
@@ -290,7 +302,7 @@ class SourcesPlayback(BaseDialog):
 		self.clear_modals()
 
 	def onClick(self, controlID):
-		self.resume_choice = resume_dict[controlID]
+		if controlID in resume_dict: self.resume_choice = resume_dict[controlID]
 
 	def onAction(self, action):
 		if action in self.closing_actions: self.is_canceled = True
@@ -315,9 +327,9 @@ class SourcesPlayback(BaseDialog):
 		self.window_mode = 'resolver'
 		self.set_resolver_properties()
 
-	def enable_resume(self, percent):
+	def enable_resume(self, percent, no_seek=False):
 		self.window_mode = 'resume'
-		self.set_resume_properties(percent)
+		self.set_resume_properties(percent, no_seek)
 
 	def busy_spinner(self, toggle='true'):
 		self.setProperty('enable_busy_spinner', toggle)
@@ -334,6 +346,119 @@ class SourcesPlayback(BaseDialog):
 		self.setProperty('year', year)
 		self.setProperty('poster', poster)
 		self.setProperty('genre', ', '.join(genre))
+		if self.plus: self.set_plus_properties()
+
+	def set_plus_properties(self):
+		settings, is_movie = self.plus_settings, self.meta_get('media_type') == 'movie'
+		if is_movie:
+			duration, rating, premiere_label = self.meta_get('duration'), self.meta_get('rating'), ''
+			line1 = [string(self.meta_get('year') or ''), self.plus_runtime(duration)] if settings['details'] else []
+			plot = self.meta_get('plot', '') if settings['movie_plot'] else ''
+		else:
+			duration, rating = self.meta_get('ep_duration') or self.meta_get('duration'), self.meta_get('ep_rating') or self.meta_get('rating')
+			premiere_label = episode_type_labels.get(self.meta_get('episode_type'), '')
+			try: episode_code = '[B]S%02dE%02d[/B]' % (self.meta_get('season'), self.meta_get('episode'))
+			except: episode_code = ''
+			line1 = [episode_code, self.meta_get('ep_name') or '']
+			if settings['details']: line1.append(self.plus_runtime(duration))
+			plot = self.plus_tv_plot(settings['tv_plot'])
+		if settings['ends_at']: line1.append(self.plus_ends_at(duration))
+		line2 = [premiere_label, self.meta_get('mpaa') or '', ', '.join((self.meta_get('genre') or [])[:3]), self.plus_rating(rating)] if settings['details'] else []
+		self.setProperty('line1', plus_separator.join(i for i in line1 if i))
+		self.setProperty('line2', plus_separator.join(i for i in line2 if i))
+		self.setProperty('plot_text', plot or '')
+		self.setProperty('credits_line', self.plus_credits(is_movie))
+		for quality in ('4k', '1080p', '720p', 'sd', 'total'): self.setProperty('results_%s' % quality, '0')
+
+	def plus_credits(self, is_movie):
+		items = []
+		if self.plus_settings['crew']:
+			if is_movie:
+				director = self.meta_get('director') or []
+				if director: items.append('%s: %s' % ('Directors' if len(director) > 1 else 'Director', ', '.join(director[:2])))
+			else:
+				created_by = (self.meta_get('extra_info') or {}).get('created_by')
+				if created_by and created_by != 'N/A': items.append('Created by %s' % created_by)
+		if self.plus_settings['cast']:
+			names = [i['name'] for i in (self.meta_get('cast') or [])[:3] if i.get('name')]
+			if names: items.append('Starring: %s' % ', '.join(names))
+		return plus_separator.join(items)
+
+	def plus_tv_plot(self, choice):
+		for item in tv_plot_order.get(choice, ()):
+			if item == 'episode': plot = self.meta_get('plot')
+			elif item == 'show': plot = self.meta_get('tvshow_plot')
+			else:
+				try: plot = next(i['overview'] for i in self.meta_get('season_data') if int(i['season_number']) == int(self.meta_get('season')))
+				except: plot = ''
+			if plot: return plot
+		return ''
+
+	def plus_runtime(self, duration):
+		try: hours, minutes = divmod(int(duration) // 60, 60)
+		except: return ''
+		if hours: return '%dh %dm' % (hours, minutes)
+		return '%dm' % minutes if minutes else ''
+
+	def plus_rating(self, rating):
+		try: rating = float(rating)
+		except: return ''
+		return '%.1f' % rating if rating > 0 else ''
+
+	def plus_ends_at(self, duration):
+		try: duration = int(duration)
+		except: return ''
+		if not duration: return ''
+		time_format = getRegion('time').replace(':%S', '')
+		return 'Ends at %s' % (datetime.now() + timedelta(seconds=duration)).strftime(time_format)
+
+	def plus_provider_name(self, name):
+		return plus_provider_names.get(name) or (name.title() if name == name.lower() else name)
+
+	def update_plus_time(self, phase, elapsed, timeout, late):
+		if elapsed is None or not timeout: return
+		elapsed = min(max(elapsed, 0), timeout)
+		self.setProperty('time_label', '[COLOR FFB40025]%.1fs left[/COLOR]' % (timeout - elapsed) if late else '%.1fs' % elapsed)
+		self.setProperty('time_sub', 'of %ds %s' % (timeout, 'cache check' if phase == 'cache' else 'timeout'))
+
+	def update_plus_chips(self, providers):
+		names = [i[0] for i in providers]
+		if names != self.plus_chip_names: return self.build_plus_chips(providers)
+		for item, last, (name, state, count) in zip(self.plus_chip_items, self.plus_chip_state, providers):
+			if last != (state, count): self.set_plus_chip(item, state, count)
+		self.plus_chip_state = [(i[1], i[2]) for i in providers]
+
+	def set_plus_chip(self, item, state, count):
+		item.setProperty('state', state)
+		item.setProperty('count', string(count) if state == 'done' else 'failed' if state == 'failed' else '')
+
+	def build_plus_chips(self, providers):
+		items = []
+		for name, state, count in providers:
+			item = self.make_listitem()
+			item.setProperty('name', self.plus_provider_name(name))
+			self.set_plus_chip(item, state, count)
+			items.append(item)
+		self.reset_window(plus_chips_id)
+		self.add_items(plus_chips_id, items)
+		self.plus_chip_names, self.plus_chip_items = [i[0] for i in providers], items
+		self.plus_chip_state = [(i[1], i[2]) for i in providers]
+		rows = min(max(-(-len(providers) // plus_chips_per_row), 1), plus_chips_max_rows)
+		lift = (rows - 1) * plus_chips_row_height
+		try:
+			chips = self.get_control(plus_chips_id)
+			chips.setPosition(plus_chips_pos[0], plus_chips_pos[1] - lift)
+			chips.setHeight(rows * plus_chips_row_height)
+			self.get_control(plus_tally_id).setPosition(plus_tally_pos[0], plus_tally_pos[1] - lift)
+		except: pass
+
+	def update_plus_progress(self, percent):
+		try:
+			percent = float(percent)
+			self.setProperty('progress_late', 'true' if percent >= 75 else 'false')
+			self.set_percent(plus_progress_id, percent)
+			self.set_percent(plus_progress_id + 1, percent)
+		except: pass
 
 	def set_resolver_properties(self):
 		if self.meta_get('media_type') == 'movie': self.text = self.meta_get('plot')
@@ -342,13 +467,16 @@ class SourcesPlayback(BaseDialog):
 		self.setProperty('window_mode', self.window_mode)
 		self.setProperty('text', self.text)
 
-	def set_resume_properties(self, percent):
+	def set_resume_properties(self, percent, no_seek=False):
 		self.setProperty('window_mode', self.window_mode)
 		self.setProperty('resume_percent', percent)
+		self.setProperty('resume_no_seek', 'true' if no_seek else 'false')
+		self.setProperty('resume_label', "Resume (Cancel 'no seek')" if no_seek else 'Resume %s%%' % percent)
 		self.setFocusId(10)
 		self.update_resumer()
 
-	def update_scraper(self, results_sd, results_720p, results_1080p, results_4k, results_total, content='', percent=0):
+	def update_scraper(self, results_sd, results_720p, results_1080p, results_4k, results_total, content='', percent=0, phase='scrape', elapsed=None, timeout=None, providers=None):
+		if self.plus: return self.update_scraper_plus(results_sd, results_720p, results_1080p, results_4k, results_total, percent, phase, elapsed, timeout, providers)
 		self.setProperty('results_4k', string(results_4k))
 		self.setProperty('results_1080p', string(results_1080p))
 		self.setProperty('results_720p', string(results_720p))
@@ -357,9 +485,22 @@ class SourcesPlayback(BaseDialog):
 		self.setProperty('percent', string(percent))
 		self.set_text(2001, content)
 
+	def update_scraper_plus(self, results_sd, results_720p, results_1080p, results_4k, results_total, percent, phase, elapsed, timeout, providers):
+		self.setProperty('results_4k', string(results_4k))
+		self.setProperty('results_1080p', string(results_1080p))
+		self.setProperty('results_720p', string(results_720p))
+		self.setProperty('results_sd', string(results_sd))
+		self.setProperty('results_total', string(results_total))
+		self.update_plus_progress(percent)
+		try:
+			self.update_plus_time(phase, elapsed, timeout, float(percent) >= 75)
+			if providers is not None: self.update_plus_chips(providers)
+		except: pass
+
 	def update_resolver(self, text='', percent=0):
 		try: self.setProperty('percent', string(percent))
 		except: pass
+		if self.plus: self.update_plus_progress(percent)
 		if text: self.set_text(2002, text)
 
 	def update_resumer(self):
@@ -368,6 +509,7 @@ class SourcesPlayback(BaseDialog):
 			percent = int((float(count)/resume_timeout)*100)
 			if percent >= 100: self.resume_choice = 'resume'
 			self.setProperty('percent', string(percent))
+			if self.plus: self.update_plus_progress(percent)
 			count += 100
 			self.sleep(100)
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from apis.real_debrid_api import RealDebridAPI
+from apis.real_debrid_api import RealDebridAPI, video_files_with_links
 from modules import source_utils
 from threading import Thread
 from modules.utils import clean_file_name, normalize
@@ -79,20 +79,13 @@ class source:
 	def _scrape_folders(self, folder_info):
 		try:
 			folder_files = RealDebrid.user_cloud_info(folder_info)
-			contents = [i for i in folder_files['files'] if i['selected'] == 1 and i['path'].lower().endswith(tuple(extensions))]
 			file_urls = folder_files['links']
+			video_files = video_files_with_links(folder_files, extensions)
+			contents = [dict(i, **{'url_link': file_urls[idx]}) for idx, i in video_files]
 			FolderId = folder_info
 			scrape_results_append = self.scrape_results.append
-			for c, i in enumerate(contents):
-				try: i.update({'url_link': file_urls[c]})
-				except: pass
 			contents.sort(key=lambda k: k['path'])
-			try:
-				# links[] is indexed over ALL selected files, so pair filenames to links off the unfiltered list
-				all_selected = [i for i in folder_files['files'] if i['selected'] == 1]
-				pack_files = [{'filename': f['path'].replace('/', ''), 'link': file_urls[idx], 'size': f['bytes']} \
-								for idx, f in enumerate(all_selected) if idx < len(file_urls) and f['path'].lower().endswith(tuple(extensions))]
-			except: pack_files = []
+			pack_files = [{'filename': i['path'].replace('/', ''), 'link': file_urls[idx], 'size': i['bytes']} for idx, i in video_files]
 			for item in contents:
 				normalized = normalize(item['path'])
 				if self.media_type == 'episode' and not seas_ep_filter(self.season, self.episode, normalized): continue

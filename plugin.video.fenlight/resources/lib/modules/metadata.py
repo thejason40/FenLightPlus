@@ -66,13 +66,13 @@ def movie_meta(id_type, media_id, api_key, mpaa_region, current_date, current_ti
 		try: duration = int(data_get('runtime', '90') * 60)
 		except: duration = 0
 		try: genre = [i['name'] for i in data_get('genres')]
-		except: genre == []
+		except: genre = []
 		rootname = '%s (%s)' % (title, year)
 		companies = data_get('production_companies')
 		if companies:
 			if len(companies) == 1: studio = ([i['name'] for i in companies][0],)
 			else:
-				try: studio = (next(i['name'] for i in companies if i['logo_path'] not in empty_value_check) or next(i['name'] for i in companies),)
+				try: studio = (next((i['name'] for i in companies if i['logo_path'] not in empty_value_check), None) or companies[0]['name'],)
 				except: pass
 		production_countries = data_get('production_countries', None)
 		if production_countries:
@@ -114,7 +114,7 @@ def movie_meta(id_type, media_id, api_key, mpaa_region, current_date, current_ti
 					next((youtube_url % i['key'] for i in all_trailers if i['type'] == 'Trailer'), None) or \
 					next((youtube_url % i['key'] for i in all_trailers if 'trailer' in i['name'].lower()), None) or \
 					next((youtube_url % i['key'] for i in all_trailers), None) or ''
-				else: trailler = ''
+				else: trailer = ''
 			except: pass
 		keywords = data_get('keywords', None)
 		status, homepage = data_get('status', 'N/A'), data_get('homepage', 'N/A')
@@ -150,7 +150,8 @@ def tvshow_meta(id_type, media_id, api_key, mpaa_region, current_date, current_t
 			external_result = tvshow_external_id(id_type, media_id, api_key)
 			if not external_result: data = None
 			else: data = tvshow_details(external_result['id'], api_key)
-		if not data or data.get('status_code', '') in invalid_error_codes:
+		if not data: return None
+		if data.get('status_code', '') in invalid_error_codes:
 			if id_type == 'tmdb_id': meta = {'tmdb_id': media_id, 'imdb_id': 'tt0000000', 'tvdb_id': '0000000', 'blank_entry': True}
 			elif id_type == 'imdb_id': meta = {'tmdb_id': '0000000', 'imdb_id': media_id, 'tvdb_id': '0000000', 'blank_entry': True}
 			else: meta = {'tmdb_id': '0000000', 'imdb_id': 'tt0000000', 'tvdb_id': media_id, 'blank_entry': True}
@@ -196,7 +197,7 @@ def tvshow_meta(id_type, media_id, api_key, mpaa_region, current_date, current_t
 		if networks:
 			if len(networks) == 1: studio = ([i['name'] for i in networks][0],)
 			else:
-				try: studio = (next(i['name'] for i in networks if i['logo_path'] not in empty_value_check) or next(i['name'] for i in network),)
+				try: studio = (next((i['name'] for i in networks if i['logo_path'] not in empty_value_check), None) or networks[0]['name'],)
 				except: pass
 		production_countries = data_get('production_countries', None)
 		if production_countries:
@@ -237,7 +238,7 @@ def tvshow_meta(id_type, media_id, api_key, mpaa_region, current_date, current_t
 					next((youtube_url % i['key'] for i in all_trailers if i['type'] == 'Trailer'), None) or \
 					next((youtube_url % i['key'] for i in all_trailers if 'trailer' in i['name'].lower()), None) or \
 					next((youtube_url % i['key'] for i in all_trailers), None) or ''
-				else: trailler = ''
+				else: trailer = ''
 			except: pass
 		keywords = data_get('keywords', None)
 		status, _type, homepage = data_get('status', 'N/A'), data_get('type', 'N/A'), data_get('homepage', 'N/A')
@@ -337,12 +338,10 @@ def episodes_meta(season, meta):
 		else: season_type = 'finale' if (total_seasons == season and tvshow_status in finished_show_check) else ''
 		if tvshow_status in finished_show_check or total_seasons > int(season): expiration = EXPIRES_182_DAYS
 		else: expiration = EXPIRES_4_DAYS
-		try:
-			details = season_episodes_details(media_id, season)['episodes']
-			total_episodes = len(details)
-			data = list(_process())
-		except: data, expiration = [], EXPIRES_4_DAYS
-	except: data, expiration = [], EXPIRES_4_DAYS
+		details = season_episodes_details(media_id, season)['episodes']
+		total_episodes = len(details)
+		data = list(_process())
+	except: return []
 	metacache_set_season(prop_string, data, expiration)
 	return data
 
@@ -411,8 +410,8 @@ def tvshow_expiry(current_date, meta):
 	try:
 		if meta['status'] in finished_show_check: expiration = EXPIRES_182_DAYS
 		else:
-			data = subtract_dates(jsondate_to_datetime(meta['extra_info']['next_episode_to_air']['air_date'], date_format, remove_time=True), current_date) - EXPIRES_1_DAYS
-			if data <= 1: expiration = EXPIRES_1_DAYS
-			else: expiration = data*24
+			days = subtract_dates(jsondate_to_datetime(meta['extra_info']['next_episode_to_air']['air_date'], date_format, remove_time=True), current_date)
+			if days <= 1: expiration = EXPIRES_1_DAYS
+			else: expiration = (days - 1) * 24
 	except: expiration = EXPIRES_4_DAYS
 	return expiration

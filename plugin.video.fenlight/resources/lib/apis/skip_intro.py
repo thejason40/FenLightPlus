@@ -3,9 +3,10 @@ from apis import theintrodb_api, introdb_api
 from caches.skip_cache import skip_cache
 # from modules.kodi_utils import logger
 
-cache_key = 'v2.%s.%s.%s.%s'  # id . season . episode . duration_seconds - the table is the namespace
+cache_key = 'v3.%s.%s.%s.%s'  # id . season . episode . duration_seconds - v3 keeps each source apart
 HIT_HOURS, EMPTY_HOURS = 720, 168  # 30 days for real data, 7 days for blank data
 KINDS = ('recap', 'intro', 'outro')  # ordered by where they sit in an episode
+EMPTY = {'intro': None, 'recap': None, 'outro': None}
 
 def valid_segment(kind, seg, total_time=None):
 	try:
@@ -46,40 +47,52 @@ def _from_theintrodb(data, total_time):
 			'recap': _first_theintrodb_seg(data.get('recap'), 'recap', total_time),
 			'outro': _first_theintrodb_seg(data.get('credits'), 'outro', total_time)}
 
-def _fetch(tmdb_id, imdb_id, season, episode, total_time):
-	# TheIntroDB primary, IntroDB fallback.
-	empty = {'intro': None, 'recap': None, 'outro': None}
-	errored = False
-	if tmdb_id:
-		data = theintrodb_api.get_media(tmdb_id, season, episode, int((total_time or 0) * 1000))
-		if data is None: errored = True                       # transient failure
-		elif data:                                            # 200 with content
-			segs = _from_theintrodb(data, total_time)
-			if any(segs.values()): return segs, True          # hit
-	if imdb_id:
-		data2 = introdb_api.get_segments(imdb_id, season, episode)
-		if data2 is None: errored = True
-		else:
-			segs2 = {'intro': data2.get('intro'), 'recap': data2.get('recap'), 'outro': data2.get('outro')}
-			if any(segs2.values()): return segs2, True        # hit
-	return empty, not errored
+def _theintrodb(tmdb_id, season, episode, total_time):
+	data = theintrodb_api.get_media(tmdb_id, season, episode, int((total_time or 0) * 1000))
+	if data is None: return None
+	return _from_theintrodb(data, total_time) if data else dict(EMPTY)
 
-def get_segments(tmdb_id, imdb_id, season, episode, total_time, cache_only=False):
+def _introdb(imdb_id, season, episode):
+	data = introdb_api.get_segments(imdb_id, season, episode)
+	if data is None: return None
+	return {'intro': data.get('intro'), 'recap': data.get('recap'), 'outro': data.get('outro')}
+
+def _usable(segs):
+	return bool(segs) and any(segs.values())
+
+def _needs_introdb(record, wanted, total_time):
+	tdb = record.get('theintrodb')
+	if not _usable(tdb): return True
+	return 'outro' in wanted and not valid_segment('outro', tdb.get('outro'), total_time)
+
+def _merge(record, total_time):
+	tdb, idb = record.get('theintrodb'), record.get('introdb')
+	if not _usable(tdb): return dict(idb or EMPTY)
+	merged = dict(tdb)
+	if idb and not valid_segment('outro', merged.get('outro'), total_time): merged['outro'] = idb.get('outro')
+	return merged
+
+def get_segments(tmdb_id, imdb_id, season, episode, total_time, wanted=KINDS, cache_only=False):
 	try: season, episode = int(season), int(episode)
 	except (TypeError, ValueError): return None
 	key_id = tmdb_id or imdb_id
 	if not key_id: return None
 	key = cache_key % (key_id, season, episode, int(total_time or 0))
-	cached = skip_cache.get(key)
-	if cached is not None: return cached
-	if cache_only: return None
-	segments, cacheable = _fetch(tmdb_id, imdb_id, season, episode, total_time)
-	if cacheable:
-		skip_cache.set(key, segments, expiration=HIT_HOURS if any(segments.values()) else EMPTY_HOURS)
+	record = skip_cache.get(key) or {}
+	if cache_only: return _merge(record, total_time) if record else None
+	fresh = False
+	if 'theintrodb' not in record and tmdb_id:
+		result = _theintrodb(tmdb_id, season, episode, total_time)
+		if result is not None: record['theintrodb'], fresh = result, True
+	if 'introdb' not in record and imdb_id and _needs_introdb(record, wanted, total_time):
+		result = _introdb(imdb_id, season, episode)
+		if result is not None: record['introdb'], fresh = result, True
+	segments = _merge(record, total_time)
+	if fresh: skip_cache.set(key, record, expiration=HIT_HOURS if any(segments.values()) else EMPTY_HOURS)
 	return segments
 
 def get_skip_windows(tmdb_id, imdb_id, season, episode, total_time, enabled_kinds, cache_only=False):
-	segments = get_segments(tmdb_id, imdb_id, season, episode, total_time, cache_only=cache_only)
+	segments = get_segments(tmdb_id, imdb_id, season, episode, total_time, enabled_kinds, cache_only=cache_only)
 	if not segments: return []
 	windows = []
 	for kind in KINDS:

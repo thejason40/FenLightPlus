@@ -2,11 +2,11 @@
 import sys
 from datetime import datetime
 from modules.utils import datetime_workaround
-from apis.real_debrid_api import RealDebridAPI
+from apis.real_debrid_api import RealDebridAPI, video_files_with_links
 from modules import kodi_utils
 from modules.source_utils import supported_video_extensions
 from modules.utils import clean_file_name, normalize, jsondate_to_datetime
-# logger = kodi_utils.logger
+logger = kodi_utils.logger
 
 show_busy_dialog, hide_busy_dialog, show_text, set_view_mode = kodi_utils.show_busy_dialog, kodi_utils.hide_busy_dialog, kodi_utils.show_text, kodi_utils.set_view_mode
 add_items, set_content, end_directory = kodi_utils.add_items, kodi_utils.set_content, kodi_utils.end_directory
@@ -68,7 +68,7 @@ def rd_downloads():
 				listitem.setArt({'icon': default_rd_icon, 'poster': default_rd_icon, 'thumb': default_rd_icon, 'fanart': fanart, 'banner': default_rd_icon})
 				info_tag = listitem.getVideoInfoTag()
 				info_tag.setPlot(' ')
-				yield (url, listitem, True)
+				yield (url, listitem, False)
 			except: pass
 	try: downloads = [i for i in RealDebrid.downloads() if i['download'].lower().endswith(tuple(extensions))]
 	except: downloads = []
@@ -86,7 +86,7 @@ def browse_rd_cloud(folder_id):
 				name, url_link, size = item['path'], item['url_link'], float(int(item['bytes']))/1073741824
 				if name.startswith('/'): name = name.split('/')[-1]
 				name = clean_file_name(name).upper()
-				if url_link.startswith('/'): url_link = 'http' + url_link
+				if url_link.startswith('/'): url_link = 'https:' + url_link
 				display = '%02d | [B]FILE[/B] | %.2f GB | [I]%s [/I]' % (count, size, name)
 				url_params = {'mode': 'real_debrid.resolve_rd', 'url': url_link, 'play': 'true'}
 				url = build_url(url_params)
@@ -101,11 +101,12 @@ def browse_rd_cloud(folder_id):
 				yield (url, listitem, False)
 			except: pass
 	handle = int(sys.argv[1])
-	cloud_files = RealDebrid.user_cloud_info(folder_id)
-	files = [i for i in cloud_files['files'] if i['selected'] == 1 and i['path'].lower().endswith(tuple(extensions))]
-	file_info = [dict(i, **{'url_link': cloud_files['links'][idx]}) for idx, i in enumerate(files)]
-	pack_info = sorted(file_info, key=lambda k: k['path'])
-	add_items(handle, list(_builder()))
+	try:
+		cloud_files = RealDebrid.user_cloud_info(folder_id)
+		file_info = [dict(i, **{'url_link': cloud_files['links'][idx]}) for idx, i in video_files_with_links(cloud_files, extensions)]
+		pack_info = sorted(file_info, key=lambda k: k['path'])
+		add_items(handle, list(_builder()))
+	except Exception as e: logger('Real Debrid Cloud', str(e))
 	set_content(handle, 'files')
 	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
@@ -114,7 +115,7 @@ def rd_delete(file_id, cache_type):
 	if not confirm_dialog(): return
 	if cache_type == 'torrent': result = RealDebrid.delete_torrent(file_id)
 	else: result = RealDebrid.delete_download(file_id) # cache_type: 'download'
-	if result.status_code in (401, 403, 404): return notification('Error')
+	if result is None or result.status_code in (401, 403, 404): return notification('Error')
 	RealDebrid.clear_cache()
 	execute_builtin('Container.Refresh')
 

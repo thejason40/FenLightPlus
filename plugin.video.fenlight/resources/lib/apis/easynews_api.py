@@ -34,32 +34,36 @@ class EasyNewsAPI:
 		self.search_link = '/2.0/search/solr-search/advanced'
 		self.account_link = 'https://account.easynews.com/editinfo.php'
 		self.usage_link = 'https://account.easynews.com/usageview.php'
-		self.username = get_setting('fenlight.easynews_user', 'empty_setting')
-		self.password = get_setting('fenlight.easynews_password', 'empty_setting')
-		self.auth = self._get_auth()
-		self.auth_quoted = quote(self.auth)
 		self.base_get = self._get
 		self.base_process = self._process_files
 		self.base_resolver = self.resolver
 
-	def _get_auth(self):
+	@property
+	def username(self):
+		return get_setting('fenlight.easynews_user', 'empty_setting')
+
+	@property
+	def password(self):
+		return get_setting('fenlight.easynews_password', 'empty_setting')
+
+	@property
+	def auth(self):
 		user_info = '%s:%s' % (self.username, self.password)
-		user_info = user_info.encode('utf-8')
-		auth = 'Basic ' + base64.b64encode(user_info).decode('utf-8')
-		return auth
+		return 'Basic ' + base64.b64encode(user_info.encode('utf-8')).decode('utf-8')
+
+	@property
+	def auth_quoted(self):
+		return quote(self.auth)
 
 	def search(self, query, expiration=48):
-		self.query = query
-		url, self.params = self._translate_search()
-		string = 'EASYNEWS_SEARCH_' + urlencode(self.params)
-		return cache_object(self._process_search, string, url, json=False, expiration=expiration)
+		url, params = self._translate_search(query)
+		string = 'EASYNEWS_SEARCH_' + urlencode(params)
+		return cache_object(lambda u: self.base_process(self.base_get(u, params)), string, url, json=False, expiration=expiration)
 
 	def search_images(self, query, page_no=1, expiration=48):
-		self.query = query
-		self.base_process = self.process_image_files
-		url, self.params = self._translate_search(search_type='IMAGE')
-		string = 'EASYNEWS_IMAGE_SEARCH_%s' % urlencode(self.params)
-		results = cache_object(self._process_search, string, url, json=False, expiration=expiration)
+		url, params = self._translate_search(query, search_type='IMAGE')
+		string = 'EASYNEWS_IMAGE_SEARCH_%s' % urlencode(params)
+		results = cache_object(lambda u: self.process_image_files(self.base_get(u, params), query), string, url, json=False, expiration=expiration)
 		try: results['results'] = results['results'][page_no -1]
 		except: pass
 		return results
@@ -87,7 +91,7 @@ class EasyNewsAPI:
 		except: pass
 		return usage_info
 
-	def process_image_files(self, files):
+	def process_image_files(self, files, query):
 		def _process():
 			count = 1
 			for item in files:
@@ -101,7 +105,7 @@ class EasyNewsAPI:
 					url_dl = download_url + url_add
 					file_dl = down_url + url_add + '|Authorization=%s' % self.auth_quoted
 					thumbnail = 'https://th.easynews.com/thumbnails-%s/sm-%s.jpg' % (post_hash[0:3], post_hash)
-					result = {'name': '%s_%s_%02d' % (self.query, post_title, count),
+					result = {'name': '%s_%s_%02d' % (query, post_title, count),
 							  'fullsize': size,
 							  'fullres': item['fullres'],
 							  'url_dl': url_dl,
@@ -194,16 +198,10 @@ class EasyNewsAPI:
 		results = list(_process())
 		return results
 
-	def _translate_search(self, search_type='VIDEO'):
-		params = search_types_params[search_type]
-		params['safeO'] = 0
-		params['gps'] = self.query
+	def _translate_search(self, query, search_type='VIDEO'):
+		params = dict(search_types_params[search_type], safeO=0, gps=query)
 		url = self.base_url + self.search_link
 		return url, params
-
-	def _process_search(self, url):
-		results = self.base_get(url, self.params)
-		return self.base_process(results)
 
 	def _get(self, url, params={}):
 		headers = {'Authorization': self.auth}
@@ -224,13 +222,17 @@ class EasyNewsAPI:
 	def resolve_easynews(self, url_dl, no_seek=None):
 		return self.base_resolver(url_dl, no_seek)
 
-	def resolver(self, url_dl, no_seek=None):
-		# 'No Seek': mark the stream non-seekable so Kodi skips the seek/length handshake
+	def _apply_no_seek(self, url_dl, no_seek):
+		# 'No Seek': mark the stream non-seekable so Kodi skips the seek/length handshake.
+		# Never on downloads (their url_dl carries the auth header appended after '|').
 		if no_seek is None:
 			no_seek = get_setting('fenlight.easynews.playback_method', '0') == '1'
 		else:
 			no_seek = no_seek in (True, 'true')
-		apply_flag = no_seek and '|Authorization=' not in url_dl   # never on downloads
+		return no_seek and '|Authorization=' not in url_dl
+
+	def resolver(self, url_dl, no_seek=None):
+		apply_flag = self._apply_no_seek(url_dl, no_seek)
 		try:
 			headers = {'Authorization': self.auth}
 			resolved_link = session.get(url_dl, headers=headers, stream=True, timeout=timeout).url
@@ -239,11 +241,7 @@ class EasyNewsAPI:
 		return resolved_link
 
 	def resolver_v3(self, url_dl, no_seek=None):
-		if no_seek is None:
-			no_seek = get_setting('fenlight.easynews.playback_method', '0') == '1'
-		else:
-			no_seek = no_seek in (True, 'true')
-		apply_flag = no_seek and '|Authorization=' not in url_dl   # never on downloads
+		apply_flag = self._apply_no_seek(url_dl, no_seek)
 		headers = {'Authorization': self.auth}
 		response = session.get(url_dl, headers=headers, stream=True, timeout=timeout)
 		stream_url = response.url

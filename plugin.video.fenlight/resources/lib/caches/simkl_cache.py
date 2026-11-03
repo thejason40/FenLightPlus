@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
-from caches.base_cache import connect_database
+from caches.base_cache import connect_database, replace_rows
 from modules.kodi_utils import sleep, confirm_dialog, close_all_dialog
 # from modules.kodi_utils import logger
 
@@ -43,20 +43,16 @@ simkl_cache = SimklCache()
 
 class SimklWatched():
 	def set_bulk_movie_watched(self, insert_list):
-		self._delete(WATCHED_DELETE, ('movie',))
-		self._executemany(WATCHED_INSERT, insert_list)
+		replace_rows('simkl_db', WATCHED_DELETE, ('movie',), WATCHED_INSERT, insert_list)
 
 	def set_bulk_tvshow_watched(self, insert_list):
-		self._delete(WATCHED_DELETE, ('episode',))
-		self._executemany(WATCHED_INSERT, insert_list)
+		replace_rows('simkl_db', WATCHED_DELETE, ('episode',), WATCHED_INSERT, insert_list)
 
 	def set_bulk_movie_progress(self, insert_list):
-		self._delete(PROGRESS_DELETE, ('movie',))
-		self._executemany(PROGRESS_INSERT, insert_list)
+		replace_rows('simkl_db', PROGRESS_DELETE, ('movie',), PROGRESS_INSERT, insert_list)
 
 	def set_bulk_tvshow_progress(self, insert_list):
-		self._delete(PROGRESS_DELETE, ('episode',))
-		self._executemany(PROGRESS_INSERT, insert_list)
+		replace_rows('simkl_db', PROGRESS_DELETE, ('episode',), PROGRESS_INSERT, insert_list)
 
 	# --- Phase-2 delta merge: touch only the items in the delta, leave everything else intact ---
 	def replace_show(self, media_id, insert_list):
@@ -89,15 +85,6 @@ class SimklWatched():
 			rows = dbcon.execute(SEASONS_SELECT, ('episode', str(media_id))).fetchall()
 			return sorted(int(r[0]) for r in rows if r[0] is not None)
 		except: return []
-
-	def _executemany(self, command, insert_list):
-		dbcon = connect_database('simkl_db')
-		dbcon.executemany(command, insert_list)
-
-	def _delete(self, command, args):
-		dbcon = connect_database('simkl_db')
-		dbcon.execute(command, args)
-		dbcon.execute('VACUUM')
 
 simkl_watched_cache = SimklWatched()
 

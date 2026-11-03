@@ -155,16 +155,28 @@ def auto_rescrape_with_all():
 def auto_episode_group():
 	return int(get_setting('fenlight.results.auto_episode_group', '0'))
 
+def scraper_window_style():
+	return get_setting('fenlight.scraper_window.style', '1')
+
+def scraper_window_settings():
+	return {'tv_plot': get_setting('fenlight.scraper_window.tv_plot', '0'),
+			'movie_plot': get_setting('fenlight.scraper_window.movie_plot', 'true') == 'true',
+			'details': get_setting('fenlight.scraper_window.details', 'true') == 'true',
+			'crew': get_setting('fenlight.scraper_window.crew', 'false') == 'true',
+			'cast': get_setting('fenlight.scraper_window.cast', 'false') == 'true',
+			'ends_at': get_setting('fenlight.scraper_window.ends_at', 'true') == 'true'}
+
 def auto_nextep_settings(play_type):
 	play_type = 'autoplay' if play_type == 'autoplay_nextep' else 'autoscrape'
 	window_percentage = 100 - int(get_setting('fenlight.%s_next_window_percentage' % play_type, '95'))
 	use_chapters = get_setting('fenlight.%s_use_chapters' % play_type, 'true') == 'true'
+	use_outro = get_setting('fenlight.%s_use_outro' % play_type, 'false') == 'true'
 	scraper_time = int(get_setting('fenlight.results.timeout', '60')) + 20
 	if play_type == 'autoplay':
 		alert_method = int(get_setting('fenlight.autoplay_alert_method', '0'))
 		default_action = default_action_dict[get_setting('fenlight.autoplay_default_action', '1')]
 	else: alert_method, default_action = '', ''
-	return {'scraper_time': scraper_time, 'window_percentage': window_percentage, 'alert_method': alert_method, 'default_action': default_action, 'use_chapters': use_chapters}
+	return {'scraper_time': scraper_time, 'window_percentage': window_percentage, 'alert_method': alert_method, 'default_action': default_action, 'use_chapters': use_chapters, 'use_outro': use_outro}
 
 def filter_status(filter_type):
 	return int(get_setting('fenlight.filter.%s' % filter_type, '0'))

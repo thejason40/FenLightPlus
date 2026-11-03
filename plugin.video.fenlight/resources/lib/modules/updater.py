@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import json
 import requests
 import shutil
@@ -23,6 +24,7 @@ changelog_location = translate_path('special://home/addons/plugin.video.fenlight
 downloads_icon = get_icon('downloads')
 addon_dir = 'plugin.video.fenlight'
 zipfile_name = 'plugin.video.fenlight-%s.zip'
+timeout = 30
 heading_str = 'Fen Light Updater'
 error_str = 'Error'
 notification_occuring_str = 'Fen Light+ Update Occuring'
@@ -45,12 +47,39 @@ changes_heading_str = 'New Online Release (v.%s) Changelog'
 view_changes_str = 'Do you want to view the changelog for the new release before installing?'
 no_changes_str = 'You are running the current version of Fen Light+.[CR][CR]There is no new version changelog to view.'
 
+def install_zip(zip_location):
+	# The installed add-on is only touched once update is downloaded and valid
+	installed = osPath.join(home_addons_dir, addon_dir)
+	staging, backup = osPath.join(packages_dir, 'fenlight_update_staging'), osPath.join(packages_dir, 'fenlight_update_backup')
+	if osPath.isdir(backup) and not osPath.isdir(installed):
+		try: os.rename(backup, installed)
+		except: return False
+	for folder in (staging, backup): shutil.rmtree(folder, ignore_errors=True)
+	try:
+		with ZipFile(zip_location) as zip_file:
+			if zip_file.testzip() is not None: return False
+			if not any(i.startswith(addon_dir + '/') for i in zip_file.namelist()): return False
+	except: return False
+	if not unzip(zip_location, staging, osPath.join(staging, addon_dir, ''), show_busy=False): return False
+	try: os.rename(installed, backup)
+	except:
+		shutil.rmtree(staging, ignore_errors=True)
+		return False
+	try: os.rename(osPath.join(staging, addon_dir), installed)
+	except:
+		try: os.rename(backup, installed)
+		except: pass
+		shutil.rmtree(staging, ignore_errors=True)
+		return False
+	for folder in (staging, backup): shutil.rmtree(folder, ignore_errors=True)
+	return True
+
 def get_location(insert=''):
 	return 'https://github.com/%s/%s/raw/main/packages/%s' % (get_setting('fenlight.update.username'), get_setting('update.location'), insert)
 
 def get_versions():
 	try:
-		result = requests.get(get_location('fen_light_version'))
+		result = requests.get(get_location('fen_light_version'), timeout=timeout)
 		if result.status_code != 200: return None, None
 		online_version = result.text.replace('\n', '')
 		current_version = addon_version()
@@ -63,7 +92,7 @@ def get_changes(online_version=None):
 			current_version, online_version = get_versions()
 			if not version_check(current_version, online_version): return ok_dialog(heading=heading_str, text=no_changes_str)
 		show_busy_dialog()
-		result = requests.get(get_location('fen_light_changes'))
+		result = requests.get(get_location('fen_light_changes'), timeout=timeout)
 		hide_busy_dialog()
 		if result.status_code != 200: return notification(error_str, icon=downloads_icon)
 		changes = result.text
@@ -95,9 +124,10 @@ def rollback_check():
 	current_version = get_versions()[0]
 	url = 'https://api.github.com/repos/%s/%s/contents/packages' % (get_setting('fenlight.update.username'), get_setting('update.location'))
 	show_busy_dialog()
-	results = requests.get(url)
+	try: results = requests.get(url, timeout=timeout)
+	except: results = None
 	hide_busy_dialog()
-	if results.status_code != 200: return ok_dialog(heading=heading_str, text=error_rollback_str)
+	if results is None or results.status_code != 200: return ok_dialog(heading=heading_str, text=error_rollback_str)
 	results = [i['name'].split('-')[1].replace('.zip', '') for i in results.json() if 'plugin.video.fenlight' in i['name'] \
 #				and not i['name'].split('-')[1].replace('.zip', '') == current_version
 	]
@@ -118,14 +148,17 @@ def update_addon(new_version, action):
 	zip_name = zipfile_name % new_version
 	url = get_location('%s') % zip_name
 	show_busy_dialog()
-	result = requests.get(url, stream=True)
+	try: result = requests.get(url, stream=True, timeout=timeout)
+	except: result = None
 	hide_busy_dialog()
-	if result.status_code != 200: return ok_dialog(heading=heading_str, text=error_update_str)
+	if result is None or result.status_code != 200: return ok_dialog(heading=heading_str, text=error_update_str)
 	zip_location = osPath.join(packages_dir, zip_name)
-	with open(zip_location, 'wb') as f: shutil.copyfileobj(result.raw, f)
-	shutil.rmtree(osPath.join(home_addons_dir, addon_dir))
-	success = unzip(zip_location, home_addons_dir, destination_check)
-	delete_file(zip_location)
+	try:
+		with open(zip_location, 'wb') as f: shutil.copyfileobj(result.raw, f)
+		success = install_zip(zip_location)
+	except: success = False
+	try: delete_file(zip_location)
+	except: pass
 	if not success: return ok_dialog(heading=heading_str, text=error_update_str)
 	if action == 5:
 		set_setting('update.action', '3')

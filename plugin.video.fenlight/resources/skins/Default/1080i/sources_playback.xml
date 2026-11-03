@@ -564,16 +564,19 @@
             <control type="grouplist">
                 <visible>String.IsEqual(Window.Property(window_mode),resume)</visible>
                 <top>620</top>
-                <left>650</left>
+                <left>0</left>
+                <width>1920</width>
+                <align>center</align>
                 <orientation>horizontal</orientation>
                 <itemgap>10</itemgap>
                 <control type="button" id="10">
                     <description>Resume</description>
-                    <width>200</width>
+                    <width min="200">auto</width>
                     <height>60</height>
+                    <textoffsetx>30</textoffsetx>
                     <onleft>12</onleft>
                     <onright>11</onright>
-                    <label>Resume $INFO[Window.Property(resume_percent)]%</label>
+                    <label>$INFO[Window.Property(resume_label)]</label>
                     <font>font12</font> <!-- FENLIGHT_26 -->
                     <textcolor>FFCCCCCC</textcolor>
                     <focusedcolor>FF1F2020</focusedcolor>
@@ -612,6 +615,17 @@
                     <align>center</align>
                     <aligny>center</aligny>
                 </control>
+            </control>
+            <control type="label">
+                <visible>String.IsEqual(Window.Property(window_mode),resume) + String.IsEqual(Window.Property(resume_no_seek),true)</visible>
+                <top>700</top>
+                <width>1920</width>
+                <height>40</height>
+                <font>font12</font> <!-- FENLIGHT_26 -->
+                <textcolor>FFB7B4BB</textcolor>
+                <align>center</align>
+                <aligny>center</aligny>
+                <label>Resume unavailable when using 'no seek'</label>
             </control>
         </control>
     </controls>

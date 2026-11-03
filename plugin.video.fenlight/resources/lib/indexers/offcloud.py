@@ -5,7 +5,7 @@ from apis.offcloud_api import OffcloudAPI
 from modules import kodi_utils
 from modules.source_utils import supported_video_extensions
 from modules.utils import clean_file_name, normalize
-# logger = kodi_utils.logger
+logger = kodi_utils.logger
 
 make_listitem, build_url, show_busy_dialog, hide_busy_dialog = kodi_utils.make_listitem, kodi_utils.build_url, kodi_utils.show_busy_dialog, kodi_utils.hide_busy_dialog
 show_text, confirm_dialog, notification, execute_builtin = kodi_utils.show_text, kodi_utils.confirm_dialog, kodi_utils.notification, kodi_utils.execute_builtin
@@ -41,12 +41,13 @@ def oc_cloud():
 				listitem.setArt({'icon': default_oc_icon, 'poster': default_oc_icon, 'thumb': default_oc_icon, 'fanart': fanart, 'banner': default_oc_icon})
 				yield (url, listitem, is_folder)
 			except: pass
-	cloud_folders = Offcloud.user_cloud()
-	folders = [i for i in cloud_folders if i['status'] == 'downloaded']
 	handle = int(sys.argv[1])
-	add_items(handle, list(_builder()))
+	try:
+		folders = [i for i in Offcloud.user_cloud() or [] if i['status'] == 'downloaded']
+		add_items(handle, list(_builder()))
+	except Exception as e: logger('Offcloud Cloud', str(e))
 	set_content(handle, 'files')
-	end_directory(handle)
+	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
 
 def browse_oc_cloud(folder_id):
@@ -69,12 +70,13 @@ def browse_oc_cloud(folder_id):
 				listitem.setInfo('video', {})
 				yield (url, listitem, False)
 			except: pass
-	torrent_files = Offcloud.user_cloud_info(folder_id)
-	video_files = [i for i in torrent_files if i.lower().endswith(tuple(extensions))]
 	handle = int(sys.argv[1])
-	add_items(handle, list(_builder()))
+	try:
+		video_files = [i for i in Offcloud.user_cloud_info(folder_id) or [] if i.lower().endswith(tuple(extensions))]
+		add_items(handle, list(_builder()))
+	except Exception as e: logger('Offcloud Cloud', str(e))
 	set_content(handle, 'files')
-	end_directory(handle)
+	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
 
 def oc_delete(folder_id):

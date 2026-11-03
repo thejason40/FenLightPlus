@@ -32,7 +32,7 @@ Go to Kodi -> File Manager -> Add Source -> add
 
 call it "FenPlus"
 
-Then go to Kodi -> Settings -> Add Ons -> Install from Zip -> FenPlus -> Install FenLight+ 2.5.2
+Then go to Kodi -> Settings -> Add Ons -> Install from Zip -> FenPlus -> Install FenLight+ 2.5.4
 
 <hr>
 <i>Full credit to Tikipeter for creating Fen and FenLight. Thanks to minicoz for forking Tiki's repository before it was taken down.</i>

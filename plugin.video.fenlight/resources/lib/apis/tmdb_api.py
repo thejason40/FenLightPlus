@@ -720,17 +720,16 @@ def auth():
 	url = 'https://www.themoviedb.org/auth/access?request_token=%s' % response['request_token']
 	try:
 		tiny_url, qr_icon = kodi_utils.make_qr(url)
-	except: pass
-	
+	except: tiny_url, qr_icon = url, ''
+
 	content = 'Authorize TMDB Account[CR]Scan the QR code or navigate to: [B]%s[/B]' % tiny_url
 	progressDialog = progress_dialog('TMDB Authorize', qr_icon)
 	progressDialog.update(content, 0)
 	data = {'request_token': response['request_token']}
 	url = '%s/auth/access_token' % (base_url_4)
 	
-	# Give the user more time to approve the request
 	timeout_counter = 0
-	max_timeout = 120  # Give the user 2 minutes to approve
+	max_timeout = 120
 	
 	while not progressDialog.iscanceled() and not access_token and timeout_counter < max_timeout:
 		sleep(1000)  # Wait 1 second between attempts
@@ -777,7 +776,7 @@ def unauth():
 	head = {'Authorization': f"Bearer {read_token}"}
 	data = {'access_token': access_token}
 	url = '%s/auth/access_token' % (base_url_4)
-	response = requests.delete(url, json=data, headers=head).json()
+	response = requests.delete(url, json=data, headers=head, timeout=timeout).json()
 	set_setting('tmdb.access_token', 'empty_setting')
 	set_setting('tmdb.account_id', 'empty_setting')
 	ok_dialog(text='Success')
@@ -790,7 +789,7 @@ def get_lists(list_type, page = 1):
 	url = f'{base_url_4}/account/{account_id}/lists?page={page}'
 
 	try:
-		response = requests.get(url, headers=head)
+		response = requests.get(url, headers=head, timeout=timeout)
 		response.raise_for_status()
 		json_data = response.json()
 	except Exception as e:
@@ -813,7 +812,7 @@ def get_list_items(params):
 	access_token = get_setting('tmdb.access_token')
 	head = {'Authorization': f'Bearer {access_token}'}
 	url = f'{base_url_4}/list/{list_id}?page={page_no}'
-	response = requests.get(url, headers=head).json()
+	response = requests.get(url, headers=head, timeout=timeout).json()
 	return response
 	
 def new_tmdb_list(keep_open = False, params = '', default_text = ''):
@@ -834,7 +833,7 @@ def new_tmdb_list(keep_open = False, params = '', default_text = ''):
 		'Authorization': f'Bearer {access_token}'
 		}
 	url = f'{base_url_4}/list'
-	response = requests.post(url, json=payload, headers=head).json()
+	response = requests.post(url, json=payload, headers=head, timeout=timeout).json()
 	if response.get('success'):
 		return_params = { 'list_title': list_title, 'list_id': response.get('id') }
 		if not default_text == '':
@@ -860,7 +859,7 @@ def del_tmdb_list(list_id):
 		'Authorization': f'Bearer {access_token}'
 		}
 	url = f'{base_url_4}/list/{list_id}'
-	response = requests.delete(url, headers=head).json()
+	response = requests.delete(url, headers=head, timeout=timeout).json()
 	if response.get('success'):
 		notification('Success', 3000)
 		kodi_utils.kodi_refresh()
@@ -878,7 +877,7 @@ def clear_tmdb_list(list_id, list_name):
 		'Authorization': f'Bearer {access_token}'
 		}
 	url = f'{base_url_4}/list/{list_id}/clear'
-	response = requests.get(url, headers=head).json()
+	response = requests.get(url, headers=head, timeout=timeout).json()
 	if response.get('success'):
 		from caches.lists_cache import lists_cache
 		lists_cache.delete_tmdb_list(list_id)
@@ -1000,7 +999,7 @@ def update_list(payload, list_id):
 		'Authorization': f'Bearer {access_token}'
 		}
 	url = f'{base_url_4}/list/{list_id}'
-	response = requests.put(url, json=payload, headers=head).json()
+	response = requests.put(url, json=payload, headers=head, timeout=timeout).json()
 	if response.get('success'):
 		notification('Success', 3000)
 		kodi_utils.kodi_refresh()
@@ -1030,7 +1029,7 @@ def check_item_exists(item_params, list_params):
 	media_type, media_id = item_params.get('media_type'), item_params.get('tmdb_id')
 	list_id = list_params.get('list_id')
 	url = f'{base_url_4}/list/{list_id}/item_status?media_id={media_id}&media_type={media_type}'
-	response = requests.get(url, headers=head).json()
+	response = requests.get(url, headers=head, timeout=timeout).json()
 	if response.get('success') and response.get('status_message') == 'Success.':
 		exists = True
 	else:

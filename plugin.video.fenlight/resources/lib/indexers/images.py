@@ -6,7 +6,7 @@ from apis.tmdb_api import tmdb_people_info, tmdb_people_full_info, tmdb_popular_
 from apis.easynews_api import import_easynews
 from modules.utils import paginate_list, chunks
 from modules import kodi_utils
-# logger = kodi_utils.logger
+logger = kodi_utils.logger
 
 notification, make_listitem, list_dirs, image_extensions = kodi_utils.notification, kodi_utils.make_listitem, kodi_utils.list_dirs, kodi_utils.image_extensions
 delete_file, show_busy_dialog, hide_busy_dialog, get_icon = kodi_utils.delete_file, kodi_utils.show_busy_dialog, kodi_utils.hide_busy_dialog, kodi_utils.get_icon
@@ -21,15 +21,17 @@ class Images():
 		self.direct_search_result = False
 		if self.mode == 'imageviewer': return self.imageviewer()
 		if self.mode == 'delete_image': return self.delete_image()
-		if self.mode == 'tmdb_people_list_image_results': self.tmdb_people_list_image_results()
-		elif self.mode == 'tmdb_people_search_image_results': self.tmdb_people_search_image_results()
-		elif self.mode == 'favorite_people_list_image_results': self.favorite_people_list_image_results()
-		elif self.mode == 'tmdb_media_image_results': self.tmdb_media_image_results()
-		elif self.mode == 'tmdb_people_image_results': self.tmdb_people_image_results()
-		elif self.mode == 'tmdb_people_tagged_image_results': self.tmdb_people_tagged_image_results()
-		elif self.mode == 'favorites_image_results': self.favorites_image_results()
-		elif self.mode == 'easynews_image_results': self.easynews_image_results()
-		elif self.mode == 'browser_image': self.browser_image()
+		try:
+			if self.mode == 'tmdb_people_list_image_results': self.tmdb_people_list_image_results()
+			elif self.mode == 'tmdb_people_search_image_results': self.tmdb_people_search_image_results()
+			elif self.mode == 'favorite_people_list_image_results': self.favorite_people_list_image_results()
+			elif self.mode == 'tmdb_media_image_results': self.tmdb_media_image_results()
+			elif self.mode == 'tmdb_people_image_results': self.tmdb_people_image_results()
+			elif self.mode == 'tmdb_people_tagged_image_results': self.tmdb_people_tagged_image_results()
+			elif self.mode == 'favorites_image_results': self.favorites_image_results()
+			elif self.mode == 'easynews_image_results': self.easynews_image_results()
+			elif self.mode == 'browser_image': self.browser_image()
+		except Exception as e: logger('Images Error', '%s: %s' % (self.mode, e)); self.list_items = []
 		hide_busy_dialog()
 		if self.direct_search_result: return
 		if len(self.list_items) == 0: return notification('None Found')

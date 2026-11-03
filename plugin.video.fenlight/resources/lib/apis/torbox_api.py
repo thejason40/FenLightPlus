@@ -1,10 +1,10 @@
 import time
 import requests
 from threading import Thread
-from urllib.parse import urlencode
-from caches.settings_cache import get_setting, set_setting
+from urllib.parse import urlencode, urlsplit, urlunsplit, parse_qsl
+from caches.settings_cache import get_setting, set_setting, LiveSetting
 from caches.main_cache import cache_object
-from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
+from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS, DebridAccountError
 from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification, confirm_dialog, sleep, progress_dialog, make_qr
 from modules.utils import copy2clip, get_datetime, jsondate_to_datetime as js2date
 from modules.kodi_utils import logger
@@ -22,13 +22,14 @@ remove_usenet = 'usenet/controlusenetdownload'
 history_usenet = 'usenet/mylist'
 explore_usenet = 'usenet/mylist?id=%s'
 user_agent = 'Mozilla/5.0'
+auth_app_name = 'FenLight+'
+account_errors = ('PLAN_RESTRICTED_FEATURE', 'NO_AUTH', 'BAD_TOKEN', 'AUTH_ERROR', 'MONTHLY_LIMIT', 'COOLDOWN_LIMIT', 'ACTIVE_LIMIT')
 timeout = 20.0
 session = make_session(base_url)
 
 class TorBoxAPI:
 
-	def __init__(self):
-		self.token = get_setting('fenlight.tb.token')
+	token = LiveSetting('fenlight.tb.token')
 
 	def _get(self, url, data={}):
 		if self.token in ('empty_setting', ''): return None
@@ -58,7 +59,7 @@ class TorBoxAPI:
 
 	def hash_in_user_cloud(self, info_hash):
 		# is this transfer already in the user's cloud? (so callers don't delete the user's own item)
-		try: return any((i.get('hash') or '').lower() == (info_hash or '').lower() for i in self._get(history)['data'])
+		try: return any((i.get('hash') or '').lower() == (info_hash or '').lower() for i in self.user_cloud()['data'])
 		except: return False
 
 	def user_cloud_usenet(self):
@@ -125,11 +126,15 @@ class TorBoxAPI:
 
 	def resolve_magnet(self, magnet_url, info_hash, store_to_cloud, title, season, episode):
 		try:
-			file_url, match, torrent_id = None, False, None
+			file_url, match, torrent_id, keep_torrent = None, False, None, True
 			extensions = supported_video_extensions()
 			extras_filtering_list = tuple(i for i in EXTRAS if not i in title.lower())
+			keep_torrent = store_to_cloud or self.hash_in_user_cloud(info_hash)
 			torrent = self.add_magnet(magnet_url)
-			if not torrent['success']: logger('TorBox resolve_magnet', 'add_magnet failed. Response: %s' % str(torrent)); return None
+			if not torrent['success']:
+				logger('TorBox resolve_magnet', 'add_magnet failed. Response: %s' % str(torrent))
+				if torrent.get('error') in account_errors: raise DebridAccountError(torrent.get('detail') or torrent['error'])
+				return None
 			torrent_id = torrent['data']['torrent_id']
 			torrent_files = self.torrent_info(torrent_id)
 			selected_files = [{'url': '%d,%d' % (torrent_id, item['id']), 'filename': item['short_name'], 'size': item['size']} \
@@ -142,16 +147,17 @@ class TorBoxAPI:
 				selected_files = [i for i in selected_files if seas_ep_filter(season, episode, i['filename'])]
 			else:
 				if self._m2ts_check(selected_files): return None
-				selected_files = [i for i in selected_files if not any(x in i['filename'] for x in extras_filtering_list)]
+				selected_files = [i for i in selected_files if not any(x in i['filename'].lower() for x in extras_filtering_list)]
 				selected_files.sort(key=lambda k: k['size'], reverse=True)
 			if not selected_files: logger('TorBox resolve_magnet', 'no file matched season %s episode %s' % (season, episode)); return None
 			file_key = selected_files[0]['url']
 			file_url = self.unrestrict_link(file_key)
-			if not store_to_cloud: Thread(target=self.delete_torrent, args=(torrent_id,)).start()
+			if not keep_torrent: Thread(target=self.delete_torrent, args=(torrent_id,)).start()
 			return file_url
+		except DebridAccountError: raise
 		except Exception as e:
 			logger('TorBox resolve_magnet', str(e))
-			if torrent_id: self.delete_torrent(torrent_id)
+			if torrent_id and not keep_torrent: self.delete_torrent(torrent_id)
 			return None
 
 	def display_magnet_pack(self, magnet_url, info_hash):
@@ -181,11 +187,13 @@ class TorBoxAPI:
 	def auth(self):
 
 		try:
-			r = requests.get(base_url + 'user/auth/device/start', params={'app': 'FenLight+ Companion'}, timeout=timeout).json().get('data')
+			r = requests.get(base_url + 'user/auth/device/start', params={'app': auth_app_name}, timeout=timeout).json().get('data')
 		except Exception: r = None
 		if not r: return ok_dialog(text='Could not start TorBox authorization')
 		device_code, user_code = r['device_code'], r['code']
-		verify_url = r.get('verification_url', 'https://torbox.app/oauth/device')
+		parts = urlsplit(r.get('verification_url') or 'https://torbox.app/oauth/device')
+		query = [(k, v) for k, v in parse_qsl(parts.query) if k != 'app'] + [('app', auth_app_name)]
+		verify_url = urlunsplit(parts._replace(query=urlencode(query)))
 		interval = int(r.get('interval', 5))
 		try:
 			expires_in = int((js2date(r['expires_at'], '%Y-%m-%dT%H:%M:%SZ') - get_datetime()).total_seconds())
@@ -194,14 +202,16 @@ class TorBoxAPI:
 		try: copy2clip(user_code)
 		except Exception: pass
 		tiny_url, qr_icon = make_qr(verify_url)
-		content = 'Scan the QR code or navigate to: [B]%s[/B][CR]Enter this code: [B]%s[/B]  (copied to clipboard)' % (verify_url, user_code)
+		content = 'Scan the QR code or navigate to: [B]%s[/B][CR]Enter this code: [B]%s[/B]  (copied to clipboard)' % (tiny_url, user_code)
 		progressDialog = progress_dialog('TorBox Authorize', qr_icon)
 		progressDialog.update(content, 0)
 		token, start, time_passed = None, time.time(), 0
 		while not progressDialog.iscanceled() and time_passed < expires_in and not token:
 			sleep(1000 * interval)
 			try: response = requests.post(base_url + 'user/auth/device/token', json={'device_code': device_code}, timeout=timeout).json()
-			except Exception: continue
+			except Exception:
+				time_passed = time.time() - start
+				continue
 
 			if response.get('success'):
 				token = (response.get('data') or {}).get('access_token')

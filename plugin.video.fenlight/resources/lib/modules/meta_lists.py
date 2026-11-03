@@ -472,6 +472,15 @@ watch_providers_tvshows = [
 {'name': 'Hallmark Movies & Mysteries', 'id': 1966, 'icon': '80iXgRgamAX3JOMVg1EDHMX9s1f.jpg'}, {'name': 'Outside Watch', 'id': 1976, 'icon': '7N6w9Hz541qNhlHEHjHgEGCjKDh.jpg'},
 {'name': 'Citytv', 'id': 1985, 'icon': 'piaX7JA1HEJ3qA4CKQ5LZyxxshm.jpg'}]
 
+chart_services = {
+'netflix': {'name': 'Netflix', 'icon': 'network_netflix'}, 'prime': {'name': 'Prime Video', 'icon': 'network_amazon'},
+'disney': {'name': 'Disney+', 'icon': 'network_disneyplus'}, 'hbo': {'name': 'HBO Max', 'icon': 'network_hbomax'},
+'hulu': {'name': 'Hulu', 'icon': 'network_hulu'}, 'apple': {'name': 'Apple TV+', 'icon': 'network_appletvplus'},
+'crave': {'name': 'Crave', 'icon': 'network_crave'}
+	}
+
+chart_countries = {'au': 'Australia', 'ca': 'Canada', 'de': 'Germany', 'gb': 'United Kingdom', 'th': 'Thailand', 'us': 'United States'}
+
 movie_sorts = [
 {'name': 'Popularity (asc)', 'id': '&sort_by=popularity.asc'}, {'name': 'Popularity (desc)', 'id': '&sort_by=popularity.desc'},
 {'name': 'Release Date (asc)', 'id': '&sort_by=primary_release_date.asc'}, {'name': 'Release Date (desc)', 'id': '&sort_by=primary_release_date.desc'},

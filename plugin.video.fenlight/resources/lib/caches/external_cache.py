@@ -14,9 +14,7 @@ class ExternalCache(object):
 		result = None
 		try:
 			cache_data = self._execute(SELECT_RESULTS, (source, media_type, tmdb_id, title, year, season, episode)).fetchone()
-			if cache_data:
-				if cache_data[1] > get_timestamp(): result = eval(cache_data[0])
-				else: self.delete(source, media_type, title, year, tmdb_id, season, episode)
+			if cache_data and cache_data[1] > get_timestamp(): result = eval(cache_data[0])
 		except: pass
 		return result
 
@@ -26,9 +24,9 @@ class ExternalCache(object):
 			self._execute(INSERT_RESULTS, (source, media_type, tmdb_id, title, year, season, episode, repr(results or []), int(expires)))
 		except: pass
 
-	def delete(self, source, media_type, tmdb_id, title, season, episode):
+	def delete(self, source, media_type, tmdb_id, title, year, season, episode):
 		try:
-			self._execute(DELETE_RESULTS, (source, media_type, tmdb_id, title, season, episode))
+			self._execute(DELETE_RESULTS, (source, media_type, tmdb_id, title, year, season, episode))
 		except: return
 
 	def delete_cache_single(self, media_type, tmdb_id):
@@ -46,8 +44,8 @@ class ExternalCache(object):
 		except: return False
 
 	def _execute(self, command, params):
-		self.dbcon = connect_database('external_db')
-		return self.dbcon.execute(command, params)
+		dbcon = connect_database('external_db')
+		return dbcon.execute(command, params)
 
 	def clean_database(self):
 		try:

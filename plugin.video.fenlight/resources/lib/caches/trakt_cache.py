@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from threading import Thread
-from caches.base_cache import connect_database
+from caches.base_cache import connect_database, replace_rows
 from modules.kodi_utils import sleep, confirm_dialog, close_all_dialog
 # from modules.kodi_utils import logger
 
 SELECT = 'SELECT id FROM trakt_data'
 DELETE = 'DELETE FROM trakt_data WHERE id=?'
-DELETE_LIKE = 'DELETE FROM trakt_data WHERE id LIKE "%s"'
+DELETE_LIKE = 'DELETE FROM trakt_data WHERE id LIKE ?'
 WATCHED_INSERT = 'INSERT OR IGNORE INTO watched VALUES (?, ?, ?, ?, ?, ?)'
 WATCHED_DELETE = 'DELETE FROM watched WHERE db_type = ?'
 PROGRESS_INSERT = 'INSERT OR IGNORE INTO progress VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
@@ -45,41 +45,27 @@ trakt_cache = TraktCache()
 
 class TraktWatched():
 	def set_bulk_tvshow_status(self, insert_list):
-		self._delete(STATUS_DELETE, ())
-		self._executemany(STATUS_INSERT, insert_list)
+		replace_rows('trakt_db', STATUS_DELETE, (), STATUS_INSERT, insert_list)
 
 	def set_tvshow_status(self, insert_dict):
 		dbcon = connect_database('trakt_db')
 		dbcon.execute('INSERT OR REPLACE INTO trakt_data (id, data) VALUES (?, ?)', ('trakt_tvshow_status', repr(insert_dict),))
 
 	def set_bulk_movie_watched(self, insert_list):
-		self._delete(WATCHED_DELETE, ('movie',))
-		self._executemany(WATCHED_INSERT, insert_list)
+		replace_rows('trakt_db', WATCHED_DELETE, ('movie',), WATCHED_INSERT, insert_list)
 
 	def set_bulk_tvshow_watched(self, insert_list):
-		self._delete(WATCHED_DELETE, ('episode',))
-		self._executemany(WATCHED_INSERT, insert_list)
+		replace_rows('trakt_db', WATCHED_DELETE, ('episode',), WATCHED_INSERT, insert_list)
 
 	def set_bulk_movie_progress(self, insert_list):
-		self._delete(PROGRESS_DELETE, ('movie',))
-		self._executemany(PROGRESS_INSERT, insert_list)
+		replace_rows('trakt_db', PROGRESS_DELETE, ('movie',), PROGRESS_INSERT, insert_list)
 
 	def set_bulk_tvshow_progress(self, insert_list):
-		self._delete(PROGRESS_DELETE, ('episode',))
-		self._executemany(PROGRESS_INSERT, insert_list)
+		replace_rows('trakt_db', PROGRESS_DELETE, ('episode',), PROGRESS_INSERT, insert_list)
 
 	def show_has_watched(self, tmdb_id):
 		dbcon = connect_database('trakt_db')
 		return dbcon.execute('SELECT 1 FROM watched WHERE db_type = ? AND media_id = ? LIMIT 1', ('episode', str(tmdb_id))).fetchone() is not None
-
-	def _executemany(self, command, insert_list):
-		dbcon = connect_database('trakt_db')
-		dbcon.executemany(command, insert_list)
-
-	def _delete(self, command, args):
-		dbcon = connect_database('trakt_db')
-		dbcon.execute(command, args)
-		dbcon.execute('VACUUM')
 
 trakt_watched_cache = TraktWatched()
 
@@ -90,17 +76,12 @@ def cache_trakt_object(function, string, url):
 	trakt_cache.set(string, result)
 	return result
 
-def reset_activity(latest_activities):
-	string = 'trakt_get_activity'
-	try:
-		dbcon = connect_database('trakt_db')
-		data = dbcon.execute(TC_BASE_GET, (string,)).fetchone()
-		if data: cached_data = eval(data[0])
-		else: cached_data = default_activities()
-		dbcon.execute(DELETE, (string,))
-		trakt_cache.set(string, latest_activities)
-	except: cached_data = default_activities()
-	return cached_data
+def get_cached_activity():
+	cached_data = trakt_cache.get('trakt_get_activity')
+	return cached_data if isinstance(cached_data, dict) else default_activities()
+
+def save_activity(latest_activities):
+	trakt_cache.set('trakt_get_activity', latest_activities)
 
 def clear_daily_cache():
 	clear_trakt_calendar()
@@ -138,14 +119,14 @@ def clear_trakt_collection_watchlist_data(list_type, media_type):
 def clear_trakt_calendar():
 	try:
 		dbcon = connect_database('trakt_db')
-		dbcon.execute(DELETE_LIKE % 'trakt_get_my_calendar_%')
+		dbcon.execute(DELETE_LIKE, ('trakt_get_my_calendar_%',))
 	except: return
 
 def clear_trakt_list_contents_data(list_type):
 	string = 'trakt_list_contents_' + list_type + '_%'
 	try:
 		dbcon = connect_database('trakt_db')
-		dbcon.execute(DELETE_LIKE % string)
+		dbcon.execute(DELETE_LIKE, (string,))
 	except: pass
 
 def clear_trakt_list_data(list_type):
@@ -158,13 +139,13 @@ def clear_trakt_list_data(list_type):
 def clear_trakt_recommendations():
 	try:
 		dbcon = connect_database('trakt_db')
-		dbcon.execute(DELETE_LIKE % 'trakt_recommendations_%')
+		dbcon.execute(DELETE_LIKE, ('trakt_recommendations_%',))
 	except: return
 
 def clear_trakt_favorites():
 	try:
 		dbcon = connect_database('trakt_db')
-		dbcon.execute(DELETE_LIKE % 'trakt_favorites_%')
+		dbcon.execute(DELETE_LIKE, ('trakt_favorites_%',))
 	except: return
 
 def clear_all_trakt_cache_data(silent=False, refresh=True):

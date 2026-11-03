@@ -119,6 +119,19 @@ def connect_database(database_name):
 	dbcon.execute('PRAGMA journal_mode = OFF')
 	return dbcon
 
+def replace_rows(database_name, delete_command, delete_args, insert_command, insert_list):
+	dbcon = connect_database(database_name)
+	dbcon.execute('PRAGMA journal_mode = MEMORY')
+	dbcon.execute('BEGIN')
+	try:
+		dbcon.execute(delete_command, delete_args)
+		dbcon.executemany(insert_command, insert_list)
+		dbcon.execute('COMMIT')
+	except:
+		try: dbcon.execute('ROLLBACK')
+		except: pass
+		raise
+
 def get_timestamp(offset=0):
 	# Offset is in HOURS multiply by 3600 to get seconds
 	return int(time.time()) + (offset*3600)
@@ -259,7 +272,7 @@ def clear_all_cache():
 	progressDialog = progress_dialog()
 	line = 'Clearing....[CR]%s'
 	caches = (('meta', 'Meta Cache'), ('internal_scrapers', 'Internal Scrapers Cache'), ('external_scrapers', 'External Scrapers Cache'),
-			('pack_continuity', 'Episode Pack Cache'), ('trakt', 'Trakt Cache'), ('imdb', 'IMDb Cache'), ('list', 'List Data Cache', ), ('main', 'Main Cache', ),
+			('pack_continuity', 'Episode Pack Cache'), ('trakt', 'Trakt Cache'), ('simkl', 'Simkl Cache'), ('imdb', 'IMDb Cache'), ('list', 'List Data Cache', ), ('main', 'Main Cache', ),
 			('pm_cloud', 'Premiumize Cloud'), ('rd_cloud', 'Real Debrid Cloud'), ('ad_cloud', 'All Debrid Cloud'),
 			('oc_cloud', 'OffCloud Cloud'), ('ed_cloud', 'Easy Debrid Cloud'), ('tb_cloud', 'TorBox Cloud'))
 	for count, cache_type in enumerate(caches, 1):
@@ -288,19 +301,12 @@ def clear_icons():
         dbcon = sqlite3.connect(databasePath+'/Textures13.db')
         dbcur = dbcon.cursor()
         
-        # Get the cached paths
-        icon = dbcur.execute("SELECT cachedurl FROM texture WHERE url ='" + addonPath + "/plugin.video.fenlight/resources/media/fenlight_icon.png';").fetchone()
-        fanart = dbcur.execute("SELECT cachedurl FROM texture WHERE url ='" + addonPath + "/plugin.video.fenlight/resources/media/fenlight_plus_fanart.png';").fetchone()
-        
-        if icon is not None:
-            if xbmcvfs.exists(thumbnailsPath + icon[0]):
-                xbmcvfs.delete(thumbnailsPath + icon[0])
-            dbcur.execute("DELETE FROM texture WHERE url ='" + addonPath + "/plugin.video.fenlight/resources/media/fenlight_icon.png';")
-        
-        if fanart is not None:
-            if xbmcvfs.exists(thumbnailsPath + fanart[0]):
-                xbmcvfs.delete(thumbnailsPath + fanart[0])
-            dbcur.execute("DELETE FROM texture WHERE url ='" + addonPath + "/plugin.video.fenlight/resources/media/fenlight_plus_fanart.png';")
+        for image in ('fenlight_plus_icon.png', 'fenlight_plus_fanart.png'):
+            url = addonPath + '/plugin.video.fenlight/resources/media/' + image
+            cached = dbcur.execute('SELECT cachedurl FROM texture WHERE url = ?', (url,)).fetchone()
+            if cached is None: continue
+            if xbmcvfs.exists(thumbnailsPath + cached[0]): xbmcvfs.delete(thumbnailsPath + cached[0])
+            dbcur.execute('DELETE FROM texture WHERE url = ?', (url,))
         
         # Commit changes before closing the connection
         dbcon.commit()

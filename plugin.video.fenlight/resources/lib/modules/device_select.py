@@ -17,6 +17,7 @@ def _store_dir():
     return base
 
 def _store_path(request_id):
+    request_id = ''.join(c for c in str(request_id) if c.isalnum() or c in '-_') or 'default'
     return os.path.join(_store_dir(), '%s.json' % request_id)
 
 def _cleanup(base):

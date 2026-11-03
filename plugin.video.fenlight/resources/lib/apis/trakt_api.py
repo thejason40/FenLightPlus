@@ -21,7 +21,8 @@ execute_builtin, select_dialog, kodi_refresh = kodi_utils.execute_builtin, kodi_
 progress_dialog, external, trakt_user_active, show_unaired_watchlist = kodi_utils.progress_dialog, kodi_utils.external, settings.trakt_user_active, settings.show_unaired_watchlist
 lists_sort_order, trakt_client, trakt_secret, tmdb_api_key = settings.lists_sort_order, settings.trakt_client, settings.trakt_secret, settings.tmdb_api_key
 clear_all_trakt_cache_data, cache_trakt_object, clear_trakt_calendar = trakt_cache.clear_all_trakt_cache_data, trakt_cache.cache_trakt_object, trakt_cache.clear_trakt_calendar
-trakt_watched_cache, reset_activity, clear_trakt_list_contents_data = trakt_cache.trakt_watched_cache, trakt_cache.reset_activity, trakt_cache.clear_trakt_list_contents_data
+trakt_watched_cache, clear_trakt_list_contents_data = trakt_cache.trakt_watched_cache, trakt_cache.clear_trakt_list_contents_data
+get_cached_activity, save_activity = trakt_cache.get_cached_activity, trakt_cache.save_activity
 clear_daily_cache = trakt_cache.clear_daily_cache
 clear_trakt_collection_watchlist_data, clear_trakt_hidden_data = trakt_cache.clear_trakt_collection_watchlist_data, trakt_cache.clear_trakt_hidden_data
 update_trakt_hidden_data = trakt_cache.update_trakt_hidden_data
@@ -40,6 +41,8 @@ TOKEN_REFRESH_MARGIN = 300
 # After a failed refresh or re-auth prompt, wait this long before trying/asking again.
 REFRESH_RETRY_BACKOFF = 900
 AUTH_PROMPT_COOLDOWN = 300
+SYNC_STALE_AFTER, SYNC_WAIT_LIMIT = 600, 30000
+sync_running_prop = 'fenlight.trakt.sync_running'
 refresh_lock, auth_prompt_lock = Lock(), Lock()
 
 def no_client_key():
@@ -50,7 +53,8 @@ def no_secret_key():
 	notification('Please set a valid Trakt Client Secret Key')
 	return None
 
-def call_trakt(path, params={}, data=None, is_delete=False, with_auth=True, method=None, pagination=False, page_no=1, error_info=None):
+def call_trakt(path, params=None, data=None, is_delete=False, with_auth=True, method=None, pagination=False, page_no=1, error_info=None):
+	params = dict(params or {})  # copied: 'page' is written into it below, and a shared default would keep it
 	def set_error(reason, status_code=None):
 		# Optional out-param so callers such as trakt_authenticate can report why a call failed.
 		if error_info is None: return
@@ -95,6 +99,11 @@ def call_trakt(path, params={}, data=None, is_delete=False, with_auth=True, meth
 	if pagination: params['page'] = page_no
 	response = send_query()
 	if response is None: return None
+	if response.status_code == 401 and with_auth:
+		used_token = headers.get('Authorization', '')[len('Bearer '):]
+		if trakt_refresh_token(force=True, failed_token=used_token):
+			response = send_query()
+			if response is None: return None
 	if response.status_code == 401:
 		if xbmc_player().isPlaying(): return None
 		if not with_auth or not prompt_reauthenticate(): return None
@@ -200,15 +209,21 @@ def refresh_token_if_needed():
 		trakt_refresh_token()
 	except: pass
 
-def trakt_refresh_token():
+def trakt_refresh_token(force=False, failed_token=None):
 	CLIENT_ID = trakt_client()
 	if CLIENT_ID in empty_setting_check: return no_client_key()
 	CLIENT_SECRET = trakt_secret()
 	if CLIENT_SECRET in empty_setting_check: return no_secret_key()
 	with refresh_lock:
-		try: expires_at = float(get_setting('fenlight.trakt.expires'))
-		except: expires_at = 0.0
-		if time.time() < (expires_at - TOKEN_REFRESH_MARGIN): return
+		if failed_token and get_setting('fenlight.trakt.token') not in (failed_token, '', 'empty_setting'): return True
+		if not force:
+			try: expires_at = float(get_setting('fenlight.trakt.expires'))
+			except: expires_at = 0.0
+			if time.time() < (expires_at - TOKEN_REFRESH_MARGIN): return
+		else:
+			try: backoff_until = float(get_property('fenlight.trakt.refresh_backoff'))
+			except: backoff_until = 0.0
+			if time.time() < backoff_until: return False
 		refresh_token = get_setting('fenlight.trakt.refresh')
 		if refresh_token in empty_setting_check or refresh_token == '0':
 			set_property('fenlight.trakt.refresh_backoff', str(time.time() + REFRESH_RETRY_BACKOFF))
@@ -218,11 +233,13 @@ def trakt_refresh_token():
 			'grant_type': 'refresh_token', 'refresh_token': refresh_token}
 		error_info = {}
 		response = call_trakt('oauth/token', data=data, with_auth=False, error_info=error_info)
-		if response and 'access_token' in response: store_trakt_token(response)
-		else:
-			set_property('fenlight.trakt.refresh_backoff', str(time.time() + REFRESH_RETRY_BACKOFF))
-			logger('Trakt Error', 'Token refresh failed (%s) - re-authorization may be required'
-					% (error_info.get('status_code') or error_info.get('reason') or 'no response'))
+		if response and 'access_token' in response:
+			store_trakt_token(response)
+			return True
+		set_property('fenlight.trakt.refresh_backoff', str(time.time() + REFRESH_RETRY_BACKOFF))
+		logger('Trakt Error', 'Token refresh failed (%s) - re-authorization may be required'
+				% (error_info.get('status_code') or error_info.get('reason') or 'no response'))
+		return False
 
 def report_device_code_failure(error_info):
 	reason = error_info.get('reason')
@@ -431,6 +448,7 @@ def trakt_watched_status_mark(action, media, media_id, tvdb_id=0, season=None, e
 		elif media =='shows': data = {'shows': [{'ids': {key: media_id}}]}
 		else: data = {'shows': [{'ids': {key: media_id}, 'seasons': [{'number': int(season)}]}]}#season
 	result = call_trakt(url, data=data)
+	if not result: return False
 	success = result[result_key][success_key] > 0
 	if not success:
 		if media != 'movies' and tvdb_id != 0 and key != 'tvdb': return trakt_watched_status_mark(action, media, tvdb_id, 0, season, episode, 'tvdb')
@@ -497,6 +515,7 @@ def trakt_fetch_collection_watchlist(list_type, media_type):
 
 def add_to_list(user, slug, data):
 	result = call_trakt('/users/%s/lists/%s/items' % (user, slug), data=data)
+	if not result: return notification('Error', 3000)
 	if result['existing']['movies'] + result['existing']['shows'] > 0: return notification('Already In List', 3000)
 	if result['added']['movies'] + result['added']['shows'] == 0: return notification('Error', 3000)
 	notification('Success', 3000)
@@ -505,6 +524,7 @@ def add_to_list(user, slug, data):
 
 def remove_from_list(user, slug, data):
 	result = call_trakt('/users/%s/lists/%s/items/remove' % (user, slug), data=data)
+	if not result: return notification('Error', 3000)
 	if result['deleted']['movies'] + result['deleted']['shows'] == 0: return notification('Error', 3000)
 	notification('Success', 3000)
 	trakt_sync_activities()
@@ -513,6 +533,7 @@ def remove_from_list(user, slug, data):
 
 def add_to_watchlist(data):
 	result = call_trakt('/sync/watchlist', data=data)
+	if not result: return notification('Error', 3000)
 	if result['existing']['movies'] + result['existing']['shows'] > 0: return notification('Already In List', 3000)
 	if result['added']['movies'] + result['added']['shows'] == 0: return notification('Error', 3000)
 	notification('Success', 3000)
@@ -521,6 +542,7 @@ def add_to_watchlist(data):
 
 def remove_from_watchlist(data):
 	result = call_trakt('/sync/watchlist/remove', data=data)
+	if not result: return notification('Error', 3000)
 	if result['deleted']['movies'] + result['deleted']['shows'] == 0: return notification('Error', 3000)
 	notification('Success', 3000)
 	trakt_sync_activities()
@@ -529,6 +551,7 @@ def remove_from_watchlist(data):
 
 def add_to_collection(data, multi=False):
 	result = call_trakt('/sync/collection', data=data)
+	if not result: return notification('Error', 3000)
 	if not multi:
 		if result['existing']['movies'] + result['existing']['episodes'] > 0: return notification('Already In List', 3000)
 		if result['added']['movies'] + result['added']['episodes'] == 0: return notification('Error', 3000)
@@ -538,6 +561,7 @@ def add_to_collection(data, multi=False):
 
 def remove_from_collection(data):
 	result = call_trakt('/sync/collection/remove', data=data)
+	if not result: return notification('Error', 3000)
 	if result['deleted']['movies'] + result['deleted']['episodes'] == 0: return notification('Error', 3000)
 	notification('Success', 3000)
 	trakt_sync_activities()
@@ -765,13 +789,15 @@ def trakt_indicators_movies():
 		tmdb_id = get_trakt_movie_id(movie['ids'])
 		if not tmdb_id: return
 		insert_append(('movie', tmdb_id, '', '', item['last_watched_at'], movie['title']))
-	insert_list = []
+	insert_list, outcome = [], {}
 	insert_append = insert_list.append
-	params = {'path': 'sync/watched/movies%s', 'with_auth': True, 'all_pages': True}
-	result = get_trakt(params)
+	params = {'path': 'sync/watched/movies%s', 'with_auth': True}
+	result = get_trakt_all_pages(params, outcome=outcome)
+	if not outcome.get('complete', True): return False
 	threads = list(make_thread_list(_process, result))
 	[i.join() for i in threads]
 	trakt_watched_cache.set_bulk_movie_watched(insert_list)
+	return True
 
 def trakt_indicators_tv():
 	def _process(item):
@@ -788,15 +814,17 @@ def trakt_indicators_tv():
 				last_watched_at = e['last_watched_at']
 				if reset_at and reset_at > js2date(last_watched_at, res_format): continue
 				insert_append(('episode', tmdb_id, season_no, e['number'], last_watched_at, title))
-	insert_list = []
+	insert_list, outcome = [], {}
 	insert_append = insert_list.append
 	# extended=progress is now REQUIRED to get the seasons/episodes data this parses (the old
 	# extended=full no longer includes season progress). It's heavy, so pagination matters most here.
-	params = {'path': 'sync/watched/shows%s', 'params': {'extended': 'progress'}, 'with_auth': True, 'all_pages': True}
-	result = get_trakt(params)
+	params = {'path': 'sync/watched/shows%s', 'params': {'extended': 'progress'}, 'with_auth': True}
+	result = get_trakt_all_pages(params, outcome=outcome)
+	if not outcome.get('complete', True): return False
 	threads = list(make_thread_list(_process, result))
 	[i.join() for i in threads]
 	trakt_watched_cache.set_bulk_tvshow_watched(insert_list)
+	return True
 
 def trakt_playback_progress():
 	params = {'path': 'sync/playback%s', 'with_auth': True, 'pagination': False}
@@ -828,13 +856,14 @@ def trakt_progress_movies(progress_info):
 		if not tmdb_id: return
 		obj = ('movie', str(tmdb_id), '', '', str(round(item['progress'], 1)), 0, item['paused_at'], item['id'], item['movie']['title'])
 		insert_append(obj)
+	if progress_info is None: return False
 	insert_list = []
 	insert_append = insert_list.append
 	progress_items = [i for i in progress_info  if i['type'] == 'movie' and i['progress'] > 1]
-	if not progress_items: return
 	threads = list(make_thread_list(_process, progress_items))
 	[i.join() for i in threads]
 	trakt_watched_cache.set_bulk_movie_progress(insert_list)
+	return True
 
 def trakt_progress_tv(progress_info):
 	def _process_tmdb_ids(item):
@@ -852,16 +881,17 @@ def trakt_progress_tv(progress_info):
 						if season > 0: yield ('episode', str(tmdb_id), season, p_item['episode']['number'], str(round(p_item['progress'], 1)),
 												0, p_item['paused_at'], p_item['id'], p_item['show']['title'])
 			except: pass
+	if progress_info is None: return False
 	tmdb_list = []
 	tmdb_list_append = tmdb_list.append
 	progress_items = [i for i in progress_info if i['type'] == 'episode' and i['progress'] > 1]
-	if not progress_items: return
 	all_shows = [i['show'] for i in progress_items]
 	all_shows = [i for n, i in enumerate(all_shows) if not i in all_shows[n + 1:]] # remove duplicates
 	threads = list(make_thread_list(_process_tmdb_ids, all_shows))
 	[i.join() for i in threads]
 	insert_list = list(_process())
 	trakt_watched_cache.set_bulk_tvshow_progress(insert_list)
+	return True
 
 def trakt_official_status(media_type):
 	if not addon_installed('script.trakt'): return True
@@ -921,6 +951,7 @@ def get_trakt(params):
 	result = call_trakt(params['path'] % params.get('path_insert', ''), params=call_params, data=params.get('data'), is_delete=params.get('is_delete', False),
 						with_auth=params.get('with_auth', False), method=params.get('method'), pagination=paginate, page_no=params.get('page_no'))
 	if not paginate: return result
+	if result is None: return ([], None) if params.get('with_page_count') else []
 	if params.get('with_page_count'):
 		try: page_count = int(result[1])
 		except: page_count = None
@@ -948,6 +979,18 @@ def get_trakt_all_pages(params, limit=250, max_pages=200, outcome=None):
 	return items
 
 def trakt_sync_activities(force_update=False, skip_hidden_clear=False):
+	waited = 0
+	while waited < SYNC_WAIT_LIMIT:
+		try: running_since = float(get_property(sync_running_prop))
+		except: break
+		if time.time() - running_since > SYNC_STALE_AFTER: break
+		sleep(500)
+		waited += 500
+	set_property(sync_running_prop, str(time.time()))
+	try: return _trakt_sync_activities(force_update, skip_hidden_clear)
+	finally: clear_property(sync_running_prop)
+
+def _trakt_sync_activities(force_update=False, skip_hidden_clear=False):
 	# def clear_watched_tvshow_cache():
 	# 	from modules.watched_status import clear_cache_watched_tvshow_status
 	# 	clear_cache_watched_tvshow_status(watched_indicators=1)
@@ -965,11 +1008,13 @@ def trakt_sync_activities(force_update=False, skip_hidden_clear=False):
 	elif _check_daily_expiry():
 		clear_daily_cache()
 		set_setting('trakt.next_daily_clear', str(int(time.time()) + (24*3600)))
-	if not trakt_user_active and not force_update: return 'no account'
+	if not trakt_user_active() and not force_update: return 'no account'
 	try: latest = trakt_get_activity()
 	except: return 'failed'
-	cached = reset_activity(latest)
+	if not isinstance(latest, dict): return 'failed'
+	cached = get_cached_activity()
 	if not _compare(latest['all'], cached['all']): return 'not needed'
+	complete = True
 	lists_actions, refresh_movies_progress, refresh_shows_progress, clear_tvshow_watched_cache = [], False, False, False
 	cached_movies, latest_movies = cached['movies'], latest['movies']
 	cached_shows, latest_shows = cached['shows'], latest['shows']
@@ -990,11 +1035,11 @@ def trakt_sync_activities(force_update=False, skip_hidden_clear=False):
 			clear_trakt_hidden_data('dropped')
 	if _compare(latest_movies['watched_at'], cached_movies['watched_at']):
 		clear_properties('movie')
-		trakt_indicators_movies()
+		complete = trakt_indicators_movies() and complete
 	if _compare(latest_episodes['watched_at'], cached_episodes['watched_at']):
 		clear_properties('episode')
 		if trakt_cache.trakt_cache.get('trakt_hidden_items_dropped'): clear_trakt_hidden_data('dropped')
-		trakt_indicators_tv()
+		complete = trakt_indicators_tv() and complete
 		# clear_tvshow_watched_cache = True
 	if _compare(latest_movies['paused_at'], cached_movies['paused_at']): refresh_movies_progress = True
 	if _compare(latest_episodes['paused_at'], cached_episodes['paused_at']): refresh_shows_progress = True
@@ -1004,13 +1049,15 @@ def trakt_sync_activities(force_update=False, skip_hidden_clear=False):
 		progress_info = trakt_playback_progress()
 		if refresh_movies_progress:
 			clear_properties('movie')
-			trakt_progress_movies(progress_info)
+			complete = trakt_progress_movies(progress_info) and complete
 		if refresh_shows_progress:
 			clear_properties('episode')
-			trakt_progress_tv(progress_info)
+			complete = trakt_progress_tv(progress_info) and complete
 	if lists_actions:
 		for item in lists_actions:
 			clear_trakt_list_data(item)
 			clear_trakt_list_contents_data(item)
 	# if clear_tvshow_watched_cache: clear_watched_tvshow_cache()
+	if not complete: return 'partial'
+	save_activity(latest)
 	return 'success'

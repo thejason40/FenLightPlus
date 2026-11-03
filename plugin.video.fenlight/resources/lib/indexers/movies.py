@@ -21,7 +21,7 @@ main = ('tmdb_movies_popular', 'tmdb_movies_popular_today','tmdb_movies_blockbus
 'tmdb_movies_premieres', 'tmdb_movies_oscar_winners', 'moviesthisday_movies_on_this_day',
 'tmdb_movies_highest_rated', 'tmdb_movies_hidden_gems', 'tmdb_movies_quick_watches')
 special = ('tmdb_movies_languages', 'tmdb_movies_providers', 'tmdb_movies_providers_uk', 'tmdb_movies_year', 'tmdb_movies_decade', 'tmdb_movies_certifications', 'tmdb_movies_recommendations',
-'tmdb_movies_genres', 'tmdb_movies_search', 'tmdb_movie_keyword_results', 'tmdb_movie_keyword_results_direct')
+'tmdb_movies_genres', 'tmdb_movies_search', 'tmdb_movie_keyword_results', 'tmdb_movie_keyword_results_direct', 'charts_movies')
 personal = {'favorites_movies': ('modules.favorites', 'get_favorites'), 'in_progress_movies': ('modules.watched_status', 'get_in_progress_movies'),
 'watched_movies': ('modules.watched_status', 'get_watched_items'), 'recent_watched_movies': ('modules.watched_status', 'get_recently_watched')}
 trakt_main = ('trakt_movies_trending', 'trakt_movies_trending_recent', 'trakt_movies_trending_uk', 'trakt_movies_trending_recent_uk','trakt_movies_most_watched', 'trakt_movies_most_favorited', 'trakt_movies_top10_boxoffice')
@@ -61,7 +61,7 @@ class Movies:
 				if data['total_pages'] > page_no: self.new_page = {'new_page': string(data['page'] + 1)}
 			elif self.action in special:
 				key_id = self.params_get('key_id') or self.params_get('query')
-				if not key_id: return
+				if not key_id: raise ValueError('no key_id')
 				data = function(key_id, page_no)
 				self.list = [i['id'] for i in data['results']]
 				if data['total_pages'] > page_no: self.new_page = {'new_page': string(data['page'] + 1), 'key_id': key_id}

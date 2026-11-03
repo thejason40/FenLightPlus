@@ -123,17 +123,22 @@ def window_player(obj):
 			else:
 				from indexers.people import person_data_dialog
 				person_data_dialog(params)
-		except: close()
+		except: hide_busy_dialog()
 	try:
 		window_player_url = obj.window_player_url
+		if not window_player_url: return notification('No Trailer Available')
 		if 'plugin.video.youtube' in window_player_url:
 			if not addon_installed('plugin.video.youtube') or not addon_enabled('plugin.video.youtube'): return
 		clear_property('fenlight.window_loaded')
 		current_params = obj.current_params
-		player = xbmc_player()
+		player, abort_monitor = xbmc_player(), kodi_utils.xbmc_monitor()
 		player.play(window_player_url)
 		sleep(2000)
-		while not player.isPlayingVideo(): sleep(100)
+		waited = 0
+		while not player.isPlayingVideo():
+			if waited >= 15000 or abort_monitor.abortRequested(): return notification('Trailer Failed to Start')
+			sleep(100)
+			waited += 100
 		obj.close()
 		while player.isPlayingVideo(): sleep(100)
 		show_busy_dialog()

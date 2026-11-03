@@ -2,7 +2,7 @@
 import time
 import json
 import random
-from threading import Thread
+from threading import Thread, Lock
 from caches.external_cache import external_cache
 from caches.settings_cache import get_setting
 from modules import kodi_utils, source_utils
@@ -37,6 +37,9 @@ class source:
 		self.internal_activated, self.internal_prescraped = len(self.internal_scrapers) > 0, len(self.prescrape_sources) > 0
 		self.processed_prescrape, self.threads_completed = False, False
 		self.sleep_time = 100
+		self.provider_names, self.provider_counts, self.provider_running, self.provider_failed = [], {}, {}, set()
+		self.internal_counts, self.cache_counts, self.cache_failed = {}, {}, set()
+		self.provider_lock = Lock()
 		self.timeout = 60 if disabled_ext_ignored else int(get_setting('fenlight.results.timeout', '20'))
 		self.sources_total = self.sources_4k = self.sources_1080p = self.sources_720p = self.sources_sd = 0
 		self.final_total = self.final_4k = self.final_1080p = self.final_720p = self.final_sd = 0
@@ -76,14 +79,16 @@ class source:
 					alive_threads = [x.getName() for x in self.threads if x.is_alive()]
 					if self.internal_activated or self.internal_prescraped: alive_threads.extend(self.process_internal_results())
 					line1 =  ', '.join(alive_threads).upper()
-					percent = (max((time.time() - start_time), 0)/float(self.timeout))*100
-					self.progress_dialog.update_scraper(self.sources_sd, self.sources_720p, self.sources_1080p, self.sources_4k, self.sources_total, line1, percent)
+					elapsed = max((time.time() - start_time), 0)
+					percent = (elapsed/float(self.timeout))*100
+					self.progress_dialog.update_scraper(self.sources_sd, self.sources_720p, self.sources_1080p, self.sources_4k, self.sources_total, line1, percent,
+															elapsed=elapsed, timeout=self.timeout, providers=self._provider_chips())
 					if self.threads_completed:
 						len_alive_threads = len(alive_threads)
 						if len_alive_threads == 0 or percent >= 100: break
 					elif percent >= 100: break
-					sleep(self.sleep_time)
 				except: pass
+				sleep(self.sleep_time)
 			return
 		def _background():
 			sleep(1500)
@@ -98,9 +103,11 @@ class source:
 		self.threads_append = self.threads.append
 		if self.media_type == 'movie':
 			self.source_dict = [i for i in self.source_dict if i[1].hasMovies]
+			self._init_provider_status()
 			Thread(target=self.process_movie_threads).start()
 		else:
 			self.source_dict = [i for i in self.source_dict if i[1].hasEpisodes]
+			self._init_provider_status()
 			self.season_packs, self.show_packs = pack_enable_check(self.meta, self.season, self.episode)
 			if self.season_packs:
 				self.source_dict = [(i[0], i[1], '') for i in self.source_dict]
@@ -120,6 +127,7 @@ class source:
 		for i in self.source_dict:
 			provider, module = i[0], i[1]
 			threaded_object = Thread(target=self.get_movie_source, args=(provider, module), name=provider)
+			self._provider_started(provider)
 			threaded_object.start()
 			self.threads_append(threaded_object)
 		self.threads_completed = True
@@ -132,47 +140,85 @@ class source:
 			if pack_arg: provider_display = pack_display % (i[0], i[2])
 			else: provider_display = provider
 			threaded_object = Thread(target=self.get_episode_source, args=(provider, module, pack_arg), name=provider_display)
+			self._provider_started(provider)
 			threaded_object.start()
 			self.threads_append(threaded_object)
 		self.threads_completed = True
 
 	def get_movie_source(self, provider, module):
-		sources = external_cache.get(provider, self.media_type, self.tmdb_id, self.title, self.year, '', '')
-		if sources == None:
-			sources = module().sources(self.data, self.host_dict)			
-			sources = self.process_sources(provider, sources)
-			if not sources: expiry_hours = 1
-			else: expiry_hours = self.single_expiry
-			external_cache.set(provider, self.media_type, self.tmdb_id, self.title, self.year, '', '', sources, expiry_hours)
-		if sources:
-			if not self.background: self.process_quality_count(sources)
-			self.sources.extend(sources)
+		try:
+			sources = external_cache.get(provider, self.media_type, self.tmdb_id, self.title, self.year, '', '')
+			if sources == None:
+				sources = module().sources(self.data, self.host_dict)
+				sources = self.process_sources(provider, sources)
+				if not sources: expiry_hours = 1
+				else: expiry_hours = self.single_expiry
+				external_cache.set(provider, self.media_type, self.tmdb_id, self.title, self.year, '', '', sources, expiry_hours)
+			if sources:
+				if not self.background: self.process_quality_count(sources)
+				self.sources.extend(sources)
+				self._provider_result(provider, len(sources))
+		except Exception as e: self._provider_error(provider, e)
+		finally: self._provider_finished(provider)
 
 	def get_episode_source(self, provider, module, pack):
-		if pack in pack_check:
-			if pack == 'Show': s_check = ''
-			else: s_check = self.season
-			e_check = ''
-		else: s_check, e_check = self.season, self.episode
-		sources = external_cache.get(provider, self.media_type, self.tmdb_id, self.title, self.year, s_check, e_check)
-		if sources == None:
-			if pack == 'Show':
-				expiry_hours = self.show_expiry
-				sources = module().sources_packs(self.data, self.host_dict, search_series=True, total_seasons=self.total_seasons)
-			elif pack == 'Season':
-				expiry_hours = self.season_expiry
-				sources = module().sources_packs(self.data, self.host_dict)
-			else:
-				expiry_hours = self.single_expiry
-				sources = module().sources(self.data, self.host_dict)
-			sources = self.process_sources(provider, sources)
-			if not sources: expiry_hours = 1
-			external_cache.set(provider, self.media_type, self.tmdb_id, self.title, self.year, s_check, e_check, sources, expiry_hours)
-		if sources:
-			if pack == 'Season': sources = [i for i in sources if not 'episode_start' in i or i['episode_start'] <= self.episode <= i['episode_end']]
-			elif pack == 'Show': sources = [i for i in sources if i['last_season'] >= self.season]
-			if not self.background: self.process_quality_count(sources)
-			self.sources.extend(sources)
+		try:
+			if pack in pack_check:
+				if pack == 'Show': s_check = ''
+				else: s_check = self.season
+				e_check = ''
+			else: s_check, e_check = self.season, self.episode
+			sources = external_cache.get(provider, self.media_type, self.tmdb_id, self.title, self.year, s_check, e_check)
+			if sources == None:
+				if pack == 'Show':
+					expiry_hours = self.show_expiry
+					sources = module().sources_packs(self.data, self.host_dict, search_series=True, total_seasons=self.total_seasons)
+				elif pack == 'Season':
+					expiry_hours = self.season_expiry
+					sources = module().sources_packs(self.data, self.host_dict)
+				else:
+					expiry_hours = self.single_expiry
+					sources = module().sources(self.data, self.host_dict)
+				sources = self.process_sources(provider, sources)
+				if not sources: expiry_hours = 1
+				external_cache.set(provider, self.media_type, self.tmdb_id, self.title, self.year, s_check, e_check, sources, expiry_hours)
+			if sources:
+				if pack == 'Season': sources = [i for i in sources if not 'episode_start' in i or i['episode_start'] <= self.episode <= i['episode_end']]
+				elif pack == 'Show': sources = [i for i in sources if i['last_season'] >= self.season]
+				if not self.background: self.process_quality_count(sources)
+				self.sources.extend(sources)
+				self._provider_result(provider, len(sources))
+		except Exception as e: self._provider_error(provider, e)
+		finally: self._provider_finished(provider)
+
+	def _init_provider_status(self):
+		self.provider_names = list(dict.fromkeys(i[0] for i in self.source_dict))
+		self.provider_counts = dict.fromkeys(self.provider_names, 0)
+		self.provider_running = dict.fromkeys(self.provider_names, 0)
+		self.provider_failed = set()
+
+	def _provider_started(self, provider):
+		with self.provider_lock: self.provider_running[provider] = self.provider_running.get(provider, 0) + 1
+
+	def _provider_finished(self, provider):
+		with self.provider_lock: self.provider_running[provider] = self.provider_running.get(provider, 1) - 1
+
+	def _provider_result(self, provider, count):
+		with self.provider_lock: self.provider_counts[provider] = self.provider_counts.get(provider, 0) + count
+
+	def _provider_error(self, provider, error):
+		self.provider_failed.add(provider)
+		kodi_utils.logger('External scraper %s failed' % provider, str(error))
+
+	def _provider_chips(self):
+		chips = [(i, 'done' if i in self.internal_counts else 'scanning', self.internal_counts.get(i, 0)) for i in self.internal_scrapers]
+		for name in self.provider_names:
+			count = self.provider_counts.get(name, 0)
+			if self.provider_running.get(name) or not self.threads_completed: state = 'scanning'
+			elif not count and name in self.provider_failed: state = 'failed'
+			else: state = 'done'
+			chips.append((name, state, count))
+		return chips
 
 	def process_results(self, results):
 		def _process_duplicates(all_results):
@@ -190,10 +236,19 @@ class source:
 						else: yield provider
 				except: yield provider
 		def _process_cache_check(provider, function):
-			cached = function(hash_list, cached_hashes)
-			if not self.background: self.process_quality_count_final([i for i in results if i['hash'] in cached])
-			final_results.extend([dict(i, **{'cache_provider': provider if i['hash'] in cached else 'Uncached %s' % provider, 'debrid':provider}) for i in results])
+			try:
+				cached = function(hash_list, cached_hashes)
+				self.cache_counts[provider] = len(cached)
+				if not self.background: self.process_quality_count_final([i for i in results if i['hash'] in cached])
+				final_results.extend([dict(i, **{'cache_provider': provider if i['hash'] in cached else 'Uncached %s' % provider, 'debrid':provider}) for i in results])
+			except Exception as e:
+				self.cache_failed.add(provider)
+				kodi_utils.logger('Cache check %s failed' % provider, str(e))
 		def _debrid_check_dialog():
+			def _chip(name):
+				if name in remaining_debrids: return (name, 'scanning', 0)
+				if name in self.cache_failed: return (name, 'failed', 0)
+				return (name, 'done', self.cache_counts.get(name, 0))
 			self.progress_dialog.reset_is_cancelled()
 			start_time, timeout = time.time(), 20
 			while not self.progress_dialog.iscanceled() and not self.monitor.abortRequested():
@@ -202,15 +257,16 @@ class source:
 					current_progress = max((time.time() - start_time), 0)
 					line1 = ', '.join(remaining_debrids).upper()
 					percent = int((current_progress/float(timeout))*100)
-					self.progress_dialog.update_scraper(self.final_sd, self.final_720p, self.final_1080p, self.final_4k, self.final_total, line1, percent)
-					sleep(self.sleep_time)
+					self.progress_dialog.update_scraper(self.final_sd, self.final_720p, self.final_1080p, self.final_4k, self.final_total, line1, percent, phase='cache',
+														elapsed=current_progress, timeout=timeout, providers=[_chip(i) for i in self.active_debrid])
 					if len(remaining_debrids) == 0: break
 					if percent >= 100: break
 				except: pass
+				sleep(self.sleep_time)
 		try:
 			if not self.background and self.all_internal_sources: self.process_quality_count_final(self.all_internal_sources)
 			final_results = []
-			results = list(_process_duplicates(results))
+			results = [i for i in _process_duplicates(results) if i.get('hash')]
 			hash_list = list(set([i['hash'] for i in results]))
 			cached_hashes = query_local_cache(hash_list)
 			debrid_check_threads = [Thread(target=_process_cache_check, args=debrid_runners[item], name=item) for item in self.active_debrid]
@@ -264,6 +320,7 @@ class source:
 			except: continue
 			set_property(int_window_prop % i, 'checked')
 			self.all_internal_sources += internal_sources
+			self.internal_counts[i] = len(internal_sources)
 			self.processed_internal_scrapers_append(i)
 			self.process_quality_count(internal_sources)
 		return [i for i in self.internal_scrapers if not i in self.processed_internal_scrapers]

@@ -37,7 +37,7 @@ def pm_cloud(folder_id=None, folder_name=None):
 				else:
 					is_folder = False
 					url_link, size = item['link'], item['size']
-					if url_link.startswith('/'): url_link = 'https' + url_link
+					if url_link.startswith('/'): url_link = 'https:' + url_link
 					display_size = float(int(size))/1073741824
 					display = '%02d | [B]FILE[/B] | %.2f GB | [I]%s [/I]' % (count, display_size, name)
 					url_params = {'mode': 'playback.video', 'url': url_link, 'obj': 'video'}
@@ -85,11 +85,11 @@ def pm_transfers():
 					is_folder = False
 					details = Premiumize.get_item_details(file_id)
 					url_link, size = details['link'], details['size']
-					if url_link.startswith('/'): url_link = 'https' + url_link
+					if url_link.startswith('/'): url_link = 'https:' + url_link
 					display_size = float(int(size))/1073741824
 					display = '%02d | %s%% | [B]FILE[/B] | %.2f GB | [I]%s [/I]' % (count, str(progress), display_size, name)
 					url_params = {'mode': 'playback.video', 'url': url_link, 'obj': 'video'}
-					down_file_params = {'mode': 'downloader.runner', 'name': item['name'], 'url': url_link, 'media_type': 'cloud.premiumize', 'image': default_pm_icon}
+					down_file_params = {'mode': 'downloader.runner', 'name': item['name'], 'url': url_link, 'action': 'cloud.premiumize', 'image': default_pm_icon}
 					cm.append(('[B]Download File[/B]','RunPlugin(%s)' % build_url(down_file_params)))
 				url = build_url(url_params)
 				listitem = make_listitem()

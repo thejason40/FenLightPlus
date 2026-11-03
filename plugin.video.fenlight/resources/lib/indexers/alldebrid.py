@@ -5,7 +5,7 @@ from apis.alldebrid_api import AllDebridAPI, _flatten_files
 from modules import kodi_utils
 from modules.source_utils import supported_video_extensions
 from modules.utils import clean_file_name, normalize
-# logger = kodi_utils.logger
+logger = kodi_utils.logger
 
 build_url, make_listitem, execute_builtin = kodi_utils.build_url, kodi_utils.make_listitem, kodi_utils.execute_builtin
 default_ad_icon, fanart, set_view_mode = kodi_utils.get_icon('alldebrid'), kodi_utils.get_addon_fanart(), kodi_utils.set_view_mode
@@ -15,7 +15,7 @@ confirm_dialog, notification = kodi_utils.confirm_dialog, kodi_utils.notificatio
 extensions = supported_video_extensions()
 AllDebrid = AllDebridAPI()
 
-def ad_cloud(folder_id=None):
+def ad_cloud():
 	def _builder():
 		for count, item in enumerate(cloud_dict, 1):
 			try:
@@ -35,12 +35,15 @@ def ad_cloud(folder_id=None):
 				info_tag.setPlot(' ')
 				yield (url, listitem, True)
 			except: pass
-	try: cloud_dict = [i for i in AllDebrid.user_cloud()['magnets'] if i['statusCode'] == 4]
-	except: cloud_dict = []
+	cloud_data = AllDebrid.user_cloud()
+	if cloud_data is None:
+		logger('alldebrid', 'user cloud unavailable')
+		cloud_dict = []
+	else: cloud_dict = [i for i in cloud_data.get('magnets') or [] if str(i.get('statusCode', 4)) == '4']
 	handle = int(sys.argv[1])
 	add_items(handle, list(_builder()))
 	set_content(handle, 'files')
-	end_directory(handle)
+	end_directory(handle, cacheToDisc=False)
 	set_view_mode('view.premium')
 
 def browse_ad_cloud(magnet_id):

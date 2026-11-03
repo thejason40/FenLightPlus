@@ -12,6 +12,11 @@ supported_media, string = kodi_utils.supported_media, str
 set_property, notification = kodi_utils.set_property, kodi_utils.notification
 expiry_3hrs, expiry_1day, expiry_2days, expiry_3days, expiry_4days, expiry_7days, expiry_10days, expiry_14days, expiry_30days = 3, 24, 48, 72, 96, 168, 240, 336, 720
 int_window_prop = 'fenlight.internal_results.%s'
+
+class DebridAccountError(Exception):
+	# Raised by a debrid service when the account is refused
+	pass
+
 RES_4K = ('.4k', 'hd4k', '4khd', '.uhd', 'ultrahd', 'ultra.hd', 'hd2160', '2160hd', '2160', '2160p', '216o', '216op')
 RES_1080 = ('1080', '1080p', '1080i', 'hd1080', '1080hd', 'hd1080p', 'm1080p', 'fullhd', 'full.hd', '1o8o', '1o8op', '108o', '108op', '1o80', '1o80p')
 RES_720 = ('720', '720p', '720i', 'hd720', '720hd', 'hd720p', '72o', '72op')

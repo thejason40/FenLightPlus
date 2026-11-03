@@ -16,7 +16,7 @@ from modules.metadata import movie_meta, tvshow_meta
 from modules.watched_status import get_recently_watched
 from modules.settings import paginate, page_limit, tmdb_api_key, mpaa_region, recommend_service, recommend_seed
 from modules.utils import manual_function_import, make_thread_list, paginate_list, get_current_timestamp, get_datetime
-# logger = kodi_utils.logger
+logger = kodi_utils.logger
 
 external, home, end_directory, set_property = kodi_utils.external, kodi_utils.home, kodi_utils.end_directory, kodi_utils.set_property
 add_items, set_content, set_category, add_dir, set_view_mode = kodi_utils.add_items, kodi_utils.set_content, kodi_utils.set_category, kodi_utils.add_dir, kodi_utils.set_view_mode
@@ -74,6 +74,7 @@ def set_persistent_content(menu_type, key, data):
 class RandomLists():
 	def __init__(self, params):
 		self.handle = int(sys.argv[1])
+		self.directory_ended = False
 		self.params = params
 		self.params_get = params.get
 		self.mode = self.params_get('mode').replace('random.', '')
@@ -91,6 +92,12 @@ class RandomLists():
 		else: self.max_range, self.sample_size = 10, 3
 
 	def run_random(self):
+		try: return self._run_random()
+		except Exception as e:
+			logger('Random List Error', '%s (%s): %s: %s' % (self.mode, self.action, type(e).__name__, e))
+			if not self.directory_ended: end_directory(self.handle, cacheToDisc=False)
+
+	def _run_random(self):
 		if self.mode == 'build_trakt_lists': return self.random_trakt_lists()
 		if self.mode == 'build_trakt_my_lists_contents': return self.trakt_my_lists_contents()
 		if self.action in discover_personal: return self.random_discover()
@@ -250,7 +257,9 @@ class RandomLists():
 			self.list_items = self.function(self.params).worker()
 			self.category_name =  list_name
 			self.make_directory()
-		except: clear_property(memory_str % 'random_because_you_watched')
+		except:
+			clear_property(memory_str % 'random_because_you_watched')
+			raise
 
 	def make_directory(self, next_page_params={}):
 		add_items(self.handle, self.list_items)
@@ -258,6 +267,7 @@ class RandomLists():
 		set_content(self.handle, self.content_type)
 		set_category(self.handle, self.category_name)
 		end_directory(self.handle, cacheToDisc=False if self.is_external else True)
+		self.directory_ended = True
 		if self.is_external:
 			if self.folder_name: set_property('fenlight.%s' % self.folder_name, self.category_name)
 			else: set_property('fenlight.%s' % self.base_list_name, self.category_name)
@@ -275,6 +285,7 @@ def random_shortcut_folders(folder_name, random_results):
 	remake_widgets = is_external and get_property('fenlight.refresh_widgets') == 'true'
 	random_list, cache_to_memory = get_persistent_content('random_shortcut_folders', folder_name, remake_widgets, is_external)
 	if not random_list:
+		if not random_results: return end_directory(int(sys.argv[1]), cacheToDisc=False)
 		if len(random_results) > 1: random_list = random.choice(random_results)
 		else: random_list = random_results[0]
 		random_list.update({'folder_name': folder_name, 'mode': random_list['mode'].replace('random.', '')})

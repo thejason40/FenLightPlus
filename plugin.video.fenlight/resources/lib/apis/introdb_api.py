@@ -10,6 +10,8 @@ def get_segments(imdb_id, season, episode):
 	if not imdb_id: return None
 	try:
 		response = session.get(base_url % (imdb_id, season, episode), timeout=timeout)
-		if response.status_code != 200: return None
-		return response.json()
+		if response.status_code == 200: return response.json()
+		# 404 is "no segments" - not a failure
+		if response.status_code == 404: return {}
+		return None
 	except: return None

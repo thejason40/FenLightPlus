@@ -32,14 +32,14 @@ def build_season_list(params):
 				if custom_order is not None: title = '%s - %s' % (show_title, title)
 				poster = tmdb_poster % poster_path if poster_path is not None else show_poster
 				thumb = poster or show_landscape or show_fanart
-				try: year = air_date.split('-')[0]
-				except: year = show_year or '2050'
+				try: year = air_date.split('-')[0] or show_year
+				except: year = show_year
 				plot = overview or show_plot
 				try: premiered = adjust_premiered_date(air_date, adjust_hours)[1]
 				except: premiered = ''
 				unaired = aired_eps == 0
 				if unaired or season_special:
-					progress, playcount, total_watched, total_unwatched = 0, 0, 0, aired_eps
+					progress, playcount, watched, unwatched = 0, 0, 0, aired_eps
 					if unaired: title = unaired_label % title
 					else: title = 'Specials'
 				else:
@@ -97,8 +97,8 @@ def build_season_list(params):
 		show_poster, show_fanart = meta_get('poster') or poster_empty, meta_get('fanart') or fanart_empty
 		show_clearlogo, show_landscape = meta_get('clearlogo') or '', meta_get('landscape') or ''
 		custom_order = params.get('custom_order', None)
-		if show_specials(): season_data.sort(key=lambda i: (i['season_number'] == 0, i['season_number']))
-		elif custom_order is not None: season_data = [i for i in season_data if i['season_number'] == params['season']]
+		if custom_order is not None: season_data = [i for i in season_data if i['season_number'] == params['season']]
+		elif show_specials(): season_data.sort(key=lambda i: (i['season_number'] == 0, i['season_number']))
 		else:
 			season_data = [i for i in season_data if not i['season_number'] == 0]
 			season_data.sort(key=lambda k: k['season_number'])
@@ -114,7 +114,8 @@ def build_season_list(params):
 		set_view_mode(view_mode, content_type, is_external)
 	except Exception as e:
 		kodi_utils.notification('BROWSE ERROR', 3000)
-		kodi_utils.logger('Browse Error', f'Exception in build_tmdb_list: {type(e).__name__}: {str(e)}')
+		kodi_utils.logger('Browse Error', f'Exception in build_season_list: {type(e).__name__}: {str(e)}')
+		if params.get('custom_order', None) is None: end_directory(int(sys.argv[1]), cacheToDisc=False)
 
 
 def single_seasons(seasons_list):

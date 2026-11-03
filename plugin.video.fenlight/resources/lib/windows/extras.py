@@ -105,7 +105,9 @@ class Extras(BaseDialog):
 					function, new_value = (like_a_list, 'true') if list_item.getProperty('liked_status') == 'false' else (unlike_a_list, 'false')
 					new_value = 'true' if list_item.getProperty('liked_status') == 'false' else 'false'
 					if function({'user': user, 'list_slug': list_slug, 'refresh': 'false'}): list_item.setProperty('liked_status', new_value)
-				except: return self.notification('Error with Trakt List')
+				except:
+					hide_busy_dialog()
+					return self.notification('Error with Trakt List')
 				hide_busy_dialog()
 			else: return
 		if not self.control_id: return

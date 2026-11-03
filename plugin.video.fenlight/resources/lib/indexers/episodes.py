@@ -105,6 +105,7 @@ def build_episode_list(params):
 	current_date, hide_watched = get_datetime(), is_home and widget_hide_watched()
 	watched_title = 'Trakt' if watched_indicators == 1 else 'Simkl' if watched_indicators == 2 else 'Fen Light'
 	meta = tvshow_meta('tmdb_id', params.get('tmdb_id'), tmdb_api_key(), mpaa_region(), current_date)
+	if not meta: return end_directory(handle, cacheToDisc=False)
 	meta_get = meta.get
 	tmdb_id, tvdb_id, imdb_id, tvshow_plot, orig_title = meta_get('tmdb_id'), meta_get('tvdb_id'), meta_get('imdb_id'), meta_get('plot'), meta_get('original_title')
 	title, show_year, rootname, show_duration, show_status = meta_get('title'), meta_get('year') or '2050', meta_get('rootname'), meta_get('duration'), meta_get('status')
@@ -201,8 +202,8 @@ def build_single_episode(list_type, params={}):
 			show_clearlogo = meta_get('clearlogo') or ''
 			show_landscape = meta_get('landscape') or ''
 			thumb = item_get('thumb', None) or show_landscape or show_fanart
-			try: year = premiered.split('-')[0]
-			except: year = show_year or '2050'
+			try: year = premiered.split('-')[0] or show_year
+			except: year = show_year
 			try:
 				poster_path = next((i['poster_path'] for i in season_data if i['season_number'] == int(season)), None)
 				season_poster = tmdb_poster % poster_path if poster_path is not None else show_poster
@@ -253,7 +254,8 @@ def build_single_episode(list_type, params={}):
 					elif season > 1:
 						prev_season = season - 1
 						prev_ep = next((i['episode_count'] for i in season_data if i['season_number'] == int(prev_season)), None)
-					cm_append(("[B]Mark Previous Unwatched[/B]", run_plugin % build_url({'mode': 'watched_status.mark_episode', 'action': 'mark_as_unwatched',
+					if (prev_season, prev_ep) != (season, episode):
+						cm_append(("[B]Mark Previous Unwatched[/B]", run_plugin % build_url({'mode': 'watched_status.mark_episode', 'action': 'mark_as_unwatched',
 												'tmdb_id': tmdb_id, 'tvdb_id': tvdb_id, 'season': prev_season, 'episode': prev_ep,  'title': title})))
 				# End Addition
 				if progress:
@@ -261,7 +263,7 @@ def build_single_episode(list_type, params={}):
 												'season': season, 'episode': episode, 'refresh': 'true'})))
 				if unwatched_info:
 					total_aired_eps = meta_get('total_aired_eps')
-					total_unwatched = get_watched_status_tvshow(watched_info_tvshow(watched_db).get(string(tmdb_id), None), total_aired_eps)[2]
+					total_unwatched = get_watched_status_tvshow(tvshow_watched_info.get(string(tmdb_id), None), total_aired_eps)[2]
 					if total_aired_eps != total_unwatched: set_properties({'watchedepisodes': '1', 'unwatchedepisodes': string(total_unwatched)})
 			if all_episodes:
 				if all_episodes == 1 and meta_get('total_seasons') > 1: browse_params = {'mode': 'build_season_list', 'tmdb_id': tmdb_id}
@@ -304,6 +306,7 @@ def build_single_episode(list_type, params={}):
 	watched_db = get_database(watched_indicators)
 	watched_title = 'Trakt' if watched_indicators == 1 else 'Simkl' if watched_indicators == 2 else 'Fen Light'
 	dropped_shows = get_dropped_shows(watched_indicators)
+	tvshow_watched_info = watched_info_tvshow(watched_db) if unwatched_info else {}
 	category_name = _get_category_name()
 	if list_type == 'episode.next':
 		if watched_indicators == 2: _simkl_nextep_sync()

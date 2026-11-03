@@ -143,7 +143,9 @@ def logger(heading, function):
 
 def short_url(url):
 	from urllib.request import Request, urlopen
+	from urllib.parse import quote
 	import json
+	url = quote(url, safe=":/?#[]@!$&'()*+,;=%~")
 	headers = {'Content-Type': 'application/json', 'User-Agent': 'Mozilla/5.0'}
 	providers = (('https://spoo.me/api/v1/shorten', 'long_url'), ('https://shrtr.top/api/v1/shorten', 'url'))
 	for api_url, url_field in providers:
@@ -153,7 +155,9 @@ def short_url(url):
 			if result.getcode() == 201:
 				return json.loads(result.read().decode('utf-8'))['short_url']
 		except Exception as e:
-			logger('SHORT URL ERROR (%s)' % api_url, e)
+			try: body = e.read().decode('utf-8', 'replace')[:300]
+			except: body = ''
+			logger('SHORT URL ERROR (%s)' % api_url, '%s %s' % (e, body) if body else e)
 	return url
 
 def make_qr(url):
@@ -163,8 +167,11 @@ def make_qr(url):
 				% (quote(tiny_url, safe=''), quote(QR_CENTER_ICON, safe='')))
 	return tiny_url, qr_icon
 
+home_window = []
+
 def kodi_window():
-	return Window(10000)
+	if not home_window: home_window.append(Window(10000))
+	return home_window[0]
 
 def get_property(prop):
 	return kodi_window().getProperty(prop)

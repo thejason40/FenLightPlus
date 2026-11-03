@@ -38,7 +38,7 @@ def get_tmdb_lists(params):
 				if list_type == 'liked_lists':
 					# Hopefully coming in future
 					display = '%s | [I]%s (x%s)[/I]' % (list_name_upper, user, str(item_count))
-					cm_append(('[B]Unlike List[/B]', 'RunPlugin(%s)' % build_url({'mode': 'tmdb.tmdb_unlike_a_list', 'user': user, 'list_slug': slug})))
+					cm_append(('[B]Unlike List[/B]', 'RunPlugin(%s)' % build_url({'mode': 'tmdb.tmdb_unlike_a_list', 'user': user, 'list_slug': list_id})))
 				else:
 					display = '%s [I](x%s)[/I]' % (list_name_upper, str(item_count))
 					cm_append(('[B]Make New List[/B]', 'RunPlugin(%s)' % build_url({'mode': 'tmdb.make_new_tmdb_list'})))
@@ -57,7 +57,7 @@ def get_tmdb_lists(params):
 			except Exception as e:
 				kodi_utils.logger('TMDB LIST ITEM ERROR', f"{type(e).__name__}: {str(e)}")
 	
-	page_no = params.get('page_no', 1)
+	page_no = int(params.get('page_no', 1))  # a str from the URL on page 2+
 	handle = int(sys.argv[1])
 	list_type, shuffle = params['list_type'], params.get('shuffle', 'false') == 'true'
 	returning_to_list = False

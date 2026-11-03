@@ -375,7 +375,7 @@ def tmdb_manager_choice(params):
 def episode_groups_choice(params):
 	episode_group_types = {1: 'Original Air Date', 2: 'Absolute', 3: 'DVD', 4: 'Digital', 5: 'Story Arc', 6: 'Production', 7: 'TV'}
 	meta = params.get('meta')
-	poster = params.get('poster') or empty_poster
+	poster = params.get('poster') or poster_empty
 	groups = metadata.episode_groups(meta['tmdb_id'])
 	if not groups:
 		notification('No Episode Groups to choose from.')
@@ -411,7 +411,7 @@ def playback_choice(params):
 	if not isinstance(meta, dict):
 		function = metadata.movie_meta if media_type == 'movie' else metadata.tvshow_meta
 		meta = function('tmdb_id', meta, tmdb_api_key(), mpaa_region(), get_datetime())
-	poster = meta.get('poster') or empty_poster
+	poster = meta.get('poster') or poster_empty
 	aliases = get_aliases_titles(make_alias_dict(meta, meta['title']))
 	items = []
 	if media_type == 'episode': items.append({'line': 'Play # Episodes', 'function': 'play_number_eps'})
@@ -526,9 +526,7 @@ def playback_choice(params):
 		if disable_filters_choice:
 			_process_params('', 'true', 'ignore_scrape_filters')
 			set_property('fs_filterless_search', 'true')
-	else:
-		from modules.metadata import episodes_meta
-		episodes_data = episodes_meta(orig_season, meta)
+	else: return
 	from modules.sources import Sources
 	Sources().playback_prep(play_params)
 
@@ -623,8 +621,8 @@ def extras_lists_choice(params={}):
 def set_language_filter_choice(params):
 	from modules.meta_lists import language_choices
 	filter_setting_id, multi_choice, include_none = params.get('filter_setting_id'), params.get('multi_choice', 'false'), params.get('include_none', 'false')
-	lang_choices = language_choices
-	if include_none == 'false': lang_choices.pop('None')
+	lang_choices = dict(language_choices)
+	if include_none == 'false': lang_choices.pop('None', None)
 	dl, fl = list(lang_choices.keys()), list(lang_choices.values())
 	try: preselect = [fl.index(i) for i in get_setting('fenlight.%s' % filter_setting_id).split(', ')]
 	except: preselect = []
@@ -720,7 +718,7 @@ def mpaa_region_choice(params={}):
 	from modules.meta_lists import regions
 	regions.sort(key=lambda x: x['name'])
 	list_items = [{'line1': i['name']} for i in regions]
-	kwargs = {'items': json.dumps(list_items), 'heading': 'Set MPAA Region', 'narrow_window': 'true'}
+	kwargs = {'items': json.dumps(list_items), 'heading': 'Set Age Rating Region', 'narrow_window': 'true'}
 	choice = select_dialog(regions, **kwargs)
 	if choice == None: return None
 	from caches.meta_cache import delete_meta_cache

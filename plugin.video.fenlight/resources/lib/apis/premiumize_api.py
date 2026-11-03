@@ -6,7 +6,7 @@ import requests
 from threading import Thread
 from urllib.parse import urlencode
 from caches.main_cache import cache_object
-from caches.settings_cache import get_setting, set_setting
+from caches.settings_cache import get_setting, set_setting, LiveSetting
 from modules.utils import copy2clip
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
 from modules import kodi_utils
@@ -22,8 +22,7 @@ timeout = 20.0
 icon = get_icon('premiumize')
 
 class PremiumizeAPI:
-	def __init__(self):
-		self.token = get_setting('fenlight.pm.token', 'empty_setting')
+	token = LiveSetting('fenlight.pm.token')
 
 	def auth(self):
 		self.token = ''

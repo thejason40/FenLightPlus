@@ -74,7 +74,9 @@ class TraktMonitor:
 		wait_for_abort, is_playing = monitor.waitForAbort, player.isPlayingVideo
 		simkl_startup_synced = False
 		while not monitor.abortRequested():
-			while is_playing() or window.getProperty(pause_services_prop) == 'true': wait_for_abort(10)
+			while is_playing() or window.getProperty(pause_services_prop) == 'true':
+				if wait_for_abort(10): break
+			if monitor.abortRequested(): break
 			wait_time = 1800
 			# Re-read the provider every pass — it can change at runtime
 			try: provider = tracking.provider()
@@ -85,7 +87,7 @@ class TraktMonitor:
 					try:
 						status = tracking.sync_activities()
 						logger('Fen Light', 'TrackingMonitor Startup Sync (Simkl) - %s' % status)
-						if status == 'success' and tracking_refresh_widgets(): run_plugin({'mode': 'kodi_refresh'})
+						if status in ('success', 'partial') and tracking_refresh_widgets(): run_plugin({'mode': 'kodi_refresh'})
 					except Exception as e: logger('Fen Light', 'TrackingMonitor Startup Sync (Simkl) Failed - %s' % str(e))
 				wait_for_abort(600)  # idle: local settings read only, no network
 				continue
@@ -98,11 +100,10 @@ class TraktMonitor:
 				sync_interval, wait_time = tracking_sync_interval()
 				next_update_string = update_string % sync_interval
 				status = tracking.sync_activities()
-				if status == 'failed': logger('Fen Light', trakt_service_string % ('Failed. Error from Tracker', next_update_string))
-				else:
-					if status in ('success', 'no account'): logger('Fen Light', trakt_service_string % ('Success. %s' % trakt_success_line_dict[status], next_update_string))
-					else: logger('Fen Light', trakt_service_string % ('Success. No Changes Needed', next_update_string))# 'not needed'
-					if status == 'success' and tracking_refresh_widgets(): run_plugin({'mode': 'kodi_refresh'})
+				if status in ('failed', 'partial'): logger('Fen Light', trakt_service_string % ('Failed. Error from Tracker', next_update_string))
+				elif status in ('success', 'no account'): logger('Fen Light', trakt_service_string % ('Success. %s' % trakt_success_line_dict[status], next_update_string))
+				else: logger('Fen Light', trakt_service_string % ('Success. No Changes Needed', next_update_string))
+				if status in ('success', 'partial') and tracking_refresh_widgets(): run_plugin({'mode': 'kodi_refresh'})
 			except Exception as e: logger('Fen Light', trakt_service_string % ('Failed', 'The following Error Occured: %s' % str(e)))
 			wait_for_abort(wait_time)
 		try: del monitor
@@ -123,9 +124,10 @@ class UpdateCheck:
 		monitor, player = xbmc.Monitor(), xbmc.Player()
 		wait_for_abort, is_playing = monitor.waitForAbort, player.isPlayingVideo
 		while not monitor.abortRequested():
-			while time() < end_pause: wait_for_abort(1)
-			while window.getProperty(pause_services_prop) == 'true' or is_playing(): wait_for_abort(1)
-			update_check(update_action())
+			aborted = False
+			while not aborted and time() < end_pause: aborted = wait_for_abort(1)
+			while not aborted and (window.getProperty(pause_services_prop) == 'true' or is_playing()): aborted = wait_for_abort(1)
+			if not aborted: update_check(update_action())
 			break
 		window.setProperty(firstrun_update_prop, 'true')
 		try: del monitor

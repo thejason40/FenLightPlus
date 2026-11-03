@@ -323,7 +323,7 @@ class Navigator:
 
 	def networks(self):
 		menu_type = self.params_get('menu_type')
-		if menu_type == 'movie': return
+		if menu_type == 'movie': return self.end_directory()
 		mode, action, networks = 'build_tvshow_list', 'tmdb_tv_networks', sorted(ml.networks, key=lambda k: k['name'])
 		for i in networks: self.add({'mode': mode, 'action': action, 'key_id': i['id'], 'name': i['name']}, i['name'], i['icon'])
 		self.end_directory()
@@ -348,6 +348,32 @@ class Navigator:
 		else:
 			action, mode, providers = 'tmdb_tv_providers_uk', 'build_tvshow_list', ml.watch_providers_tvshows_uk
 		for i in providers: self.add({'mode': mode, 'action': action, 'key_id': i['id'], 'name': i['name']}, i['name'], image_insert % i['icon'], original_image=True)
+		self.end_directory()
+
+	def charts_countries(self):
+		from apis.charts_api import get_index
+		countries = list(get_index().get('countries', {}))
+		if not countries: notification('Streaming Charts unavailable', 3000)
+		# the user's region first, the rest by name
+		home_country = s.mpaa_region().lower()
+		countries.sort(key=lambda k: (k != home_country, ml.chart_countries.get(k, k.upper())))
+		for i in countries:
+			name = ml.chart_countries.get(i, i.upper())
+			self.add({'mode': 'navigator.charts_services', 'menu_type': self.params_get('menu_type'), 'country': i, 'name': name}, name, 'streaming_charts')
+		self.end_directory()
+
+	def charts_services(self):
+		from apis.charts_api import get_index
+		menu_type, country = self.params_get('menu_type'), self.params_get('country')
+		mode, action = ('build_movie_list', 'charts_movies') if menu_type == 'movie' else ('build_tvshow_list', 'charts_tvshows')
+		index = get_index()
+		services = index.get('countries', {}).get(country, {}).get('services', [])
+		attribution = index.get('attribution', {}).get('text', ' ')
+		for i in services:
+			service = ml.chart_services.get(i, {})
+			name = service.get('name', i.title())
+			self.add({'mode': mode, 'action': action, 'key_id': '%s:%s' % (country, i), 'category_name': '%s (%s)' % (name, self.category_name)},
+					name, service.get('icon', 'providers'), plot=attribution)
 		self.end_directory()
 
 	def genres(self):
@@ -384,14 +410,16 @@ class Navigator:
 		except: page_no = self.params_get('new_page')
 		mode = 'build_movie_list' if media_type == 'movie' else 'build_tvshow_list'
 		action = 'tmdb_movie_keyword_results' if media_type == 'movie' else 'tmdb_tv_keyword_results'
-		data = tmdb_keywords_by_query(key_id, page_no)
-		for item in data['results']:
-			name = item['name'].upper()
-			self.add({'mode': mode, 'action': action, 'key_id': item['id'], 'iconImage': 'tmdb', 'category_name': name}, name, iconImage='tmdb')
-		if data['total_pages'] > page_no:
-			new_page = {'mode': 'navigator.keyword_results', 'key_id': key_id, 'category_name': self.category_name, 'new_page': str(data['page'] + 1)}
-			self.add(new_page, 'Next Page (%s) >>' % new_page['new_page'], 'nextpage', False)
-		self.category_name = 'Search Results for %s' % key_id.upper()
+		try:
+			data = tmdb_keywords_by_query(key_id, page_no)
+			for item in data['results']:
+				name = item['name'].upper()
+				self.add({'mode': mode, 'action': action, 'key_id': item['id'], 'iconImage': 'tmdb', 'category_name': name}, name, iconImage='tmdb')
+			if data['total_pages'] > page_no:
+				new_page = {'mode': 'navigator.keyword_results', 'key_id': key_id, 'category_name': self.category_name, 'new_page': str(data['page'] + 1)}
+				self.add(new_page, 'Next Page (%s) >>' % new_page['new_page'], 'nextpage', False)
+			self.category_name = 'Search Results for %s' % key_id.upper()
+		except: pass
 		self.end_directory()
 
 	def choose_view(self):
@@ -513,7 +541,7 @@ class Navigator:
 		for item in random_list_dict[menu_type](): self.add(item, item['name'], item['iconImage'])
 		self.end_directory()
 
-	def add(self, url_params, list_name, iconImage='folder', original_image=False, cm_items=[]):
+	def add(self, url_params, list_name, iconImage='folder', original_image=False, cm_items=[], plot=' '):
 		isFolder = url_params.get('isFolder', 'true') == 'true'
 		if original_image: icon = iconImage
 		else: icon = get_icon(iconImage)
@@ -523,7 +551,7 @@ class Navigator:
 		listitem.setLabel(list_name)
 		listitem.setArt({'icon': icon, 'poster': icon, 'thumb': icon, 'fanart': fanart, 'banner': icon, 'landscape': icon})
 		info_tag = listitem.getVideoInfoTag()
-		info_tag.setPlot(' ')
+		info_tag.setPlot(plot)
 		if cm_items and not self.is_home: listitem.addContextMenuItems(cm_items)
 		add_item(int(sys.argv[1]), url, listitem, isFolder)
 

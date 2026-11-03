@@ -106,6 +106,9 @@ def call_simkl(path, params=None, data=None, is_delete=False, with_auth=True, me
 				continue
 			return None
 		if status_code == 204: return {'result': 'OK'}
+		if status_code >= 400:
+			logger('Simkl Error', 'HTTP %s for %s' % (status_code, path))
+			return None
 		try: response.encoding = 'utf-8'
 		except: pass
 		try: return response.json()
@@ -274,28 +277,31 @@ def _movie_watched_row(item):
 
 def simkl_indicators_movies(act=None):
 	items = simkl_all_items('movies')
-	if items is None: return  # transient failure — keep the existing rows and cache
+	if items is None: return False  # transient failure — keep the existing rows and cache
 	rows = []
 	for item in items:
 		tmdb_id, row, watched = _movie_watched_row(item)
 		if tmdb_id and watched: rows.append(row)
 	simkl_watched_cache.set_bulk_movie_watched(rows)
 	_seed_status_raw('movies', items, act)
+	return True
 
 def simkl_indicators_tv(act=None):
 	shows = simkl_all_items('shows', extended='full', extra=TV_FLAGS)
 	anime = simkl_all_items('anime', extended='full_anime_seasons', extra=TV_FLAGS)
 	_seed_status_raw('shows', shows, act)
 	_seed_status_raw('anime', anime, act)
-	if shows is None or anime is None: return  # partial failure — don't rebuild rows from half a library
+	if shows is None or anime is None: return False  # partial failure — don't rebuild rows from half a library
 	rows = []
 	for item in shows + anime:
 		_tmdb, ep_rows = _show_episode_rows(item)
 		if ep_rows: rows.extend(ep_rows)
 	simkl_watched_cache.set_bulk_tvshow_watched(rows)
+	return True
 
 def simkl_delta_sync(watermark, act=None):
-	data = simkl_all_items_combined(watermark, extended='full_anime_seasons', extra=TV_FLAGS) or {}
+	data = simkl_all_items_combined(watermark, extended='full_anime_seasons', extra=TV_FLAGS)
+	if data is None: return False
 	_merge_status_raw_from_delta(data, act)
 	for item in (data.get('shows') or []) + (data.get('anime') or []):
 		tmdb_id, ep_rows = _show_episode_rows(item)
@@ -307,9 +313,11 @@ def simkl_delta_sync(watermark, act=None):
 		if tmdb_id is None: continue
 		if watched: simkl_watched_cache.upsert_movie(row)
 		else: simkl_watched_cache.remove_movie(tmdb_id)
+	return True
 
 def simkl_playback_progress():
 	result = call_simkl('sync/playback')
+	if result is None: return None
 	if isinstance(result, list): return result
 	if isinstance(result, dict):
 		items = []
@@ -329,13 +337,14 @@ def simkl_progress_movies(progress_info):
 		except: pct = 0
 		paused_at = _norm_ts(item.get('paused_at', ''))
 		insert_append(('movie', str(tmdb_id), '', '', str(pct), 0, paused_at, item.get('id', 0), movie.get('title', '')))
+	if progress_info is None: return False
 	insert_list = []
 	insert_append = insert_list.append
 	items = [i for i in progress_info if _pb_type(i) == 'movie' and _pb_progress(i) > 1]
-	if not items: return
 	threads = list(make_thread_list(_process, items))
 	[i.join() for i in threads]
 	simkl_watched_cache.set_bulk_movie_progress(insert_list)
+	return True
 
 def _pb_type(item):
 	if item.get('type'): return 'movie' if item['type'] in ('movie', 'movies') else 'episode'
@@ -359,13 +368,14 @@ def simkl_progress_tv(progress_info):
 		if season <= 0 or number <= 0: return
 		pct = round(_pb_progress(item), 1)
 		insert_append(('episode', str(tmdb_id), season, number, str(pct), 0, _norm_ts(item.get('paused_at', '')), item.get('id', 0), show.get('title', '')))
+	if progress_info is None: return False
 	insert_list = []
 	insert_append = insert_list.append
 	items = [i for i in progress_info if _pb_type(i) == 'episode' and _pb_progress(i) > 1]
-	if not items: return
 	threads = list(make_thread_list(_process, items))
 	[i.join() for i in threads]
 	simkl_watched_cache.set_bulk_tvshow_progress(insert_list)
+	return True
 
 def _timestamp(date_time_str):
 	for fmt in res_formats:
@@ -419,21 +429,23 @@ def simkl_sync_activities(force_update=False, bypass_throttle=False):
 	removed = (_compare(l_tv.get('removed_from_list', ''), c_tv.get('removed_from_list', ''))
 			or _compare(l_movies.get('removed_from_list', ''), c_movies.get('removed_from_list', ''))
 			or _compare(l_anime.get('removed_from_list', ''), c_anime.get('removed_from_list', '')))
+	complete = True
 	if force_update or is_initial:
-		simkl_indicators_movies(latest)
-		simkl_indicators_tv(latest)
+		complete = simkl_indicators_movies(latest) and complete
+		complete = simkl_indicators_tv(latest) and complete
 	elif removed:
 		if simkl_removals_reconcile(latest):
-			simkl_delta_sync(cached.get('all'), latest)
+			complete = simkl_delta_sync(cached.get('all'), latest) and complete
 		else:
-			simkl_indicators_movies(latest)
-			simkl_indicators_tv(latest)
+			complete = simkl_indicators_movies(latest) and complete
+			complete = simkl_indicators_tv(latest) and complete
 	elif refresh_movies_watched or refresh_tv_watched:
-		simkl_delta_sync(cached.get('all'), latest)
+		complete = simkl_delta_sync(cached.get('all'), latest) and complete
 	if refresh_playback:
 		progress_info = simkl_playback_progress()
-		simkl_progress_movies(progress_info)
-		simkl_progress_tv(progress_info)
+		complete = simkl_progress_movies(progress_info) and complete
+		complete = simkl_progress_tv(progress_info) and complete
+	if not complete: return 'partial'
 	simkl_data_cache.set('simkl_get_activity', latest)
 	from caches.simkl_cache import clear_simkl_calendar
 	clear_simkl_calendar()

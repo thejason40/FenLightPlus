@@ -60,9 +60,12 @@ class source:
 			except: return self.sources
 			for item in my_cloud_files:
 				if item['status'] != 'downloaded': continue
-				if item['isDirectory']: append(Thread(target=self._scrape_folders, args=(item['requestId'],)))
+				if item['isDirectory']:
+					folder_name = clean_title(normalize(item['fileName']))
+					if folder_name and self.folder_query not in folder_name: continue
+					append(Thread(target=self._scrape_folders, args=(item['requestId'],)))
 				else:
-					if not item['fileName'].endswith(tuple(extensions)): continue
+					if not item['fileName'].lower().endswith(tuple(extensions)): continue
 					match = False
 					normalized = normalize(item['fileName'])
 					filename = clean_title(normalized)
@@ -80,11 +83,11 @@ class source:
 			torrent_info = Offcloud.torrent_info(folder_info)
 			try:
 				pack_files = [{'filename': normalize(i.split('/')[-1]), 'link': Offcloud.requote_uri(i), 'size': 0} \
-								for i in torrent_info if i.endswith(tuple(extensions))]
+								for i in torrent_info if i.lower().endswith(tuple(extensions))]
 			except: pack_files = []
 			for item in torrent_info:
 				try:
-					if not item.endswith(tuple(extensions)): continue
+					if not item.lower().endswith(tuple(extensions)): continue
 					match = False
 					normalized = normalize(item.split('/')[-1])
 					filename = clean_title(normalized)

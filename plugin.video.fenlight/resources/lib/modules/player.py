@@ -16,6 +16,7 @@ auto_resume, auto_nextep_settings, store_resolved_to_cloud = st.auto_resume, st.
 set_bookmark, mark_movie, mark_episode = ws.set_bookmark, ws.mark_movie, ws.mark_episode
 total_time_errors = ('0.0', '', 0.0, None)
 set_resume, set_watched = 5, 90
+outro_wait_floor = 30
 video_fullscreen_check = 'Window.IsActive(fullscreenvideo)'
 
 class FenLightPlayer(xbmc_player):
@@ -80,7 +81,7 @@ class FenLightPlayer(xbmc_player):
 					if self.getTotalTime() not in total_time_errors and get_visibility(video_fullscreen_check): self.playback_successful = True
 				except: pass
 			resolve_percent = round(resolve_percent + 26.0/100, 1)
-			self.sources_object.progress_dialog.update_resolver(percent=resolve_percent)
+			if self.sources_object.progress_dialog: self.sources_object.progress_dialog.update_resolver(percent=resolve_percent)
 			sleep(50)
 
 	def playback_close_dialogs(self):
@@ -125,7 +126,7 @@ class FenLightPlayer(xbmc_player):
 						playNextNum = False
 					if playNextNum: self.autoplay_nextep = True
 					if self.binge_mode: self.autoplay_nextep = True
-					if self.autoplay_nextep or self.autoscrape_nextep:
+					if (self.autoplay_nextep or self.autoscrape_nextep) and not self.waiting_on_outro():
 						if not self.nextep_info_gathered: self.info_next_ep()
 						if round(self.total_time - self.curr_time) <= self.start_prep: self.run_next_ep(); break
 				except: pass
@@ -163,8 +164,9 @@ class FenLightPlayer(xbmc_player):
 			if self.media_type == 'movie':
 				listitem.setArt({'poster': poster, 'fanart': fanart, 'icon': poster, 'clearlogo': clearlogo})
 				info_tag = listitem.getVideoInfoTag()
+				if str(self.year).isdigit(): info_tag.setYear(int(self.year))  # TMDb year can be '' when the date is missing
 				info_tag.setMediaType('movie'), info_tag.setTitle(self.title), info_tag.setOriginalTitle(self.meta_get('original_title')), info_tag.setPlot(plot)
-				info_tag.setYear(int(self.year)), info_tag.setRating(rating), info_tag.setVotes(votes), info_tag.setMpaa(mpaa)
+				info_tag.setRating(rating), info_tag.setVotes(votes), info_tag.setMpaa(mpaa)
 				info_tag.setDuration(duration), info_tag.setCountries(country), info_tag.setTrailer(trailer), info_tag.setPremiered(premiered)
 				info_tag.setTagLine(tagline), info_tag.setStudios(studio), info_tag.setIMDBNumber(self.imdb_id), info_tag.setGenres(genre)
 				info_tag.setWriters(writer), info_tag.setDirectors(director), info_tag.setUniqueIDs({'imdb': self.imdb_id, 'tmdb': str(self.tmdb_id)})
@@ -172,9 +174,10 @@ class FenLightPlayer(xbmc_player):
 			else:
 				listitem.setArt({'poster': poster, 'fanart': fanart, 'icon': poster, 'clearlogo': clearlogo, 'tvshow.poster': poster, 'tvshow.clearlogo': clearlogo})
 				info_tag = listitem.getVideoInfoTag()
+				if str(self.year).isdigit(): info_tag.setYear(int(self.year))
 				info_tag.setMediaType('episode'), info_tag.setTitle(self.meta_get('ep_name')), info_tag.setOriginalTitle(self.meta_get('original_title'))
 				info_tag.setTvShowTitle(self.title), info_tag.setTvShowStatus(self.meta_get('status')), info_tag.setSeason(self.season), info_tag.setEpisode(self.episode)
-				info_tag.setPlot(plot), info_tag.setYear(int(self.year)), info_tag.setRating(rating), info_tag.setVotes(votes)
+				info_tag.setPlot(plot), info_tag.setRating(rating), info_tag.setVotes(votes)
 				info_tag.setMpaa(mpaa), info_tag.setDuration(duration), info_tag.setTrailer(trailer), info_tag.setFirstAired(premiered)
 				info_tag.setStudios(studio), info_tag.setIMDBNumber(self.imdb_id), info_tag.setGenres(genre), info_tag.setWriters(writer)
 				info_tag.setDirectors(director), info_tag.setUniqueIDs({'imdb': self.imdb_id, 'tmdb': str(self.tmdb_id), 'tvdb': str(self.tvdb_id)})
@@ -249,7 +252,8 @@ class FenLightPlayer(xbmc_player):
 	def onPlayBackEnded(self):
 		try:
 			if self.is_generic or self.media_marked: return
-			self.media_watched_marker(force_watched=True)
+			near_end = self.total_time and self.total_time - self.curr_time <= min(600, self.total_time * 0.15)
+			self.media_watched_marker(force_watched=bool(near_end))
 		except Exception as e: ku.logger('fenlight.player', 'onPlayBackEnded failed: %s' % e)
 
 	def run_next_ep(self):
@@ -270,8 +274,9 @@ class FenLightPlayer(xbmc_player):
 		try:
 				play_type = 'autoplay_nextep' if self.autoplay_nextep else 'autoscrape_nextep'
 				nextep_settings = auto_nextep_settings(play_type)
-				final_chapter = self.final_chapter() if nextep_settings['use_chapters'] else None
-				percentage = 100 - final_chapter if final_chapter else nextep_settings['window_percentage']
+				alert_point = self.outro_point() if nextep_settings['use_outro'] else None
+				if not alert_point and nextep_settings['use_chapters']: alert_point = self.final_chapter()
+				percentage = 100 - alert_point if alert_point else nextep_settings['window_percentage']
 				window_time = round((percentage/100) * self.total_time)
 				use_window = nextep_settings['alert_method'] == 0
 				default_action = nextep_settings['default_action']
@@ -285,6 +290,16 @@ class FenLightPlayer(xbmc_player):
 					# snapshot the current episode's identity before next_episode_info mutates meta — needed for Stop & Unmark
 					self.nextep_settings['prev_episode'] = {'tmdb_id': self.tmdb_id, 'tvdb_id': self.tvdb_id, 'season': self.season, 'episode': self.episode, 'title': self.title}
 		except: pass
+
+	def waiting_on_outro(self):
+		return self.outro_pending and self.total_time - self.curr_time > outro_wait_floor
+
+	def outro_point(self):
+		try:
+			point = self.outro_start / self.total_time * 100
+			if 90 <= point < 100: return point
+		except: pass
+		return None
 
 	def final_chapter(self):
 		try:
@@ -309,6 +324,7 @@ class FenLightPlayer(xbmc_player):
 			self.meta_get, self.kodi_monitor, self.playback_percent = self.meta.get, xbmc_monitor(), self.sources_object.playback_percent or 0.0
 			self.playing_filename = self.sources_object.playing_filename
 			self.media_marked, self.nextep_info_gathered = False, False
+			self.outro_start, self.outro_pending = None, False
 			self.dialogs_cleared = False
 			self.current_point, self.total_time, self.curr_time = 0, 0, 0
 			self.playback_successful, self.cancel_all_playback = None, False
@@ -328,7 +344,7 @@ class FenLightPlayer(xbmc_player):
 		clear_property('subs.player_filename')
 
 	def clear_playing_item(self):
-		if self.playing_item['cache_provider'] == 'Offcloud':
+		if self.playing_item.get('cache_provider') == 'Offcloud':
 			if self.playing_item.get('direct_debrid_link', False): return
 			if store_resolved_to_cloud('Offcloud', 'package' in self.playing_item): return
 			from apis.offcloud_api import OffcloudAPI
@@ -344,31 +360,38 @@ class FenLightPlayer(xbmc_player):
 	def start_skip_watcher(self):
 		try:
 			if self.is_generic or self.media_type != 'episode': return
-			behavior = st.binge_skip_behavior() if self.binge_mode else 2
-			if behavior == 1:
-				# binge "Skip All Segments": every kind, silently, regardless of the skip settings
-				skip_settings = {'kinds': {'intro', 'recap', 'outro'}, 'dismiss': 0, 'silent': True}
-			else:
-				skip_settings = st.skip_segment_settings()
-				if not skip_settings: return
-				skip_settings['silent'] = behavior == 0
-			Thread(target=self._skip_watcher, args=(skip_settings,)).start()
-		except: pass
+			try:
+				play_type = self.nextep_play_type()
+				outro_alert = bool(play_type) and auto_nextep_settings(play_type)['use_outro']
+			except: outro_alert = False
+			skip_settings = None
+			if 'seekable=0' not in self.url:
+				behavior = st.binge_skip_behavior() if self.binge_mode else 2
+				if behavior == 1:
+					skip_settings = {'kinds': {'intro', 'recap', 'outro'}, 'dismiss': 0, 'silent': True}
+				else:
+					skip_settings = st.skip_segment_settings()
+					if skip_settings: skip_settings['silent'] = behavior == 0
+			if not skip_settings and not outro_alert: return
+			self.outro_pending = outro_alert  # monitor() holds the alert window until the outro lookup has answered
+			Thread(target=self._skip_watcher, args=(skip_settings or {'kinds': set(), 'dismiss': 0}, outro_alert)).start()
+		except: self.outro_pending = False
 
-	def _play_next_will_fire(self):
+	def nextep_play_type(self):
 		try:
 			obj = self.sources_object
-			if any((obj.random_continual, obj.random, obj.disable_autoplay_next_episode)): return False
-			if self.binge_mode: return True
-			if obj.autoplay_nextep or obj.autoscrape_nextep: return True
-			return bool(self.num_episodes and int(self.num_episodes) > 1)
-		except: return False
+			if any((obj.random_continual, obj.random, obj.disable_autoplay_next_episode)): return None
+			if self.binge_mode or obj.autoplay_nextep or (self.num_episodes and int(self.num_episodes) > 1): return 'autoplay_nextep'
+			if obj.autoscrape_nextep: return 'autoscrape_nextep'
+		except: pass
+		return None
 
-	def _skip_watcher(self, skip_settings):
+	def _skip_watcher(self, skip_settings, outro_alert=False):
 		try:
 			kinds = set(skip_settings['kinds'])
-			if 'outro' in kinds and self._play_next_will_fire(): kinds.discard('outro')
-			if not kinds or not (self.tmdb_id or self.imdb_id): return
+			if 'outro' in kinds and self.nextep_play_type(): kinds.discard('outro')
+			fetch_kinds = kinds | {'outro'} if outro_alert else kinds
+			if not fetch_kinds or not (self.tmdb_id or self.imdb_id): return
 			from apis import skip_intro
 			dismiss, silent = skip_settings['dismiss'], skip_settings.get('silent', False)
 			# Wait for the duration to be known — TheIntroDB matches the release by duration_ms.
@@ -378,7 +401,14 @@ class FenLightPlayer(xbmc_player):
 				except: total_time = 0
 				if not total_time: sleep(500)
 			if not total_time: return
-			windows = skip_intro.get_skip_windows(self.tmdb_id, self.imdb_id, self.season, self.episode, total_time, kinds)
+			windows = skip_intro.get_skip_windows(self.tmdb_id, self.imdb_id, self.season, self.episode, total_time, fetch_kinds)
+			if outro_alert:
+				outro = next((w for w in windows if w['kind'] == 'outro'), None)
+				windows = [w for w in windows if w['kind'] != 'outro']
+				if outro:
+					self.outro_start = outro['start']
+					self.nextep_info_gathered = False
+			self.outro_pending = False
 			if not windows: return
 			waited = 0
 			while not silent and self.isPlayingVideo() and not self.dialogs_cleared and waited < 15000:
@@ -398,6 +428,7 @@ class FenLightPlayer(xbmc_player):
 				if len(handled) >= len(windows): return
 				sleep(500)
 		except: pass
+		finally: self.outro_pending = False
 
 	def _do_skip(self, window, dismiss, silent=False):
 		try:

@@ -4,7 +4,7 @@ from apis.alldebrid_api import AllDebridAPI, _flatten_files
 from modules import source_utils
 from modules.utils import clean_file_name, normalize
 from modules.settings import enabled_debrids_check, filter_by_name
-# from modules.kodi_utils import logger
+from modules.kodi_utils import logger
 
 internal_results, check_title, clean_title, get_aliases_titles = source_utils.internal_results, source_utils.check_title, source_utils.clean_title, source_utils.get_aliases_titles
 get_file_info, release_info_format, seas_ep_filter = source_utils.get_file_info, source_utils.release_info_format, source_utils.seas_ep_filter
@@ -53,10 +53,11 @@ class source:
 
 	def _scrape_cloud(self):
 		try:
-			try:
-				my_cloud_files = AllDebrid.user_cloud()['magnets']
-				my_cloud_files = [i for i in my_cloud_files if i['statusCode'] == 4]
-			except: return self.sources
+			cloud_data = AllDebrid.user_cloud()
+			if cloud_data is None:
+				logger('alldebrid', 'user cloud unavailable')
+				return self.sources
+			my_cloud_files = [i for i in cloud_data.get('magnets') or [] if str(i.get('statusCode', 4)) == '4']
 			threads = []
 			results_append = self.folder_results.append
 			append = threads.append

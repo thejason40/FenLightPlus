@@ -1,9 +1,17 @@
 # -*- coding: utf-8 -*-
+from types import ModuleType
 from modules.kodi_utils import external
 from urllib.parse import parse_qsl
 # from modules.kodi_utils import logger
 
 def sys_exit_check(): return external()
+
+def dispatch(target, name, *args):
+	if not name.isidentifier() or name.startswith('_'): return
+	function = getattr(target, name, None)
+	if not callable(function): return
+	if isinstance(target, ModuleType) and getattr(function, '__module__', None) != target.__name__: return
+	return function(*args)
 
 def routing(sys):
 	params = dict(parse_qsl(sys.argv[2][1:], keep_blank_values=True))
@@ -11,13 +19,13 @@ def routing(sys):
 	mode = _get('mode', 'navigator.main')
 	if 'navigator.' in mode:
 		from indexers.navigator import Navigator
-		return exec('Navigator(params).%s()' % mode.split('.')[1])
+		return dispatch(Navigator(params), mode.split('.')[1])
 	if 'menu_editor.' in mode:
 		from modules.menu_editor import MenuEditor
-		return exec('MenuEditor(params).%s()' % mode.split('.')[1])
+		return dispatch(MenuEditor(params), mode.split('.')[1])
 	if 'easynews.' in mode:
 		from indexers import easynews
-		return exec('easynews.%s(params)' % mode.split('.')[1])
+		return dispatch(easynews, mode.split('.')[1], params)
 	if 'playback.' in mode:
 		if mode == 'playback.media':
 			from modules.sources import Sources
@@ -39,19 +47,19 @@ def routing(sys):
 		return app_export_config(params)
 	if 'choice' in mode:
 		from indexers import dialogs
-		return exec('dialogs.%s(params)' % mode)
+		return dispatch(dialogs, mode, params)
 	if 'custom_key.' in mode:
 		from modules import custom_keys
-		return exec('custom_keys.%s()' % mode.split('custom_key.')[1])
+		return dispatch(custom_keys, mode.split('custom_key.')[1])
 	if 'trakt.' in mode:
 		if '.list' in mode:
 			from indexers import trakt_lists
-			return exec('trakt_lists.%s(params)' % mode.split('.')[2])
+			return dispatch(trakt_lists, mode.split('.')[2], params)
 		from apis import trakt_api
-		return exec('trakt_api.%s(params)' % mode.split('.')[1])
+		return dispatch(trakt_api, mode.split('.')[1], params)
 	if 'simkl.' in mode:
 		from apis import simkl_api
-		return exec('simkl_api.%s(params)' % mode.split('.')[1])
+		return dispatch(simkl_api, mode.split('.')[1], params)
 	if 'build' in mode:
 		if mode == 'build_movie_list':
 			from indexers.movies import Movies
@@ -168,7 +176,7 @@ def routing(sys):
 	if 'alldebrid' in mode:
 		if mode == 'alldebrid.ad_cloud':
 			from indexers.alldebrid import ad_cloud
-			return ad_cloud(_get('id', None))
+			return ad_cloud()
 		if mode == 'alldebrid.browse_ad_cloud':
 			from indexers.alldebrid import browse_ad_cloud
 			return browse_ad_cloud(_get('id'))
@@ -260,13 +268,13 @@ def routing(sys):
 			return show_text(_get('heading'), _get('text', None), _get('file', None), _get('meta'), {})
 	if 'settings_manager.' in mode:
 		from caches import settings_cache
-		return exec('settings_cache.%s(params)' % mode.split('.')[1])
+		return dispatch(settings_cache, mode.split('.')[1], params)
 	if 'downloader.' in mode:
 		from modules import downloader
-		return exec('downloader.%s(params)' % mode.split('.')[1])
+		return dispatch(downloader, mode.split('.')[1], params)
 	if 'updater' in mode:
 		from modules import updater
-		return exec('updater.%s()' % mode.split('.')[1])
+		return dispatch(updater, mode.split('.')[1])
 	##EXTRA modes##
 	if 'tmdb.' in mode:
 		if mode == 'tmdb.clear_tmdb_list_cache':
@@ -298,7 +306,7 @@ def routing(sys):
 			return set_list_backdrop(_get('list_id', None), _get('backdrop_url', None))
 	if mode == 'set_view':
 		from modules.kodi_utils import set_view
-		return kodi_utils.set_view(_get('view_type'))
+		return set_view(_get('view_type'))
 	if mode == 'sync_settings':
 		from caches.settings_cache import sync_settings
 		return sync_settings(params)

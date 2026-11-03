@@ -2,8 +2,8 @@
 from caches.base_cache import connect_database, get_timestamp
 # from modules.kodi_utils import logger
 
-GET_MANY = 'SELECT * FROM debrid_data WHERE hash in (%s)'
-SET_MANY = 'INSERT INTO debrid_data VALUES (?, ?, ?, ?)'
+GET_MANY = 'SELECT * FROM debrid_data WHERE hash in (%s) AND expires > ?'
+SET_MANY = 'INSERT OR REPLACE INTO debrid_data VALUES (?, ?, ?, ?)'
 REMOVE_MANY = 'DELETE FROM debrid_data WHERE hash=?'
 CLEAR = 'DELETE FROM debrid_data'
 CLEAR_DEBRID = 'DELETE FROM debrid_data WHERE debrid=?'
@@ -14,12 +14,9 @@ class DebridCache:
 		result = None
 		try:
 			dbcon = connect_database('debridcache_db')
-			current_time = get_timestamp()
-			cache_data = dbcon.execute(GET_MANY % (', '.join('?' for _ in hash_list)), hash_list).fetchall()
+			cache_data = dbcon.execute(GET_MANY % (', '.join('?' for _ in hash_list)), list(hash_list) + [get_timestamp()]).fetchall()
 			dbcon.close()
-			if cache_data:
-				if cache_data[0][3] > current_time: result = cache_data
-				else: self.remove_many(cache_data)
+			if cache_data: result = cache_data
 		except: pass
 		return result
 

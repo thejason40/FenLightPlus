@@ -36,7 +36,8 @@ def add_to_local_cache(hash_list, debrid):
 
 def cached_check(hash_list, cached_hashes, debrid):
 	cached_list = [i[0] for i in cached_hashes if i[1] == debrid and i[2] == 'True']
-	unchecked_list = [i for i in hash_list if not any([h for h in cached_hashes if h[0] == i and h[1] == debrid])]
+	checked = {h[0] for h in cached_hashes if h[1] == debrid}
+	unchecked_list = [i for i in hash_list if i not in checked]
 	return cached_list, unchecked_list
 
 def RD_check(hash_list, cached_hashes):

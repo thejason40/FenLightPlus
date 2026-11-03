@@ -67,10 +67,10 @@ class source:
 				folder_id = item['id']
 				try:
 					pack_files = [{'filename': f['short_name'], 'link': '%d,%d' % (int(folder_id), f['id']), 'size': f['size']} \
-									for f in item['files'] if f['short_name'].endswith(tuple(extensions))]
+									for f in item['files'] if f['short_name'].lower().endswith(tuple(extensions))]
 				except: pack_files = []
 				for file in item['files']:
-					if not file['short_name'].endswith(tuple(extensions)): continue
+					if not file['short_name'].lower().endswith(tuple(extensions)): continue
 					normalized = normalize(file['short_name'])
 					folder_name = clean_title(normalized)
 					if self.media_type == 'movie':
@@ -92,7 +92,7 @@ class source:
 				if not self.folder_query in clean_title(normalize(item['name'])): continue
 				folder_id = item['id']
 				for file in item['files']:
-					if not file['short_name'].endswith(tuple(extensions)): continue
+					if not file['short_name'].lower().endswith(tuple(extensions)): continue
 					normalized = normalize(file['short_name'])
 					folder_name = clean_title(normalized)
 					if self.media_type == 'movie':

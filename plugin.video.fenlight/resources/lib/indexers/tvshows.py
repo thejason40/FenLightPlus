@@ -21,7 +21,7 @@ main = ('tmdb_tv_popular', 'tmdb_tv_popular_today', 'tmdb_tv_premieres', 'tmdb_t
 'tmdb_tv_highest_rated', 'tmdb_tv_hidden_gems', 'tmdb_tv_marathon', 'tmdb_anime_highest_rated', 'tmdb_anime_hidden_gems', 'tmdb_anime_marathon')
 special = ('tmdb_tv_languages', 'tmdb_tv_networks', 'tmdb_tv_providers', 'tmdb_tv_providers_uk', 'tmdb_tv_year', 'tmdb_tv_decade', 'tmdb_tv_recommendations', 'tmdb_tv_genres',
 'tmdb_tv_search', 'tmdb_tv_keyword_results', 'tmdb_tv_keyword_results_direct', 'tmdb_anime_year', 'tmdb_anime_decade', 'tmdb_anime_genres',
-'tmdb_anime_providers', 'tmdb_anime_search')
+'tmdb_anime_providers', 'tmdb_anime_search', 'charts_tvshows')
 personal = {'in_progress_tvshows': ('modules.watched_status', 'get_in_progress_tvshows'), 'favorites_tvshows': ('modules.favorites', 'get_favorites'),
 'favorites_anime_tvshows': ('modules.favorites', 'get_favorites'), 'watched_tvshows': ('modules.watched_status', 'get_watched_items')}
 trakt_main = ('trakt_tv_trending', 'trakt_tv_trending_recent', 'trakt_tv_trending_uk', 'trakt_tv_trending_recent_uk', 'trakt_tv_most_watched', 'trakt_tv_most_favorited',
@@ -66,7 +66,7 @@ class TVShows:
 				if not is_random and  data['total_pages'] > page_no: self.new_page = {'new_page': string(page_no + 1)}
 			elif self.action in special:
 				key_id = self.params_get('key_id') or self.params_get('query')
-				if not key_id: return
+				if not key_id: raise ValueError('no key_id')  # not return: the except below still ends the directory
 				data = function(key_id, page_no)
 				self.list = [i['id'] for i in data['results']]
 				if not is_random and data['total_pages'] > page_no: self.new_page = {'new_page': string(page_no + 1), 'key_id': key_id}
@@ -89,7 +89,7 @@ class TVShows:
 			elif self.action in trakt_special:
 				self.id_type = 'trakt_dict'
 				key_id = self.params_get('key_id', None)
-				if not key_id: return
+				if not key_id: raise ValueError('no key_id')  # not return: the except below still ends the directory
 				data = function(key_id, page_no)
 				total_pages = None
 				if isinstance(data, tuple): data, total_pages = data
@@ -155,7 +155,7 @@ class TVShows:
 			thumb = poster or landscape or fanart
 			tmdb_id, total_seasons, total_aired_eps = meta_get('tmdb_id'), meta_get('total_seasons'), meta_get('total_aired_eps')
 			unaired = total_aired_eps == 0
-			if unaired: progress, playcount, total_watched, total_unwatched = 0, 0, 0, total_aired_eps
+			if unaired: progress, visible_progress, playcount, total_watched, total_unwatched = 0, '0', 0, 0, total_aired_eps
 			else:
 				playcount, total_watched, total_unwatched = get_watched_status_tvshow(self.watched_info.get(string(tmdb_id), None), total_aired_eps)
 				if total_watched: progress = get_progress_status_tvshow(total_watched, total_aired_eps)

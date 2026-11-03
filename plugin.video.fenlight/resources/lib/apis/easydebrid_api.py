@@ -3,7 +3,7 @@
 import json
 import requests
 from urllib.parse import urlencode
-from caches.settings_cache import get_setting, set_setting
+from caches.settings_cache import get_setting, set_setting, LiveSetting
 from modules.kodi_utils import make_session, kodi_dialog, notification, ok_dialog, confirm_dialog
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
 # from modules.kodi_utils import logger
@@ -19,8 +19,7 @@ session = make_session(base_url)
 
 class EasyDebridAPI:
 
-	def __init__(self):
-		self.token = get_setting('fenlight.ed.token')
+	token = LiveSetting('fenlight.ed.token')
 
 	def _get(self, url, data={}):
 		if self.token in ('empty_setting', ''): return None
@@ -68,7 +67,7 @@ class EasyDebridAPI:
 				if not torrent_files: return None
 			else:
 				if self._m2ts_check(torrent_files): return None
-				torrent_files = [i for i in torrent_files if not any(x in i['filename'] for x in EXTRAS)]
+				torrent_files = [i for i in torrent_files if not any(x in i['filename'].lower() for x in EXTRAS)]
 				torrent_files.sort(key=lambda k: k['size'], reverse=True)
 			file_url = torrent_files[0]['url']
 			return self.add_headers_to_url(file_url)

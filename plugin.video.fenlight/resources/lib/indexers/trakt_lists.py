@@ -31,8 +31,8 @@ def search_trakt_lists(params):
 				list_info = item[list_key]
 				if list_key == 'officiallist': continue
 				item_count = list_info['item_count']
-				if list_info['privacy'] == 'private' or item_count == 0: continue
-				list_name, user, slug = list_info['name'], list_info['username'], list_info['ids']['slug']
+				if list_info['privacy'] == 'private' or item_count == 0 or not list_info['user']['ids']['slug']: continue
+				list_name, user, slug = list_info['name'], list_info['user']['ids']['slug'], list_info['ids']['slug']
 				list_name_upper = list_name.upper()
 				if not slug: continue
 				cm = []
@@ -54,9 +54,12 @@ def search_trakt_lists(params):
 		mode = params.get('mode')
 		page = params.get('new_page', '1')
 		search_title = params.get('key_id') or params.get('query')
-		lists, pages = trakt_search_lists(search_title, page)
+		result = trakt_search_lists(search_title, page)
+		lists = result[0]
+		try: pages = int(result[1])
+		except: pages = 1
 		add_items(handle, list(_builder()))
-		if pages > page:
+		if pages > int(page):
 			new_page = str(int(page) + 1)
 			add_dir({'mode': mode, 'key_id': search_title, 'new_page': new_page}, 'Next Page (%s) >>' % new_page, handle, 'nextpage', nextpage_landscape)
 	except: pass
@@ -76,7 +79,7 @@ def get_trakt_lists(params):
 				list_name_upper = " ".join(w.capitalize() for w in list_name.split())
 				mode = 'random.build_trakt_my_lists_contents' if randomize_contents == 'true' else 'trakt.list.build_trakt_list'
 				url_params = {'mode': mode, 'user': user, 'slug': slug, 'list_type': list_type, 'list_name': list_name}
-				if randomize_contents: url_params['random'] = 'true'
+				if randomize_contents == 'true': url_params['random'] = 'true'
 				elif shuffle: url_params['shuffle'] = 'true'
 				url = build_url(url_params)
 				if list_type == 'liked_lists':
@@ -156,7 +159,7 @@ def get_trakt_trending_popular_lists(params):
 		list_type = params['list_type']
 		lists = trakt_trending_popular_lists(list_type, page)
 		add_items(handle, list(_process()))
-		add_dir({'mode': 'trakt.list.get_trakt_trending_popular_lists', 'list_type': 'trending', 'new_page': new_page},
+		add_dir({'mode': 'trakt.list.get_trakt_trending_popular_lists', 'list_type': list_type, 'new_page': new_page},
 				'Next Page (%s) >>' % new_page, handle, 'nextpage', nextpage_landscape)
 	except: pass
 	set_content(handle, 'files')

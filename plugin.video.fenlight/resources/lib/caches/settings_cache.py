@@ -27,12 +27,11 @@ CLEAR_SETTINGS = 'DELETE FROM settings'
 
 class SettingsCache:
 	def get(self, setting_id):
-		try:
-			dbcon = connect_database('settings_db')
-			setting_id = setting_id.replace('fenlight.', '')
-			setting_value = dbcon.execute(BASE_GET, (setting_id,)).fetchone()[0]
-			self.set_memory_cache(setting_id, setting_value)
-		except: setting_value = None
+		dbcon = connect_database('settings_db')
+		setting_id = setting_id.replace('fenlight.', '')
+		row = dbcon.execute(BASE_GET, (setting_id,)).fetchone()
+		setting_value = row[0] if row else None
+		if setting_value is not None: self.set_memory_cache(setting_id, setting_value)
 		return setting_value
 
 	def remove_setting(self, setting_id):
@@ -117,8 +116,33 @@ def secret_display_value(setting_id, setting_value):
 def set_setting(setting_id, value):
 	settings_cache.set(setting_id, value)
 
+known_empty_settings = set()
+
 def get_setting(setting_id, fallback=''):
-	return get_property(setting_id) or settings_cache.get(setting_id) or fallback
+	if not setting_id.startswith('fenlight.'): setting_id = 'fenlight.%s' % setting_id
+	value = get_property(setting_id)
+	if value: return value
+	if setting_id in known_empty_settings: return fallback
+	try: value = settings_cache.get(setting_id)
+	except: return fallback
+	if value: return value
+	known_empty_settings.add(setting_id)
+	return fallback
+
+class LiveSetting:
+	def __init__(self, setting_id, fallback='empty_setting'):
+		self.setting_id, self.fallback = setting_id, fallback
+
+	def __set_name__(self, owner, name):
+		self.attribute = '_%s' % name
+
+	def __get__(self, instance, owner=None):
+		if instance is None: return self
+		value = instance.__dict__.get(self.attribute)
+		return get_setting(self.setting_id, self.fallback) if value is None else value
+
+	def __set__(self, instance, value):
+		instance.__dict__[self.attribute] = value
 
 def get_many(settings_list):
 	return settings_cache.get_many(settings_list)
@@ -449,6 +473,13 @@ default_settings = [
 #==================== Display
 {'setting_id': 'results.timeout', 'setting_type': 'action', 'setting_default': '20', 'min_value': '1'},
 {'setting_id': 'results.list_format', 'setting_type': 'string', 'setting_default': 'List'},
+{'setting_id': 'scraper_window.style', 'setting_type': 'action', 'setting_default': '1', 'settings_options': {'0': 'Classic', '1': 'FenLight+'}},
+{'setting_id': 'scraper_window.tv_plot', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Episode', '1': 'Season', '2': 'Show', '3': 'Off'}},
+{'setting_id': 'scraper_window.movie_plot', 'setting_type': 'boolean', 'setting_default': 'true'},
+{'setting_id': 'scraper_window.details', 'setting_type': 'boolean', 'setting_default': 'true'},
+{'setting_id': 'scraper_window.crew', 'setting_type': 'boolean', 'setting_default': 'false'},
+{'setting_id': 'scraper_window.cast', 'setting_type': 'boolean', 'setting_default': 'false'},
+{'setting_id': 'scraper_window.ends_at', 'setting_type': 'boolean', 'setting_default': 'true'},
 #==================== General
 {'setting_id': 'results.auto_rescrape_with_all', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Off', '1': 'Auto', '2': 'Prompt'}},
 {'setting_id': 'results.auto_episode_group', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Off', '1': 'Auto', '2': 'Prompt'}},
@@ -511,9 +542,11 @@ default_settings = [
 {'setting_id': 'autoplay_alert_method', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Window', '1': 'Notification'}},
 {'setting_id': 'autoplay_next_window_percentage', 'setting_type': 'action', 'setting_default': '95', 'min_value': '75', 'max_value': '99'},
 {'setting_id': 'autoplay_use_chapters', 'setting_type': 'boolean', 'setting_default': 'true'},
+{'setting_id': 'autoplay_use_outro', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'autoscrape_next_episode', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'autoscrape_next_window_percentage', 'setting_type': 'action', 'setting_default': '95', 'min_value': '75', 'max_value': '99'},
 {'setting_id': 'autoscrape_use_chapters', 'setting_type': 'boolean', 'setting_default': 'true'},
+{'setting_id': 'autoscrape_use_outro', 'setting_type': 'boolean', 'setting_default': 'false'},
 {'setting_id': 'auto_resume_episode', 'setting_type': 'action', 'setting_default': '0', 'settings_options': {'0': 'Never', '1': 'Always', '2': 'Autoplay Only'}},
 #==================== Skip Segments (IntroDB)
 {'setting_id': 'skip_segments', 'setting_type': 'boolean', 'setting_default': 'false'},

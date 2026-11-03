@@ -4,7 +4,7 @@ import time
 import requests
 from threading import Thread
 from caches.main_cache import cache_object
-from caches.settings_cache import get_setting, set_setting
+from caches.settings_cache import get_setting, set_setting, LiveSetting
 from modules.utils import copy2clip
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
 from modules import kodi_utils
@@ -35,16 +35,20 @@ def _flatten_files(tree):
 	return results
 
 class AllDebridAPI:
+	token = LiveSetting('fenlight.ad.token')
+
 	def __init__(self):
-		self.token = get_setting('fenlight.ad.token', 'empty_setting')
 		self.break_auth_loop = False
 
 	def auth(self):
 		self.token = ''
-		response = requests.get(base_url + 'v4/pin/get', timeout=timeout).json()
-		response = response['data']
-		expires_in = int(response['expires_in'])
-		user_code = response['pin']
+		try:
+			response = requests.get(base_url + 'v4/pin/get', timeout=timeout).json()['data']
+			expires_in = int(response['expires_in'])
+			user_code = response['pin']
+		except Exception as e:
+			logger('alldebrid', 'pin/get failed: %s' % e)
+			return ok_dialog(text='Error')
 		poll_url = response.get('check_url')
 		if not poll_url: poll_url = base_url + 'v4/pin/check?check=%s&pin=%s' % (response.get('check'), user_code)
 		try: copy2clip(user_code)
@@ -59,7 +63,9 @@ class AllDebridAPI:
 		while not progressDialog.iscanceled() and time_passed < expires_in and not self.token:
 			sleep(1000 * sleep_interval)
 			try: response = requests.get(poll_url, timeout=timeout).json()
-			except: continue
+			except:
+				time_passed = time.time() - start
+				continue
 			response = response.get('data', {})
 			activated = response.get('activated')
 			if not activated:
@@ -98,7 +104,8 @@ class AllDebridAPI:
 
 	def _user_cloud(self):
 		result = self._request('v4.1/magnet/status', {'status': 'ready'})
-		magnets = (result or {}).get('magnets') or []
+		if result is None: return None
+		magnets = result.get('magnets') or []
 		if isinstance(magnets, dict): magnets = [magnets]
 		return {'magnets': magnets}
 
@@ -175,7 +182,7 @@ class AllDebridAPI:
 			if not store_to_cloud: Thread(target=self.delete_transfer, args=(transfer_id,)).start()
 			if media_id:
 				file_url = self.unrestrict_link(media_id)
-				if not any(file_url.lower().endswith(x) for x in extensions): file_url = None
+				if file_url and not any(file_url.lower().endswith(x) for x in extensions): file_url = None
 			return file_url
 		except:
 			try:

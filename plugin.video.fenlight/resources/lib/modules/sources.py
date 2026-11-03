@@ -11,7 +11,7 @@ from scrapers import external, folders
 from modules import debrid, kodi_utils, settings, metadata, watched_status
 from modules.player import FenLightPlayer
 from modules.pack_continuity import find_episode_file as pack_continuity_find, build_items as pack_continuity_build
-from modules.source_utils import get_cache_expiry, make_alias_dict, max_size_for_line_speed
+from modules.source_utils import get_cache_expiry, make_alias_dict, max_size_for_line_speed, DebridAccountError
 from modules.utils import clean_file_name, string_to_float, safe_string, remove_accents, get_datetime, append_module_to_syspath, manual_function_import, manual_module_import
 # logger = kodi_utils.logger
 
@@ -26,7 +26,8 @@ quality_filter, sort_to_top, tmdb_api_key, mpaa_region = settings.quality_filter
 scraping_settings, include_prerelease_results, auto_rescrape_with_all = settings.scraping_settings, settings.include_prerelease_results, settings.auto_rescrape_with_all
 ignore_results_filter, results_sort_order, results_format, filter_status = settings.ignore_results_filter, settings.results_sort_order, settings.results_format, settings.filter_status
 autoplay_next_episode, autoscrape_next_episode, limit_resolve = settings.autoplay_next_episode, settings.autoscrape_next_episode, settings.limit_resolve
-pack_continuity = settings.pack_continuity
+pack_continuity, scraper_window_style = settings.pack_continuity, settings.scraper_window_style
+easynews_no_seek_default = settings.easynews_no_seek_default
 auto_episode_group, preferred_autoplay, debrid_enabled = settings.auto_episode_group, settings.preferred_autoplay, debrid.debrid_enabled
 get_progress_status_movie, get_bookmarks_movie, erase_bookmark = watched_status.get_progress_status_movie, watched_status.get_bookmarks_movie, watched_status.erase_bookmark
 get_progress_status_episode, get_bookmarks_episode = watched_status.get_progress_status_episode, watched_status.get_bookmarks_episode
@@ -69,16 +70,16 @@ class Sources():
 		self.ext_name, self.ext_folder, self.provider_defaults, self.ext_sources = '', '', [], None
 		self.progress_dialog, self.progress_thread = None, None
 		self.playing_filename = ''
+		self.failed_debrids = set()
+		self.internal_counts = {}
 		self.count_tuple = (('sources_4k', '4K', self._quality_length), ('sources_1080p', '1080p', self._quality_length), ('sources_720p', '720p', self._quality_length),
 							('sources_sd', '', self._quality_length_sd), ('sources_total', '', self._quality_length_final))
 
 	def playback_prep(self, params=None):
 		hide_busy_dialog()
-		if params: 
-			self.params = params
-			self.num_episodes = params.get('num_episodes', None)
+		if params: self.params = params
 		params_get = self.params.get
-		self.num_episodes = params.get('nextep_settings', {}).get('num_episodes', params.get('num_episodes', None))
+		self.num_episodes = params_get('nextep_settings', {}).get('num_episodes', params_get('num_episodes', None))
 		self.binge_mode = params_get('binge_mode', 'false') == 'true' or bool(params_get('nextep_settings', {}).get('binge_mode', False))
 		self.play_type, self.background, self.prescrape = params_get('play_type', ''), params_get('background', 'false') == 'true', params_get('prescrape', self.prescrape) == 'true'
 		self.device_list, self.play_selected = params_get('device_list', 'false') == 'true', params_get('play_selected', None)
@@ -254,8 +255,8 @@ class Sources():
 		else:
 			self.all_scrapers = list(set(self.active_internal_scrapers + self.remove_scrapers))
 			clear_property('fs_filterless_search')
-		self.uncached_results = self.sort_results([i for i in results if 'Uncached' in i.get('cache_provider', '')])
-		results = [i for i in results if not i in self.uncached_results]
+		uncached, results = self._split_uncached(results)
+		self.uncached_results = self.sort_results(uncached)
 		if self.ignore_scrape_filters:
 			self.filters_ignored = True
 			results = self.sort_results(results)
@@ -282,7 +283,7 @@ class Sources():
 	def filter_results(self, results):
 		if self.folders_ignore_filters:
 			folder_results = [i for i in results if i['scrape_provider'] == 'folders']
-			results = [i for i in results if not i in folder_results]
+			results = [i for i in results if i['scrape_provider'] != 'folders']
 		else: folder_results = []
 		results = [i for i in results if i['quality'] in self.quality_filter]
 		if self.filter_size_method:
@@ -298,7 +299,9 @@ class Sources():
 		return results
 
 	def filter_audio(self, results):
-		return [i for i in results if not any(x in i['extraInfo'] for x in audio_filters())]
+		filters = audio_filters()
+		if not filters: return results
+		return [i for i in results if not any(x in i['extraInfo'] for x in filters)]
 
 	def special_filter(self, results, file_type):
 		enable_setting, key = filter_status(file_type), filter_keys[file_type]
@@ -319,7 +322,7 @@ class Sources():
 			if not sort_first_scrapers: return results
 			sort_first = [i for i in results if i['scrape_provider'] in sort_first_scrapers]
 			sort_first.sort(key=lambda k: (self._sort_folder_to_top(k['scrape_provider']), k['quality_rank']))
-			sort_last = [i for i in results if not i in sort_first]
+			sort_last = [i for i in results if i['scrape_provider'] not in sort_first_scrapers]
 			results = sort_first + sort_last
 		except: pass
 		return results
@@ -331,7 +334,7 @@ class Sources():
 			if not preferences: return results
 			preference_results = [i for i in results if any(x in i['extraInfo'] for x in preferences)]
 			if not preference_results: return results
-			results = [i for i in results if not i in preference_results]
+			results = [i for i in results if not any(x in i['extraInfo'] for x in preferences)]
 			preference_results = sorted([dict(item, **{'pref_includes': sum([preference_values[preferences.index(x)] for x in [i for i in preferences if i in item['extraInfo']]])}) \
 						for item in preference_results], key=lambda k: k['pref_includes'], reverse=True)
 			return preference_results + results
@@ -398,7 +401,9 @@ class Sources():
 			all_sources = self.ext_sources.total_providers['torrents']
 			if self.disabled_ext_ignored: active_sources = all_sources
 			elif self.default_ext_only: active_sources = [i for i in self.provider_defaults if i in all_sources]
-			else: active_sources = [i for i in all_sources if json.loads(get_property('%s_settings' % self.ext_name)).get('provider.%s' % i, 'false') == 'true']
+			else:
+				ext_settings = json.loads(get_property('%s_settings' % self.ext_name))
+				active_sources = [i for i in all_sources if ext_settings.get('provider.%s' % i, 'false') == 'true']
 			sourceDict = [(i, manual_function_import('%s.sources_%s.%s.%s' % (self.ext_name, self.ext_name, 'torrents', i), 'source')) for i in active_sources]
 		except: sourceDict = self.legacy_external_sources()
 		return sourceDict
@@ -418,7 +423,6 @@ class Sources():
 				scraper_name = item[0]
 				module = manual_function_import('scrapers.folders', 'source')
 				yield ('folders', (module, (item[1], scraper_name, item[2])), scraper_name)
-		sourceDict = list(import_info())
 		try: sourceDict = list(import_info())
 		except: sourceDict = []
 		return sourceDict
@@ -445,7 +449,9 @@ class Sources():
 					current_progress = max((time.time() - start_time), 0)
 					line1 = ', '.join(remaining_providers).upper()
 					percent = int((current_progress/float(scraper_timeout))*100)
-					self.progress_dialog.update_scraper(self.sources_sd, self.sources_720p, self.sources_1080p, self.sources_4k, self.sources_total, line1, percent)
+					chips = [(i, 'scanning' if i in remaining_providers else 'done', self.internal_counts.get(i, 0)) for i in self.internal_scrapers]
+					self.progress_dialog.update_scraper(self.sources_sd, self.sources_720p, self.sources_1080p, self.sources_4k, self.sources_total, line1, percent,
+														elapsed=current_progress, timeout=scraper_timeout, providers=chips)
 					sleep(self.sleep_time)
 					if len(remaining_providers) == 0: break
 					if percent >= 100: break
@@ -558,6 +564,7 @@ class Sources():
 			try: sources = json.loads(win_property)
 			except: continue
 			set_property(int_window_prop % i, 'checked')
+			self.internal_counts[i] = len(sources)
 			self._sources_quality_count(sources)
 	
 	def _sources_quality_count(self, sources):
@@ -580,15 +587,20 @@ class Sources():
 		else: return 1
 
 	def _sort_uncached_results(self, results):
-		uncached = [i for i in results if 'Uncached' in i.get('cache_provider', '')]
-		cached = [i for i in results if not i in uncached]
+		uncached, cached = self._split_uncached(results)
 		return cached + uncached
 
+	def _split_uncached(self, results):
+		uncached, cached = [], []
+		for i in results: (uncached if 'Uncached' in i.get('cache_provider', '') else cached).append(i)
+		return uncached, cached
+
 	def get_meta(self):
-		if self.media_type == 'movie': self.meta = metadata.movie_meta('tmdb_id', self.tmdb_id, tmdb_api_key(), mpaa_region(), get_datetime())
+		# meta is None when TMDb couldn't be reached
+		if self.media_type == 'movie': self.meta = metadata.movie_meta('tmdb_id', self.tmdb_id, tmdb_api_key(), mpaa_region(), get_datetime()) or {}
 		else:
 			try:
-				self.meta = metadata.tvshow_meta('tmdb_id', self.tmdb_id, tmdb_api_key(), mpaa_region(), get_datetime())
+				self.meta = metadata.tvshow_meta('tmdb_id', self.tmdb_id, tmdb_api_key(), mpaa_region(), get_datetime()) or {}
 				episodes_data = metadata.episodes_meta(self.season, self.meta)
 				episode_data = [i for i in episodes_data if i['episode'] == self.episode][0]
 				ep_thumb = episode_data.get('thumb', None) or self.meta.get('fanart') or ''
@@ -596,6 +608,7 @@ class Sources():
 				self.meta.update({'season': episode_data['season'], 'episode': episode_data['episode'], 'premiered': episode_data['premiered'], 'episode_type': episode_type,
 								'ep_name': episode_data['title'], 'ep_thumb': ep_thumb, 'plot': episode_data['plot'], 'tvshow_plot': self.meta['plot'],
 								'custom_season': self.custom_season, 'custom_episode': self.custom_episode})
+				self.meta.update({'ep_rating': episode_data.get('rating'), 'ep_duration': episode_data.get('duration')})
 			except: pass
 		self.meta.update({'media_type': self.media_type, 'background': self.background, 'custom_title': self.custom_title, 'custom_year': self.custom_year})
 
@@ -619,7 +632,8 @@ class Sources():
 			for item in self.folder_info: clear_property(int_window_prop % item[0])
 
 	def _make_progress_dialog(self):
-		self.progress_dialog = create_window(('windows.sources', 'SourcesPlayback'), 'sources_playback.xml', meta=self.meta)
+		skin_xml = 'sources_playback_plus.xml' if scraper_window_style() == '1' else 'sources_playback.xml'
+		self.progress_dialog = create_window(('windows.sources', 'SourcesPlayback'), skin_xml, meta=self.meta)
 		self.progress_thread = Thread(target=self.progress_dialog.run)
 		self.progress_thread.start()
 
@@ -628,9 +642,9 @@ class Sources():
 		if not self.progress_dialog: self._make_progress_dialog()
 		self.progress_dialog.enable_resolver()
 
-	def _make_resume_dialog(self, percent):
+	def _make_resume_dialog(self, percent, no_seek=False):
 		if not self.progress_dialog: self._make_progress_dialog()
-		self.progress_dialog.enable_resume(percent)
+		self.progress_dialog.enable_resume(percent, no_seek)
 		return self.progress_dialog.resume_choice
 
 	def _make_nextep_dialog(self, default_action='cancel'):
@@ -715,14 +729,19 @@ class Sources():
 						resolve_item['resolve_display'] = '%02d. [B]%s (RETRYx%s)[/B][CR]%s[CR]%s' % (count, provider_text, retry, extra_info, display_name)
 						processed_items_append(resolve_item)
 			items = list(processed_items)
-			if not self.continue_resolve_check(): return self._kill_progress_dialog()
+			if not self.continue_resolve_check():
+				self.cancel_all_playback = True  # prompt declined, not a failed resolve - stops try_pack_cache evicting the pack and re-prompting
+				return self._kill_progress_dialog()
 			hide_busy_dialog()
-			self.playback_percent = self.get_playback_percent()
+			no_seek = source.get('scrape_provider') == 'easynews' and (easynews_no_seek_default() if no_seek_override is None else no_seek_override)
+			self.playback_percent = self.get_playback_percent(no_seek)
 			if self.playback_percent == None: return self._kill_progress_dialog()
+			if self.playback_percent: no_seek_override = False  # resuming needs seeking
 			if not self.resolve_dialog_made: self._make_resolve_dialog()
 			if self.background: sleep(1000)
 			monitor = xbmc_monitor()
 			for count, item in enumerate(items, 1):
+				if item.get('cache_provider') in self.failed_debrids: continue
 				try:
 					hide_busy_dialog()
 					if not self.progress_dialog: break
@@ -761,21 +780,21 @@ class Sources():
 		try: del monitor
 		except: pass
 
-	def get_playback_percent(self):
+	def get_playback_percent(self, no_seek=False):
 		if self.media_type == 'movie': percent = get_progress_status_movie(get_bookmarks_movie(), str(self.tmdb_id))
 		elif any((self.random, self.random_continual)): return 0.0
 		else: percent = get_progress_status_episode(get_bookmarks_episode(self.tmdb_id, self.season), self.episode)
 		if not percent: return 0.0
-		action = self.get_resume_status(percent)
+		action = self.get_resume_status(percent, no_seek)
 		if action == 'cancel': return None
 		if action == 'start_over':
 			erase_bookmark(self.media_type, self.tmdb_id, self.season, self.episode)
 			return 0.0
 		return float(percent)
 
-	def get_resume_status(self, percent):
+	def get_resume_status(self, percent, no_seek=False):
 		if auto_resume(self.media_type): return float(percent)
-		return self._make_resume_dialog(percent)
+		return self._make_resume_dialog(percent, no_seek)
 
 	def playback_failed_action(self):
 		self._kill_progress_dialog()
@@ -932,6 +951,11 @@ class Sources():
 		debrid_function = self.debrid_importer(debrid_provider)
 		store_to_cloud = store_resolved_to_cloud(debrid_provider, pack)
 		try: url = debrid_function().resolve_magnet(item_url, _hash, store_to_cloud, title, season, episode)
+		except DebridAccountError as e:
+			kodi_utils.logger('resolve_cached', 'Account refused by %s, skipping its other results: %s' % (debrid_provider, str(e)))
+			self.failed_debrids.add(debrid_provider)
+			notification('%s: %s' % (debrid_provider, str(e)), 5000)
+			return None
 		except Exception as e:
 			kodi_utils.logger('resolve_cached', 'Exception for %s [%s]: %s' % (title, debrid_provider, str(e)))
 			url = None

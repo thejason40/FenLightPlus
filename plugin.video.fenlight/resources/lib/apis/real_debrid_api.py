@@ -3,7 +3,7 @@ import re
 import sys
 import time
 import requests
-from threading import Thread
+from threading import Thread, Lock
 from caches.main_cache import cache_object
 from caches.settings_cache import get_setting, set_setting
 from modules.utils import copy2clip
@@ -26,6 +26,12 @@ device_url = 'device/code?%s'
 credentials_url = 'device/credentials?%s'
 icon = get_icon('realdebrid')
 timeout = 20.0
+refresh_lock = Lock()
+
+def video_files_with_links(torrent_info, extensions):
+	links = torrent_info.get('links') or []
+	selected = [i for i in torrent_info.get('files', []) if i['selected'] == 1]
+	return [(idx, i) for idx, i in enumerate(selected) if idx < len(links) and i['path'].lower().endswith(tuple(extensions))]
 
 class RealDebridAPI:
 	def __init__(self):
@@ -60,7 +66,9 @@ class RealDebridAPI:
 		while not progressDialog.iscanceled() and time_passed < expires_in and not self.secret:
 			sleep(1000 * sleep_interval)
 			try: response = requests.get(poll_url, timeout=timeout).json()
-			except: continue
+			except:
+				time_passed = time.time() - start
+				continue
 			if 'error' in response:
 				time_passed = time.time() - start
 				progress = int(100 * time_passed/float(expires_in))
@@ -83,24 +91,36 @@ class RealDebridAPI:
 			response = requests.post(url, data=data, timeout=timeout).json()
 			self.token = response['access_token']
 			self.refresh = response['refresh_token']
-			username = self.account_info()['username']
 			set_setting('rd.token', self.token)
 			set_setting('rd.refresh', self.refresh)
+			username = self.account_info()['username']
 			set_setting('rd.account_id', username)
 			set_setting('rd.enabled', 'true')
 			ok_dialog(text='Success')
 
 	def refresh_token(self):
-		try:
-			url = auth_url + 'token'
-			data = {'client_id': self.client_ID, 'client_secret': self.secret, 'code': self.refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
-			response = requests.post(url, data=data).json()
-			self.token = response['access_token']
-			self.refresh = response['refresh_token']
-			set_setting('rd.token', self.token)
-			set_setting('rd.refresh', self.refresh)
-			return True
-		except: return False
+		with refresh_lock:
+			stored_token = get_setting('fenlight.rd.token', 'empty_setting')
+			if stored_token not in ('empty_setting', '') and stored_token != self.token:
+				self.token, self.refresh = stored_token, get_setting('fenlight.rd.refresh', 'empty_setting')
+				return True
+			try:
+				self.client_ID = get_setting('fenlight.rd.client_id', 'empty_setting')
+				if self.client_ID in ('empty_setting', ''): self.client_ID = 'X245A4XAIBGVM'
+				self.secret, self.refresh = get_setting('fenlight.rd.secret', 'empty_setting'), get_setting('fenlight.rd.refresh', 'empty_setting')
+				url = auth_url + 'token'
+				data = {'client_id': self.client_ID, 'client_secret': self.secret, 'code': self.refresh, 'grant_type': 'http://oauth.net/grant_type/device/1.0'}
+				response = requests.post(url, data=data, timeout=timeout).json()
+				self.token = response['access_token']
+				self.refresh = response['refresh_token']
+				set_setting('rd.token', self.token)
+				set_setting('rd.refresh', self.refresh)
+				return True
+			except: return False
+
+	def _load_token(self):
+		self.token = get_setting('fenlight.rd.token', 'empty_setting')
+		return self.token not in ('empty_setting', '')
 
 	def revoke(self):
 		set_setting('rd.client_id', 'empty_setting')
@@ -212,13 +232,13 @@ class RealDebridAPI:
 		return self._post(url, post_data)
 
 	def delete_torrent(self, folder_id):
-		if self.token in ('empty_setting', ''): return None
+		if not self._load_token(): return None
 		url = 'torrents/delete/%s&auth_token=%s' % (folder_id, self.token)
 		response = requests.delete(base_url + url, timeout=timeout)
 		return response
 
 	def delete_download(self, download_id):
-		if self.token in ('empty_setting', ''): return None
+		if not self._load_token(): return None
 		url = 'downloads/delete/%s&auth_token=%s' % (download_id, self.token)
 		response = requests.delete(base_url + url, timeout=timeout)
 		return response
@@ -257,16 +277,13 @@ class RealDebridAPI:
 			if not transfer_finished:
 				self.delete_torrent(torrent_id)
 				return None
-			selected_files = [(idx, i) for idx, i in enumerate([i for i in torrent_info['files'] if i['selected'] == 1 and i['path'].lower().endswith(tuple(extensions))])]
-			selected_files = sorted(selected_files, key=lambda x: x[1]['bytes'], reverse=True)
+			# index is into links[], not into the video-only list
+			selected_files = sorted(video_files_with_links(torrent_info, extensions), key=lambda x: x[1]['bytes'], reverse=True)
 			try:
-				# links[] is indexed over ALL selected files, so pair filenames to links
-				rd_links = torrent_info.get('links') or []
-				pack_items = [dict(i, **{'link': rd_links[idx] if store_to_cloud and idx < len(rd_links) else ''}) \
-								for idx, i in enumerate([i for i in torrent_info['files'] if i['selected'] == 1])]
+				rd_links = torrent_info['links']
 				from caches.pack_cache import stash_pack
-				stash_pack(info_hash, [{'link': i['link'], 'filename': i['path'].replace('/', ''), 'size': i['bytes']} \
-										for i in pack_items if i['path'].lower().endswith(tuple(extensions))])
+				stash_pack(info_hash, [{'link': rd_links[idx] if store_to_cloud else '', 'filename': i['path'].replace('/', ''), 'size': i['bytes']} \
+										for idx, i in sorted(selected_files)])
 			except: pass
 			match = False
 			if season:
@@ -293,8 +310,7 @@ class RealDebridAPI:
 			if match:
 				rd_link = torrent_info['links'][index]
 				file_url = self.unrestrict_link(rd_link)
-				if file_url.endswith('rar'): file_url = None
-				if not any(file_url.lower().endswith(x) for x in extensions): file_url = None
+				if file_url and (file_url.endswith('rar') or not any(file_url.lower().endswith(x) for x in extensions)): file_url = None
 				if not store_to_cloud: Thread(target=self.delete_torrent, args=(torrent_id,)).start()
 				return file_url
 			else: self.delete_torrent(torrent_id)
@@ -347,29 +363,29 @@ class RealDebridAPI:
 			if item['path'].endswith('.m2ts'): return True
 		return False
 
-	def _get(self, url):
+	def _get(self, url, retry=True):
 		original_url = url
 		url = base_url + url
-		if self.token in ('empty_setting', ''): return None
+		if not self._load_token(): return None
 		if '?' not in url: url += '?auth_token=%s' % self.token
 		else: url += '&auth_token=%s' % self.token
 		response = requests.get(url, timeout=timeout)
 		if any(value in response.text for value in ('bad_token', 'Bad Request')):
-			if self.refresh_token(): response = self._get(original_url)
-			else: return None
+			if retry and self.refresh_token(): return self._get(original_url, retry=False)
+			return None
 		try: return response.json()
 		except: return response
 
-	def _post(self, url, post_data):
+	def _post(self, url, post_data, retry=True):
 		original_url = url
 		url = base_url + url
-		if self.token in ('empty_setting', ''): return None
+		if not self._load_token(): return None
 		if '?' not in url: url += '?auth_token=%s' % self.token
 		else: url += '&auth_token=%s' % self.token
 		response = requests.post(url, data=post_data, timeout=timeout)
 		if any(value in response.text for value in ('bad_token', 'Bad Request')):
-			if self.refresh_token(): response = self._post(original_url, post_data)
-			else: return None
+			if retry and self.refresh_token(): return self._post(original_url, post_data, retry=False)
+			return None
 		try: return response.json()
 		except:
 			kodi_utils.logger('RD _post', 'Non-JSON response for %s: [%s] %s' % (original_url, response.status_code, response.text[:200]))

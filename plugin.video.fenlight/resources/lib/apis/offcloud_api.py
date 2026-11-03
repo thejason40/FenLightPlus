@@ -3,7 +3,7 @@
 import requests
 from threading import Thread
 from caches.main_cache import cache_object
-from caches.settings_cache import get_setting, set_setting
+from caches.settings_cache import get_setting, set_setting, LiveSetting
 from modules.source_utils import supported_video_extensions, seas_ep_filter, EXTRAS
 from modules.kodi_utils import make_session, kodi_dialog, ok_dialog, notification
 # from modules.kodi_utils import logger
@@ -22,8 +22,7 @@ session = make_session(base_url)
 timeout = 20.0
 
 class OffcloudAPI:
-	def __init__(self):
-		self.token = get_setting('fenlight.oc.token', 'empty_setting')
+	token = LiveSetting('fenlight.oc.token')
 
 	def ok_message(self, message='An Error Occurred'):
 		return ok_dialog(text=message)
@@ -108,7 +107,7 @@ class OffcloudAPI:
 				if not torrent_files: return None
 			else:
 				if self._m2ts_check(torrent_files): self.delete_torrent(torrent_id) ; return None
-				torrent_files = [i for i in torrent_files if not any(x in i['filename'] for x in EXTRAS)]
+				torrent_files = [i for i in torrent_files if not any(x in i['filename'].lower() for x in EXTRAS)]
 			file_key = torrent_files[0]['url']
 			file_url = self.requote_uri(file_key)
 			return file_url
