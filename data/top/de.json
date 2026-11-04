@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-03T15:06:16+00:00",
+  "generatedAt": "2026-11-04T15:25:51+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -165,7 +165,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +341,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -550,10 +550,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Corpse Bride",
-          "year": 2005,
-          "imdbId": "tt0121164",
-          "tmdbId": "movie/3933"
+          "title": "The Baader Meinhof Complex",
+          "year": 2008,
+          "imdbId": "tt0765432",
+          "tmdbId": "movie/6968"
         },
         {
           "rank": 5,
@@ -586,10 +586,10 @@
           "rank": 8,
           "type": "movie",
           "typeRank": 4,
-          "title": "The Baader Meinhof Complex",
-          "year": 2008,
-          "imdbId": "tt0765432",
-          "tmdbId": "movie/6968"
+          "title": "Civil War",
+          "year": 2024,
+          "imdbId": "tt17279496",
+          "tmdbId": "movie/929590"
         },
         {
           "rank": 9,
@@ -604,37 +604,37 @@
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
+          "title": "Corpse Bride",
+          "year": 2005,
+          "imdbId": "tt0121164",
+          "tmdbId": "movie/3933"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 6,
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
           "title": "A Nightmare on Elm Street",
           "year": 1984,
           "imdbId": "tt0087800",
           "tmdbId": "movie/377"
         },
         {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Civil War",
-          "year": 2024,
-          "imdbId": "tt17279496",
-          "tmdbId": "movie/929590"
-        },
-        {
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
+          "title": "The Torment",
+          "year": 2026,
+          "imdbId": "tt47816221",
+          "tmdbId": "tv/279185"
         },
         {
           "rank": 14,
@@ -649,10 +649,10 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "The Torment",
-          "year": 2026,
-          "imdbId": "tt47816221",
-          "tmdbId": "tv/279185"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 16,
@@ -667,28 +667,28 @@
           "rank": 17,
           "type": "series",
           "typeRank": 9,
-          "title": "GET JIRO",
-          "year": 2026,
-          "imdbId": "tt33406999",
-          "tmdbId": "tv/231801"
+          "title": "High Maintenance",
+          "year": 2016,
+          "imdbId": "tt6078096",
+          "tmdbId": "tv/67243"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "A Nightmare on Elm Street Part 2: Freddy's Revenge",
-          "year": 1985,
-          "imdbId": "tt0089686",
-          "tmdbId": "movie/10014"
+          "title": "Bad Moms",
+          "year": 2016,
+          "imdbId": "tt4651520",
+          "tmdbId": "movie/376659"
         },
         {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "High Maintenance",
-          "year": 2016,
-          "imdbId": "tt6078096",
-          "tmdbId": "tv/67243"
+          "title": "GET JIRO",
+          "year": 2026,
+          "imdbId": "tt33406999",
+          "tmdbId": "tv/231801"
         },
         {
           "rank": 20,
@@ -702,7 +702,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,

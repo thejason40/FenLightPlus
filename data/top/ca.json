@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-03T15:06:16+00:00",
+  "generatedAt": "2026-11-04T15:25:51+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -702,66 +702,66 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "Saturday Night Live",
-          "year": 1975,
-          "imdbId": "tt0072562",
-          "tmdbId": "tv/1667"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "YAGA",
-          "year": 2026,
-          "imdbId": "tt39980704",
-          "tmdbId": "tv/314360"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "The Celebrity Traitors",
-          "year": 2025,
-          "imdbId": "tt33248156",
-          "tmdbId": "tv/291431"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Traitors",
-          "year": 2023,
-          "imdbId": "tt15557874",
-          "tmdbId": "tv/215943"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
           "title": "The Gilded Age",
           "year": 2022,
           "imdbId": "tt4406178",
           "tmdbId": "tv/81723"
         },
         {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Scream 7",
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
+        },
+        {
+          "rank": 3,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Saturday Night Live",
+          "year": 1975,
+          "imdbId": "tt0072562",
+          "tmdbId": "tv/1667"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 4,
+          "title": "YAGA",
           "year": 2026,
-          "imdbId": "tt27047903",
-          "tmdbId": "movie/1159559"
+          "imdbId": "tt39980704",
+          "tmdbId": "tv/314360"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 5,
+          "title": "The Celebrity Traitors",
+          "year": 2025,
+          "imdbId": "tt33248156",
+          "tmdbId": "tv/291431"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The Traitors",
+          "year": 2023,
+          "imdbId": "tt15557874",
+          "tmdbId": "tv/215943"
         },
         {
           "rank": 7,
           "type": "series",
-          "typeRank": 6,
+          "typeRank": 7,
           "title": "WAR",
           "year": 2026,
           "imdbId": "tt37972251",
@@ -770,7 +770,7 @@
         {
           "rank": 8,
           "type": "series",
-          "typeRank": 7,
+          "typeRank": 8,
           "title": "Crystal Lake",
           "year": 2026,
           "imdbId": "tt23148340",
@@ -778,12 +778,12 @@
         },
         {
           "rank": 9,
-          "type": "series",
-          "typeRank": 8,
-          "title": "American Hostage",
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Scream 7",
           "year": 2026,
-          "imdbId": "tt30051064",
-          "tmdbId": "tv/239618"
+          "imdbId": "tt27047903",
+          "tmdbId": "movie/1159559"
         }
       ]
     }

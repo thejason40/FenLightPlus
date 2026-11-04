@@ -1,13 +1,13 @@
 {
   "country": "gb",
-  "generatedAt": "2026-11-03T15:06:16+00:00",
+  "generatedAt": "2026-11-04T15:25:51+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
@@ -568,31 +568,40 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Divergent",
-          "year": 2014,
-          "imdbId": "tt1840309",
-          "tmdbId": "movie/157350"
-        },
-        {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 4,
           "title": "The Hunger Games: Catching Fire",
           "year": 2013,
           "imdbId": "tt1951264",
           "tmdbId": "movie/101299"
         },
         {
-          "rank": 8,
+          "rank": 7,
           "type": "series",
           "typeRank": 4,
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Divergent",
+          "year": 2014,
+          "imdbId": "tt1840309",
+          "tmdbId": "movie/157350"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
           "title": "The Audacity",
           "year": 2026,
           "imdbId": "tt30923123",
           "tmdbId": "tv/258036"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "type": "movie",
           "typeRank": 5,
           "title": "The Hunger Games: Mockingjay - Part 1",
@@ -601,25 +610,7 @@
           "tmdbId": "movie/131631"
         },
         {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 5,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
-        },
-        {
           "rank": 11,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Evil Dead Rise",
-          "year": 2023,
-          "imdbId": "tt13345606",
-          "tmdbId": "movie/713704"
-        },
-        {
-          "rank": 12,
           "type": "series",
           "typeRank": 6,
           "title": "Lanterns",
@@ -628,7 +619,25 @@
           "tmdbId": "tv/95350"
         },
         {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Hunger Games: Mockingjay - Part 2",
+          "year": 2015,
+          "imdbId": "tt1951266",
+          "tmdbId": "movie/131634"
+        },
+        {
           "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "The Serial Killer Connection",
+          "year": 2026,
+          "imdbId": "tt46066662",
+          "tmdbId": "tv/337700"
+        },
+        {
+          "rank": 14,
           "type": "movie",
           "typeRank": 7,
           "title": "Twilight",
@@ -637,22 +646,13 @@
           "tmdbId": "movie/8966"
         },
         {
-          "rank": 14,
-          "type": "series",
-          "typeRank": 7,
-          "title": "GET JIRO",
-          "year": 2026,
-          "imdbId": "tt33406999",
-          "tmdbId": "tv/231801"
-        },
-        {
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Dracula",
-          "year": 2025,
-          "imdbId": "tt31434030",
-          "tmdbId": "movie/1246049"
+          "title": "Evil Dead Rise",
+          "year": 2023,
+          "imdbId": "tt13345606",
+          "tmdbId": "movie/713704"
         },
         {
           "rank": 16,
@@ -667,33 +667,33 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 9,
-          "title": "Evil Dead",
-          "year": 2013,
-          "imdbId": "tt1288558",
-          "tmdbId": "movie/109428"
+          "title": "Insurgent",
+          "year": 2015,
+          "imdbId": "tt2908446",
+          "tmdbId": "movie/262500"
         },
         {
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "The Serial Killer Connection",
+          "title": "GET JIRO",
           "year": 2026,
-          "imdbId": "tt46066662",
-          "tmdbId": "tv/337700"
+          "imdbId": "tt33406999",
+          "tmdbId": "tv/231801"
         },
         {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "John Wick: Chapter 2",
-          "year": 2017,
-          "imdbId": "tt4425200",
-          "tmdbId": "movie/324552"
+          "title": "Dracula",
+          "year": 2025,
+          "imdbId": "tt31434030",
+          "tmdbId": "movie/1246049"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-03T15:06:16+00:00",
+      "fetchedAt": "2026-11-04T15:25:51+00:00",
       "items": [
         {
           "rank": 1,
