@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import xbmc, xbmcgui
+from modules.ipv6_fallback import install as ipv6_fallback
+ipv6_fallback()
 import json
 from threading import Thread
 
