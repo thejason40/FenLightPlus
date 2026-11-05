@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-04T15:25:51+00:00",
+  "generatedAt": "2026-11-05T15:27:10+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -165,7 +165,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +341,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -568,46 +568,46 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "A Nightmare on Elm Street",
-          "year": 2010,
-          "imdbId": "tt1179056",
-          "tmdbId": "movie/23437"
+          "title": "Bad Moms",
+          "year": 2016,
+          "imdbId": "tt4651520",
+          "tmdbId": "movie/376659"
         },
         {
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Youth",
-          "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Civil War",
-          "year": 2024,
-          "imdbId": "tt17279496",
-          "tmdbId": "movie/929590"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
           "title": "YAGA",
           "year": 2026,
           "imdbId": "tt39980704",
           "tmdbId": "tv/314360"
         },
         {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "A Nightmare on Elm Street",
+          "year": 2010,
+          "imdbId": "tt1179056",
+          "tmdbId": "movie/23437"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
+        },
+        {
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Corpse Bride",
-          "year": 2005,
-          "imdbId": "tt0121164",
-          "tmdbId": "movie/3933"
+          "title": "Civil War",
+          "year": 2024,
+          "imdbId": "tt17279496",
+          "tmdbId": "movie/929590"
         },
         {
           "rank": 11,
@@ -622,10 +622,10 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "A Nightmare on Elm Street",
-          "year": 1984,
-          "imdbId": "tt0087800",
-          "tmdbId": "movie/377"
+          "title": "Corpse Bride",
+          "year": 2005,
+          "imdbId": "tt0121164",
+          "tmdbId": "movie/3933"
         },
         {
           "rank": 13,
@@ -640,46 +640,46 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 7,
-          "title": "Return to Silent Hill",
-          "year": 2026,
-          "imdbId": "tt22868010",
-          "tmdbId": "movie/680493"
+          "title": "A Nightmare on Elm Street",
+          "year": 1984,
+          "imdbId": "tt0087800",
+          "tmdbId": "movie/377"
         },
         {
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Devil's Bath",
-          "year": 2024,
-          "imdbId": "tt29141112",
-          "tmdbId": "movie/931944"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
           "title": "High Maintenance",
           "year": 2016,
           "imdbId": "tt6078096",
           "tmdbId": "tv/67243"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Return to Silent Hill",
+          "year": 2026,
+          "imdbId": "tt22868010",
+          "tmdbId": "movie/680493"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
+        },
+        {
           "rank": 18,
           "type": "movie",
           "typeRank": 9,
-          "title": "Bad Moms",
-          "year": 2016,
-          "imdbId": "tt4651520",
-          "tmdbId": "movie/376659"
+          "title": "A Bad Moms Christmas",
+          "year": 2017,
+          "imdbId": "tt6359956",
+          "tmdbId": "movie/431530"
         },
         {
           "rank": 19,
@@ -694,15 +694,15 @@
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "A Nightmare on Elm Street 3: Dream Warriors",
-          "year": 1987,
-          "imdbId": "tt0093629",
-          "tmdbId": "movie/10072"
+          "title": "The Devil's Bath",
+          "year": 2024,
+          "imdbId": "tt29141112",
+          "tmdbId": "movie/931944"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,

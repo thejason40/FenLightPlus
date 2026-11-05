@@ -1,13 +1,13 @@
 {
   "country": "gb",
-  "generatedAt": "2026-11-04T15:25:51+00:00",
+  "generatedAt": "2026-11-05T15:27:10+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -550,10 +550,10 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Backrooms",
-          "year": 2026,
-          "imdbId": "tt26657236",
-          "tmdbId": "movie/1083381"
+          "title": "The Hunger Games: Catching Fire",
+          "year": 2013,
+          "imdbId": "tt1951264",
+          "tmdbId": "movie/101299"
         },
         {
           "rank": 5,
@@ -568,46 +568,46 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "The Hunger Games: Catching Fire",
-          "year": 2013,
-          "imdbId": "tt1951264",
-          "tmdbId": "movie/101299"
+          "title": "Backrooms",
+          "year": 2026,
+          "imdbId": "tt26657236",
+          "tmdbId": "movie/1083381"
         },
         {
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Divergent",
-          "year": 2014,
-          "imdbId": "tt1840309",
-          "tmdbId": "movie/157350"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
           "title": "The Audacity",
           "year": 2026,
           "imdbId": "tt30923123",
           "tmdbId": "tv/258036"
         },
         {
-          "rank": 10,
+          "rank": 8,
           "type": "movie",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "The Hunger Games: Mockingjay - Part 1",
           "year": 2014,
           "imdbId": "tt1951265",
           "tmdbId": "movie/131631"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "IT: Welcome to Derry",
+          "year": 2025,
+          "imdbId": "tt19244304",
+          "tmdbId": "tv/200875"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Divergent",
+          "year": 2014,
+          "imdbId": "tt1840309",
+          "tmdbId": "movie/157350"
         },
         {
           "rank": 11,
@@ -649,10 +649,10 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Evil Dead Rise",
-          "year": 2023,
-          "imdbId": "tt13345606",
-          "tmdbId": "movie/713704"
+          "title": "Insurgent",
+          "year": 2015,
+          "imdbId": "tt2908446",
+          "tmdbId": "movie/262500"
         },
         {
           "rank": 16,
@@ -667,10 +667,10 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 9,
-          "title": "Insurgent",
-          "year": 2015,
-          "imdbId": "tt2908446",
-          "tmdbId": "movie/262500"
+          "title": "Evil Dead Rise",
+          "year": 2023,
+          "imdbId": "tt13345606",
+          "tmdbId": "movie/713704"
         },
         {
           "rank": 18,
@@ -685,15 +685,15 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Dracula",
-          "year": 2025,
-          "imdbId": "tt31434030",
-          "tmdbId": "movie/1246049"
+          "title": "Allegiant",
+          "year": 2016,
+          "imdbId": "tt3410834",
+          "tmdbId": "movie/262504"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,

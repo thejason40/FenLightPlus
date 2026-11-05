@@ -1,13 +1,13 @@
 {
   "country": "au",
-  "generatedAt": "2026-11-04T15:25:51+00:00",
+  "generatedAt": "2026-11-05T15:27:10+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +535,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -577,10 +577,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
+          "title": "Adultery",
+          "year": 2026,
+          "imdbId": "tt36119015",
+          "tmdbId": "tv/338641"
         },
         {
           "rank": 6,
@@ -595,46 +595,46 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Adultery",
-          "year": 2026,
-          "imdbId": "tt36119015",
-          "tmdbId": "tv/338641"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Housemaid",
-          "year": 2025,
-          "imdbId": "tt27543632",
-          "tmdbId": "movie/1368166"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
           "title": "Georgie & Mandy's First Marriage",
           "year": 2024,
           "imdbId": "tt31589662",
           "tmdbId": "tv/243875"
         },
         {
-          "rank": 10,
+          "rank": 8,
           "type": "movie",
-          "typeRank": 5,
+          "typeRank": 4,
           "title": "The Inventor: Out for Blood in Silicon Valley",
           "year": 2019,
           "imdbId": "tt8488126",
           "tmdbId": "movie/566228"
         },
         {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "1000-lb Sisters",
+          "year": 2020,
+          "imdbId": "tt11617414",
+          "tmdbId": "tv/98410"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "The Housemaid",
+          "year": 2025,
+          "imdbId": "tt27543632",
+          "tmdbId": "movie/1368166"
+        },
+        {
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "Line of Fire",
-          "year": 2026,
-          "imdbId": "tt39365612",
-          "tmdbId": "tv/321958"
+          "title": "The Last Ship",
+          "year": 2014,
+          "imdbId": "tt2402207",
+          "tmdbId": "tv/60802"
         },
         {
           "rank": 12,
@@ -649,10 +649,10 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "The Last Ship",
-          "year": 2014,
-          "imdbId": "tt2402207",
-          "tmdbId": "tv/60802"
+          "title": "Line of Fire",
+          "year": 2026,
+          "imdbId": "tt39365612",
+          "tmdbId": "tv/321958"
         },
         {
           "rank": 14,
@@ -667,60 +667,60 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
-          "title": "90 Day Fiancé",
-          "year": 2014,
-          "imdbId": "tt3469050",
-          "tmdbId": "tv/61575"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Doctor Sleep",
-          "year": 2019,
-          "imdbId": "tt5606664",
-          "tmdbId": "movie/501170"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
           "title": "Newlyweds",
           "year": 2026,
           "imdbId": "tt39469996",
           "tmdbId": "tv/322267"
         },
         {
-          "rank": 18,
+          "rank": 16,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 8,
           "title": "Mountainhead",
           "year": 2025,
           "imdbId": "tt35396529",
           "tmdbId": "movie/1417059"
         },
         {
-          "rank": 19,
+          "rank": 17,
           "type": "series",
-          "typeRank": 10,
+          "typeRank": 9,
           "title": "A Killer Among Friends",
           "year": 2025,
           "imdbId": "tt37522426",
           "tmdbId": "tv/294219"
         },
         {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Elf: The Musical",
+          "year": 2017,
+          "imdbId": "tt7806262",
+          "tmdbId": "movie/495726"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 10,
+          "title": "90 Day Fiancé",
+          "year": 2014,
+          "imdbId": "tt3469050",
+          "tmdbId": "tv/61575"
+        },
+        {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "The Polar Express",
-          "year": 2004,
-          "imdbId": "tt0338348",
-          "tmdbId": "movie/5255"
+          "title": "Doctor Sleep",
+          "year": 2019,
+          "imdbId": "tt5606664",
+          "tmdbId": "movie/501170"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,

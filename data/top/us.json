@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-04T15:25:51+00:00",
+  "generatedAt": "2026-11-05T15:27:10+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -508,7 +508,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -532,10 +532,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "90 Day: Hunt for Love",
-          "year": 2025,
-          "imdbId": "tt36694933",
-          "tmdbId": "tv/290564"
+          "title": "1000-lb Sisters",
+          "year": 2020,
+          "imdbId": "tt11617414",
+          "tmdbId": "tv/98410"
         },
         {
           "rank": 4,
@@ -559,141 +559,141 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "The Death of Robin Hood",
-          "year": 2026,
-          "imdbId": "tt32273171",
-          "tmdbId": "movie/1284465"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
           "title": "Elf",
           "year": 2003,
           "imdbId": "tt0319343",
           "tmdbId": "movie/10719"
         },
         {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 4,
+          "title": "1000-lb Roomies",
+          "year": 2025,
+          "imdbId": "tt36857388",
+          "tmdbId": "tv/291934"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "The Death of Robin Hood",
+          "year": 2026,
+          "imdbId": "tt32273171",
+          "tmdbId": "movie/1284465"
+        },
+        {
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "90 Day Fiancé: The Other Way",
-          "year": 2019,
-          "imdbId": "tt9170070",
-          "tmdbId": "tv/90046"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Project X",
-          "year": 2012,
-          "imdbId": "tt1636826",
-          "tmdbId": "movie/57214"
+          "title": "National Lampoon's Christmas Vacation",
+          "year": 1989,
+          "imdbId": "tt0097958",
+          "tmdbId": "movie/5825"
         },
         {
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "Holiday Baking Championship",
-          "year": 2014,
-          "imdbId": "tt4226226",
-          "tmdbId": "tv/68598"
+          "title": "90 Day: Hunt for Love",
+          "year": 2025,
+          "imdbId": "tt36694933",
+          "tmdbId": "tv/290564"
         },
         {
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "The Wolverine",
-          "year": 2013,
-          "imdbId": "tt1430132",
-          "tmdbId": "movie/76170"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Youth",
-          "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "The Predator",
-          "year": 2018,
-          "imdbId": "tt3829266",
-          "tmdbId": "movie/346910"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Sister Wives",
-          "year": 2010,
-          "imdbId": "tt1721666",
-          "tmdbId": "tv/34045"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Polar Express",
-          "year": 2004,
-          "imdbId": "tt0338348",
-          "tmdbId": "movie/5255"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Red Sparrow",
           "year": 2018,
           "imdbId": "tt2873282",
           "tmdbId": "movie/401981"
         },
         {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Holiday Baking Championship",
+          "year": 2014,
+          "imdbId": "tt4226226",
+          "tmdbId": "tv/68598"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Project X",
+          "year": 2012,
+          "imdbId": "tt1636826",
+          "tmdbId": "movie/57214"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Wolverine",
+          "year": 2013,
+          "imdbId": "tt1430132",
+          "tmdbId": "movie/76170"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Bobby's Triple Threat",
+          "year": 2022,
+          "imdbId": "tt21832348",
+          "tmdbId": "tv/211201"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The First Purge",
+          "year": 2018,
+          "imdbId": "tt6133466",
+          "tmdbId": "movie/442249"
+        },
+        {
           "rank": 19,
           "type": "series",
           "typeRank": 10,
-          "title": "IT: Welcome to Derry",
-          "year": 2025,
-          "imdbId": "tt19244304",
-          "tmdbId": "tv/200875"
+          "title": "90 Day Fiancé: The Other Way",
+          "year": 2019,
+          "imdbId": "tt9170070",
+          "tmdbId": "tv/90046"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "National Lampoon's Christmas Vacation",
-          "year": 1989,
-          "imdbId": "tt0097958",
-          "tmdbId": "movie/5825"
+          "title": "The Polar Express",
+          "year": 2004,
+          "imdbId": "tt0338348",
+          "tmdbId": "movie/5255"
         }
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
@@ -941,7 +941,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-04T15:25:51+00:00",
+      "fetchedAt": "2026-11-05T15:27:10+00:00",
       "items": [
         {
           "rank": 1,
