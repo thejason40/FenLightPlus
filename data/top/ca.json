@@ -1,142 +1,160 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-05T15:27:10+00:00",
+  "generatedAt": "2026-11-06T15:03:22+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-05T15:27:10+00:00",
+      "fetchedAt": "2026-11-06T15:03:22+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
+          "type": "movie",
           "typeRank": 1,
-          "title": "The One About Matthew Perry",
+          "title": "A Dog's Perfect Christmas",
           "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
+          "imdbId": "tt38515310",
+          "tmdbId": "movie/1570488"
         },
         {
           "rank": 2,
           "type": "series",
-          "typeRank": 2,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
+          "typeRank": 1,
           "title": "Love Is Blind",
           "year": 2020,
           "imdbId": "tt11704040",
           "tmdbId": "tv/99353"
         },
         {
+          "rank": 3,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The One About Matthew Perry",
+          "year": 2026,
+          "imdbId": "tt44941753",
+          "tmdbId": "tv/333533"
+        },
+        {
           "rank": 4,
           "type": "movie",
-          "typeRank": 1,
-          "title": "The Addams Family",
-          "year": 2019,
-          "imdbId": "tt1620981",
-          "tmdbId": "movie/481084"
+          "typeRank": 2,
+          "title": "Final Destination Bloodlines",
+          "year": 2025,
+          "imdbId": "tt9619824",
+          "tmdbId": "movie/574475"
         },
         {
           "rank": 5,
           "type": "movie",
-          "typeRank": 2,
-          "title": "Surviving Hurricane Otis",
+          "typeRank": 3,
+          "title": "Collision Course",
           "year": 2026,
-          "imdbId": "tt37961714",
-          "tmdbId": "movie/1780005"
+          "imdbId": "tt38793125",
+          "tmdbId": "movie/1571955"
         },
         {
           "rank": 6,
-          "type": "movie",
+          "type": "series",
           "typeRank": 3,
-          "title": "Survive",
+          "title": "Nobody Wants This",
           "year": 2024,
-          "imdbId": "tt27032708",
-          "tmdbId": "movie/1196470"
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
         },
         {
           "rank": 7,
           "type": "movie",
           "typeRank": 4,
-          "title": "The Addams Family 2",
-          "year": 2021,
-          "imdbId": "tt11125620",
-          "tmdbId": "movie/639721"
+          "title": "The Hobbit: An Unexpected Journey",
+          "year": 2012,
+          "imdbId": "tt0903624",
+          "tmdbId": "movie/49051"
         },
         {
           "rank": 8,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Gajab Raat",
+          "type": "series",
+          "typeRank": 4,
+          "title": "A Couple of Lies",
           "year": 2026,
-          "imdbId": "tt39631280",
-          "tmdbId": "movie/1453407"
+          "imdbId": "tt42767924",
+          "tmdbId": "tv/336240"
         },
         {
           "rank": 9,
           "type": "series",
-          "typeRank": 4,
+          "typeRank": 5,
+          "title": "WWE NXT",
+          "year": 2010,
+          "imdbId": "tt1601141",
+          "tmdbId": "tv/31991"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Heist",
+          "year": 2001,
+          "imdbId": "tt0252503",
+          "tmdbId": "movie/11088"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 6,
           "title": "Lupin",
           "year": 2021,
           "imdbId": "tt2531336",
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 10,
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Hobbit: The Desolation of Smaug",
+          "year": 2013,
+          "imdbId": "tt1170358",
+          "tmdbId": "movie/57158"
+        },
+        {
+          "rank": 13,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 7,
           "title": "Below",
           "year": 2026,
           "imdbId": "tt35934755",
           "tmdbId": "tv/285322"
         },
         {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Minimum Wage",
-          "year": 2026,
-          "imdbId": "tt42220724",
-          "tmdbId": "tv/321221"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Animals",
-          "year": 2026,
-          "imdbId": "tt31049299",
-          "tmdbId": "movie/1236045"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Greenfingers",
-          "year": 2001,
-          "imdbId": "tt0203540",
-          "tmdbId": "movie/33379"
-        },
-        {
           "rank": 14,
-          "type": "movie",
+          "type": "series",
           "typeRank": 8,
-          "title": "Money Train",
-          "year": 1995,
-          "imdbId": "tt0113845",
-          "tmdbId": "movie/11517"
+          "title": "Dead-End Job",
+          "year": 2026,
+          "imdbId": "tt36458668",
+          "tmdbId": "tv/289517"
         },
         {
           "rank": 15,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "SCTV: The Greatest Show You've Never Heard Of",
+          "year": 2026,
+          "imdbId": "tt44825373",
+          "tmdbId": "movie/1756307"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Hobbit: The Battle of the Five Armies",
+          "year": 2014,
+          "imdbId": "tt2310332",
+          "tmdbId": "movie/122917"
+        },
+        {
+          "rank": 17,
           "type": "movie",
           "typeRank": 9,
           "title": "Nowhere to Run",
@@ -145,45 +163,27 @@
           "tmdbId": "movie/10413"
         },
         {
-          "rank": 16,
+          "rank": 18,
           "type": "movie",
           "typeRank": 10,
-          "title": "Hubie Halloween",
-          "year": 2020,
-          "imdbId": "tt10682266",
-          "tmdbId": "movie/617505"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 8,
-          "title": "East of Eden",
-          "year": 2026,
-          "imdbId": "tt21097264",
-          "tmdbId": "tv/258165"
+          "title": "The Holiday",
+          "year": 2006,
+          "imdbId": "tt0457939",
+          "tmdbId": "movie/1581"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-05T15:27:10+00:00",
+      "fetchedAt": "2026-11-06T15:03:22+00:00",
       "items": [
         {
           "rank": 1,
           "type": "movie",
           "typeRank": 1,
-          "title": "Minions & Monsters",
+          "title": "The Mongoose",
           "year": 2026,
-          "imdbId": "tt32890033",
-          "tmdbId": "movie/1315772"
+          "imdbId": "tt13611778",
+          "tmdbId": "movie/1294189"
         },
         {
           "rank": 2,
@@ -207,13 +207,31 @@
           "rank": 4,
           "type": "movie",
           "typeRank": 2,
-          "title": "Ali G: Who Iz I?",
+          "title": "Minions & Monsters",
           "year": 2026,
-          "imdbId": "tt43655467",
-          "tmdbId": "movie/1727734"
+          "imdbId": "tt32890033",
+          "tmdbId": "movie/1315772"
         },
         {
           "rank": 5,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Greatest",
+          "year": 2026,
+          "imdbId": "tt15715850",
+          "tmdbId": "tv/258989"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 4,
+          "title": "LOL: Last One Laughing UK",
+          "year": 2025,
+          "imdbId": "tt35050741",
+          "tmdbId": "tv/262819"
+        },
+        {
+          "rank": 7,
           "type": "movie",
           "typeRank": 3,
           "title": "Disclosure Day",
@@ -222,34 +240,43 @@
           "tmdbId": "movie/1275779"
         },
         {
-          "rank": 6,
+          "rank": 8,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Neagley",
+          "year": 2026,
+          "imdbId": "tt33539520",
+          "tmdbId": "tv/273207"
+        },
+        {
+          "rank": 9,
           "type": "movie",
           "typeRank": 4,
-          "title": "Obsession",
+          "title": "Apocalypse Z: New World",
           "year": 2026,
-          "imdbId": "tt37287335",
-          "tmdbId": "movie/1339713"
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
         },
         {
-          "rank": 7,
+          "rank": 10,
           "type": "movie",
           "typeRank": 5,
-          "title": "Backrooms",
-          "year": 2026,
-          "imdbId": "tt26657236",
-          "tmdbId": "movie/1083381"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 6,
           "title": "Love of Your Life",
           "year": 2026,
           "imdbId": "tt34384900",
           "tmdbId": "movie/1381078"
         },
         {
-          "rank": 9,
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Ali G: Who Iz I?",
+          "year": 2026,
+          "imdbId": "tt43655467",
+          "tmdbId": "movie/1727734"
+        },
+        {
+          "rank": 12,
           "type": "movie",
           "typeRank": 7,
           "title": "Masterplan",
@@ -258,61 +285,7 @@
           "tmdbId": "movie/1561726"
         },
         {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Neagley",
-          "year": 2026,
-          "imdbId": "tt33539520",
-          "tmdbId": "tv/273207"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 4,
-          "title": "LOL: Last One Laughing Quebec",
-          "year": 2023,
-          "imdbId": "tt23058150",
-          "tmdbId": "tv/217745"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Reacher",
-          "year": 2022,
-          "imdbId": "tt9288030",
-          "tmdbId": "tv/108978"
-        },
-        {
           "rank": 13,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Off Campus",
-          "year": 2026,
-          "imdbId": "tt33546863",
-          "tmdbId": "tv/273240"
-        },
-        {
-          "rank": 14,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Terminal List: Dark Wolf",
-          "year": 2025,
-          "imdbId": "tt26576161",
-          "tmdbId": "tv/219760"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Helluva Boss",
-          "year": 2020,
-          "imdbId": "tt10691770",
-          "tmdbId": "tv/289892"
-        },
-        {
-          "rank": 16,
           "type": "movie",
           "typeRank": 8,
           "title": "The Death of Robin Hood",
@@ -321,45 +294,27 @@
           "tmdbId": "movie/1284465"
         },
         {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Sterling Point",
-          "year": 2026,
-          "imdbId": "tt35618070",
-          "tmdbId": "tv/283297"
-        },
-        {
-          "rank": 18,
+          "rank": 14,
           "type": "movie",
           "typeRank": 9,
-          "title": "Tuner",
+          "title": "Drive - The Pretenders",
           "year": 2026,
-          "imdbId": "tt33296751",
-          "tmdbId": "movie/1340206"
+          "imdbId": "tt37180686",
+          "tmdbId": "movie/1596275"
         },
         {
-          "rank": 19,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Kill Jackie",
-          "year": 2026,
-          "imdbId": "tt35726020",
-          "tmdbId": "tv/284558"
-        },
-        {
-          "rank": 20,
+          "rank": 15,
           "type": "movie",
           "typeRank": 10,
-          "title": "Apocalypse Z: New World",
+          "title": "Mirzapur: The Movie",
           "year": 2026,
-          "imdbId": "tt37522541",
-          "tmdbId": "movie/1507696"
+          "imdbId": "tt34339725",
+          "tmdbId": "movie/1378537"
         }
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-05T15:27:10+00:00",
+      "fetchedAt": "2026-11-06T15:03:22+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,43 +472,43 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-05T15:27:10+00:00",
+      "fetchedAt": "2026-11-06T15:03:22+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
+          "title": "Stick",
+          "year": 2025,
+          "imdbId": "tt31710249",
+          "tmdbId": "tv/248830"
+        },
+        {
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
           "title": "Nocturne",
           "year": 2026,
           "imdbId": "tt26598805",
           "tmdbId": "tv/292741"
         },
         {
-          "rank": 2,
+          "rank": 3,
           "type": "series",
-          "typeRank": 2,
+          "typeRank": 3,
           "title": "Ted Lasso",
           "year": 2020,
           "imdbId": "tt10986410",
           "tmdbId": "tv/97546"
         },
         {
-          "rank": 3,
+          "rank": 4,
           "type": "series",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "Slow Horses",
           "year": 2022,
           "imdbId": "tt5875444",
           "tmdbId": "tv/95480"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Dark Matter",
-          "year": 2024,
-          "imdbId": "tt19231492",
-          "tmdbId": "tv/196322"
         },
         {
           "rank": 5,
@@ -568,19 +523,19 @@
           "rank": 6,
           "type": "series",
           "typeRank": 6,
-          "title": "Silo",
-          "year": 2023,
-          "imdbId": "tt14688458",
-          "tmdbId": "tv/125988"
+          "title": "Dark Matter",
+          "year": 2024,
+          "imdbId": "tt19231492",
+          "tmdbId": "tv/196322"
         },
         {
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Widow's Bay",
-          "year": 2026,
-          "imdbId": "tt33332385",
-          "tmdbId": "tv/270476"
+          "title": "Silo",
+          "year": 2023,
+          "imdbId": "tt14688458",
+          "tmdbId": "tv/125988"
         },
         {
           "rank": 8,
@@ -595,19 +550,19 @@
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "Stick",
-          "year": 2025,
-          "imdbId": "tt31710249",
-          "tmdbId": "tv/248830"
+          "title": "Shrinking",
+          "year": 2023,
+          "imdbId": "tt15677150",
+          "tmdbId": "tv/136311"
         },
         {
           "rank": 10,
           "type": "series",
           "typeRank": 10,
-          "title": "Shrinking",
-          "year": 2023,
-          "imdbId": "tt15677150",
-          "tmdbId": "tv/136311"
+          "title": "Widow's Bay",
+          "year": 2026,
+          "imdbId": "tt33332385",
+          "tmdbId": "tv/270476"
         },
         {
           "rank": 11,
@@ -640,55 +595,55 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "It's the Great Pumpkin, Charlie Brown",
-          "year": 1966,
-          "imdbId": "tt0060550",
-          "tmdbId": "movie/13353"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "The Last First: Winter K2",
-          "year": 2026,
-          "imdbId": "tt39150288",
-          "tmdbId": "movie/1596303"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Spider-Man: Homecoming",
-          "year": 2017,
-          "imdbId": "tt2250912",
-          "tmdbId": "movie/315635"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 7,
           "title": "F1",
           "year": 2025,
           "imdbId": "tt16311594",
           "tmdbId": "movie/911430"
         },
         {
-          "rank": 18,
+          "rank": 15,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 5,
+          "title": "Spider-Man: Homecoming",
+          "year": 2017,
+          "imdbId": "tt2250912",
+          "tmdbId": "movie/315635"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Last First: Winter K2",
+          "year": 2026,
+          "imdbId": "tt39150288",
+          "tmdbId": "movie/1596303"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Inception",
           "year": 2010,
           "imdbId": "tt1375666",
           "tmdbId": "movie/27205"
         },
         {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Proposal",
+          "year": 2009,
+          "imdbId": "tt1041829",
+          "tmdbId": "movie/18240"
+        },
+        {
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
+          "title": "The Dink",
+          "year": 2026,
+          "imdbId": "tt33499146",
+          "tmdbId": "movie/1361774"
         },
         {
           "rank": 20,
@@ -702,7 +657,7 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-05T15:27:10+00:00",
+      "fetchedAt": "2026-11-06T15:03:22+00:00",
       "items": [
         {
           "rank": 1,
@@ -735,55 +690,55 @@
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "Doc",
+          "year": 2025,
+          "imdbId": "tt26748321",
+          "tmdbId": "tv/255055"
         },
         {
           "rank": 5,
           "type": "series",
           "typeRank": 5,
+          "title": "MasterChef Canada",
+          "year": 2014,
+          "imdbId": "tt3219166",
+          "tmdbId": "tv/64958"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 6,
           "title": "YAGA",
           "year": 2026,
           "imdbId": "tt39980704",
           "tmdbId": "tv/314360"
         },
         {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Tracker",
-          "year": 2024,
-          "imdbId": "tt13875494",
-          "tmdbId": "tv/211288"
-        },
-        {
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
+          "title": "Best Medicine",
+          "year": 2026,
+          "imdbId": "tt36885662",
+          "tmdbId": "tv/291084"
         },
         {
           "rank": 8,
           "type": "series",
           "typeRank": 8,
-          "title": "Saturday Night Live",
-          "year": 1975,
-          "imdbId": "tt0072562",
-          "tmdbId": "tv/1667"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "The Traitors",
-          "year": 2023,
-          "imdbId": "tt15557874",
-          "tmdbId": "tv/215943"
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
         },
         {
           "rank": 10,
