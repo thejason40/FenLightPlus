@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-06T15:03:22+00:00",
+  "generatedAt": "2026-11-07T14:01:38+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -214,24 +214,6 @@
         },
         {
           "rank": 5,
-          "type": "series",
-          "typeRank": 3,
-          "title": "The Greatest",
-          "year": 2026,
-          "imdbId": "tt15715850",
-          "tmdbId": "tv/258989"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 4,
-          "title": "LOL: Last One Laughing UK",
-          "year": 2025,
-          "imdbId": "tt35050741",
-          "tmdbId": "tv/262819"
-        },
-        {
-          "rank": 7,
           "type": "movie",
           "typeRank": 3,
           "title": "Disclosure Day",
@@ -240,9 +222,27 @@
           "tmdbId": "movie/1275779"
         },
         {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Love of Your Life",
+          "year": 2026,
+          "imdbId": "tt34384900",
+          "tmdbId": "movie/1381078"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Apocalypse Z: New World",
+          "year": 2026,
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
+        },
+        {
           "rank": 8,
           "type": "series",
-          "typeRank": 5,
+          "typeRank": 3,
           "title": "Neagley",
           "year": 2026,
           "imdbId": "tt33539520",
@@ -250,42 +250,60 @@
         },
         {
           "rank": 9,
-          "type": "movie",
+          "type": "series",
           "typeRank": 4,
-          "title": "Apocalypse Z: New World",
-          "year": 2026,
-          "imdbId": "tt37522541",
-          "tmdbId": "movie/1507696"
+          "title": "LOL: Last One Laughing UK",
+          "year": 2025,
+          "imdbId": "tt35050741",
+          "tmdbId": "tv/262819"
         },
         {
           "rank": 10,
-          "type": "movie",
+          "type": "series",
           "typeRank": 5,
-          "title": "Love of Your Life",
+          "title": "The Greatest",
           "year": 2026,
-          "imdbId": "tt34384900",
-          "tmdbId": "movie/1381078"
+          "imdbId": "tt15715850",
+          "tmdbId": "tv/258989"
         },
         {
           "rank": 11,
           "type": "movie",
           "typeRank": 6,
-          "title": "Ali G: Who Iz I?",
-          "year": 2026,
-          "imdbId": "tt43655467",
-          "tmdbId": "movie/1727734"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 7,
           "title": "Masterplan",
           "year": 2026,
           "imdbId": "tt38672588",
           "tmdbId": "movie/1561726"
         },
         {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Off Campus",
+          "year": 2026,
+          "imdbId": "tt33546863",
+          "tmdbId": "tv/273240"
+        },
+        {
           "rank": 13,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Ali G: Who Iz I?",
+          "year": 2026,
+          "imdbId": "tt43655467",
+          "tmdbId": "movie/1727734"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Reacher",
+          "year": 2022,
+          "imdbId": "tt9288030",
+          "tmdbId": "tv/108978"
+        },
+        {
+          "rank": 15,
           "type": "movie",
           "typeRank": 8,
           "title": "The Death of Robin Hood",
@@ -294,27 +312,45 @@
           "tmdbId": "movie/1284465"
         },
         {
-          "rank": 14,
+          "rank": 16,
+          "type": "series",
+          "typeRank": 8,
+          "title": "LOL: Last One Laughing Quebec",
+          "year": 2023,
+          "imdbId": "tt23058150",
+          "tmdbId": "tv/217745"
+        },
+        {
+          "rank": 17,
           "type": "movie",
           "typeRank": 9,
+          "title": "The Grinch",
+          "year": 2018,
+          "imdbId": "tt2709692",
+          "tmdbId": "movie/360920"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 9,
+          "title": "The Terminal List: Dark Wolf",
+          "year": 2025,
+          "imdbId": "tt26576161",
+          "tmdbId": "tv/219760"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 10,
           "title": "Drive - The Pretenders",
           "year": 2026,
           "imdbId": "tt37180686",
           "tmdbId": "movie/1596275"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Mirzapur: The Movie",
-          "year": 2026,
-          "imdbId": "tt34339725",
-          "tmdbId": "movie/1378537"
         }
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -472,25 +508,25 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "Stick",
-          "year": 2025,
-          "imdbId": "tt31710249",
-          "tmdbId": "tv/248830"
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
+          "title": "Stick",
+          "year": 2025,
+          "imdbId": "tt31710249",
+          "tmdbId": "tv/248830"
         },
         {
           "rank": 3,
@@ -550,19 +586,19 @@
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "Shrinking",
-          "year": 2023,
-          "imdbId": "tt15677150",
-          "tmdbId": "tv/136311"
+          "title": "Widow's Bay",
+          "year": 2026,
+          "imdbId": "tt33332385",
+          "tmdbId": "tv/270476"
         },
         {
           "rank": 10,
           "type": "series",
           "typeRank": 10,
-          "title": "Widow's Bay",
-          "year": 2026,
-          "imdbId": "tt33332385",
-          "tmdbId": "tv/270476"
+          "title": "Shrinking",
+          "year": 2023,
+          "imdbId": "tt15677150",
+          "tmdbId": "tv/136311"
         },
         {
           "rank": 11,
@@ -604,46 +640,46 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Spider-Man: Homecoming",
-          "year": 2017,
-          "imdbId": "tt2250912",
-          "tmdbId": "movie/315635"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 6,
           "title": "The Last First: Winter K2",
           "year": 2026,
           "imdbId": "tt39150288",
           "tmdbId": "movie/1596303"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Spider-Man: Homecoming",
+          "year": 2017,
+          "imdbId": "tt2250912",
+          "tmdbId": "movie/315635"
+        },
+        {
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
+          "title": "The Dink",
+          "year": 2026,
+          "imdbId": "tt33499146",
+          "tmdbId": "movie/1361774"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
           "title": "Inception",
           "year": 2010,
           "imdbId": "tt1375666",
           "tmdbId": "movie/27205"
         },
         {
-          "rank": 18,
+          "rank": 19,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 9,
           "title": "The Proposal",
           "year": 2009,
           "imdbId": "tt1041829",
           "tmdbId": "movie/18240"
-        },
-        {
-          "rank": 19,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Dink",
-          "year": 2026,
-          "imdbId": "tt33499146",
-          "tmdbId": "movie/1361774"
         },
         {
           "rank": 20,
@@ -657,25 +693,25 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Traitors Canada",
-          "year": 2023,
-          "imdbId": "tt28251824",
-          "tmdbId": "tv/234613"
+          "title": "The Amazing Race",
+          "year": 2001,
+          "imdbId": "tt0285335",
+          "tmdbId": "tv/30957"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "The Voice",
-          "year": 2011,
-          "imdbId": "tt1839337",
-          "tmdbId": "tv/37678"
+          "title": "RuPaul's Drag Race UK",
+          "year": 2019,
+          "imdbId": "tt9780442",
+          "tmdbId": "tv/92611"
         },
         {
           "rank": 3,
@@ -690,19 +726,19 @@
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Doc",
-          "year": 2025,
-          "imdbId": "tt26748321",
-          "tmdbId": "tv/255055"
+          "title": "The Traitors Canada",
+          "year": 2023,
+          "imdbId": "tt28251824",
+          "tmdbId": "tv/234613"
         },
         {
           "rank": 5,
           "type": "series",
           "typeRank": 5,
-          "title": "MasterChef Canada",
-          "year": 2014,
-          "imdbId": "tt3219166",
-          "tmdbId": "tv/64958"
+          "title": "The Voice",
+          "year": 2011,
+          "imdbId": "tt1839337",
+          "tmdbId": "tv/37678"
         },
         {
           "rank": 6,
@@ -717,28 +753,28 @@
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Best Medicine",
-          "year": 2026,
-          "imdbId": "tt36885662",
-          "tmdbId": "tv/291084"
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
         },
         {
           "rank": 8,
           "type": "series",
           "typeRank": 8,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "WAR",
+          "year": 2026,
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 9,
           "type": "series",
           "typeRank": 9,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
+          "title": "Doc",
+          "year": 2025,
+          "imdbId": "tt26748321",
+          "tmdbId": "tv/255055"
         },
         {
           "rank": 10,

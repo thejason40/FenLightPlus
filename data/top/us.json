@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-06T15:03:22+00:00",
+  "generatedAt": "2026-11-07T14:01:38+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -165,25 +165,25 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
+          "title": "The Greatest",
+          "year": 2026,
+          "imdbId": "tt15715850",
+          "tmdbId": "tv/258989"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "The Greatest",
-          "year": 2026,
-          "imdbId": "tt15715850",
-          "tmdbId": "tv/258989"
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
         },
         {
           "rank": 3,
@@ -196,15 +196,6 @@
         },
         {
           "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Neagley",
-          "year": 2026,
-          "imdbId": "tt33539520",
-          "tmdbId": "tv/273207"
-        },
-        {
-          "rank": 5,
           "type": "movie",
           "typeRank": 1,
           "title": "Hungry",
@@ -213,16 +204,34 @@
           "tmdbId": "movie/1382832"
         },
         {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Neagley",
+          "year": 2026,
+          "imdbId": "tt33539520",
+          "tmdbId": "tv/273207"
+        },
+        {
           "rank": 6,
           "type": "movie",
           "typeRank": 2,
+          "title": "Hunting Season",
+          "year": 2025,
+          "imdbId": "tt32537226",
+          "tmdbId": "movie/1387382"
+        },
+        {
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 3,
           "title": "First Winter",
           "year": 1982,
           "imdbId": "tt0082383",
           "tmdbId": "movie/244395"
         },
         {
-          "rank": 7,
+          "rank": 8,
           "type": "series",
           "typeRank": 5,
           "title": "Reacher",
@@ -231,34 +240,7 @@
           "tmdbId": "tv/108978"
         },
         {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Forget Me Never",
-          "year": 1999,
-          "imdbId": "tt0217498",
-          "tmdbId": "movie/201736"
-        },
-        {
           "rank": 9,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Hunting Season",
-          "year": 2025,
-          "imdbId": "tt32537226",
-          "tmdbId": "movie/1387382"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Apocalypse Z: New World",
-          "year": 2026,
-          "imdbId": "tt37522541",
-          "tmdbId": "movie/1507696"
-        },
-        {
-          "rank": 11,
           "type": "series",
           "typeRank": 6,
           "title": "Off Campus",
@@ -267,16 +249,43 @@
           "tmdbId": "tv/273240"
         },
         {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Apocalypse Z: New World",
+          "year": 2026,
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Total Recall",
+          "year": 2012,
+          "imdbId": "tt1386703",
+          "tmdbId": "movie/64635"
+        },
+        {
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "Underwater",
-          "year": 2020,
-          "imdbId": "tt5774060",
-          "tmdbId": "movie/443791"
+          "title": "Dark Nature",
+          "year": 2023,
+          "imdbId": "tt16427398",
+          "tmdbId": "movie/994138"
         },
         {
           "rank": 13,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Forget Me Never",
+          "year": 1999,
+          "imdbId": "tt0217498",
+          "tmdbId": "movie/201736"
+        },
+        {
+          "rank": 14,
           "type": "series",
           "typeRank": 7,
           "title": "Wild Cards",
@@ -285,63 +294,54 @@
           "tmdbId": "tv/240932"
         },
         {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Drive - The Pretenders",
-          "year": 2026,
-          "imdbId": "tt37180686",
-          "tmdbId": "movie/1596275"
-        },
-        {
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Dark Nature",
-          "year": 2023,
-          "imdbId": "tt16427398",
-          "tmdbId": "movie/994138"
+          "title": "Elf",
+          "year": 2003,
+          "imdbId": "tt0319343",
+          "tmdbId": "movie/10719"
         },
         {
           "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "Sight Unseen",
-          "year": 2024,
-          "imdbId": "tt30487848",
-          "tmdbId": "tv/242535"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Love of Your Life",
-          "year": 2026,
-          "imdbId": "tt34384900",
-          "tmdbId": "movie/1381078"
-        },
-        {
-          "rank": 18,
-          "type": "series",
-          "typeRank": 9,
           "title": "On Call",
           "year": 2025,
           "imdbId": "tt14582876",
           "tmdbId": "tv/236429"
         },
         {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Drive - The Pretenders",
+          "year": 2026,
+          "imdbId": "tt37180686",
+          "tmdbId": "movie/1596275"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Sight Unseen",
+          "year": 2024,
+          "imdbId": "tt30487848",
+          "tmdbId": "tv/242535"
+        },
+        {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Elf",
-          "year": 2003,
-          "imdbId": "tt0319343",
-          "tmdbId": "movie/10719"
+          "title": "Love of Your Life",
+          "year": 2026,
+          "imdbId": "tt34384900",
+          "tmdbId": "movie/1381078"
         }
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -499,7 +499,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -684,7 +684,7 @@
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -941,7 +941,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -1026,15 +1026,6 @@
         },
         {
           "rank": 10,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Shrinking",
-          "year": 2023,
-          "imdbId": "tt15677150",
-          "tmdbId": "tv/136311"
-        },
-        {
-          "rank": 11,
           "type": "movie",
           "typeRank": 1,
           "title": "The Nice Guys",
@@ -1043,49 +1034,58 @@
           "tmdbId": "movie/290250"
         },
         {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Awkwafina: The Unlikely Cook",
+          "year": 2026,
+          "imdbId": "tt38992068",
+          "tmdbId": "tv/306179"
+        },
+        {
           "rank": 12,
           "type": "movie",
           "typeRank": 2,
-          "title": "Prisoners",
-          "year": 2013,
-          "imdbId": "tt1392214",
-          "tmdbId": "movie/146233"
-        },
-        {
-          "rank": 13,
-          "type": "movie",
-          "typeRank": 3,
           "title": "A Charlie Brown Thanksgiving",
           "year": 1973,
           "imdbId": "tt0068359",
           "tmdbId": "movie/13479"
         },
         {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "Prisoners",
+          "year": 2013,
+          "imdbId": "tt1392214",
+          "tmdbId": "movie/146233"
+        },
+        {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "It's the Great Pumpkin, Charlie Brown",
-          "year": 1966,
-          "imdbId": "tt0060550",
-          "tmdbId": "movie/13353"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Matchbox the Movie",
           "year": 2026,
           "imdbId": "tt28498219",
           "tmdbId": "movie/1148365"
         },
         {
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "It's the Great Pumpkin, Charlie Brown",
+          "year": 1966,
+          "imdbId": "tt0060550",
+          "tmdbId": "movie/13353"
+        },
+        {
           "rank": 16,
           "type": "movie",
           "typeRank": 6,
-          "title": "Body of Lies",
-          "year": 2008,
-          "imdbId": "tt0758774",
-          "tmdbId": "movie/12113"
+          "title": "Mayday",
+          "year": 2026,
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 17,
@@ -1100,10 +1100,10 @@
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "Mayday",
-          "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "title": "Body of Lies",
+          "year": 2008,
+          "imdbId": "tt0758774",
+          "tmdbId": "movie/12113"
         },
         {
           "rank": 19,

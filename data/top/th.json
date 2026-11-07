@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-06T15:03:22+00:00",
+  "generatedAt": "2026-11-07T14:01:38+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -156,7 +156,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -216,10 +216,10 @@
           "rank": 7,
           "type": "movie",
           "typeRank": 4,
-          "title": "Backrooms",
+          "title": "Sakamoto Days",
           "year": 2026,
-          "imdbId": "tt26657236",
-          "tmdbId": "movie/1083381"
+          "imdbId": "tt38488719",
+          "tmdbId": "movie/1548708"
         },
         {
           "rank": 8,
@@ -234,22 +234,31 @@
           "rank": 9,
           "type": "movie",
           "typeRank": 5,
-          "title": "Sakamoto Days",
+          "title": "Backrooms",
           "year": 2026,
-          "imdbId": "tt38488719",
-          "tmdbId": "movie/1548708"
+          "imdbId": "tt26657236",
+          "tmdbId": "movie/1083381"
         },
         {
           "rank": 10,
           "type": "movie",
           "typeRank": 6,
+          "title": "In the Grey",
+          "year": 2026,
+          "imdbId": "tt27681354",
+          "tmdbId": "movie/1122573"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Harry Potter and the Chamber of Secrets",
           "year": 2002,
           "imdbId": "tt0295297",
           "tmdbId": "movie/672"
         },
         {
-          "rank": 11,
+          "rank": 12,
           "type": "series",
           "typeRank": 5,
           "title": "Reacher",
@@ -258,25 +267,7 @@
           "tmdbId": "tv/108978"
         },
         {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "In the Grey",
-          "year": 2026,
-          "imdbId": "tt27681354",
-          "tmdbId": "movie/1122573"
-        },
-        {
           "rank": 13,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Neagley",
-          "year": 2026,
-          "imdbId": "tt33539520",
-          "tmdbId": "tv/273207"
-        },
-        {
-          "rank": 14,
           "type": "movie",
           "typeRank": 8,
           "title": "Apocalypse Z: The Beginning of the End",
@@ -285,7 +276,25 @@
           "tmdbId": "movie/1118031"
         },
         {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Neagley",
+          "year": 2026,
+          "imdbId": "tt33539520",
+          "tmdbId": "tv/273207"
+        },
+        {
           "rank": 15,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "year": 2004,
+          "imdbId": "tt0304141",
+          "tmdbId": "movie/673"
+        },
+        {
+          "rank": 16,
           "type": "series",
           "typeRank": 7,
           "title": "Carrie",
@@ -294,36 +303,18 @@
           "tmdbId": "tv/288673"
         },
         {
-          "rank": 16,
+          "rank": 17,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 10,
           "title": "Harry Potter and the Goblet of Fire",
           "year": 2005,
           "imdbId": "tt0330373",
           "tmdbId": "movie/674"
-        },
-        {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 8,
-          "title": "See You at Work Tomorrow!",
-          "year": 2026,
-          "imdbId": "tt38960812",
-          "tmdbId": "tv/289763"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "year": 2004,
-          "imdbId": "tt0304141",
-          "tmdbId": "movie/673"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -499,7 +490,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -541,19 +532,19 @@
           "rank": 5,
           "type": "series",
           "typeRank": 4,
-          "title": "Dark Matter",
-          "year": 2024,
-          "imdbId": "tt19231492",
-          "tmdbId": "tv/196322"
+          "title": "Ted Lasso",
+          "year": 2020,
+          "imdbId": "tt10986410",
+          "tmdbId": "tv/97546"
         },
         {
           "rank": 6,
           "type": "series",
           "typeRank": 5,
-          "title": "Ted Lasso",
-          "year": 2020,
-          "imdbId": "tt10986410",
-          "tmdbId": "tv/97546"
+          "title": "Dark Matter",
+          "year": 2024,
+          "imdbId": "tt19231492",
+          "tmdbId": "tv/196322"
         },
         {
           "rank": 7,
@@ -566,15 +557,6 @@
         },
         {
           "rank": 8,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Monarch: Legacy of Monsters",
-          "year": 2023,
-          "imdbId": "tt17220216",
-          "tmdbId": "tv/202411"
-        },
-        {
-          "rank": 9,
           "type": "movie",
           "typeRank": 2,
           "title": "Matchbox the Movie",
@@ -583,34 +565,16 @@
           "tmdbId": "movie/1148365"
         },
         {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Monarch: Legacy of Monsters",
+          "year": 2023,
+          "imdbId": "tt17220216",
+          "tmdbId": "tv/202411"
+        },
+        {
           "rank": 10,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Widow's Bay",
-          "year": 2026,
-          "imdbId": "tt33332385",
-          "tmdbId": "tv/270476"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Severance",
-          "year": 2022,
-          "imdbId": "tt11280740",
-          "tmdbId": "tv/95396"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Lucky",
-          "year": 2026,
-          "imdbId": "tt34866681",
-          "tmdbId": "tv/278624"
-        },
-        {
-          "rank": 13,
           "type": "movie",
           "typeRank": 3,
           "title": "Eternity",
@@ -619,13 +583,40 @@
           "tmdbId": "movie/1259102"
         },
         {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Widow's Bay",
+          "year": 2026,
+          "imdbId": "tt33332385",
+          "tmdbId": "tv/270476"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Lucky",
+          "year": 2026,
+          "imdbId": "tt34866681",
+          "tmdbId": "tv/278624"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Severance",
+          "year": 2022,
+          "imdbId": "tt11280740",
+          "tmdbId": "tv/95396"
+        },
+        {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Mayday",
-          "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "title": "The Gorge",
+          "year": 2025,
+          "imdbId": "tt13654226",
+          "tmdbId": "movie/950396"
         },
         {
           "rank": 15,
@@ -640,10 +631,10 @@
           "rank": 16,
           "type": "movie",
           "typeRank": 6,
-          "title": "The Gorge",
-          "year": 2025,
-          "imdbId": "tt13654226",
-          "tmdbId": "movie/950396"
+          "title": "Mayday",
+          "year": 2026,
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 17,

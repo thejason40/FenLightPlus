@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-06T15:03:22+00:00",
+  "generatedAt": "2026-11-07T14:01:38+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -198,19 +198,19 @@
           "rank": 3,
           "type": "series",
           "typeRank": 1,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
+          "title": "7 vs. Wild",
+          "year": 2021,
+          "imdbId": "tt16994878",
+          "tmdbId": "tv/139434"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 2,
-          "title": "7 vs. Wild",
-          "year": 2021,
-          "imdbId": "tt16994878",
-          "tmdbId": "tv/139434"
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
         },
         {
           "rank": 5,
@@ -252,22 +252,13 @@
           "rank": 9,
           "type": "movie",
           "typeRank": 5,
-          "title": "Apocalypse Z: New World",
-          "year": 2026,
-          "imdbId": "tt37522541",
-          "tmdbId": "movie/1507696"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 6,
           "title": "Harry Potter and the Prisoner of Azkaban",
           "year": 2004,
           "imdbId": "tt0304141",
           "tmdbId": "movie/673"
         },
         {
-          "rank": 11,
+          "rank": 10,
           "type": "series",
           "typeRank": 5,
           "title": "Neagley",
@@ -276,43 +267,43 @@
           "tmdbId": "tv/273207"
         },
         {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Reacher",
-          "year": 2022,
-          "imdbId": "tt9288030",
-          "tmdbId": "tv/108978"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Friends Sex and Games",
-          "year": 2026,
-          "imdbId": "tt37180305",
-          "tmdbId": "tv/298550"
-        },
-        {
-          "rank": 14,
+          "rank": 11,
           "type": "movie",
-          "typeRank": 7,
+          "typeRank": 6,
           "title": "Harry Potter and the Goblet of Fire",
           "year": 2005,
           "imdbId": "tt0330373",
           "tmdbId": "movie/674"
         },
         {
-          "rank": 15,
+          "rank": 12,
           "type": "series",
-          "typeRank": 8,
-          "title": "The Terminal List: Dark Wolf",
-          "year": 2025,
-          "imdbId": "tt26576161",
-          "tmdbId": "tv/219760"
+          "typeRank": 6,
+          "title": "Friends Sex and Games",
+          "year": 2026,
+          "imdbId": "tt37180305",
+          "tmdbId": "tv/298550"
         },
         {
-          "rank": 16,
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Apocalypse Z: New World",
+          "year": 2026,
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Reacher",
+          "year": 2022,
+          "imdbId": "tt9288030",
+          "tmdbId": "tv/108978"
+        },
+        {
+          "rank": 15,
           "type": "movie",
           "typeRank": 8,
           "title": "Harry Potter and the Order of the Phoenix",
@@ -321,16 +312,16 @@
           "tmdbId": "movie/675"
         },
         {
-          "rank": 17,
+          "rank": 16,
           "type": "series",
-          "typeRank": 9,
-          "title": "Sterling Point",
-          "year": 2026,
-          "imdbId": "tt35618070",
-          "tmdbId": "tv/283297"
+          "typeRank": 8,
+          "title": "The Lord of the Rings: The Rings of Power",
+          "year": 2022,
+          "imdbId": "tt7631058",
+          "tmdbId": "tv/84773"
         },
         {
-          "rank": 18,
+          "rank": 17,
           "type": "movie",
           "typeRank": 9,
           "title": "Masterplan",
@@ -339,27 +330,27 @@
           "tmdbId": "movie/1561726"
         },
         {
-          "rank": 19,
+          "rank": 18,
           "type": "series",
-          "typeRank": 10,
-          "title": "The Lord of the Rings: The Rings of Power",
-          "year": 2022,
-          "imdbId": "tt7631058",
-          "tmdbId": "tv/84773"
+          "typeRank": 9,
+          "title": "The Terminal List: Dark Wolf",
+          "year": 2025,
+          "imdbId": "tt26576161",
+          "tmdbId": "tv/219760"
         },
         {
-          "rank": 20,
+          "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Harry Potter and the Half-Blood Prince",
-          "year": 2009,
-          "imdbId": "tt0417741",
-          "tmdbId": "movie/767"
+          "title": "The Get Out",
+          "year": 2026,
+          "imdbId": "tt32321803",
+          "tmdbId": "movie/1279493"
         }
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +526,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
@@ -720,25 +711,25 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-06T15:03:22+00:00",
+      "fetchedAt": "2026-11-07T14:01:38+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "Ted Lasso",
-          "year": 2020,
-          "imdbId": "tt10986410",
-          "tmdbId": "tv/97546"
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Slow Horses",
-          "year": 2022,
-          "imdbId": "tt5875444",
-          "tmdbId": "tv/95480"
+          "title": "Ted Lasso",
+          "year": 2020,
+          "imdbId": "tt10986410",
+          "tmdbId": "tv/97546"
         },
         {
           "rank": 3,
@@ -753,10 +744,10 @@
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
+          "title": "Slow Horses",
+          "year": 2022,
+          "imdbId": "tt5875444",
+          "tmdbId": "tv/95480"
         },
         {
           "rank": 5,
@@ -787,6 +778,15 @@
         },
         {
           "rank": 8,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Sunshine",
+          "year": 2007,
+          "imdbId": "tt0448134",
+          "tmdbId": "movie/1272"
+        },
+        {
+          "rank": 9,
           "type": "series",
           "typeRank": 8,
           "title": "Small Prophets",
@@ -795,22 +795,13 @@
           "tmdbId": "tv/312693"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "type": "series",
           "typeRank": 9,
           "title": "Brothers",
           "year": 2026,
           "imdbId": "tt6773088",
           "tmdbId": "tv/250203"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Sunshine",
-          "year": 2007,
-          "imdbId": "tt0448134",
-          "tmdbId": "movie/1272"
         },
         {
           "rank": 11,
@@ -834,19 +825,19 @@
           "rank": 13,
           "type": "movie",
           "typeRank": 3,
-          "title": "Tenzing",
+          "title": "Mayday",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Mayday",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 15,
@@ -888,19 +879,19 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "The Family Plan 2",
-          "year": 2025,
-          "imdbId": "tt34276058",
-          "tmdbId": "movie/1363123"
+          "title": "The Last First: Winter K2",
+          "year": 2026,
+          "imdbId": "tt39150288",
+          "tmdbId": "movie/1596303"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "The Last First: Winter K2",
-          "year": 2026,
-          "imdbId": "tt39150288",
-          "tmdbId": "movie/1596303"
+          "title": "The Family Plan 2",
+          "year": 2025,
+          "imdbId": "tt34276058",
+          "tmdbId": "movie/1363123"
         }
       ]
     }
