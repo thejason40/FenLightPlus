@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-07T14:01:38+00:00",
+  "generatedAt": "2026-11-08T14:17:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -526,7 +526,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -711,7 +711,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -769,21 +769,21 @@
         },
         {
           "rank": 7,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Where's Wanda?",
-          "year": 2024,
-          "imdbId": "tt29011445",
-          "tmdbId": "tv/234310"
-        },
-        {
-          "rank": 8,
           "type": "movie",
           "typeRank": 1,
           "title": "Sunshine",
           "year": 2007,
           "imdbId": "tt0448134",
           "tmdbId": "movie/1272"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Where's Wanda?",
+          "year": 2024,
+          "imdbId": "tt29011445",
+          "tmdbId": "tv/234310"
         },
         {
           "rank": 9,
@@ -870,28 +870,28 @@
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
+          "title": "The Family Plan 2",
+          "year": 2025,
+          "imdbId": "tt34276058",
+          "tmdbId": "movie/1363123"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
           "title": "Ready Player One",
           "year": 2018,
           "imdbId": "tt1677720",
           "tmdbId": "movie/333339"
         },
         {
-          "rank": 19,
+          "rank": 20,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 10,
           "title": "The Last First: Winter K2",
           "year": 2026,
           "imdbId": "tt39150288",
           "tmdbId": "movie/1596303"
-        },
-        {
-          "rank": 20,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "The Family Plan 2",
-          "year": 2025,
-          "imdbId": "tt34276058",
-          "tmdbId": "movie/1363123"
         }
       ]
     }

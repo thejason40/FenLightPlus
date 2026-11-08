@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-07T14:01:38+00:00",
+  "generatedAt": "2026-11-08T14:17:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -156,7 +156,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -314,7 +314,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -490,7 +490,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -557,21 +557,21 @@
         },
         {
           "rank": 8,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Matchbox the Movie",
-          "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
-        },
-        {
-          "rank": 9,
           "type": "series",
           "typeRank": 7,
           "title": "Monarch: Legacy of Monsters",
           "year": 2023,
           "imdbId": "tt17220216",
           "tmdbId": "tv/202411"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "Matchbox the Movie",
+          "year": 2026,
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 10,
@@ -595,28 +595,28 @@
           "rank": 12,
           "type": "series",
           "typeRank": 9,
+          "title": "Awkwafina: The Unlikely Cook",
+          "year": 2026,
+          "imdbId": "tt38992068",
+          "tmdbId": "tv/306179"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 10,
           "title": "Lucky",
           "year": 2026,
           "imdbId": "tt34866681",
           "tmdbId": "tv/278624"
         },
         {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Severance",
-          "year": 2022,
-          "imdbId": "tt11280740",
-          "tmdbId": "tv/95396"
-        },
-        {
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "The Gorge",
-          "year": 2025,
-          "imdbId": "tt13654226",
-          "tmdbId": "movie/950396"
+          "title": "Mayday",
+          "year": 2026,
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 15,
@@ -631,10 +631,10 @@
           "rank": 16,
           "type": "movie",
           "typeRank": 6,
-          "title": "Mayday",
-          "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "title": "The Gorge",
+          "year": 2025,
+          "imdbId": "tt13654226",
+          "tmdbId": "movie/950396"
         },
         {
           "rank": 17,

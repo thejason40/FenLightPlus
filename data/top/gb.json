@@ -1,13 +1,13 @@
 {
   "country": "gb",
-  "generatedAt": "2026-11-07T14:01:38+00:00",
+  "generatedAt": "2026-11-08T14:17:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -693,7 +693,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -751,17 +751,17 @@
         },
         {
           "rank": 7,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Knife Edge: Chasing Michelin Stars",
-          "year": 2025,
-          "imdbId": "tt36935784",
-          "tmdbId": "tv/291361"
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Tenzing",
+          "year": 2026,
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 8,
           "type": "series",
-          "typeRank": 8,
+          "typeRank": 7,
           "title": "Widow's Bay",
           "year": 2026,
           "imdbId": "tt33332385",
@@ -770,20 +770,20 @@
         {
           "rank": 9,
           "type": "series",
+          "typeRank": 8,
+          "title": "Knife Edge: Chasing Michelin Stars",
+          "year": 2025,
+          "imdbId": "tt36935784",
+          "tmdbId": "tv/291361"
+        },
+        {
+          "rank": 10,
+          "type": "series",
           "typeRank": 9,
           "title": "Brothers",
           "year": 2026,
           "imdbId": "tt6773088",
           "tmdbId": "tv/250203"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Tenzing",
-          "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
         },
         {
           "rank": 11,
@@ -816,19 +816,19 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "F1",
-          "year": 2025,
-          "imdbId": "tt16311594",
-          "tmdbId": "movie/911430"
+          "title": "Inception",
+          "year": 2010,
+          "imdbId": "tt1375666",
+          "tmdbId": "movie/27205"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Inception",
-          "year": 2010,
-          "imdbId": "tt1375666",
-          "tmdbId": "movie/27205"
+          "title": "F1",
+          "year": 2025,
+          "imdbId": "tt16311594",
+          "tmdbId": "movie/911430"
         },
         {
           "rank": 16,

@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-07T14:01:38+00:00",
+  "generatedAt": "2026-11-08T14:17:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -165,7 +165,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +341,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -499,7 +499,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -684,7 +684,7 @@
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -941,7 +941,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -1064,19 +1064,19 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Matchbox the Movie",
-          "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
+          "title": "It's the Great Pumpkin, Charlie Brown",
+          "year": 1966,
+          "imdbId": "tt0060550",
+          "tmdbId": "movie/13353"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "It's the Great Pumpkin, Charlie Brown",
-          "year": 1966,
-          "imdbId": "tt0060550",
-          "tmdbId": "movie/13353"
+          "title": "Matchbox the Movie",
+          "year": 2026,
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 16,

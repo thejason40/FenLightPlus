@@ -1,13 +1,13 @@
 {
   "country": "au",
-  "generatedAt": "2026-11-07T14:01:38+00:00",
+  "generatedAt": "2026-11-08T14:17:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -526,7 +526,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -711,25 +711,25 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-07T14:01:38+00:00",
+      "fetchedAt": "2026-11-08T14:17:05+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
+          "title": "Stick",
+          "year": 2025,
+          "imdbId": "tt31710249",
+          "tmdbId": "tv/248830"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Stick",
-          "year": 2025,
-          "imdbId": "tt31710249",
-          "tmdbId": "tv/248830"
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
         },
         {
           "rank": 3,
