@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-08T14:17:05+00:00",
+  "generatedAt": "2026-11-09T17:28:26+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -508,7 +508,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -693,16 +693,16 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Traitors",
-          "year": 2023,
-          "imdbId": "tt15557874",
-          "tmdbId": "tv/215943"
+          "title": "Saturday Night Live",
+          "year": 1975,
+          "imdbId": "tt0072562",
+          "tmdbId": "tv/1667"
         },
         {
           "rank": 2,
@@ -717,28 +717,28 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Grey's Anatomy",
-          "year": 2005,
-          "imdbId": "tt0413573",
-          "tmdbId": "tv/1416"
+          "title": "The Traitors",
+          "year": 2023,
+          "imdbId": "tt15557874",
+          "tmdbId": "tv/215943"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
         },
         {
           "rank": 5,
           "type": "series",
           "typeRank": 5,
-          "title": "RuPaul's Drag Race UK",
-          "year": 2019,
-          "imdbId": "tt9780442",
-          "tmdbId": "tv/92611"
+          "title": "WAR",
+          "year": 2026,
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 6,
@@ -753,37 +753,37 @@
           "rank": 7,
           "type": "series",
           "typeRank": 7,
-          "title": "Hell's Kitchen",
+          "title": "Grey's Anatomy",
           "year": 2005,
-          "imdbId": "tt0437005",
-          "tmdbId": "tv/2370"
+          "imdbId": "tt0413573",
+          "tmdbId": "tv/1416"
         },
         {
           "rank": 8,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "The Hunger Games",
+          "year": 2012,
+          "imdbId": "tt1392170",
+          "tmdbId": "movie/70160"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "The Hunger Games: Catching Fire",
+          "year": 2013,
+          "imdbId": "tt1951264",
+          "tmdbId": "movie/101299"
+        },
+        {
+          "rank": 10,
           "type": "series",
           "typeRank": 8,
           "title": "Georgie & Mandy's First Marriage",
           "year": 2024,
           "imdbId": "tt31589662",
           "tmdbId": "tv/243875"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 9,
-          "title": "The Amazing Race",
-          "year": 2001,
-          "imdbId": "tt0285335",
-          "tmdbId": "tv/30957"
-        },
-        {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 10,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
         }
       ]
     }

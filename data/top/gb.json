@@ -1,13 +1,13 @@
 {
   "country": "gb",
-  "generatedAt": "2026-11-08T14:17:05+00:00",
+  "generatedAt": "2026-11-09T17:28:26+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -174,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
@@ -693,7 +693,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-08T14:17:05+00:00",
+      "fetchedAt": "2026-11-09T17:28:26+00:00",
       "items": [
         {
           "rank": 1,
