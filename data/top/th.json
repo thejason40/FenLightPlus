@@ -1,34 +1,16 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-09T17:28:26+00:00",
+  "generatedAt": "2026-11-10T15:35:43+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-09T17:28:26+00:00",
+      "fetchedAt": "2026-11-10T15:35:43+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Overacting",
-          "year": 2026,
-          "imdbId": "tt39750664",
-          "tmdbId": "movie/1630420"
-        },
-        {
-          "rank": 2,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Collision Course",
-          "year": 2026,
-          "imdbId": "tt38793125",
-          "tmdbId": "movie/1571955"
-        },
-        {
-          "rank": 3,
           "type": "series",
           "typeRank": 1,
           "title": "Dead-End Job",
@@ -37,13 +19,31 @@
           "tmdbId": "tv/289517"
         },
         {
-          "rank": 4,
+          "rank": 2,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Overacting",
+          "year": 2026,
+          "imdbId": "tt39750664",
+          "tmdbId": "movie/1630420"
+        },
+        {
+          "rank": 3,
           "type": "series",
           "typeRank": 2,
           "title": "Where the Mask Ends",
           "year": 2026,
           "imdbId": "tt42576855",
           "tmdbId": "tv/300146"
+        },
+        {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "One Year to Live, Buy a Man",
+          "year": 2026,
+          "imdbId": "tt39400541",
+          "tmdbId": "movie/1654940"
         },
         {
           "rank": 5,
@@ -56,87 +56,51 @@
         },
         {
           "rank": 6,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Lupin",
-          "year": 2021,
-          "imdbId": "tt2531336",
-          "tmdbId": "tv/96677"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Take Charge of My Heart",
-          "year": 2026,
-          "imdbId": "tt37737331",
-          "tmdbId": "tv/289423"
-        },
-        {
-          "rank": 8,
           "type": "movie",
           "typeRank": 3,
-          "title": "Nakee 2",
-          "year": 2018,
-          "imdbId": "tt9169974",
-          "tmdbId": "movie/554792"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Pursuit of Jade",
-          "year": 2026,
-          "imdbId": "tt35316225",
-          "tmdbId": "tv/279388"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "One Year to Live, Buy a Man",
-          "year": 2026,
-          "imdbId": "tt39400541",
-          "tmdbId": "movie/1654940"
-        },
-        {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Borderlands",
           "year": 2024,
           "imdbId": "tt4978420",
           "tmdbId": "movie/365177"
         },
         {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
+          "rank": 7,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "The Silent Hour",
+          "year": 2024,
+          "imdbId": "tt22874848",
+          "tmdbId": "movie/1047373"
         },
         {
-          "rank": 13,
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Pantai Norasingh",
+          "year": 2015,
+          "imdbId": "tt6448036",
+          "tmdbId": "movie/400825"
+        },
+        {
+          "rank": 9,
           "type": "movie",
           "typeRank": 6,
+          "title": "Collision Course",
+          "year": 2026,
+          "imdbId": "tt38793125",
+          "tmdbId": "movie/1571955"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Mr. Hurt",
           "year": 2017,
           "imdbId": "tt6138706",
           "tmdbId": "movie/466023"
         },
         {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Final Destination Bloodlines",
-          "year": 2025,
-          "imdbId": "tt9619824",
-          "tmdbId": "movie/574475"
-        },
-        {
-          "rank": 15,
+          "rank": 11,
           "type": "movie",
           "typeRank": 8,
           "title": "H2-Oh!",
@@ -145,30 +109,66 @@
           "tmdbId": "movie/126809"
         },
         {
-          "rank": 16,
+          "rank": 12,
           "type": "movie",
           "typeRank": 9,
-          "title": "Wonder Woman 1984",
-          "year": 2020,
-          "imdbId": "tt7126948",
-          "tmdbId": "movie/464052"
+          "title": "Broken Sword Hero",
+          "year": 2017,
+          "imdbId": "tt6538906",
+          "tmdbId": "movie/464766"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Reclaim",
+          "year": 2025,
+          "imdbId": "tt35007079",
+          "tmdbId": "tv/285658"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Lupin",
+          "year": 2021,
+          "imdbId": "tt2531336",
+          "tmdbId": "tv/96677"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 6,
+          "title": "100 Days of Deception",
+          "year": 2026,
+          "imdbId": "tt39201866",
+          "tmdbId": "tv/293607"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Take Charge of My Heart",
+          "year": 2026,
+          "imdbId": "tt37737331",
+          "tmdbId": "tv/289423"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Final Destination Bloodlines",
+          "year": 2025,
+          "imdbId": "tt9619824",
+          "tmdbId": "movie/574475"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-09T17:28:26+00:00",
+      "fetchedAt": "2026-11-10T15:35:43+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Undercover: Caught on Tape",
-          "year": 2024,
-          "imdbId": "tt17524192",
-          "tmdbId": "tv/243357"
-        },
-        {
-          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "The Housemaid",
@@ -177,16 +177,16 @@
           "tmdbId": "movie/1368166"
         },
         {
-          "rank": 3,
+          "rank": 2,
           "type": "series",
-          "typeRank": 2,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
+          "typeRank": 1,
+          "title": "Undercover: Caught on Tape",
+          "year": 2024,
+          "imdbId": "tt17524192",
+          "tmdbId": "tv/243357"
         },
         {
-          "rank": 4,
+          "rank": 3,
           "type": "movie",
           "typeRank": 2,
           "title": "Apocalypse Z: New World",
@@ -195,67 +195,76 @@
           "tmdbId": "movie/1507696"
         },
         {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
+        },
+        {
           "rank": 5,
           "type": "movie",
           "typeRank": 3,
-          "title": "Harry Potter and the Philosopher's Stone",
-          "year": 2001,
-          "imdbId": "tt0241527",
-          "tmdbId": "movie/671"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 3,
-          "title": "A Love Other Than Yours",
-          "year": 2026,
-          "imdbId": "tt43736405",
-          "tmdbId": "tv/314939"
-        },
-        {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Sakamoto Days",
-          "year": 2026,
-          "imdbId": "tt38488719",
-          "tmdbId": "movie/1548708"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Terminal List: Dark Wolf",
-          "year": 2025,
-          "imdbId": "tt26576161",
-          "tmdbId": "tv/219760"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Backrooms",
           "year": 2026,
           "imdbId": "tt26657236",
           "tmdbId": "movie/1083381"
         },
         {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Harry Potter and the Philosopher's Stone",
+          "year": 2001,
+          "imdbId": "tt0241527",
+          "tmdbId": "movie/671"
+        },
+        {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Terminal List: Dark Wolf",
+          "year": 2025,
+          "imdbId": "tt26576161",
+          "tmdbId": "tv/219760"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Sakamoto Days",
+          "year": 2026,
+          "imdbId": "tt38488719",
+          "tmdbId": "movie/1548708"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 4,
+          "title": "A Love Other Than Yours",
+          "year": 2026,
+          "imdbId": "tt43736405",
+          "tmdbId": "tv/314939"
+        },
+        {
           "rank": 10,
           "type": "movie",
           "typeRank": 6,
-          "title": "In the Grey",
-          "year": 2026,
-          "imdbId": "tt27681354",
-          "tmdbId": "movie/1122573"
+          "title": "Harry Potter and the Chamber of Secrets",
+          "year": 2002,
+          "imdbId": "tt0295297",
+          "tmdbId": "movie/672"
         },
         {
           "rank": 11,
           "type": "movie",
           "typeRank": 7,
-          "title": "Harry Potter and the Chamber of Secrets",
-          "year": 2002,
-          "imdbId": "tt0295297",
-          "tmdbId": "movie/672"
+          "title": "In the Grey",
+          "year": 2026,
+          "imdbId": "tt27681354",
+          "tmdbId": "movie/1122573"
         },
         {
           "rank": 12,
@@ -270,10 +279,10 @@
           "rank": 13,
           "type": "movie",
           "typeRank": 8,
-          "title": "Apocalypse Z: The Beginning of the End",
-          "year": 2024,
-          "imdbId": "tt27599851",
-          "tmdbId": "movie/1118031"
+          "title": "Harry Potter and the Prisoner of Azkaban",
+          "year": 2004,
+          "imdbId": "tt0304141",
+          "tmdbId": "movie/673"
         },
         {
           "rank": 14,
@@ -288,10 +297,10 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 9,
-          "title": "Harry Potter and the Prisoner of Azkaban",
-          "year": 2004,
-          "imdbId": "tt0304141",
-          "tmdbId": "movie/673"
+          "title": "Harry Potter and the Goblet of Fire",
+          "year": 2005,
+          "imdbId": "tt0330373",
+          "tmdbId": "movie/674"
         },
         {
           "rank": 16,
@@ -306,15 +315,15 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 10,
-          "title": "Harry Potter and the Goblet of Fire",
-          "year": 2005,
-          "imdbId": "tt0330373",
-          "tmdbId": "movie/674"
+          "title": "Apocalypse Z: The Beginning of the End",
+          "year": 2024,
+          "imdbId": "tt27599851",
+          "tmdbId": "movie/1118031"
         }
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-09T17:28:26+00:00",
+      "fetchedAt": "2026-11-10T15:35:43+00:00",
       "items": [
         {
           "rank": 1,
@@ -490,7 +499,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-09T17:28:26+00:00",
+      "fetchedAt": "2026-11-10T15:35:43+00:00",
       "items": [
         {
           "rank": 1,
