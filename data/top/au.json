@@ -1,34 +1,16 @@
 {
   "country": "au",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Black Doves",
-          "year": 2024,
-          "imdbId": "tt27995113",
-          "tmdbId": "tv/225385"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 3,
           "type": "movie",
           "typeRank": 1,
           "title": "The Super Mario Galaxy Movie",
@@ -37,7 +19,7 @@
           "tmdbId": "movie/1226863"
         },
         {
-          "rank": 4,
+          "rank": 2,
           "type": "movie",
           "typeRank": 2,
           "title": "It Ends with Us",
@@ -46,16 +28,7 @@
           "tmdbId": "movie/1079091"
         },
         {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Will Trent",
-          "year": 2023,
-          "imdbId": "tt17543592",
-          "tmdbId": "tv/208569"
-        },
-        {
-          "rank": 6,
+          "rank": 3,
           "type": "movie",
           "typeRank": 3,
           "title": "The Son of No One",
@@ -64,52 +37,34 @@
           "tmdbId": "movie/74536"
         },
         {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The One About Matthew Perry",
-          "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Power",
-          "year": 2014,
-          "imdbId": "tt3281796",
-          "tmdbId": "tv/54650"
-        },
-        {
-          "rank": 9,
+          "rank": 4,
           "type": "movie",
           "typeRank": 4,
-          "title": "All the Pretty Horses",
-          "year": 2000,
-          "imdbId": "tt0149624",
-          "tmdbId": "movie/21355"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Me Before You",
           "year": 2016,
           "imdbId": "tt2674426",
           "tmdbId": "movie/296096"
         },
         {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 6,
-          "title": "North of North",
-          "year": 2025,
-          "imdbId": "tt27370649",
-          "tmdbId": "tv/249023"
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "All the Pretty Horses",
+          "year": 2000,
+          "imdbId": "tt0149624",
+          "tmdbId": "movie/21355"
         },
         {
-          "rank": 12,
+          "rank": 6,
+          "type": "series",
+          "typeRank": 1,
+          "title": "Black Doves",
+          "year": 2024,
+          "imdbId": "tt27995113",
+          "tmdbId": "tv/225385"
+        },
+        {
+          "rank": 7,
           "type": "movie",
           "typeRank": 6,
           "title": "A Dog's Perfect Christmas",
@@ -118,58 +73,103 @@
           "tmdbId": "movie/1570488"
         },
         {
-          "rank": 13,
+          "rank": 8,
           "type": "movie",
           "typeRank": 7,
-          "title": "Heist",
-          "year": 2001,
-          "imdbId": "tt0252503",
-          "tmdbId": "movie/11088"
-        },
-        {
-          "rank": 14,
-          "type": "movie",
-          "typeRank": 8,
           "title": "Christmas at the Palace",
           "year": 2018,
           "imdbId": "tt9033632",
           "tmdbId": "movie/550023"
         },
         {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 7,
-          "title": "The Diplomat",
-          "year": 2023,
-          "imdbId": "tt17491088",
-          "tmdbId": "tv/203857"
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Heist",
+          "year": 2001,
+          "imdbId": "tt0252503",
+          "tmdbId": "movie/11088"
         },
         {
-          "rank": 16,
+          "rank": 10,
           "type": "movie",
           "typeRank": 9,
-          "title": "You, Me & Tuscany",
-          "year": 2026,
-          "imdbId": "tt36352591",
-          "tmdbId": "movie/1455079"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 10,
           "title": "Christmas in Love",
           "year": 2018,
           "imdbId": "tt9033712",
           "tmdbId": "movie/550020"
         },
         {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Raw",
+          "year": 1993,
+          "imdbId": "tt0185103",
+          "tmdbId": "tv/4656"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "You, Me & Tuscany",
+          "year": 2026,
+          "imdbId": "tt36352591",
+          "tmdbId": "movie/1455079"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Nobody Wants This",
+          "year": 2024,
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Will Trent",
+          "year": 2023,
+          "imdbId": "tt17543592",
+          "tmdbId": "tv/208569"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Power",
+          "year": 2014,
+          "imdbId": "tt3281796",
+          "tmdbId": "tv/54650"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The One About Matthew Perry",
+          "year": 2026,
+          "imdbId": "tt44941753",
+          "tmdbId": "tv/333533"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 7,
+          "title": "North of North",
+          "year": 2025,
+          "imdbId": "tt27370649",
+          "tmdbId": "tv/249023"
+        },
+        {
           "rank": 18,
           "type": "series",
           "typeRank": 8,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
+          "title": "The Diplomat",
+          "year": 2023,
+          "imdbId": "tt17491088",
+          "tmdbId": "tv/203857"
         },
         {
           "rank": 19,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -350,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -526,7 +526,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -711,7 +711,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,

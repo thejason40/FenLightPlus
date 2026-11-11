@@ -1,34 +1,16 @@
 {
   "country": "gb",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Black Doves",
-          "year": 2024,
-          "imdbId": "tt27995113",
-          "tmdbId": "tv/225385"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "The One About Matthew Perry",
-          "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
-        },
-        {
-          "rank": 3,
           "type": "movie",
           "typeRank": 1,
           "title": "In the Heart of the Sea",
@@ -37,7 +19,7 @@
           "tmdbId": "movie/205775"
         },
         {
-          "rank": 4,
+          "rank": 2,
           "type": "movie",
           "typeRank": 2,
           "title": "A Dog's Perfect Christmas",
@@ -46,7 +28,7 @@
           "tmdbId": "movie/1570488"
         },
         {
-          "rank": 5,
+          "rank": 3,
           "type": "movie",
           "typeRank": 3,
           "title": "Sing 2",
@@ -55,7 +37,7 @@
           "tmdbId": "movie/438695"
         },
         {
-          "rank": 6,
+          "rank": 4,
           "type": "movie",
           "typeRank": 4,
           "title": "Interstellar",
@@ -64,7 +46,16 @@
           "tmdbId": "movie/157336"
         },
         {
-          "rank": 7,
+          "rank": 5,
+          "type": "series",
+          "typeRank": 1,
+          "title": "Black Doves",
+          "year": 2024,
+          "imdbId": "tt27995113",
+          "tmdbId": "tv/225385"
+        },
+        {
+          "rank": 6,
           "type": "movie",
           "typeRank": 5,
           "title": "Christmas at the Palace",
@@ -73,16 +64,7 @@
           "tmdbId": "movie/550023"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 9,
+          "rank": 7,
           "type": "movie",
           "typeRank": 6,
           "title": "Heist",
@@ -91,18 +73,36 @@
           "tmdbId": "movie/11088"
         },
         {
-          "rank": 10,
+          "rank": 8,
           "type": "movie",
           "typeRank": 7,
+          "title": "How the Grinch Stole Christmas",
+          "year": 2000,
+          "imdbId": "tt0170016",
+          "tmdbId": "movie/8871"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 8,
           "title": "Sing",
           "year": 2016,
           "imdbId": "tt3470600",
           "tmdbId": "movie/335797"
         },
         {
+          "rank": 10,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Raw",
+          "year": 1993,
+          "imdbId": "tt0185103",
+          "tmdbId": "tv/4656"
+        },
+        {
           "rank": 11,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 9,
           "title": "Nosferatu",
           "year": 2024,
           "imdbId": "tt5040012",
@@ -110,21 +110,21 @@
         },
         {
           "rank": 12,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Pelican Brief",
-          "year": 1993,
-          "imdbId": "tt0107798",
-          "tmdbId": "movie/9944"
+          "type": "series",
+          "typeRank": 3,
+          "title": "The One About Matthew Perry",
+          "year": 2026,
+          "imdbId": "tt44941753",
+          "tmdbId": "tv/333533"
         },
         {
           "rank": 13,
           "type": "series",
           "typeRank": 4,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
+          "title": "Nobody Wants This",
+          "year": 2024,
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
         },
         {
           "rank": 14,
@@ -157,6 +157,15 @@
           "rank": 17,
           "type": "series",
           "typeRank": 8,
+          "title": "The Gentlemen",
+          "year": 2024,
+          "imdbId": "tt13210838",
+          "tmdbId": "tv/236235"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 9,
           "title": "Lupin",
           "year": 2021,
           "imdbId": "tt2531336",
@@ -165,7 +174,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -341,7 +350,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -508,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -684,7 +693,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,

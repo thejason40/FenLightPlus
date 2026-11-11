@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -38,24 +38,6 @@
         },
         {
           "rank": 4,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "The Day After Tomorrow",
-          "year": 2004,
-          "imdbId": "tt0319262",
-          "tmdbId": "movie/435"
-        },
-        {
-          "rank": 5,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "Kidnapped in Her Own Home: The Martha Carelli Story",
-          "year": 2026,
-          "imdbId": "tt39182249",
-          "tmdbId": "movie/1665152"
-        },
-        {
-          "rank": 6,
           "type": "series",
           "typeRank": 2,
           "title": "Love Is Blind",
@@ -64,61 +46,25 @@
           "tmdbId": "tv/99353"
         },
         {
-          "rank": 7,
+          "rank": 5,
           "type": "movie",
-          "typeRank": 5,
-          "title": "The Croods",
-          "year": 2013,
-          "imdbId": "tt0481499",
-          "tmdbId": "movie/49519"
+          "typeRank": 3,
+          "title": "The Day After Tomorrow",
+          "year": 2004,
+          "imdbId": "tt0319262",
+          "tmdbId": "movie/435"
         },
         {
-          "rank": 8,
+          "rank": 6,
           "type": "movie",
-          "typeRank": 6,
-          "title": "King Arthur: Legend of the Sword",
-          "year": 2017,
-          "imdbId": "tt1972591",
-          "tmdbId": "movie/274857"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "The Mummy",
-          "year": 2017,
-          "imdbId": "tt2345759",
-          "tmdbId": "movie/282035"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "Carolina Caroline",
+          "typeRank": 4,
+          "title": "Kidnapped in Her Own Home: The Martha Carelli Story",
           "year": 2026,
-          "imdbId": "tt33365126",
-          "tmdbId": "movie/1329471"
+          "imdbId": "tt39182249",
+          "tmdbId": "movie/1665152"
         },
         {
-          "rank": 11,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "10,000 BC",
-          "year": 2008,
-          "imdbId": "tt0443649",
-          "tmdbId": "movie/7840"
-        },
-        {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Cry Macho",
-          "year": 2021,
-          "imdbId": "tt1924245",
-          "tmdbId": "movie/749274"
-        },
-        {
-          "rank": 13,
+          "rank": 7,
           "type": "series",
           "typeRank": 3,
           "title": "Black Doves",
@@ -127,7 +73,7 @@
           "tmdbId": "tv/225385"
         },
         {
-          "rank": 14,
+          "rank": 8,
           "type": "series",
           "typeRank": 4,
           "title": "FROM",
@@ -136,7 +82,34 @@
           "tmdbId": "tv/124364"
         },
         {
-          "rank": 15,
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "The Croods",
+          "year": 2013,
+          "imdbId": "tt0481499",
+          "tmdbId": "movie/49519"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "King Arthur: Legend of the Sword",
+          "year": 2017,
+          "imdbId": "tt1972591",
+          "tmdbId": "movie/274857"
+        },
+        {
+          "rank": 11,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "The Mummy",
+          "year": 2017,
+          "imdbId": "tt2345759",
+          "tmdbId": "movie/282035"
+        },
+        {
+          "rank": 12,
           "type": "series",
           "typeRank": 5,
           "title": "Nobody Wants This",
@@ -145,7 +118,7 @@
           "tmdbId": "tv/250923"
         },
         {
-          "rank": 16,
+          "rank": 13,
           "type": "series",
           "typeRank": 6,
           "title": "Power",
@@ -154,13 +127,40 @@
           "tmdbId": "tv/54650"
         },
         {
-          "rank": 17,
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Carolina Caroline",
+          "year": 2026,
+          "imdbId": "tt33365126",
+          "tmdbId": "movie/1329471"
+        },
+        {
+          "rank": 15,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "10,000 BC",
+          "year": 2008,
+          "imdbId": "tt0443649",
+          "tmdbId": "movie/7840"
+        },
+        {
+          "rank": 16,
           "type": "series",
           "typeRank": 7,
           "title": "The One About Matthew Perry",
           "year": 2026,
           "imdbId": "tt44941753",
           "tmdbId": "tv/333533"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Cry Macho",
+          "year": 2021,
+          "imdbId": "tt1924245",
+          "tmdbId": "movie/749274"
         },
         {
           "rank": 18,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -702,7 +702,7 @@
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -959,7 +959,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,

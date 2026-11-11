@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -20,15 +20,6 @@
         },
         {
           "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Anaesthesia",
-          "year": 2026,
-          "imdbId": "tt38681812",
-          "tmdbId": "tv/312006"
-        },
-        {
-          "rank": 3,
           "type": "movie",
           "typeRank": 1,
           "title": "How to Make a Killing",
@@ -37,16 +28,16 @@
           "tmdbId": "movie/467905"
         },
         {
-          "rank": 4,
+          "rank": 3,
           "type": "movie",
           "typeRank": 2,
-          "title": "Collision Course",
+          "title": "A Dog's Perfect Christmas",
           "year": 2026,
-          "imdbId": "tt38793125",
-          "tmdbId": "movie/1571955"
+          "imdbId": "tt38515310",
+          "tmdbId": "movie/1570488"
         },
         {
-          "rank": 5,
+          "rank": 4,
           "type": "movie",
           "typeRank": 3,
           "title": "Sinners",
@@ -55,13 +46,22 @@
           "tmdbId": "movie/1233413"
         },
         {
-          "rank": 6,
+          "rank": 5,
           "type": "movie",
           "typeRank": 4,
-          "title": "A Dog's Perfect Christmas",
+          "title": "Collision Course",
           "year": 2026,
-          "imdbId": "tt38515310",
-          "tmdbId": "movie/1570488"
+          "imdbId": "tt38793125",
+          "tmdbId": "movie/1571955"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Anaesthesia",
+          "year": 2026,
+          "imdbId": "tt38681812",
+          "tmdbId": "tv/312006"
         },
         {
           "rank": 7,
@@ -74,17 +74,17 @@
         },
         {
           "rank": 8,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "My Best Friend",
-          "year": 2026,
-          "imdbId": "tt37458193",
-          "tmdbId": "movie/1257147"
+          "type": "series",
+          "typeRank": 4,
+          "title": "Power",
+          "year": 2014,
+          "imdbId": "tt3281796",
+          "tmdbId": "tv/54650"
         },
         {
           "rank": 9,
           "type": "movie",
-          "typeRank": 6,
+          "typeRank": 5,
           "title": "Christmas at the Palace",
           "year": 2018,
           "imdbId": "tt9033632",
@@ -93,7 +93,7 @@
         {
           "rank": 10,
           "type": "series",
-          "typeRank": 4,
+          "typeRank": 5,
           "title": "A Couple of Lies",
           "year": 2026,
           "imdbId": "tt42767924",
@@ -101,24 +101,6 @@
         },
         {
           "rank": 11,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "All the Pretty Horses",
-          "year": 2000,
-          "imdbId": "tt0149624",
-          "tmdbId": "movie/21355"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Power",
-          "year": 2014,
-          "imdbId": "tt3281796",
-          "tmdbId": "tv/54650"
-        },
-        {
-          "rank": 13,
           "type": "series",
           "typeRank": 6,
           "title": "Will Trent",
@@ -127,9 +109,27 @@
           "tmdbId": "tv/208569"
         },
         {
-          "rank": 14,
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "The Good Lawyer",
+          "year": 2026,
+          "imdbId": "tt39453578",
+          "tmdbId": "movie/1616419"
+        },
+        {
+          "rank": 13,
           "type": "series",
           "typeRank": 7,
+          "title": "Ghosts",
+          "year": 2021,
+          "imdbId": "tt11379026",
+          "tmdbId": "tv/126027"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 8,
           "title": "Dead-End Job",
           "year": 2026,
           "imdbId": "tt36458668",
@@ -137,39 +137,39 @@
         },
         {
           "rank": 15,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Perfect Storm",
-          "year": 2000,
-          "imdbId": "tt0177971",
-          "tmdbId": "movie/2133"
-        },
-        {
-          "rank": 16,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Ghosts",
-          "year": 2021,
-          "imdbId": "tt11379026",
-          "tmdbId": "tv/126027"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "Sing 2",
-          "year": 2021,
-          "imdbId": "tt6467266",
-          "tmdbId": "movie/438695"
-        },
-        {
-          "rank": 18,
           "type": "series",
           "typeRank": 9,
           "title": "Nobody Wants This",
           "year": 2024,
           "imdbId": "tt26933824",
           "tmdbId": "tv/250923"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "My Best Friend",
+          "year": 2026,
+          "imdbId": "tt37458193",
+          "tmdbId": "movie/1257147"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "All the Pretty Horses",
+          "year": 2000,
+          "imdbId": "tt0149624",
+          "tmdbId": "movie/21355"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The Perfect Storm",
+          "year": 2000,
+          "imdbId": "tt0177971",
+          "tmdbId": "movie/2133"
         }
       ]
     },

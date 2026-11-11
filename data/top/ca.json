@@ -1,61 +1,16 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Raw",
-          "year": 1993,
-          "imdbId": "tt0185103",
-          "tmdbId": "tv/4656"
-        },
-        {
-          "rank": 2,
-          "type": "series",
-          "typeRank": 2,
-          "title": "Love Is Blind",
-          "year": 2020,
-          "imdbId": "tt11704040",
-          "tmdbId": "tv/99353"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
-          "title": "Black Doves",
-          "year": 2024,
-          "imdbId": "tt27995113",
-          "tmdbId": "tv/225385"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "North of North",
-          "year": 2025,
-          "imdbId": "tt27370649",
-          "tmdbId": "tv/249023"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 6,
           "type": "movie",
           "typeRank": 1,
           "title": "A Dog's Perfect Christmas",
@@ -64,7 +19,7 @@
           "tmdbId": "movie/1570488"
         },
         {
-          "rank": 7,
+          "rank": 2,
           "type": "movie",
           "typeRank": 2,
           "title": "Carolina Caroline",
@@ -73,25 +28,7 @@
           "tmdbId": "movie/1329471"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The One About Matthew Perry",
-          "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Below",
-          "year": 2026,
-          "imdbId": "tt35934755",
-          "tmdbId": "tv/285322"
-        },
-        {
-          "rank": 10,
+          "rank": 3,
           "type": "movie",
           "typeRank": 3,
           "title": "Heist",
@@ -100,25 +37,7 @@
           "tmdbId": "movie/11088"
         },
         {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Anaesthesia",
-          "year": 2026,
-          "imdbId": "tt38681812",
-          "tmdbId": "tv/312006"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 9,
-          "title": "Lupin",
-          "year": 2021,
-          "imdbId": "tt2531336",
-          "tmdbId": "tv/96677"
-        },
-        {
-          "rank": 13,
+          "rank": 4,
           "type": "movie",
           "typeRank": 4,
           "title": "The Holiday",
@@ -127,7 +46,16 @@
           "tmdbId": "movie/1581"
         },
         {
-          "rank": 14,
+          "rank": 5,
+          "type": "series",
+          "typeRank": 1,
+          "title": "Raw",
+          "year": 1993,
+          "imdbId": "tt0185103",
+          "tmdbId": "tv/4656"
+        },
+        {
+          "rank": 6,
           "type": "movie",
           "typeRank": 5,
           "title": "The Hobbit: An Unexpected Journey",
@@ -136,7 +64,7 @@
           "tmdbId": "movie/49051"
         },
         {
-          "rank": 15,
+          "rank": 7,
           "type": "movie",
           "typeRank": 6,
           "title": "The Good Lawyer",
@@ -145,7 +73,7 @@
           "tmdbId": "movie/1616419"
         },
         {
-          "rank": 16,
+          "rank": 8,
           "type": "movie",
           "typeRank": 7,
           "title": "The Hobbit: The Desolation of Smaug",
@@ -154,7 +82,7 @@
           "tmdbId": "movie/57158"
         },
         {
-          "rank": 17,
+          "rank": 9,
           "type": "movie",
           "typeRank": 8,
           "title": "Final Destination Bloodlines",
@@ -163,7 +91,7 @@
           "tmdbId": "movie/574475"
         },
         {
-          "rank": 18,
+          "rank": 10,
           "type": "movie",
           "typeRank": 9,
           "title": "All the Pretty Horses",
@@ -172,18 +100,90 @@
           "tmdbId": "movie/21355"
         },
         {
-          "rank": 19,
+          "rank": 11,
           "type": "movie",
           "typeRank": 10,
           "title": "The Hobbit: The Battle of the Five Armies",
           "year": 2014,
           "imdbId": "tt2310332",
           "tmdbId": "movie/122917"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Love Is Blind",
+          "year": 2020,
+          "imdbId": "tt11704040",
+          "tmdbId": "tv/99353"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Black Doves",
+          "year": 2024,
+          "imdbId": "tt27995113",
+          "tmdbId": "tv/225385"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 4,
+          "title": "North of North",
+          "year": 2025,
+          "imdbId": "tt27370649",
+          "tmdbId": "tv/249023"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Nobody Wants This",
+          "year": 2024,
+          "imdbId": "tt26933824",
+          "tmdbId": "tv/250923"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 6,
+          "title": "The One About Matthew Perry",
+          "year": 2026,
+          "imdbId": "tt44941753",
+          "tmdbId": "tv/333533"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Below",
+          "year": 2026,
+          "imdbId": "tt35934755",
+          "tmdbId": "tv/285322"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Anaesthesia",
+          "year": 2026,
+          "imdbId": "tt38681812",
+          "tmdbId": "tv/312006"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Lupin",
+          "year": 2021,
+          "imdbId": "tt2531336",
+          "tmdbId": "tv/96677"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -702,7 +702,7 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,

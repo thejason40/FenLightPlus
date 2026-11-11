@@ -1,25 +1,16 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-10T15:35:43+00:00",
+  "generatedAt": "2026-11-11T15:11:05+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
-          "type": "series",
-          "typeRank": 1,
-          "title": "Dead-End Job",
-          "year": 2026,
-          "imdbId": "tt36458668",
-          "tmdbId": "tv/289517"
-        },
-        {
-          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "Overacting",
@@ -28,16 +19,16 @@
           "tmdbId": "movie/1630420"
         },
         {
-          "rank": 3,
+          "rank": 2,
           "type": "series",
-          "typeRank": 2,
-          "title": "Where the Mask Ends",
+          "typeRank": 1,
+          "title": "Dead-End Job",
           "year": 2026,
-          "imdbId": "tt42576855",
-          "tmdbId": "tv/300146"
+          "imdbId": "tt36458668",
+          "tmdbId": "tv/289517"
         },
         {
-          "rank": 4,
+          "rank": 3,
           "type": "movie",
           "typeRank": 2,
           "title": "One Year to Live, Buy a Man",
@@ -46,18 +37,27 @@
           "tmdbId": "movie/1654940"
         },
         {
+          "rank": 4,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "The Silent Hour",
+          "year": 2024,
+          "imdbId": "tt22874848",
+          "tmdbId": "movie/1047373"
+        },
+        {
           "rank": 5,
           "type": "series",
-          "typeRank": 3,
-          "title": "Doctor X: Mafia in White",
+          "typeRank": 2,
+          "title": "Where the Mask Ends",
           "year": 2026,
-          "imdbId": "tt39328047",
-          "tmdbId": "tv/293610"
+          "imdbId": "tt42576855",
+          "tmdbId": "tv/300146"
         },
         {
           "rank": 6,
           "type": "movie",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "Borderlands",
           "year": 2024,
           "imdbId": "tt4978420",
@@ -66,15 +66,6 @@
         {
           "rank": 7,
           "type": "movie",
-          "typeRank": 4,
-          "title": "The Silent Hour",
-          "year": 2024,
-          "imdbId": "tt22874848",
-          "tmdbId": "movie/1047373"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
           "typeRank": 5,
           "title": "Pantai Norasingh",
           "year": 2015,
@@ -82,9 +73,18 @@
           "tmdbId": "movie/400825"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "movie",
           "typeRank": 6,
+          "title": "Mr. Hurt",
+          "year": 2017,
+          "imdbId": "tt6138706",
+          "tmdbId": "movie/466023"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Collision Course",
           "year": 2026,
           "imdbId": "tt38793125",
@@ -93,20 +93,20 @@
         {
           "rank": 10,
           "type": "movie",
-          "typeRank": 7,
-          "title": "Mr. Hurt",
-          "year": 2017,
-          "imdbId": "tt6138706",
-          "tmdbId": "movie/466023"
-        },
-        {
-          "rank": 11,
-          "type": "movie",
           "typeRank": 8,
           "title": "H2-Oh!",
           "year": 2010,
           "imdbId": "tt2344840",
           "tmdbId": "movie/126809"
+        },
+        {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 3,
+          "title": "Doctor X: Mafia in White",
+          "year": 2026,
+          "imdbId": "tt39328047",
+          "tmdbId": "tv/293610"
         },
         {
           "rank": 12,
@@ -119,6 +119,15 @@
         },
         {
           "rank": 13,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Me Before You",
+          "year": 2016,
+          "imdbId": "tt2674426",
+          "tmdbId": "movie/296096"
+        },
+        {
+          "rank": 14,
           "type": "series",
           "typeRank": 4,
           "title": "Reclaim",
@@ -127,7 +136,7 @@
           "tmdbId": "tv/285658"
         },
         {
-          "rank": 14,
+          "rank": 15,
           "type": "series",
           "typeRank": 5,
           "title": "Lupin",
@@ -136,18 +145,9 @@
           "tmdbId": "tv/96677"
         },
         {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 6,
-          "title": "100 Days of Deception",
-          "year": 2026,
-          "imdbId": "tt39201866",
-          "tmdbId": "tv/293607"
-        },
-        {
           "rank": 16,
           "type": "series",
-          "typeRank": 7,
+          "typeRank": 6,
           "title": "Take Charge of My Heart",
           "year": 2026,
           "imdbId": "tt37737331",
@@ -155,17 +155,17 @@
         },
         {
           "rank": 17,
-          "type": "movie",
-          "typeRank": 10,
-          "title": "Final Destination Bloodlines",
-          "year": 2025,
-          "imdbId": "tt9619824",
-          "tmdbId": "movie/574475"
+          "type": "series",
+          "typeRank": 7,
+          "title": "Pursuit of Jade",
+          "year": 2026,
+          "imdbId": "tt35316225",
+          "tmdbId": "tv/279388"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -323,7 +323,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
@@ -499,7 +499,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-10T15:35:43+00:00",
+      "fetchedAt": "2026-11-11T15:11:05+00:00",
       "items": [
         {
           "rank": 1,
