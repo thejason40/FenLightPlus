@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-15T14:44:49+00:00",
+  "generatedAt": "2026-11-16T16:59:39+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -368,7 +368,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -544,7 +544,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -566,21 +566,21 @@
         },
         {
           "rank": 3,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
+        },
+        {
+          "rank": 4,
           "type": "movie",
           "typeRank": 2,
           "title": "The Drama",
           "year": 2026,
           "imdbId": "tt33071426",
           "tmdbId": "movie/1325734"
-        },
-        {
-          "rank": 4,
-          "type": "series",
-          "typeRank": 2,
-          "title": "YAGA",
-          "year": 2026,
-          "imdbId": "tt39980704",
-          "tmdbId": "tv/314360"
         },
         {
           "rank": 5,
@@ -595,19 +595,19 @@
           "rank": 6,
           "type": "series",
           "typeRank": 3,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
+          "title": "YAGA",
+          "year": 2026,
+          "imdbId": "tt39980704",
+          "tmdbId": "tv/314360"
         },
         {
           "rank": 7,
           "type": "movie",
           "typeRank": 4,
-          "title": "A Few Good Men",
-          "year": 1992,
-          "imdbId": "tt0104257",
-          "tmdbId": "movie/881"
+          "title": "Dead of Winter",
+          "year": 2025,
+          "imdbId": "tt7574556",
+          "tmdbId": "movie/1235746"
         },
         {
           "rank": 8,
@@ -622,10 +622,10 @@
           "rank": 9,
           "type": "movie",
           "typeRank": 5,
-          "title": "Dead of Winter",
-          "year": 2025,
-          "imdbId": "tt7574556",
-          "tmdbId": "movie/1235746"
+          "title": "A Few Good Men",
+          "year": 1992,
+          "imdbId": "tt0104257",
+          "tmdbId": "movie/881"
         },
         {
           "rank": 10,
@@ -640,10 +640,10 @@
           "rank": 11,
           "type": "movie",
           "typeRank": 6,
-          "title": "Escape from New York",
-          "year": 1981,
-          "imdbId": "tt0082340",
-          "tmdbId": "movie/1103"
+          "title": "Love Actually",
+          "year": 2003,
+          "imdbId": "tt0314331",
+          "tmdbId": "movie/508"
         },
         {
           "rank": 12,
@@ -658,10 +658,10 @@
           "rank": 13,
           "type": "movie",
           "typeRank": 7,
-          "title": "Love Actually",
-          "year": 2003,
-          "imdbId": "tt0314331",
-          "tmdbId": "movie/508"
+          "title": "Talk to Me",
+          "year": 2023,
+          "imdbId": "tt10638522",
+          "tmdbId": "movie/1008042"
         },
         {
           "rank": 14,
@@ -676,28 +676,28 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Bad Moms",
-          "year": 2016,
-          "imdbId": "tt4651520",
-          "tmdbId": "movie/376659"
+          "title": "Escape from New York",
+          "year": 1981,
+          "imdbId": "tt0082340",
+          "tmdbId": "movie/1103"
         },
         {
           "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "Melania Rea",
+          "title": "GET JIRO",
           "year": 2026,
-          "imdbId": "tt45114341",
-          "tmdbId": "tv/339697"
+          "imdbId": "tt33406999",
+          "tmdbId": "tv/231801"
         },
         {
           "rank": 17,
           "type": "movie",
           "typeRank": 9,
-          "title": "Jerry Maguire",
-          "year": 1996,
-          "imdbId": "tt0116695",
-          "tmdbId": "movie/9390"
+          "title": "Return to Silent Hill",
+          "year": 2026,
+          "imdbId": "tt22868010",
+          "tmdbId": "movie/680493"
         },
         {
           "rank": 18,
@@ -712,15 +712,15 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Return to Silent Hill",
-          "year": 2026,
-          "imdbId": "tt22868010",
-          "tmdbId": "movie/680493"
+          "title": "Bad Moms",
+          "year": 2016,
+          "imdbId": "tt4651520",
+          "tmdbId": "movie/376659"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -735,19 +735,19 @@
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
+          "title": "Ted Lasso",
+          "year": 2020,
+          "imdbId": "tt10986410",
+          "tmdbId": "tv/97546"
         },
         {
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Ted Lasso",
-          "year": 2020,
-          "imdbId": "tt10986410",
-          "tmdbId": "tv/97546"
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
         },
         {
           "rank": 4,
@@ -805,15 +805,6 @@
         },
         {
           "rank": 10,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Being Heumann",
-          "year": 2026,
-          "imdbId": "tt15095848",
-          "tmdbId": "movie/1050981"
-        },
-        {
-          "rank": 11,
           "type": "series",
           "typeRank": 9,
           "title": "For All Mankind",
@@ -822,13 +813,22 @@
           "tmdbId": "tv/87917"
         },
         {
-          "rank": 12,
+          "rank": 11,
           "type": "series",
           "typeRank": 10,
           "title": "Shrinking",
           "year": 2023,
           "imdbId": "tt15677150",
           "tmdbId": "tv/136311"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "Being Heumann",
+          "year": 2026,
+          "imdbId": "tt15095848",
+          "tmdbId": "movie/1050981"
         },
         {
           "rank": 13,
@@ -843,19 +843,19 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Matchbox the Movie",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Tenzing",
+          "title": "Matchbox the Movie",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 16,
@@ -870,19 +870,19 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "Snoopy Presents: 12 Days of Snoopy",
-          "year": 2026,
-          "imdbId": "tt47791876",
-          "tmdbId": "movie/1780407"
+          "title": "The Gorge",
+          "year": 2025,
+          "imdbId": "tt13654226",
+          "tmdbId": "movie/950396"
         },
         {
           "rank": 18,
           "type": "movie",
           "typeRank": 8,
-          "title": "The Gorge",
-          "year": 2025,
-          "imdbId": "tt13654226",
-          "tmdbId": "movie/950396"
+          "title": "Snoopy Presents: 12 Days of Snoopy",
+          "year": 2026,
+          "imdbId": "tt47791876",
+          "tmdbId": "movie/1780407"
         },
         {
           "rank": 19,

@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-15T14:44:49+00:00",
+  "generatedAt": "2026-11-16T16:59:39+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -192,7 +192,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -471,15 +471,6 @@
         },
         {
           "rank": 13,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Se7en",
-          "year": 1995,
-          "imdbId": "tt0114369",
-          "tmdbId": "movie/807"
-        },
-        {
-          "rank": 14,
           "type": "series",
           "typeRank": 7,
           "title": "Harry Potter: Wizards of Baking",
@@ -488,13 +479,22 @@
           "tmdbId": "tv/254514"
         },
         {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Se7en",
+          "year": 1995,
+          "imdbId": "tt0114369",
+          "tmdbId": "movie/807"
+        },
+        {
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Rampage",
-          "year": 2018,
-          "imdbId": "tt2231461",
-          "tmdbId": "movie/427641"
+          "title": "Godzilla",
+          "year": 2014,
+          "imdbId": "tt0831387",
+          "tmdbId": "movie/124905"
         },
         {
           "rank": 16,
@@ -509,33 +509,33 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 9,
-          "title": "Crawlspace",
-          "year": 2022,
-          "imdbId": "tt14394620",
-          "tmdbId": "movie/879538"
+          "title": "Wardriver",
+          "year": 2026,
+          "imdbId": "tt5095076",
+          "tmdbId": "movie/938150"
         },
         {
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "Women's Hell",
+          "title": "Silent Night",
           "year": 2026,
-          "imdbId": "tt40444881",
-          "tmdbId": "tv/286702"
+          "imdbId": "tt38961437",
+          "tmdbId": "tv/305245"
         },
         {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Wardriver",
-          "year": 2026,
-          "imdbId": "tt5095076",
-          "tmdbId": "movie/938150"
+          "title": "Rampage",
+          "year": 2018,
+          "imdbId": "tt2231461",
+          "tmdbId": "movie/427641"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -559,28 +559,28 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
+          "title": "Slow Horses",
+          "year": 2022,
+          "imdbId": "tt5875444",
+          "tmdbId": "tv/95480"
+        },
+        {
+          "rank": 4,
+          "type": "series",
+          "typeRank": 4,
           "title": "Stick",
           "year": 2025,
           "imdbId": "tt31710249",
           "tmdbId": "tv/248830"
         },
         {
-          "rank": 4,
+          "rank": 5,
           "type": "movie",
           "typeRank": 1,
           "title": "F1",
           "year": 2025,
           "imdbId": "tt16311594",
           "tmdbId": "movie/911430"
-        },
-        {
-          "rank": 5,
-          "type": "series",
-          "typeRank": 4,
-          "title": "Slow Horses",
-          "year": 2022,
-          "imdbId": "tt5875444",
-          "tmdbId": "tv/95480"
         },
         {
           "rank": 6,
@@ -595,40 +595,31 @@
           "rank": 7,
           "type": "series",
           "typeRank": 5,
-          "title": "Monarch: Legacy of Monsters",
-          "year": 2023,
-          "imdbId": "tt17220216",
-          "tmdbId": "tv/202411"
-        },
-        {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 6,
           "title": "Ted Lasso",
           "year": 2020,
           "imdbId": "tt10986410",
           "tmdbId": "tv/97546"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "series",
-          "typeRank": 7,
+          "typeRank": 6,
           "title": "Silo",
           "year": 2023,
           "imdbId": "tt14688458",
           "tmdbId": "tv/125988"
         },
         {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
+          "rank": 9,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Monarch: Legacy of Monsters",
+          "year": 2023,
+          "imdbId": "tt17220216",
+          "tmdbId": "tv/202411"
         },
         {
-          "rank": 11,
+          "rank": 10,
           "type": "series",
           "typeRank": 8,
           "title": "Dark Matter",
@@ -637,7 +628,7 @@
           "tmdbId": "tv/196322"
         },
         {
-          "rank": 12,
+          "rank": 11,
           "type": "series",
           "typeRank": 9,
           "title": "Severance",
@@ -646,13 +637,22 @@
           "tmdbId": "tv/95396"
         },
         {
-          "rank": 13,
+          "rank": 12,
           "type": "series",
           "typeRank": 10,
-          "title": "Foundation",
-          "year": 2021,
-          "imdbId": "tt0804484",
-          "tmdbId": "tv/93740"
+          "title": "Widow's Bay",
+          "year": 2026,
+          "imdbId": "tt33332385",
+          "tmdbId": "tv/270476"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "A Charlie Brown Thanksgiving",
+          "year": 1973,
+          "imdbId": "tt0068359",
+          "tmdbId": "movie/13479"
         },
         {
           "rank": 14,
@@ -667,28 +667,28 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Luck",
-          "year": 2022,
-          "imdbId": "tt7214954",
-          "tmdbId": "movie/585511"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 6,
           "title": "Being Heumann",
           "year": 2026,
           "imdbId": "tt15095848",
           "tmdbId": "movie/1050981"
         },
         {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Luck",
+          "year": 2022,
+          "imdbId": "tt7214954",
+          "tmdbId": "movie/585511"
+        },
+        {
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "Mayday",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 18,
@@ -703,19 +703,19 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "Tenzing",
+          "title": "Mayday",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Fountain of Youth",
-          "year": 2025,
-          "imdbId": "tt27075958",
-          "tmdbId": "movie/1098006"
+          "title": "Greyhound",
+          "year": 2020,
+          "imdbId": "tt6048922",
+          "tmdbId": "movie/516486"
         }
       ]
     }

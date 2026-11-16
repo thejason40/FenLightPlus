@@ -1,13 +1,13 @@
 {
   "country": "au",
-  "generatedAt": "2026-11-15T14:44:49+00:00",
+  "generatedAt": "2026-11-16T16:59:39+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +535,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -613,10 +613,10 @@
           "rank": 9,
           "type": "series",
           "typeRank": 5,
-          "title": "Sister Wives",
-          "year": 2010,
-          "imdbId": "tt1721666",
-          "tmdbId": "tv/34045"
+          "title": "Youth",
+          "year": 2026,
+          "imdbId": "tt35949226",
+          "tmdbId": "tv/285418"
         },
         {
           "rank": 10,
@@ -631,10 +631,10 @@
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "Gold Rush",
-          "year": 2010,
-          "imdbId": "tt1800864",
-          "tmdbId": "tv/34634"
+          "title": "Toxic",
+          "year": 2025,
+          "imdbId": "tt26735683",
+          "tmdbId": "tv/289196"
         },
         {
           "rank": 12,
@@ -649,10 +649,10 @@
           "rank": 13,
           "type": "series",
           "typeRank": 7,
-          "title": "Youth",
-          "year": 2026,
-          "imdbId": "tt35949226",
-          "tmdbId": "tv/285418"
+          "title": "Sister Wives",
+          "year": 2010,
+          "imdbId": "tt1721666",
+          "tmdbId": "tv/34045"
         },
         {
           "rank": 14,
@@ -667,60 +667,60 @@
           "rank": 15,
           "type": "series",
           "typeRank": 8,
+          "title": "Gold Rush",
+          "year": 2010,
+          "imdbId": "tt1800864",
+          "tmdbId": "tv/34634"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Dead of Winter",
+          "year": 2025,
+          "imdbId": "tt7574556",
+          "tmdbId": "movie/1235746"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
           "title": "1000-lb Sisters",
           "year": 2020,
           "imdbId": "tt11617414",
           "tmdbId": "tv/98410"
         },
         {
-          "rank": 16,
+          "rank": 18,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 9,
           "title": "V for Vendetta",
           "year": 2006,
           "imdbId": "tt0434409",
           "tmdbId": "movie/752"
         },
         {
-          "rank": 17,
+          "rank": 19,
           "type": "series",
-          "typeRank": 9,
+          "typeRank": 10,
           "title": "GET JIRO",
           "year": 2026,
           "imdbId": "tt33406999",
           "tmdbId": "tv/231801"
         },
         {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "The Housemaid",
-          "year": 2025,
-          "imdbId": "tt27543632",
-          "tmdbId": "movie/1368166"
-        },
-        {
-          "rank": 19,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Signs of a Psychopath",
-          "year": 2020,
-          "imdbId": "tt13530014",
-          "tmdbId": "tv/108464"
-        },
-        {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Godzilla: King of the Monsters",
-          "year": 2019,
-          "imdbId": "tt3741700",
-          "tmdbId": "movie/373571"
+          "title": "Austin Powers: The Spy Who Shagged Me",
+          "year": 1999,
+          "imdbId": "tt0145660",
+          "tmdbId": "movie/817"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-15T14:44:49+00:00",
+      "fetchedAt": "2026-11-16T16:59:39+00:00",
       "items": [
         {
           "rank": 1,
@@ -787,21 +787,21 @@
         },
         {
           "rank": 8,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Being Heumann",
-          "year": 2026,
-          "imdbId": "tt15095848",
-          "tmdbId": "movie/1050981"
-        },
-        {
-          "rank": 9,
           "type": "series",
           "typeRank": 8,
           "title": "Shrinking",
           "year": 2023,
           "imdbId": "tt15677150",
           "tmdbId": "tv/136311"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Being Heumann",
+          "year": 2026,
+          "imdbId": "tt15095848",
+          "tmdbId": "movie/1050981"
         },
         {
           "rank": 10,
@@ -852,19 +852,19 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "The Instigators",
-          "year": 2024,
-          "imdbId": "tt24169886",
-          "tmdbId": "movie/1059064"
+          "title": "F1",
+          "year": 2025,
+          "imdbId": "tt16311594",
+          "tmdbId": "movie/911430"
         },
         {
           "rank": 16,
           "type": "movie",
           "typeRank": 6,
-          "title": "F1",
-          "year": 2025,
-          "imdbId": "tt16311594",
-          "tmdbId": "movie/911430"
+          "title": "The Instigators",
+          "year": 2024,
+          "imdbId": "tt24169886",
+          "tmdbId": "movie/1059064"
         },
         {
           "rank": 17,
@@ -888,19 +888,19 @@
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "The Dink",
-          "year": 2026,
-          "imdbId": "tt33499146",
-          "tmdbId": "movie/1361774"
+          "title": "The Martian",
+          "year": 2015,
+          "imdbId": "tt3659388",
+          "tmdbId": "movie/286217"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "The Martian",
-          "year": 2015,
-          "imdbId": "tt3659388",
-          "tmdbId": "movie/286217"
+          "title": "The Dink",
+          "year": 2026,
+          "imdbId": "tt33499146",
+          "tmdbId": "movie/1361774"
         }
       ]
     }
