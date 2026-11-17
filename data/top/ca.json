@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-16T16:59:39+00:00",
+  "generatedAt": "2026-11-17T16:52:50+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -702,19 +702,37 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
+        },
+        {
+          "rank": 2,
+          "type": "series",
+          "typeRank": 2,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
+        },
+        {
+          "rank": 3,
+          "type": "series",
+          "typeRank": 3,
           "title": "Saturday Night Live",
           "year": 1975,
           "imdbId": "tt0072562",
           "tmdbId": "tv/1667"
         },
         {
-          "rank": 2,
+          "rank": 4,
           "type": "movie",
           "typeRank": 1,
           "title": "The End of Oak Street",
@@ -723,49 +741,31 @@
           "tmdbId": "movie/1101383"
         },
         {
-          "rank": 3,
+          "rank": 5,
           "type": "series",
-          "typeRank": 2,
+          "typeRank": 4,
           "title": "YAGA",
           "year": 2026,
           "imdbId": "tt39980704",
           "tmdbId": "tv/314360"
         },
         {
-          "rank": 4,
+          "rank": 6,
           "type": "series",
-          "typeRank": 3,
+          "typeRank": 5,
           "title": "The Traitors",
           "year": 2023,
           "imdbId": "tt15557874",
           "tmdbId": "tv/215943"
         },
         {
-          "rank": 5,
+          "rank": 7,
           "type": "series",
-          "typeRank": 4,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
-        },
-        {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 5,
+          "typeRank": 6,
           "title": "The Good Daughter",
           "year": 2026,
           "imdbId": "tt31842126",
           "tmdbId": "tv/249565"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 6,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
         },
         {
           "rank": 8,
@@ -789,10 +789,10 @@
           "rank": 10,
           "type": "series",
           "typeRank": 7,
-          "title": "Grey's Anatomy",
-          "year": 2005,
-          "imdbId": "tt0413573",
-          "tmdbId": "tv/1416"
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
         }
       ]
     }

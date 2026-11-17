@@ -1,13 +1,13 @@
 {
   "country": "us",
-  "generatedAt": "2026-11-16T16:59:39+00:00",
+  "generatedAt": "2026-11-17T16:52:50+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -192,7 +192,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -377,7 +377,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +535,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -559,10 +559,10 @@
           "rank": 3,
           "type": "series",
           "typeRank": 2,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 4,
@@ -577,10 +577,10 @@
           "rank": 5,
           "type": "series",
           "typeRank": 3,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "90 Day Fiancé: The Other Way",
+          "year": 2019,
+          "imdbId": "tt9170070",
+          "tmdbId": "tv/90046"
         },
         {
           "rank": 6,
@@ -595,10 +595,10 @@
           "rank": 7,
           "type": "series",
           "typeRank": 4,
-          "title": "Real Time with Bill Maher",
-          "year": 2003,
-          "imdbId": "tt0350448",
-          "tmdbId": "tv/4419"
+          "title": "WAR",
+          "year": 2026,
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
         },
         {
           "rank": 8,
@@ -611,6 +611,15 @@
         },
         {
           "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Sister Wives",
+          "year": 2010,
+          "imdbId": "tt1721666",
+          "tmdbId": "tv/34045"
+        },
+        {
+          "rank": 10,
           "type": "movie",
           "typeRank": 5,
           "title": "National Lampoon's Christmas Vacation",
@@ -619,16 +628,16 @@
           "tmdbId": "movie/5825"
         },
         {
-          "rank": 10,
+          "rank": 11,
           "type": "series",
-          "typeRank": 5,
-          "title": "Holiday Baking Championship",
-          "year": 2014,
-          "imdbId": "tt4226226",
-          "tmdbId": "tv/68598"
+          "typeRank": 6,
+          "title": "Tournament of Champions: All-Star Christmas",
+          "year": 2025,
+          "imdbId": "tt38866811",
+          "tmdbId": "tv/305016"
         },
         {
-          "rank": 11,
+          "rank": 12,
           "type": "movie",
           "typeRank": 6,
           "title": "Christmas with the Kranks",
@@ -637,81 +646,81 @@
           "tmdbId": "movie/13673"
         },
         {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Gold Rush",
-          "year": 2010,
-          "imdbId": "tt1800864",
-          "tmdbId": "tv/34634"
-        },
-        {
           "rank": 13,
-          "type": "movie",
+          "type": "series",
           "typeRank": 7,
-          "title": "The First Purge",
-          "year": 2018,
-          "imdbId": "tt6133466",
-          "tmdbId": "movie/442249"
+          "title": "Holiday Baking Championship",
+          "year": 2014,
+          "imdbId": "tt4226226",
+          "tmdbId": "tv/68598"
         },
         {
           "rank": 14,
-          "type": "series",
+          "type": "movie",
           "typeRank": 7,
-          "title": "Harry Potter: Wizards of Baking",
-          "year": 2024,
-          "imdbId": "tt32374361",
-          "tmdbId": "tv/254514"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 8,
-          "title": "The Death of Robin Hood",
-          "year": 2026,
-          "imdbId": "tt32273171",
-          "tmdbId": "movie/1284465"
-        },
-        {
-          "rank": 16,
-          "type": "series",
-          "typeRank": 8,
-          "title": "GET JIRO",
-          "year": 2026,
-          "imdbId": "tt33406999",
-          "tmdbId": "tv/231801"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 9,
           "title": "Madame Web",
           "year": 2024,
           "imdbId": "tt11057302",
           "tmdbId": "movie/634492"
         },
         {
-          "rank": 18,
+          "rank": 15,
           "type": "series",
-          "typeRank": 9,
-          "title": "1000-lb Sisters",
-          "year": 2020,
-          "imdbId": "tt11617414",
-          "tmdbId": "tv/98410"
+          "typeRank": 8,
+          "title": "Real Time with Bill Maher",
+          "year": 2003,
+          "imdbId": "tt0350448",
+          "tmdbId": "tv/4419"
         },
         {
-          "rank": 19,
+          "rank": 16,
           "type": "movie",
-          "typeRank": 10,
+          "typeRank": 8,
+          "title": "The First Purge",
+          "year": 2018,
+          "imdbId": "tt6133466",
+          "tmdbId": "movie/442249"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Crown of Deceit: Inside the Miss Universe Scandal",
+          "year": 2026,
+          "imdbId": "tt49815439",
+          "tmdbId": "tv/340085"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 9,
           "title": "Four Christmases",
           "year": 2008,
           "imdbId": "tt0369436",
           "tmdbId": "movie/12193"
+        },
+        {
+          "rank": 19,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Harry Potter: Wizards of Baking",
+          "year": 2024,
+          "imdbId": "tt32374361",
+          "tmdbId": "tv/254514"
+        },
+        {
+          "rank": 20,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Red Sparrow",
+          "year": 2018,
+          "imdbId": "tt2873282",
+          "tmdbId": "movie/401981"
         }
       ]
     },
     "hulu": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
@@ -742,21 +751,21 @@
         },
         {
           "rank": 4,
-          "type": "series",
-          "typeRank": 4,
-          "title": "9-1-1: Nashville",
-          "year": 2025,
-          "imdbId": "tt33550053",
-          "tmdbId": "tv/284838"
-        },
-        {
-          "rank": 5,
           "type": "movie",
           "typeRank": 1,
           "title": "The 12 Dates of Christmas",
           "year": 2026,
           "imdbId": "tt39219651",
           "tmdbId": "movie/1600653"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 4,
+          "title": "9-1-1: Nashville",
+          "year": 2025,
+          "imdbId": "tt33550053",
+          "tmdbId": "tv/284838"
         },
         {
           "rank": 6,
@@ -769,6 +778,15 @@
         },
         {
           "rank": 7,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
+        },
+        {
+          "rank": 8,
           "type": "movie",
           "typeRank": 2,
           "title": "Super Troopers 3",
@@ -777,61 +795,7 @@
           "tmdbId": "movie/675871"
         },
         {
-          "rank": 8,
-          "type": "series",
-          "typeRank": 6,
-          "title": "Hell's Kitchen",
-          "year": 2005,
-          "imdbId": "tt0437005",
-          "tmdbId": "tv/2370"
-        },
-        {
           "rank": 9,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Reasonable Doubt",
-          "year": 2022,
-          "imdbId": "tt11231226",
-          "tmdbId": "tv/205272"
-        },
-        {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Abbott Elementary",
-          "year": 2021,
-          "imdbId": "tt14218830",
-          "tmdbId": "tv/125935"
-        },
-        {
-          "rank": 11,
-          "type": "series",
-          "typeRank": 9,
-          "title": "All's Fair",
-          "year": 2025,
-          "imdbId": "tt30291387",
-          "tmdbId": "tv/258742"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 10,
-          "title": "Best Medicine",
-          "year": 2026,
-          "imdbId": "tt36885662",
-          "tmdbId": "tv/291084"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 11,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
-        },
-        {
-          "rank": 14,
           "type": "movie",
           "typeRank": 3,
           "title": "The Hunger Games",
@@ -840,25 +804,7 @@
           "tmdbId": "movie/70160"
         },
         {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 12,
-          "title": "Doc",
-          "year": 2025,
-          "imdbId": "tt26748321",
-          "tmdbId": "tv/255055"
-        },
-        {
-          "rank": 16,
-          "type": "series",
-          "typeRank": 13,
-          "title": "General Hospital",
-          "year": 1963,
-          "imdbId": "tt0056758",
-          "tmdbId": "tv/987"
-        },
-        {
-          "rank": 17,
+          "rank": 10,
           "type": "movie",
           "typeRank": 4,
           "title": "The Hunger Games: Catching Fire",
@@ -867,7 +813,79 @@
           "tmdbId": "movie/101299"
         },
         {
+          "rank": 11,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Abbott Elementary",
+          "year": 2021,
+          "imdbId": "tt14218830",
+          "tmdbId": "tv/125935"
+        },
+        {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 8,
+          "title": "All's Fair",
+          "year": 2025,
+          "imdbId": "tt30291387",
+          "tmdbId": "tv/258742"
+        },
+        {
+          "rank": 13,
+          "type": "series",
+          "typeRank": 9,
+          "title": "Reasonable Doubt",
+          "year": 2022,
+          "imdbId": "tt11231226",
+          "tmdbId": "tv/205272"
+        },
+        {
+          "rank": 14,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Best Medicine",
+          "year": 2026,
+          "imdbId": "tt36885662",
+          "tmdbId": "tv/291084"
+        },
+        {
+          "rank": 15,
+          "type": "series",
+          "typeRank": 11,
+          "title": "Hell's Kitchen",
+          "year": 2005,
+          "imdbId": "tt0437005",
+          "tmdbId": "tv/2370"
+        },
+        {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 12,
+          "title": "Doc",
+          "year": 2025,
+          "imdbId": "tt26748321",
+          "tmdbId": "tv/255055"
+        },
+        {
+          "rank": 17,
+          "type": "series",
+          "typeRank": 13,
+          "title": "Phony",
+          "year": 2026,
+          "imdbId": "tt21952924",
+          "tmdbId": "tv/275139"
+        },
+        {
           "rank": 18,
+          "type": "series",
+          "typeRank": 14,
+          "title": "Dancing with the Stars",
+          "year": 2005,
+          "imdbId": "tt0463398",
+          "tmdbId": "tv/1508"
+        },
+        {
+          "rank": 19,
           "type": "movie",
           "typeRank": 5,
           "title": "The Holiday",
@@ -876,7 +894,7 @@
           "tmdbId": "movie/1581"
         },
         {
-          "rank": 19,
+          "rank": 20,
           "type": "movie",
           "typeRank": 6,
           "title": "The Hunger Games: The Ballad of Songbirds & Snakes",
@@ -885,18 +903,9 @@
           "tmdbId": "movie/695721"
         },
         {
-          "rank": 20,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "A Bad Moms Christmas",
-          "year": 2017,
-          "imdbId": "tt6359956",
-          "tmdbId": "movie/431530"
-        },
-        {
           "rank": 21,
           "type": "movie",
-          "typeRank": 8,
+          "typeRank": 7,
           "title": "The Hunger Games: Mockingjay - Part 1",
           "year": 2014,
           "imdbId": "tt1951265",
@@ -905,23 +914,32 @@
         {
           "rank": 22,
           "type": "movie",
-          "typeRank": 9,
-          "title": "Why Him?",
-          "year": 2016,
-          "imdbId": "tt4501244",
-          "tmdbId": "movie/356305"
-        },
-        {
-          "rank": 23,
-          "type": "movie",
-          "typeRank": 10,
+          "typeRank": 8,
           "title": "The Hunger Games: Mockingjay - Part 2",
           "year": 2015,
           "imdbId": "tt1951266",
           "tmdbId": "movie/131634"
         },
         {
+          "rank": 23,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "A Bad Moms Christmas",
+          "year": 2017,
+          "imdbId": "tt6359956",
+          "tmdbId": "movie/431530"
+        },
+        {
           "rank": 24,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Why Him?",
+          "year": 2016,
+          "imdbId": "tt4501244",
+          "tmdbId": "movie/356305"
+        },
+        {
+          "rank": 25,
           "type": "movie",
           "typeRank": 11,
           "title": "Monsters University",
@@ -930,7 +948,7 @@
           "tmdbId": "movie/62211"
         },
         {
-          "rank": 25,
+          "rank": 26,
           "type": "movie",
           "typeRank": 12,
           "title": "Babygirl",
@@ -939,7 +957,7 @@
           "tmdbId": "movie/1097549"
         },
         {
-          "rank": 26,
+          "rank": 27,
           "type": "movie",
           "typeRank": 13,
           "title": "Jumanji: Welcome to the Jungle",
@@ -950,7 +968,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-16T16:59:39+00:00",
+      "fetchedAt": "2026-11-17T16:52:50+00:00",
       "items": [
         {
           "rank": 1,
