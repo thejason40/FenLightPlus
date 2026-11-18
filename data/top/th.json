@@ -1,13 +1,13 @@
 {
   "country": "th",
-  "generatedAt": "2026-11-17T16:52:50+00:00",
+  "generatedAt": "2026-11-18T16:26:53+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -192,7 +192,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -410,132 +410,132 @@
           "rank": 6,
           "type": "movie",
           "typeRank": 3,
-          "title": "Ghost in the Shell",
-          "year": 2017,
-          "imdbId": "tt1219827",
-          "tmdbId": "movie/315837"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 4,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
-        },
-        {
-          "rank": 8,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Super Mario Galaxy Movie",
-          "year": 2026,
-          "imdbId": "tt28650488",
-          "tmdbId": "movie/1226863"
-        },
-        {
-          "rank": 9,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
-          "year": 2026,
-          "imdbId": "tt43619474",
-          "tmdbId": "tv/319990"
-        },
-        {
-          "rank": 10,
-          "type": "movie",
-          "typeRank": 5,
           "title": "Crawl",
           "year": 2019,
           "imdbId": "tt8364368",
           "tmdbId": "movie/511987"
         },
         {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Line of Fire",
+          "year": 2026,
+          "imdbId": "tt39365612",
+          "tmdbId": "tv/321958"
+        },
+        {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Ghost in the Shell",
+          "year": 2017,
+          "imdbId": "tt1219827",
+          "tmdbId": "movie/315837"
+        },
+        {
+          "rank": 9,
+          "type": "series",
+          "typeRank": 5,
+          "title": "WAR",
+          "year": 2026,
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Lemony Snicket's A Series of Unfortunate Events",
+          "year": 2004,
+          "imdbId": "tt0339291",
+          "tmdbId": "movie/11774"
+        },
+        {
           "rank": 11,
           "type": "series",
           "typeRank": 6,
-          "title": "Cupertino",
+          "title": "Strange: Junji Ito's Tales for Sleepless Nights",
           "year": 2026,
-          "imdbId": "tt33270224",
-          "tmdbId": "tv/303630"
+          "imdbId": "tt43619474",
+          "tmdbId": "tv/319990"
         },
         {
           "rank": 12,
           "type": "movie",
           "typeRank": 6,
-          "title": "Pacific Rim: Uprising",
-          "year": 2018,
-          "imdbId": "tt2557478",
-          "tmdbId": "movie/268896"
+          "title": "The Super Mario Galaxy Movie",
+          "year": 2026,
+          "imdbId": "tt28650488",
+          "tmdbId": "movie/1226863"
         },
         {
           "rank": 13,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Harry Potter: Wizards of Baking",
-          "year": 2024,
-          "imdbId": "tt32374361",
-          "tmdbId": "tv/254514"
-        },
-        {
-          "rank": 14,
           "type": "movie",
           "typeRank": 7,
-          "title": "Godzilla",
-          "year": 2014,
-          "imdbId": "tt0831387",
-          "tmdbId": "movie/124905"
-        },
-        {
-          "rank": 15,
-          "type": "series",
-          "typeRank": 8,
-          "title": "Folklore",
-          "year": 2018,
-          "imdbId": "tt9397640",
-          "tmdbId": "tv/83090"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 8,
           "title": "Super 8",
           "year": 2011,
           "imdbId": "tt1650062",
           "tmdbId": "movie/37686"
         },
         {
-          "rank": 17,
+          "rank": 14,
+          "type": "series",
+          "typeRank": 7,
+          "title": "Cupertino",
+          "year": 2026,
+          "imdbId": "tt33270224",
+          "tmdbId": "tv/303630"
+        },
+        {
+          "rank": 15,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 8,
           "title": "Se7en",
           "year": 1995,
           "imdbId": "tt0114369",
           "tmdbId": "movie/807"
         },
         {
+          "rank": 16,
+          "type": "series",
+          "typeRank": 8,
+          "title": "Harry Potter: Wizards of Baking",
+          "year": 2024,
+          "imdbId": "tt32374361",
+          "tmdbId": "tv/254514"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Pacific Rim: Uprising",
+          "year": 2018,
+          "imdbId": "tt2557478",
+          "tmdbId": "movie/268896"
+        },
+        {
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "GIFT",
-          "year": 2026,
-          "imdbId": "tt42498501",
-          "tmdbId": "tv/314647"
+          "title": "Folklore",
+          "year": 2018,
+          "imdbId": "tt9397640",
+          "tmdbId": "tv/83090"
         },
         {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Nobody 2",
-          "year": 2025,
-          "imdbId": "tt28996126",
-          "tmdbId": "movie/1007734"
+          "title": "Dirty Angels",
+          "year": 2024,
+          "imdbId": "tt23872640",
+          "tmdbId": "movie/1043905"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -550,31 +550,22 @@
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
-        },
-        {
-          "rank": 3,
-          "type": "series",
-          "typeRank": 3,
           "title": "Slow Horses",
           "year": 2022,
           "imdbId": "tt5875444",
           "tmdbId": "tv/95480"
         },
         {
-          "rank": 4,
+          "rank": 3,
           "type": "series",
-          "typeRank": 4,
+          "typeRank": 3,
           "title": "Stick",
           "year": 2025,
           "imdbId": "tt31710249",
           "tmdbId": "tv/248830"
         },
         {
-          "rank": 5,
+          "rank": 4,
           "type": "movie",
           "typeRank": 1,
           "title": "F1",
@@ -583,25 +574,25 @@
           "tmdbId": "movie/911430"
         },
         {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
+        },
+        {
           "rank": 6,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Eternity",
-          "year": 2025,
-          "imdbId": "tt24950660",
-          "tmdbId": "movie/1259102"
+          "type": "series",
+          "typeRank": 5,
+          "title": "Monarch: Legacy of Monsters",
+          "year": 2023,
+          "imdbId": "tt17220216",
+          "tmdbId": "tv/202411"
         },
         {
           "rank": 7,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Ted Lasso",
-          "year": 2020,
-          "imdbId": "tt10986410",
-          "tmdbId": "tv/97546"
-        },
-        {
-          "rank": 8,
           "type": "series",
           "typeRank": 6,
           "title": "Silo",
@@ -610,13 +601,22 @@
           "tmdbId": "tv/125988"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "series",
           "typeRank": 7,
-          "title": "Monarch: Legacy of Monsters",
-          "year": 2023,
-          "imdbId": "tt17220216",
-          "tmdbId": "tv/202411"
+          "title": "Ted Lasso",
+          "year": 2020,
+          "imdbId": "tt10986410",
+          "tmdbId": "tv/97546"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 2,
+          "title": "Eternity",
+          "year": 2025,
+          "imdbId": "tt24950660",
+          "tmdbId": "movie/1259102"
         },
         {
           "rank": 10,
@@ -631,28 +631,28 @@
           "rank": 11,
           "type": "series",
           "typeRank": 9,
-          "title": "Severance",
-          "year": 2022,
-          "imdbId": "tt11280740",
-          "tmdbId": "tv/95396"
-        },
-        {
-          "rank": 12,
-          "type": "series",
-          "typeRank": 10,
           "title": "Widow's Bay",
           "year": 2026,
           "imdbId": "tt33332385",
           "tmdbId": "tv/270476"
         },
         {
+          "rank": 12,
+          "type": "series",
+          "typeRank": 10,
+          "title": "Severance",
+          "year": 2022,
+          "imdbId": "tt11280740",
+          "tmdbId": "tv/95396"
+        },
+        {
           "rank": 13,
           "type": "movie",
           "typeRank": 3,
-          "title": "A Charlie Brown Thanksgiving",
-          "year": 1973,
-          "imdbId": "tt0068359",
-          "tmdbId": "movie/13479"
+          "title": "Being Heumann",
+          "year": 2026,
+          "imdbId": "tt15095848",
+          "tmdbId": "movie/1050981"
         },
         {
           "rank": 14,
@@ -667,55 +667,55 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Being Heumann",
-          "year": 2026,
-          "imdbId": "tt15095848",
-          "tmdbId": "movie/1050981"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "Luck",
-          "year": 2022,
-          "imdbId": "tt7214954",
-          "tmdbId": "movie/585511"
-        },
-        {
-          "rank": 17,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Tenzing",
-          "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 8,
           "title": "The Gorge",
           "year": 2025,
           "imdbId": "tt13654226",
           "tmdbId": "movie/950396"
         },
         {
-          "rank": 19,
+          "rank": 16,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 6,
+          "title": "Greyhound",
+          "year": 2020,
+          "imdbId": "tt6048922",
+          "tmdbId": "movie/516486"
+        },
+        {
+          "rank": 17,
+          "type": "movie",
+          "typeRank": 7,
           "title": "Mayday",
           "year": 2026,
           "imdbId": "tt28014327",
           "tmdbId": "movie/1137844"
         },
         {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "Tenzing",
+          "year": 2026,
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "Luck",
+          "year": 2022,
+          "imdbId": "tt7214954",
+          "tmdbId": "movie/585511"
+        },
+        {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Greyhound",
-          "year": 2020,
-          "imdbId": "tt6048922",
-          "tmdbId": "movie/516486"
+          "title": "Fountain of Youth",
+          "year": 2025,
+          "imdbId": "tt27075958",
+          "tmdbId": "movie/1098006"
         }
       ]
     }

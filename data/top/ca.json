@@ -1,13 +1,13 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-17T16:52:50+00:00",
+  "generatedAt": "2026-11-18T16:26:53+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -359,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -517,7 +517,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -575,15 +575,6 @@
         },
         {
           "rank": 7,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Being Heumann",
-          "year": 2026,
-          "imdbId": "tt15095848",
-          "tmdbId": "movie/1050981"
-        },
-        {
-          "rank": 8,
           "type": "series",
           "typeRank": 7,
           "title": "Dark Matter",
@@ -592,13 +583,22 @@
           "tmdbId": "tv/196322"
         },
         {
-          "rank": 9,
+          "rank": 8,
           "type": "series",
           "typeRank": 8,
           "title": "Shrinking",
           "year": 2023,
           "imdbId": "tt15677150",
           "tmdbId": "tv/136311"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Being Heumann",
+          "year": 2026,
+          "imdbId": "tt15095848",
+          "tmdbId": "movie/1050981"
         },
         {
           "rank": 10,
@@ -622,19 +622,19 @@
           "rank": 12,
           "type": "movie",
           "typeRank": 2,
-          "title": "Tenzing",
+          "title": "Mayday",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28014327",
+          "tmdbId": "movie/1137844"
         },
         {
           "rank": 13,
           "type": "movie",
           "typeRank": 3,
-          "title": "Mayday",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28014327",
-          "tmdbId": "movie/1137844"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 14,
@@ -649,46 +649,46 @@
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Snoopy Presents: 12 Days of Snoopy",
-          "year": 2026,
-          "imdbId": "tt47791876",
-          "tmdbId": "movie/1780407"
-        },
-        {
-          "rank": 16,
-          "type": "movie",
-          "typeRank": 6,
           "title": "The Instigators",
           "year": 2024,
           "imdbId": "tt24169886",
           "tmdbId": "movie/1059064"
         },
         {
-          "rank": 17,
+          "rank": 16,
           "type": "movie",
-          "typeRank": 7,
-          "title": "A Charlie Brown Christmas",
-          "year": 1965,
-          "imdbId": "tt0059026",
-          "tmdbId": "movie/13187"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 8,
+          "typeRank": 6,
           "title": "F1",
           "year": 2025,
           "imdbId": "tt16311594",
           "tmdbId": "movie/911430"
         },
         {
-          "rank": 19,
+          "rank": 17,
           "type": "movie",
-          "typeRank": 9,
+          "typeRank": 7,
+          "title": "Snoopy Presents: 12 Days of Snoopy",
+          "year": 2026,
+          "imdbId": "tt47791876",
+          "tmdbId": "movie/1780407"
+        },
+        {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
           "title": "The Proposal",
           "year": 2009,
           "imdbId": "tt1041829",
           "tmdbId": "movie/18240"
+        },
+        {
+          "rank": 19,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "A Charlie Brown Christmas",
+          "year": 1965,
+          "imdbId": "tt0059026",
+          "tmdbId": "movie/13187"
         },
         {
           "rank": 20,
@@ -702,34 +702,34 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
+          "title": "The Traitors Canada",
+          "year": 2023,
+          "imdbId": "tt28251824",
+          "tmdbId": "tv/234613"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "The Voice",
+          "year": 2011,
+          "imdbId": "tt1839337",
+          "tmdbId": "tv/37678"
         },
         {
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Saturday Night Live",
-          "year": 1975,
-          "imdbId": "tt0072562",
-          "tmdbId": "tv/1667"
+          "title": "The Gilded Age",
+          "year": 2022,
+          "imdbId": "tt4406178",
+          "tmdbId": "tv/81723"
         },
         {
           "rank": 4,
@@ -744,31 +744,40 @@
           "rank": 5,
           "type": "series",
           "typeRank": 4,
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 5,
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
+        },
+        {
+          "rank": 7,
+          "type": "series",
+          "typeRank": 6,
+          "title": "Saturday Night Live",
+          "year": 1975,
+          "imdbId": "tt0072562",
+          "tmdbId": "tv/1667"
+        },
+        {
+          "rank": 8,
+          "type": "series",
+          "typeRank": 7,
           "title": "YAGA",
           "year": 2026,
           "imdbId": "tt39980704",
           "tmdbId": "tv/314360"
         },
         {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 5,
-          "title": "The Traitors",
-          "year": 2023,
-          "imdbId": "tt15557874",
-          "tmdbId": "tv/215943"
-        },
-        {
-          "rank": 7,
-          "type": "series",
-          "typeRank": 6,
-          "title": "The Good Daughter",
-          "year": 2026,
-          "imdbId": "tt31842126",
-          "tmdbId": "tv/249565"
-        },
-        {
-          "rank": 8,
+          "rank": 9,
           "type": "movie",
           "typeRank": 2,
           "title": "The Hunger Games",
@@ -777,22 +786,13 @@
           "tmdbId": "movie/70160"
         },
         {
-          "rank": 9,
+          "rank": 10,
           "type": "movie",
           "typeRank": 3,
           "title": "The Hunger Games: Catching Fire",
           "year": 2013,
           "imdbId": "tt1951264",
           "tmdbId": "movie/101299"
-        },
-        {
-          "rank": 10,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
         }
       ]
     }

@@ -1,13 +1,13 @@
 {
   "country": "de",
-  "generatedAt": "2026-11-17T16:52:50+00:00",
+  "generatedAt": "2026-11-18T16:26:53+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -183,7 +183,7 @@
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -368,7 +368,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -544,7 +544,7 @@
       ]
     },
     "hbo": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -584,21 +584,21 @@
         },
         {
           "rank": 5,
-          "type": "series",
-          "typeRank": 3,
-          "title": "The Good Daughter",
-          "year": 2026,
-          "imdbId": "tt31842126",
-          "tmdbId": "tv/249565"
-        },
-        {
-          "rank": 6,
           "type": "movie",
           "typeRank": 3,
           "title": "Talk to Me",
           "year": 2023,
           "imdbId": "tt10638522",
           "tmdbId": "movie/1008042"
+        },
+        {
+          "rank": 6,
+          "type": "series",
+          "typeRank": 3,
+          "title": "The Good Daughter",
+          "year": 2026,
+          "imdbId": "tt31842126",
+          "tmdbId": "tv/249565"
         },
         {
           "rank": 7,
@@ -622,10 +622,10 @@
           "rank": 9,
           "type": "movie",
           "typeRank": 5,
-          "title": "A Few Good Men",
-          "year": 1992,
-          "imdbId": "tt0104257",
-          "tmdbId": "movie/881"
+          "title": "Into the Wild",
+          "year": 2007,
+          "imdbId": "tt0758758",
+          "tmdbId": "movie/5915"
         },
         {
           "rank": 10,
@@ -640,19 +640,19 @@
           "rank": 11,
           "type": "movie",
           "typeRank": 6,
-          "title": "Dead of Winter",
-          "year": 2025,
-          "imdbId": "tt7574556",
-          "tmdbId": "movie/1235746"
+          "title": "A Few Good Men",
+          "year": 1992,
+          "imdbId": "tt0104257",
+          "tmdbId": "movie/881"
         },
         {
           "rank": 12,
           "type": "series",
           "typeRank": 6,
-          "title": "Last Week Tonight with John Oliver",
-          "year": 2014,
-          "imdbId": "tt3530232",
-          "tmdbId": "tv/60694"
+          "title": "Silent Night",
+          "year": 2026,
+          "imdbId": "tt38961437",
+          "tmdbId": "tv/305245"
         },
         {
           "rank": 13,
@@ -667,28 +667,28 @@
           "rank": 14,
           "type": "series",
           "typeRank": 7,
-          "title": "Silent Night",
-          "year": 2026,
-          "imdbId": "tt38961437",
-          "tmdbId": "tv/305245"
+          "title": "Last Week Tonight with John Oliver",
+          "year": 2014,
+          "imdbId": "tt3530232",
+          "tmdbId": "tv/60694"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 8,
-          "title": "Escape from New York",
-          "year": 1981,
-          "imdbId": "tt0082340",
-          "tmdbId": "movie/1103"
+          "title": "Day of the Dead",
+          "year": 1985,
+          "imdbId": "tt0088993",
+          "tmdbId": "movie/8408"
         },
         {
           "rank": 16,
           "type": "series",
           "typeRank": 8,
-          "title": "GET JIRO",
+          "title": "The Torment",
           "year": 2026,
-          "imdbId": "tt33406999",
-          "tmdbId": "tv/231801"
+          "imdbId": "tt47816221",
+          "tmdbId": "tv/279185"
         },
         {
           "rank": 17,
@@ -703,24 +703,24 @@
           "rank": 18,
           "type": "series",
           "typeRank": 9,
-          "title": "The Torment",
+          "title": "GET JIRO",
           "year": 2026,
-          "imdbId": "tt47816221",
-          "tmdbId": "tv/279185"
+          "imdbId": "tt33406999",
+          "tmdbId": "tv/231801"
         },
         {
           "rank": 19,
           "type": "movie",
           "typeRank": 10,
-          "title": "Day of the Dead",
-          "year": 1985,
-          "imdbId": "tt0088993",
-          "tmdbId": "movie/8408"
+          "title": "Dead of Winter",
+          "year": 2025,
+          "imdbId": "tt7574556",
+          "tmdbId": "movie/1235746"
         }
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-17T16:52:50+00:00",
+      "fetchedAt": "2026-11-18T16:26:53+00:00",
       "items": [
         {
           "rank": 1,
@@ -744,19 +744,19 @@
           "rank": 3,
           "type": "series",
           "typeRank": 3,
-          "title": "Nocturne",
-          "year": 2026,
-          "imdbId": "tt26598805",
-          "tmdbId": "tv/292741"
+          "title": "Slow Horses",
+          "year": 2022,
+          "imdbId": "tt5875444",
+          "tmdbId": "tv/95480"
         },
         {
           "rank": 4,
           "type": "series",
           "typeRank": 4,
-          "title": "Slow Horses",
-          "year": 2022,
-          "imdbId": "tt5875444",
-          "tmdbId": "tv/95480"
+          "title": "Nocturne",
+          "year": 2026,
+          "imdbId": "tt26598805",
+          "tmdbId": "tv/292741"
         },
         {
           "rank": 5,
@@ -796,21 +796,21 @@
         },
         {
           "rank": 9,
-          "type": "movie",
-          "typeRank": 1,
-          "title": "Sunshine",
-          "year": 2007,
-          "imdbId": "tt0448134",
-          "tmdbId": "movie/1272"
-        },
-        {
-          "rank": 10,
           "type": "series",
           "typeRank": 9,
           "title": "For All Mankind",
           "year": 2019,
           "imdbId": "tt7772588",
           "tmdbId": "tv/87917"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 1,
+          "title": "Sunshine",
+          "year": 2007,
+          "imdbId": "tt0448134",
+          "tmdbId": "movie/1272"
         },
         {
           "rank": 11,
@@ -843,19 +843,19 @@
           "rank": 14,
           "type": "movie",
           "typeRank": 4,
-          "title": "Tenzing",
+          "title": "Matchbox the Movie",
           "year": 2026,
-          "imdbId": "tt6262770",
-          "tmdbId": "movie/1288069"
+          "imdbId": "tt28498219",
+          "tmdbId": "movie/1148365"
         },
         {
           "rank": 15,
           "type": "movie",
           "typeRank": 5,
-          "title": "Matchbox the Movie",
+          "title": "Tenzing",
           "year": 2026,
-          "imdbId": "tt28498219",
-          "tmdbId": "movie/1148365"
+          "imdbId": "tt6262770",
+          "tmdbId": "movie/1288069"
         },
         {
           "rank": 16,
@@ -870,37 +870,37 @@
           "rank": 17,
           "type": "movie",
           "typeRank": 7,
-          "title": "The Gorge",
-          "year": 2025,
-          "imdbId": "tt13654226",
-          "tmdbId": "movie/950396"
-        },
-        {
-          "rank": 18,
-          "type": "movie",
-          "typeRank": 8,
           "title": "Snoopy Presents: 12 Days of Snoopy",
           "year": 2026,
           "imdbId": "tt47791876",
           "tmdbId": "movie/1780407"
         },
         {
+          "rank": 18,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "The Gorge",
+          "year": 2025,
+          "imdbId": "tt13654226",
+          "tmdbId": "movie/950396"
+        },
+        {
           "rank": 19,
           "type": "movie",
           "typeRank": 9,
-          "title": "The Family Plan 2",
-          "year": 2025,
-          "imdbId": "tt34276058",
-          "tmdbId": "movie/1363123"
+          "title": "Spider-Man: Far From Home",
+          "year": 2019,
+          "imdbId": "tt6320628",
+          "tmdbId": "movie/429617"
         },
         {
           "rank": 20,
           "type": "movie",
           "typeRank": 10,
-          "title": "Spider-Man: Far From Home",
-          "year": 2019,
-          "imdbId": "tt6320628",
-          "tmdbId": "movie/429617"
+          "title": "The Family Plan 2",
+          "year": 2025,
+          "imdbId": "tt34276058",
+          "tmdbId": "movie/1363123"
         }
       ]
     }
