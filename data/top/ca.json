@@ -1,16 +1,25 @@
 {
   "country": "ca",
-  "generatedAt": "2026-11-21T15:21:42+00:00",
+  "generatedAt": "2026-11-22T15:16:52+00:00",
   "attribution": {
     "text": "Streaming data by Movie of the Night (Streaming Availability API)",
     "url": "https://www.movieofthenight.com/about/api"
   },
   "services": {
     "netflix": {
-      "fetchedAt": "2026-11-21T15:21:42+00:00",
+      "fetchedAt": "2026-11-22T15:16:52+00:00",
       "items": [
         {
           "rank": 1,
+          "type": "series",
+          "typeRank": 1,
+          "title": "WWE Friday Night SmackDown",
+          "year": 1999,
+          "imdbId": "tt0227972",
+          "tmdbId": "tv/1549"
+        },
+        {
+          "rank": 2,
           "type": "movie",
           "typeRank": 1,
           "title": "Guarding Stars",
@@ -19,126 +28,117 @@
           "tmdbId": "movie/1551025"
         },
         {
-          "rank": 2,
-          "type": "movie",
-          "typeRank": 2,
-          "title": "Russell Brand: Open Secret",
-          "year": 2026,
-          "imdbId": "tt50969289",
-          "tmdbId": "movie/1823907"
-        },
-        {
           "rank": 3,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "Heartland",
-          "year": 2026,
-          "imdbId": "tt38213251",
-          "tmdbId": "movie/1543469"
-        },
-        {
-          "rank": 4,
-          "type": "movie",
-          "typeRank": 4,
-          "title": "The Christmas Switch",
-          "year": 2026,
-          "imdbId": "tt39313557",
-          "tmdbId": "movie/1757174"
-        },
-        {
-          "rank": 5,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Christmas at Fields Ranch",
-          "year": 2025,
-          "imdbId": "tt37964718",
-          "tmdbId": "movie/1574367"
-        },
-        {
-          "rank": 6,
-          "type": "movie",
-          "typeRank": 6,
-          "title": "A Wisconsin Christmas Pie",
-          "year": 2025,
-          "imdbId": "tt36454258",
-          "tmdbId": "movie/1463182"
-        },
-        {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Never Surrender",
-          "year": 2026,
-          "imdbId": "tt39370926",
-          "tmdbId": "movie/1616687"
-        },
-        {
-          "rank": 8,
           "type": "series",
-          "typeRank": 1,
+          "typeRank": 2,
           "title": "The Body",
           "year": 2026,
           "imdbId": "tt8014982",
           "tmdbId": "tv/291507"
         },
         {
-          "rank": 9,
+          "rank": 4,
           "type": "movie",
-          "typeRank": 8,
-          "title": "The Boss Baby: Family Business",
-          "year": 2021,
-          "imdbId": "tt6932874",
-          "tmdbId": "movie/459151"
+          "typeRank": 2,
+          "title": "Steps",
+          "year": 2026,
+          "imdbId": "tt14413964",
+          "tmdbId": "movie/1595124"
         },
         {
-          "rank": 10,
+          "rank": 5,
+          "type": "movie",
+          "typeRank": 3,
+          "title": "The Grinch",
+          "year": 2018,
+          "imdbId": "tt2709692",
+          "tmdbId": "movie/360920"
+        },
+        {
+          "rank": 6,
+          "type": "movie",
+          "typeRank": 4,
+          "title": "Heartland",
+          "year": 2026,
+          "imdbId": "tt38213251",
+          "tmdbId": "movie/1543469"
+        },
+        {
+          "rank": 7,
           "type": "series",
-          "typeRank": 2,
+          "typeRank": 3,
           "title": "The Law of Beasts",
           "year": 2026,
           "imdbId": "tt44079238",
           "tmdbId": "tv/332839"
         },
         {
+          "rank": 8,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "Russell Brand: Open Secret",
+          "year": 2026,
+          "imdbId": "tt50969289",
+          "tmdbId": "movie/1823907"
+        },
+        {
+          "rank": 9,
+          "type": "movie",
+          "typeRank": 6,
+          "title": "Primetime Preacher$",
+          "year": 2026,
+          "imdbId": "tt48434154",
+          "tmdbId": "movie/1791730"
+        },
+        {
+          "rank": 10,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "The Christmas Switch",
+          "year": 2026,
+          "imdbId": "tt39313557",
+          "tmdbId": "movie/1757174"
+        },
+        {
           "rank": 11,
+          "type": "movie",
+          "typeRank": 8,
+          "title": "A Wisconsin Christmas Pie",
+          "year": 2025,
+          "imdbId": "tt36454258",
+          "tmdbId": "movie/1463182"
+        },
+        {
+          "rank": 12,
+          "type": "movie",
+          "typeRank": 9,
+          "title": "The Boss Baby: Family Business",
+          "year": 2021,
+          "imdbId": "tt6932874",
+          "tmdbId": "movie/459151"
+        },
+        {
+          "rank": 13,
+          "type": "movie",
+          "typeRank": 10,
+          "title": "Christmas at Fields Ranch",
+          "year": 2025,
+          "imdbId": "tt37964718",
+          "tmdbId": "movie/1574367"
+        },
+        {
+          "rank": 14,
           "type": "series",
-          "typeRank": 3,
+          "typeRank": 4,
           "title": "Black Doves",
           "year": 2024,
           "imdbId": "tt27995113",
           "tmdbId": "tv/225385"
         },
         {
-          "rank": 12,
-          "type": "movie",
-          "typeRank": 9,
-          "title": "One Eight Seven",
-          "year": 1997,
-          "imdbId": "tt0118531",
-          "tmdbId": "movie/6072"
-        },
-        {
-          "rank": 13,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Empress",
-          "year": 2022,
-          "imdbId": "tt13720112",
-          "tmdbId": "tv/131488"
-        },
-        {
-          "rank": 14,
-          "type": "series",
-          "typeRank": 5,
-          "title": "Taken: Natalee Holloway",
-          "year": 2026,
-          "imdbId": "tt43681696",
-          "tmdbId": "tv/338684"
-        },
-        {
           "rank": 15,
           "type": "movie",
-          "typeRank": 10,
+          "typeRank": 11,
           "title": "Mike Ward: Modest",
           "year": 2026,
           "imdbId": "tt49794576",
@@ -147,23 +147,32 @@
         {
           "rank": 16,
           "type": "series",
+          "typeRank": 5,
+          "title": "The Empress",
+          "year": 2022,
+          "imdbId": "tt13720112",
+          "tmdbId": "tv/131488"
+        },
+        {
+          "rank": 17,
+          "type": "series",
           "typeRank": 6,
+          "title": "Taken: Natalee Holloway",
+          "year": 2026,
+          "imdbId": "tt43681696",
+          "tmdbId": "tv/338684"
+        },
+        {
+          "rank": 18,
+          "type": "series",
+          "typeRank": 7,
           "title": "Cunk on Cinema",
           "year": 2026,
           "imdbId": "tt47021035",
           "tmdbId": "tv/335981"
         },
         {
-          "rank": 17,
-          "type": "series",
-          "typeRank": 7,
-          "title": "Nobody Wants This",
-          "year": 2024,
-          "imdbId": "tt26933824",
-          "tmdbId": "tv/250923"
-        },
-        {
-          "rank": 18,
+          "rank": 19,
           "type": "series",
           "typeRank": 8,
           "title": "Win the Mall",
@@ -172,18 +181,18 @@
           "tmdbId": "tv/336592"
         },
         {
-          "rank": 19,
+          "rank": 20,
           "type": "series",
           "typeRank": 9,
-          "title": "The One About Matthew Perry",
+          "title": "The Altruists",
           "year": 2026,
-          "imdbId": "tt44941753",
-          "tmdbId": "tv/333533"
+          "imdbId": "tt36786185",
+          "tmdbId": "tv/308007"
         }
       ]
     },
     "prime": {
-      "fetchedAt": "2026-11-21T15:21:42+00:00",
+      "fetchedAt": "2026-11-22T15:16:52+00:00",
       "items": [
         {
           "rank": 1,
@@ -198,37 +207,37 @@
           "rank": 2,
           "type": "movie",
           "typeRank": 1,
-          "title": "The Mongoose",
-          "year": 2026,
-          "imdbId": "tt13611778",
-          "tmdbId": "movie/1294189"
-        },
-        {
-          "rank": 3,
-          "type": "movie",
-          "typeRank": 2,
           "title": "Elf",
           "year": 2003,
           "imdbId": "tt0319343",
           "tmdbId": "movie/10719"
         },
         {
-          "rank": 4,
-          "type": "series",
+          "rank": 3,
+          "type": "movie",
           "typeRank": 2,
-          "title": "The Terminal List",
-          "year": 2022,
-          "imdbId": "tt11743610",
-          "tmdbId": "tv/120911"
+          "title": "The Mongoose",
+          "year": 2026,
+          "imdbId": "tt13611778",
+          "tmdbId": "movie/1294189"
         },
         {
-          "rank": 5,
+          "rank": 4,
           "type": "movie",
           "typeRank": 3,
           "title": "Madden",
           "year": 2026,
           "imdbId": "tt24818230",
           "tmdbId": "movie/1131943"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 2,
+          "title": "The Terminal List",
+          "year": 2022,
+          "imdbId": "tt11743610",
+          "tmdbId": "tv/120911"
         },
         {
           "rank": 6,
@@ -250,21 +259,21 @@
         },
         {
           "rank": 8,
+          "type": "movie",
+          "typeRank": 5,
+          "title": "The Grinch",
+          "year": 2018,
+          "imdbId": "tt2709692",
+          "tmdbId": "movie/360920"
+        },
+        {
+          "rank": 9,
           "type": "series",
           "typeRank": 4,
           "title": "The Greatest",
           "year": 2026,
           "imdbId": "tt15715850",
           "tmdbId": "tv/258989"
-        },
-        {
-          "rank": 9,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Apocalypse Z: New World",
-          "year": 2026,
-          "imdbId": "tt37522541",
-          "tmdbId": "movie/1507696"
         },
         {
           "rank": 10,
@@ -297,10 +306,10 @@
           "rank": 13,
           "type": "movie",
           "typeRank": 6,
-          "title": "The Grinch",
-          "year": 2018,
-          "imdbId": "tt2709692",
-          "tmdbId": "movie/360920"
+          "title": "Apocalypse Z: New World",
+          "year": 2026,
+          "imdbId": "tt37522541",
+          "tmdbId": "movie/1507696"
         },
         {
           "rank": 14,
@@ -313,21 +322,21 @@
         },
         {
           "rank": 15,
-          "type": "movie",
-          "typeRank": 7,
-          "title": "Minions & Monsters",
-          "year": 2026,
-          "imdbId": "tt32890033",
-          "tmdbId": "movie/1315772"
-        },
-        {
-          "rank": 16,
           "type": "series",
           "typeRank": 9,
           "title": "Neagley",
           "year": 2026,
           "imdbId": "tt33539520",
           "tmdbId": "tv/273207"
+        },
+        {
+          "rank": 16,
+          "type": "movie",
+          "typeRank": 7,
+          "title": "Minions & Monsters",
+          "year": 2026,
+          "imdbId": "tt32890033",
+          "tmdbId": "movie/1315772"
         },
         {
           "rank": 17,
@@ -350,7 +359,7 @@
       ]
     },
     "disney": {
-      "fetchedAt": "2026-11-21T15:21:42+00:00",
+      "fetchedAt": "2026-11-22T15:16:52+00:00",
       "items": [
         {
           "rank": 1,
@@ -535,7 +544,7 @@
       ]
     },
     "apple": {
-      "fetchedAt": "2026-11-21T15:21:42+00:00",
+      "fetchedAt": "2026-11-22T15:16:52+00:00",
       "items": [
         {
           "rank": 1,
@@ -649,28 +658,28 @@
           "rank": 13,
           "type": "movie",
           "typeRank": 3,
+          "title": "Snoopy Presents: 12 Days of Snoopy",
+          "year": 2026,
+          "imdbId": "tt47791876",
+          "tmdbId": "movie/1780407"
+        },
+        {
+          "rank": 14,
+          "type": "movie",
+          "typeRank": 4,
           "title": "Tenzing",
           "year": 2026,
           "imdbId": "tt6262770",
           "tmdbId": "movie/1288069"
         },
         {
-          "rank": 14,
+          "rank": 15,
           "type": "movie",
-          "typeRank": 4,
+          "typeRank": 5,
           "title": "Matchbox the Movie",
           "year": 2026,
           "imdbId": "tt28498219",
           "tmdbId": "movie/1148365"
-        },
-        {
-          "rank": 15,
-          "type": "movie",
-          "typeRank": 5,
-          "title": "Snoopy Presents: 12 Days of Snoopy",
-          "year": 2026,
-          "imdbId": "tt47791876",
-          "tmdbId": "movie/1780407"
         },
         {
           "rank": 16,
@@ -720,25 +729,25 @@
       ]
     },
     "crave": {
-      "fetchedAt": "2026-11-21T15:21:42+00:00",
+      "fetchedAt": "2026-11-22T15:16:52+00:00",
       "items": [
         {
           "rank": 1,
           "type": "series",
           "typeRank": 1,
-          "title": "The Amazing Race",
-          "year": 2001,
-          "imdbId": "tt0285335",
-          "tmdbId": "tv/30957"
+          "title": "YAGA",
+          "year": 2026,
+          "imdbId": "tt39980704",
+          "tmdbId": "tv/314360"
         },
         {
           "rank": 2,
           "type": "series",
           "typeRank": 2,
-          "title": "Love Island Australia",
-          "year": 2018,
-          "imdbId": "tt8467296",
-          "tmdbId": "tv/79792"
+          "title": "Yellowjackets",
+          "year": 2021,
+          "imdbId": "tt11041332",
+          "tmdbId": "tv/117488"
         },
         {
           "rank": 3,
@@ -751,6 +760,24 @@
         },
         {
           "rank": 4,
+          "type": "series",
+          "typeRank": 4,
+          "title": "Grey's Anatomy",
+          "year": 2005,
+          "imdbId": "tt0413573",
+          "tmdbId": "tv/1416"
+        },
+        {
+          "rank": 5,
+          "type": "series",
+          "typeRank": 5,
+          "title": "WAR",
+          "year": 2026,
+          "imdbId": "tt37972251",
+          "tmdbId": "tv/298852"
+        },
+        {
+          "rank": 6,
           "type": "movie",
           "typeRank": 1,
           "title": "The Hunger Games",
@@ -759,7 +786,7 @@
           "tmdbId": "movie/70160"
         },
         {
-          "rank": 5,
+          "rank": 7,
           "type": "movie",
           "typeRank": 2,
           "title": "The Hunger Games: Catching Fire",
@@ -768,49 +795,22 @@
           "tmdbId": "movie/101299"
         },
         {
-          "rank": 6,
-          "type": "series",
-          "typeRank": 4,
-          "title": "The Traitors Canada",
-          "year": 2023,
-          "imdbId": "tt28251824",
-          "tmdbId": "tv/234613"
-        },
-        {
-          "rank": 7,
-          "type": "movie",
-          "typeRank": 3,
-          "title": "The End of Oak Street",
-          "year": 2026,
-          "imdbId": "tt27165187",
-          "tmdbId": "movie/1101383"
-        },
-        {
           "rank": 8,
           "type": "series",
-          "typeRank": 5,
-          "title": "The Gilded Age",
-          "year": 2022,
-          "imdbId": "tt4406178",
-          "tmdbId": "tv/81723"
+          "typeRank": 6,
+          "title": "Love Island Australia",
+          "year": 2018,
+          "imdbId": "tt8467296",
+          "tmdbId": "tv/79792"
         },
         {
           "rank": 9,
           "type": "series",
-          "typeRank": 6,
-          "title": "WAR",
-          "year": 2026,
-          "imdbId": "tt37972251",
-          "tmdbId": "tv/298852"
-        },
-        {
-          "rank": 10,
-          "type": "series",
           "typeRank": 7,
-          "title": "YAGA",
-          "year": 2026,
-          "imdbId": "tt39980704",
-          "tmdbId": "tv/314360"
+          "title": "Project Runway Canada",
+          "year": 2007,
+          "imdbId": "tt1158101",
+          "tmdbId": "tv/5726"
         }
       ]
     }
